@@ -1,212 +1,156 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suresh Manne - Official Website</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <title>VIP Fancy Numbers</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #121212;
-  color: #fff;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #1e1e1e;
-  flex-wrap: wrap;
-}
-
-nav h1 {
-  color: #4caf50;
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  flex-wrap: wrap;
-}
-
-nav ul li {
-  margin: 0 1rem;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.container {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.section-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #4caf50;
-}
-
-.number-category {
-  margin-bottom: 2rem;
-}
-
-.number-category h3 {
-  color: #ffc107;
-  margin-bottom: 1rem;
-}
-
-.numbers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.number-box {
-  background-color: #1f1f1f;
-  padding: 1rem;
-  border-radius: 8px;
-  flex: 1 0 150px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.number-box a {
-  color: #4caf50;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.social-icons a {
-  color: #fff;
-  font-size: 2rem;
-  margin-right: 1rem;
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  padding: 0.75rem;
-  margin: 0.5rem 0;
-  border: none;
-  border-radius: 5px;
-}
-
-.contact-form button {
-  background-color: #4caf50;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  border: none;
-}
-
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .number-box {
-    flex: 1 0 100%;
-  }
-}
-
-  </style>
-</head><body>
-  <nav>
-    <h1>🌟 Suresh Manne</h1>
-    <ul>
-      <li><a href="#about">About Me</a></li>
-      <li><a href="#numbers">Fancy Numbers</a></li>
-      <li><a href="#connect">Connect</a></li>
-    </ul>
-  </nav>  <div class="container">
-    <section id="about">
-      <h2 class="section-title">👤 About Me</h2>
-      <p>🧑‍💼 I'm <strong>Suresh Manne</strong>, CEO & Founding Director of <em>Manne Communications</em>, a telecom brand known across India. I’m passionate about technology, food, trains, bikes, and Rajasthani culture! I’ve worked across 5 states as an English Trainer, Team Leader, and Zone Head, and I’ve served 10,000+ customers. 💼🌍</p>
-      <ul>
-        <li>🎓 Born: June 20, 1995 – Tenali, Andhra Pradesh</li>
-        <li>🏫 Education: Sree Gurudatta High School ➝ Viveka Junior College ➝ ASN Degree College</li>
-        <li>💼 First Job: ILM, Bangalore – Trainer to Zone Head</li>
-        <li>📦 Past: Airtel & Pay1 Distributor, 2015-2018</li>
-        <li>🏡 Present: Admin Director @ Niru’s Pre School, Vizag</li>
-        <li>👨‍👩‍👦 Married to Anupama (Met @ ILM) – Blessed with Baby Boy Lashvik (12 Dec 2024)</li>
-        <li>📍 Travelled: 25 Indian states | 🎶 Music: Rajasthani Folk Fan</li>
-      </ul>
-    </section><section id="numbers">
-  <h2 class="section-title">📱 Fancy Numbers</h2>
-  <input type="text" class="search-input" placeholder="Search number..." onkeyup="filterNumbers()" />
-  <div id="fancy-numbers"></div>
-</section>
-
-<section id="connect">
-  <h2 class="section-title">📞 Connect with Me</h2>
-  <p>Email: <a href="mailto:sureshchowdarymanne18@gmail.com">sureshchowdarymanne18@gmail.com</a></p>
-  <p>📱 WhatsApp: <a href="https://wa.me/9090900005" target="_blank">9090900005</a></p>
-  <div class="social-icons">
-    <a href="https://www.facebook.com/share/156DqkFCDeB/" target="_blank"><i class="fab fa-facebook"></i></a>
-    <a href="https://www.instagram.com/suresh_unexplained?igsh=a2MwNWw4MWY5a3l3" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://x.com/Suresh_Manne_5" target="_blank"><i class="fab fa-x-twitter"></i></a>
-  </div>
-  <form class="contact-form">
-    <input type="text" placeholder="Your Name" required />
-    <input type="email" placeholder="Your Email" required />
-    <textarea rows="4" placeholder="Your Message"></textarea>
-    <button type="submit">Send</button>
-  </form>
-</section>
-
-  </div>  <script>
-    const categories = {
-      "💸 ₹0–₹2,999": ["9000387143", "8719021630"],
-      "💰 ₹3,000–₹5,999": ["7772991313", "9168691683"],
-      "🔥 ₹6,000–₹9,999": ["9168691684", "9598979999"],
-      "✨ ₹10,000–₹19,999": ["9444322999"],
-      "👑 ₹20,000–₹29,999": ["7449777999", "9088333999"],
-      "🥇 ₹30,000–₹39,999": ["7449939999"],
-      "🌟 ₹40,000–₹59,999": ["8436669999"],
-      "💎 ₹5L+": ["9555666999"]
-    };
-
-    function renderNumbers() {
-      const container = document.getElementById("fancy-numbers");
-      container.innerHTML = "";
-      for (const [title, nums] of Object.entries(categories)) {
-        const div = document.createElement("div");
-        div.className = "number-category";
-        div.innerHTML = `<h3>${title}</h3><div class='numbers'>${nums
-          .map(
-            (n) => `<div class='number-box'><a href='https://wa.me/9090900005?text=I am interested in number ${n}' target='_blank'>${n}</a></div>`
-          )
-          .join("")}</div>`;
-        container.appendChild(div);
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00e676;
+    }
+    #searchBox {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    .number-card {
+      background-color: #1e1e1e;
+      margin: 10px 0;
+      padding: 16px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.3s;
+      flex-wrap: wrap;
+    }
+    .number-card:hover {
+      background-color: #2c2c2c;
+    }
+    .emoji {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    .number-info {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+    }
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #4caf50;
+    }
+    .whatsapp-link {
+      background: #25D366;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+    @media screen and (max-width: 600px) {
+      .number-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .whatsapp-link {
+        margin-top: 10px;
+        margin-left: 0;
       }
     }
+  </style>
+</head>
+<body>
+  <h1>💎 All VIP Fancy Numbers 💎</h1>
+  <input type="text" id="searchBox" placeholder="Search Number or Price..." />  <div id="numbersContainer"></div>  <script>
+    const numbers = [
+      { emoji: "🎉", number: "8877 123456", price: 200000 },
+      { emoji: "⭐", number: "9649 123456", price: 150000 },
+      { emoji: "🚀", number: "8888 234567", price: 200000 },
+      { emoji: "💥", number: "9111 345678", price: 200000 },
+      { emoji: "🔥", number: "9341 345678", price: 60000 },
+      { emoji: "⚡", number: "7519 456789", price: 55000 },
+      { emoji: "🌈", number: "8759 456789", price: 55000 },
+      { emoji: "🎊", number: "9539 456789", price: 80000 },
+      { emoji: "💥", number: "9444 14 5444", price: 15000 },
+      { emoji: "🌊", number: "9669 587 555", price: 4000 },
+      { emoji: "🔥", number: "9669 868 555", price: 4000 },
+      { emoji: "⚡", number: "9009 169 666", price: 5000 },
+      { emoji: "🚀", number: "966 999 3777", price: 5000 },
+      { emoji: "👑", number: "9444 322 999", price: 9999 },
+      { emoji: "💰", number: "62626 62628", price: 19999 },
+      { emoji: "👑", number: "94948 94945", price: 19999 },
+      { emoji: "🌟", number: "94 274 23456", price: 35000 },
+      { emoji: "🎯", number: "9917 11 3456", price: 25000 },
+      { emoji: "🚀", number: "924 456 1456", price: 15000 },
+      { emoji: "🌈", number: "9111 874 456", price: 10000 },
+      { emoji: "🌈", number: "9111 937 456", price: 10000 },
+      { emoji: "🔔", number: "9444 352 456", price: 7000 },
+      { emoji: "🔔", number: "9444 361 456", price: 7000 },
+      { emoji: "💫", number: "9171 274 456", price: 4000 },
+      { emoji: "🌍", number: "9244 264 456", price: 4000 },
+      { emoji: "✨", number: "95 22337 456", price: 6000 },
+      { emoji: "💎", number: "944444 9499", price: 59999 },
+      { emoji: "🔥", number: "99903 66666", price: 189999 },
+      { emoji: "💎", number: "999 75 999 56", price: 9999 },
+      { emoji: "🌈", number: "93466 93466", price: 125000 },
+      { emoji: "💎", number: "93478 93478", price: 80000 }
+      // 🔽 Add remaining numbers here in the same format 🔽
+    ];
 
-    function filterNumbers() {
-      const val = document.querySelector(".search-input").value.toLowerCase();
-      document.querySelectorAll(".number-box").forEach((el) => {
-        el.style.display = el.innerText.toLowerCase().includes(val) ? "block" : "none";
+    const container = document.getElementById("numbersContainer");
+    const searchBox = document.getElementById("searchBox");
+
+    function displayNumbers(list) {
+      container.innerHTML = "";
+      list.sort((a, b) => a.price - b.price);
+      list.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "number-card";
+
+        const info = document.createElement("div");
+        info.className = "number-info";
+        info.innerHTML = `<span class="emoji">${item.emoji}</span> ${item.number}`;
+
+        const price = document.createElement("div");
+        price.className = "price";
+        price.innerHTML = `₹${item.price.toLocaleString()}`;
+
+        const waLink = document.createElement("a");
+        waLink.className = "whatsapp-link";
+        waLink.href = `https://wa.me/919090900005?text=I'm%20interested%20in%20this%20VIP%20Number:%20${item.number}%20for%20₹${item.price}`;
+        waLink.target = "_blank";
+        waLink.innerText = "WhatsApp";
+
+        card.appendChild(info);
+        card.appendChild(price);
+        card.appendChild(waLink);
+        container.appendChild(card);
       });
     }
 
-    renderNumbers();
-  </script></body></html>
+    searchBox.addEventListener("input", e => {
+      const term = e.target.value.toLowerCase();
+      const filtered = numbers.filter(n =>
+        n.number.replace(/\s+/g, '').includes(term) ||
+        n.price.toString().includes(term)
+      );
+      displayNumbers(filtered);
+    });
+
+    displayNumbers(numbers);
+  </script></body>
+</html>

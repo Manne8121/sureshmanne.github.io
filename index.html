@@ -1,156 +1,124 @@
-<!DOCTYPE html><html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VIP Fancy Numbers</title>
+  <title>Fancy Numbers by Suresh Manne</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
       background-color: #121212;
       color: #fff;
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #00e676;
-    }
-    #searchBox {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-    }
-    .number-card {
-      background-color: #1e1e1e;
-      margin: 10px 0;
-      padding: 16px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.3s;
-      flex-wrap: wrap;
-    }
-    .number-card:hover {
-      background-color: #2c2c2c;
-    }
-    .emoji {
-      font-size: 20px;
-      margin-right: 10px;
-    }
-    .number-info {
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-    }
-    .price {
-      font-size: 18px;
-      font-weight: bold;
-      color: #4caf50;
-    }
-    .whatsapp-link {
-      background: #25D366;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 14px;
-      margin-left: 10px;
-    }
-    @media screen and (max-width: 600px) {
-      .number-card {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .whatsapp-link {
-        margin-top: 10px;
-        margin-left: 0;
-      }
-    }
+    }header, footer {
+  text-align: center;
+  padding: 20px;
+  background: #1f1f1f;
+}
+
+h1, h2 {
+  color: #f39c12;
+}
+
+.section {
+  padding: 20px;
+}
+
+.number-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.number-card {
+  background: #1e1e1e;
+  padding: 10px 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+  transition: transform 0.2s;
+}
+
+.number-card:hover {
+  transform: scale(1.05);
+}
+
+.number-card a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  color: #f39c12;
+  font-size: 24px;
+  margin: 0 10px;
+}
+
+.contact-form {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #1f1f1f;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.contact-form input, .contact-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.contact-form button {
+  padding: 10px;
+  background: #f39c12;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
   </style>
-</head>
-<body>
-  <h1>💎 All VIP Fancy Numbers 💎</h1>
-  <input type="text" id="searchBox" placeholder="Search Number or Price..." />  <div id="numbersContainer"></div>  <script>
-    const numbers = [
-      { emoji: "🎉", number: "8877 123456", price: 200000 },
-      { emoji: "⭐", number: "9649 123456", price: 150000 },
-      { emoji: "🚀", number: "8888 234567", price: 200000 },
-      { emoji: "💥", number: "9111 345678", price: 200000 },
-      { emoji: "🔥", number: "9341 345678", price: 60000 },
-      { emoji: "⚡", number: "7519 456789", price: 55000 },
-      { emoji: "🌈", number: "8759 456789", price: 55000 },
-      { emoji: "🎊", number: "9539 456789", price: 80000 },
-      { emoji: "💥", number: "9444 14 5444", price: 15000 },
-      { emoji: "🌊", number: "9669 587 555", price: 4000 },
-      { emoji: "🔥", number: "9669 868 555", price: 4000 },
-      { emoji: "⚡", number: "9009 169 666", price: 5000 },
-      { emoji: "🚀", number: "966 999 3777", price: 5000 },
-      { emoji: "👑", number: "9444 322 999", price: 9999 },
-      { emoji: "💰", number: "62626 62628", price: 19999 },
-      { emoji: "👑", number: "94948 94945", price: 19999 },
-      { emoji: "🌟", number: "94 274 23456", price: 35000 },
-      { emoji: "🎯", number: "9917 11 3456", price: 25000 },
-      { emoji: "🚀", number: "924 456 1456", price: 15000 },
-      { emoji: "🌈", number: "9111 874 456", price: 10000 },
-      { emoji: "🌈", number: "9111 937 456", price: 10000 },
-      { emoji: "🔔", number: "9444 352 456", price: 7000 },
-      { emoji: "🔔", number: "9444 361 456", price: 7000 },
-      { emoji: "💫", number: "9171 274 456", price: 4000 },
-      { emoji: "🌍", number: "9244 264 456", price: 4000 },
-      { emoji: "✨", number: "95 22337 456", price: 6000 },
-      { emoji: "💎", number: "944444 9499", price: 59999 },
-      { emoji: "🔥", number: "99903 66666", price: 189999 },
-      { emoji: "💎", number: "999 75 999 56", price: 9999 },
-      { emoji: "🌈", number: "93466 93466", price: 125000 },
-      { emoji: "💎", number: "93478 93478", price: 80000 }
-      // 🔽 Add remaining numbers here in the same format 🔽
-    ];
-
-    const container = document.getElementById("numbersContainer");
-    const searchBox = document.getElementById("searchBox");
-
-    function displayNumbers(list) {
-      container.innerHTML = "";
-      list.sort((a, b) => a.price - b.price);
-      list.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "number-card";
-
-        const info = document.createElement("div");
-        info.className = "number-info";
-        info.innerHTML = `<span class="emoji">${item.emoji}</span> ${item.number}`;
-
-        const price = document.createElement("div");
-        price.className = "price";
-        price.innerHTML = `₹${item.price.toLocaleString()}`;
-
-        const waLink = document.createElement("a");
-        waLink.className = "whatsapp-link";
-        waLink.href = `https://wa.me/919090900005?text=I'm%20interested%20in%20this%20VIP%20Number:%20${item.number}%20for%20₹${item.price}`;
-        waLink.target = "_blank";
-        waLink.innerText = "WhatsApp";
-
-        card.appendChild(info);
-        card.appendChild(price);
-        card.appendChild(waLink);
-        container.appendChild(card);
-      });
-    }
-
-    searchBox.addEventListener("input", e => {
-      const term = e.target.value.toLowerCase();
-      const filtered = numbers.filter(n =>
-        n.number.replace(/\s+/g, '').includes(term) ||
-        n.price.toString().includes(term)
-      );
-      displayNumbers(filtered);
-    });
-
-    displayNumbers(numbers);
-  </script></body>
-</html>
+</head><body>
+  <header>
+    <h1>📱 Fancy Numbers by Suresh Manne</h1>
+    <p>Your destination for exclusive VIP mobile numbers</p>
+  </header>  <div class="section">
+    <h2>🌟 Available Numbers</h2>
+    <div class="number-list">
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%208877123456">🎉 8877 123456 - ₹200000 🎉</a></div>
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%209649123456">⭐ 9649 123456 - ₹150000 ⭐</a></div>
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%208888234567">🚀 8888 234567 - ₹200000 🚀</a></div>
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%209111345678">💥 9111 345678 - ₹200000 💥</a></div>
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%209341345678">🔥 9341 345678 - ₹60000 🔥</a></div>
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%207519456789">⚡ 7519 456789 - ₹55000 ⚡</a></div>
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%208759456789">🌈 8759 456789 - ₹55000 🌈</a></div>
+      <div class="number-card"><a href="https://wa.me/919090900005?text=I'm%20interested%20in%209539456789">🎊 9539 456789 - ₹80000 🎊</a></div>
+      <!-- Continue listing all numbers in the same format... -->
+    </div>
+  </div>  <div class="section">
+    <h2>📞 Connect with Me</h2>
+    <div class="contact-form">
+      <form action="https://formspree.io/f/moqgkqkj" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <div class="social-icons">
+        <a href="https://wa.me/919090900005"><img src="https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png" width="30" alt="WhatsApp" /></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/50/ffffff/facebook--v1.png" width="30" alt="Facebook" /></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" width="30" alt="Instagram" /></a>
+      </div>
+    </div>
+  </div>  <footer>
+    <p>© 2025 Suresh Manne. All rights reserved.</p>
+  </footer>
+</body></html>

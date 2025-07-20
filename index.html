@@ -1,166 +1,212 @@
 <!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suresh Manne - VIP Numbers</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <title>Suresh Manne - Official Website</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .navbar {
-      margin-bottom: 2rem;
-    }
-    .number-card {
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      padding: 1rem;
-      margin: 0.5rem 0;
-    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #121212;
+  color: #fff;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #1e1e1e;
+  flex-wrap: wrap;
+}
+
+nav h1 {
+  color: #4caf50;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+nav ul li {
+  margin: 0 1rem;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #4caf50;
+}
+
+.number-category {
+  margin-bottom: 2rem;
+}
+
+.number-category h3 {
+  color: #ffc107;
+  margin-bottom: 1rem;
+}
+
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.number-box {
+  background-color: #1f1f1f;
+  padding: 1rem;
+  border-radius: 8px;
+  flex: 1 0 150px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.number-box a {
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.social-icons a {
+  color: #fff;
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 5px;
+}
+
+.contact-form button {
+  background-color: #4caf50;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .number-box {
+    flex: 1 0 100%;
+  }
+}
+
   </style>
 </head><body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Suresh Manne</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#about">About Me</a></li>
-          <li class="nav-item"><a class="nav-link" href="#fancy">Fancy Numbers</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Connect</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>  <section id="about" class="container">
-    <h2>👋 About Me</h2>
-    <p>
-      Hi! I’m <strong>Suresh Manne</strong> 🙌 – a passionate entrepreneur, known for my unique collection of premium <strong>VIP mobile numbers</strong>. 📱
-      Based in India, I help individuals and businesses stand out with numbers that leave a lasting impression. 🌟
-      From budget gems to luxury collectibles, I deal in all categories.
-    </p>
-    <p>
-      📞 Contact Me Anytime at: <strong>9090900005</strong>
-    </p>
-  </section>  <section id="fancy" class="container mt-5">
-    <h2>✨ Fancy Numbers Available</h2>
-    <div id="numbers-list" class="row">
-      <!-- VIP Numbers List Will Appear Here -->
-      <script>
-        const numbers = `🎉 8877 123456 - ₹200000 🎉    
-⭐ 9649 123456 - ₹150000 ⭐    
-🚀 8888 234567 - ₹200000 🚀    
-💥 9111 345678 - ₹200000 💥    
-🔥 9341 345678 - ₹60000 🔥    
-⚡ 7519 456789 - ₹55000 ⚡    
-🌈 8759 456789 - ₹55000 🌈    
-🎊 9539 456789 - ₹80000 🎊    
-💥 9444 14 5444 - ₹15000 💥    
-🌊 9669 587 555 - ₹4000 🌊    
-🔥 9669 868 555 - ₹4000 🔥    
-⚡ 9009 169 666 - ₹5000 ⚡    
-🚀 966 999 3777 - ₹5000 🚀    
-👑 9444 322 999 - ₹9999 👑    
-💰 62626 62628 - ₹19999 💰    
-👑 94948 94945 - ₹19999 👑    
-🌟 94 274 23456 - ₹35000 🌟    
-🎯 9917 11 3456 - ₹25000 🎯    
-🚀 924 456 1456 - ₹15000 🚀    
-🌈 9111 874 456 - ₹10000 🌈    
-🌈 9111 937 456 - ₹10000 🌈    
-🔔 9444 352 456 - ₹7000 🔔    
-🔔 9444 361 456 - ₹7000 🔔    
-💫 9171 274 456 - ₹4000 💫    
-🌍 9244 264 456 - ₹4000 🌍    
-✨ 95 22337 456 - ₹6000 ✨    
-💎 944444 9499 - ₹59999 💎    
-🔥 99903 66666 - ₹189999 🔥    
-💎 999 75 999 56 - ₹9999 💎    
-🌈 93466 93466 - ₹125000 🌈    
-💎 93478 93478 - ₹80000 💎    
-🌈 90919 00005 - ₹75000 🌈    
-💎 91122 00005 - ₹50000 💎    
-🚀 97777 00005 - ₹300000 🚀    
-🌈 9692 700 300 - ₹3999 🌈    
-💎 9827 900 400 - ₹3999 💎    
-🌈 8676 000005 - ₹75000 🌈    
-💎 9647 000005 - ₹100000 💎    
-🚀 9848 000005 - ₹200000 🚀    
-🎯 638 1234568 - ₹19999 🎯    
-🌈 9009 303 990 - ₹3499 🌈    
-🌊 9009 0505 59 - ₹3499 🌊    
-💎 9009 906 960 - ₹3499 💎    
-🌊 916 86 916 83 - ₹7999 🌊    
-🎯 916 86 916 84 - ₹7999 🎯    
-💎 93 916 51 916 - ₹4999 💎    
-🌟 88886 01234 - ₹35000 🌟    
-💎 94274 23456 - ₹35000 💎    
-🚀 88886 34567 - ₹35000 🚀    
-🎯 96442 45678 - ₹15000 🎯    
-🌈 96445 45678 - ₹20000 🌈    
-💎 97 06 16 26 36 - ₹19999 💎    
-🌟 9188 131313 - ₹150000 🌟    
-🎯 9337 343434 - ₹25000 🎯    
-🚀 9337 787878 - ₹25000 🚀    
-🔥 949 444 3333 - ₹35000 🔥    
-💎 958 958 3333 - ₹55000 💎    
-🚀 898 898 3333 - ₹40000 🚀    
-🎯 898 898 4444 - ₹40000 🎯    
-🌈 98888 2 4444 - ₹70000 🌈    
-⚡️ 887 887 6666 - ₹95000 ⚡️    
-💰 6269 22 8888 - ₹10000 💰    
-🔥 8999989499 - ₹15000 🔥    
-🔥 9444449499 - ₹75000 🔥    
-🎯 7449777999 - ₹25000 🎯    
-🌟 9088333999 - ₹25000 🌟    
-🎯 9444322999 - ₹10000 🎯    
-🏆 9555666999 - ₹550000 🏆    
-🏓 7449939999 - ₹30000 🏓    
-🍀 8436669999 - ₹40000 🍀    
-🎁 8888389999 - ₹150000 🎁    
-🏆 8888479999 - ₹100000 🏆    
-🏸 9401039999 - ₹15000 🏸    
-🥊 9401049999 - ₹20000 🥊    
-🎯 9495749999 - ₹20000 🎯    
-🥋 9496319999 - ₹20000 🥋    
-🤸 9497789999 - ₹25000 🤸    
-🎢 9522259999 - ₹35000 🎢    
-🎲 9598979999 - ₹40000 🎲    
-🎸 9711449999 - ₹40000 🎸    
-🎸 7071699999 - ₹75000 🎸    
-🥋 9115599999 - ₹550000 🥋    
-🤸 9117799999 - ₹550000 🤸    
-🔥 76666 43433 - ₹3500 🔥    
-💎 76666 31118 - ₹5000 💎    
-🎯 800007 1997 - ₹5000 🎯    
-🌊 9374 777755 - ₹6000 🌊    
-💥 8886888 438 - ₹7000 💥    
-👑 85558 19991 - ₹8000 👑    
-🌈 89999 89499 - ₹15000 🌈    
-🌊 93478 94478 - ₹5000 🌊    
-💎 89195 89196 - ₹5000 💎    
-💫 7772 99 1313 - ₹3000 💫    
-🌟 9111 48 1313 - ₹4000 🌟    
-💉 9827 104 108 - ₹3499 💉`;document.addEventListener("DOMContentLoaded", () => {
-      const listContainer = document.getElementById("numbers-list");
-      numbers.split("\n").forEach(line => {
-        const div = document.createElement("div");
-        div.className = "col-md-4 number-card bg-light";
-        div.innerText = line.trim();
-        listContainer.appendChild(div);
-      });
-    });
-  </script>
-</div>
+  <nav>
+    <h1>🌟 Suresh Manne</h1>
+    <ul>
+      <li><a href="#about">About Me</a></li>
+      <li><a href="#numbers">Fancy Numbers</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>  <div class="container">
+    <section id="about">
+      <h2 class="section-title">👤 About Me</h2>
+      <p>🧑‍💼 I'm <strong>Suresh Manne</strong>, CEO & Founding Director of <em>Manne Communications</em>, a telecom brand known across India. I’m passionate about technology, food, trains, bikes, and Rajasthani culture! I’ve worked across 5 states as an English Trainer, Team Leader, and Zone Head, and I’ve served 10,000+ customers. 💼🌍</p>
+      <ul>
+        <li>🎓 Born: June 20, 1995 – Tenali, Andhra Pradesh</li>
+        <li>🏫 Education: Sree Gurudatta High School ➝ Viveka Junior College ➝ ASN Degree College</li>
+        <li>💼 First Job: ILM, Bangalore – Trainer to Zone Head</li>
+        <li>📦 Past: Airtel & Pay1 Distributor, 2015-2018</li>
+        <li>🏡 Present: Admin Director @ Niru’s Pre School, Vizag</li>
+        <li>👨‍👩‍👦 Married to Anupama (Met @ ILM) – Blessed with Baby Boy Lashvik (12 Dec 2024)</li>
+        <li>📍 Travelled: 25 Indian states | 🎶 Music: Rajasthani Folk Fan</li>
+      </ul>
+    </section><section id="numbers">
+  <h2 class="section-title">📱 Fancy Numbers</h2>
+  <input type="text" class="search-input" placeholder="Search number..." onkeyup="filterNumbers()" />
+  <div id="fancy-numbers"></div>
+</section>
 
-  </section>  <section id="contact" class="container mt-5 mb-5">
-    <h2>📬 Connect With Me</h2>
-    <p>Email: <a href="mailto:sureshchowdarymanne18@gmail.com">sureshchowdarymanne18@gmail.com</a></p>
-    <p>Phone: <a href="tel:+919090900005">9090900005</a></p>
-    <p>
-      <a href="https://www.facebook.com/share/156DqkFCDeB/" target="_blank"><i class="fab fa-facebook fa-2x me-3"></i></a>
-      <a href="https://www.instagram.com/suresh_unexplained?igsh=a2MwNWw4MWY5a3l3" target="_blank"><i class="fab fa-instagram fa-2x me-3"></i></a>
-      <a href="https://x.com/Suresh_Manne_5?t=d6GXOMjx6KtceZA0WAgKuw&s=09" target="_blank"><i class="fab fa-twitter fa-2x"></i></a>
-    </p>
-  </section>  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script></body></html>
+<section id="connect">
+  <h2 class="section-title">📞 Connect with Me</h2>
+  <p>Email: <a href="mailto:sureshchowdarymanne18@gmail.com">sureshchowdarymanne18@gmail.com</a></p>
+  <p>📱 WhatsApp: <a href="https://wa.me/9090900005" target="_blank">9090900005</a></p>
+  <div class="social-icons">
+    <a href="https://www.facebook.com/share/156DqkFCDeB/" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.instagram.com/suresh_unexplained?igsh=a2MwNWw4MWY5a3l3" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/Suresh_Manne_5" target="_blank"><i class="fab fa-x-twitter"></i></a>
+  </div>
+  <form class="contact-form">
+    <input type="text" placeholder="Your Name" required />
+    <input type="email" placeholder="Your Email" required />
+    <textarea rows="4" placeholder="Your Message"></textarea>
+    <button type="submit">Send</button>
+  </form>
+</section>
+
+  </div>  <script>
+    const categories = {
+      "💸 ₹0–₹2,999": ["9000387143", "8719021630"],
+      "💰 ₹3,000–₹5,999": ["7772991313", "9168691683"],
+      "🔥 ₹6,000–₹9,999": ["9168691684", "9598979999"],
+      "✨ ₹10,000–₹19,999": ["9444322999"],
+      "👑 ₹20,000–₹29,999": ["7449777999", "9088333999"],
+      "🥇 ₹30,000–₹39,999": ["7449939999"],
+      "🌟 ₹40,000–₹59,999": ["8436669999"],
+      "💎 ₹5L+": ["9555666999"]
+    };
+
+    function renderNumbers() {
+      const container = document.getElementById("fancy-numbers");
+      container.innerHTML = "";
+      for (const [title, nums] of Object.entries(categories)) {
+        const div = document.createElement("div");
+        div.className = "number-category";
+        div.innerHTML = `<h3>${title}</h3><div class='numbers'>${nums
+          .map(
+            (n) => `<div class='number-box'><a href='https://wa.me/9090900005?text=I am interested in number ${n}' target='_blank'>${n}</a></div>`
+          )
+          .join("")}</div>`;
+        container.appendChild(div);
+      }
+    }
+
+    function filterNumbers() {
+      const val = document.querySelector(".search-input").value.toLowerCase();
+      document.querySelectorAll(".number-box").forEach((el) => {
+        el.style.display = el.innerText.toLowerCase().includes(val) ? "block" : "none";
+      });
+    }
+
+    renderNumbers();
+  </script></body></html>

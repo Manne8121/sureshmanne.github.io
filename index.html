@@ -103,27 +103,51 @@
 <body>
 
 <nav>
-  <a href="#" onclick="showSection('about')">About Me</a>
-  <a href="#" onclick="showSection('numbers')">Fancy Numbers</a>
-  <a href="#" onclick="showSection('contact')">Connect</a>
+  <a href="#about" onclick="showSection('about')">About Me</a>
+  <a href="#numbers" onclick="showSection('numbers')">Fancy Numbers</a>
+  <a href="#contact" onclick="showSection('contact')">Connect</a>
 </nav>
 
-<section id="about" class="active">
-  <!-- About Me Section is fine and unchanged -->
-  <!-- ... -->
+<section id="about">
+  <h1>👋 About Me</h1>
+  <p>🗓️ Born on <strong>June 20, 1995</strong> in Tenali, Andhra Pradesh.</p>
+  <p>👪 Parents: <strong>Manne Venkateswara Rao</strong> & <strong>Manne Nagamani</strong></p>
+
+  <h2>📘 Education</h2>
+  <p>🏫 Saraswathi High School, Uppugunduru (Nursery to Grade 8)</p>
+  <p>📚 Sree Gurudatta High School, Ongole (Grade 9 & 10th)</p>
+  <p>🏫 Viveka Junior College, Tenali (Grade 11 & 12th)</p>
+  <p>🎓 ASN Degree College, Tenali – after discontinuing CA</p>
+
+  <h2>💼 Career</h2>
+  <p>📍 2015: Pay 1 Distributor, Prakasam District</p>
+  <p>📍 2016–2018: Bharti Airtel Distributor</p>
+  <p>🎯 2018: Trainer, Team Leader & Zone Head at ILM, Bangalore</p>
+  <p>🌍 Worked in Kerala, Tamil Nadu, MP, Maharashtra & AP</p>
+
+  <h2>🏢 Business</h2>
+  <p>💼 CEO & Founder of <strong>Manne Communications</strong> – <em>"Number That Matters"</em></p>
+  <p>🤝 Served over 10,000 clients across India</p>
+
+  <h2>🎯 Interests</h2>
+  <p>💻 Tech enthusiast | 📷 Gadgets | 🧳 Travel | 🚆 Trains | 🛵 Rides | 🎶 Rajasthani music & culture</p>
+  <p>🛖 Loves village lifestyle | 🧭 Traveled 25 Indian states | 💭 Wants to settle in Rajasthan</p>
+
+  <h2>👨‍👩‍👦 Personal Life</h2>
+  <p>❤️ Married to <strong>Anupama</strong></p>
+  <p>👶 Blessed with a baby boy <strong>Lashvik Manne</strong> on Dec 12, 2024</p>
+  <p>🎓 Admin Director at <strong>Niru's Pre School, Visakhapatnam</strong></p>
 </section>
 
 <section id="numbers">
   <h1>📱 Fancy Numbers</h1>
 
-  <!-- You can keep adding number-box entries here -->
-  <!-- Sample fixed WhatsApp URL -->
   <div class="number-box">
     9088333999 – ₹25,000
     <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209088333999" target="_blank">Enquire Now</a>
   </div>
 
-  <!-- Continue other number boxes... -->
+  <!-- Add more number-boxes here... -->
 </section>
 
 <section id="contact">
@@ -152,8 +176,18 @@
 <script>
   function showSection(id) {
     document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add("active");
+      window.location.hash = id;
+    }
   }
+
+  // Load correct section on page load
+  window.onload = () => {
+    const hash = window.location.hash.replace('#', '') || 'about';
+    showSection(hash);
+  };
 </script>
 
 </body>

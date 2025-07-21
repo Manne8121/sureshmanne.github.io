@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -6,140 +7,196 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background: #111;
-      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
     }
     nav {
-      background: #1e1e1e;
-      padding: 10px;
+      background: #1f1f1f;
+      padding: 15px;
       text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     nav a {
-      color: #f9f9f9;
-      margin: 0 15px;
+      color: #fff;
+      margin: 0 20px;
       text-decoration: none;
       font-weight: bold;
       font-size: 1.1em;
     }
     section {
       display: none;
-      padding: 20px;
-      max-width: 800px;
+      padding: 25px;
+      max-width: 850px;
       margin: auto;
-      background: #1e1e1e;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       margin-top: 20px;
     }
     section.active {
       display: block;
     }
     h1, h2 {
-      color: #00e6e6;
+      color: #fca311;
     }
     .icon {
-      margin-right: 8px;
+      margin-right: 10px;
+      color: #fca311;
     }
     ul {
       list-style: none;
       padding: 0;
     }
     ul li {
-      padding: 5px 0;
+      padding: 6px 0;
       font-size: 1.1em;
     }
     .social-icons a {
       margin-right: 15px;
-      color: #00ccff;
+      color: #fca311;
       font-size: 1.5em;
     }
     .number-box {
       margin: 10px 0;
-      padding: 15px;
-      background: #2e2e2e;
-      border-left: 5px solid #00cc99;
-      border-radius: 6px;
+      padding: 12px;
+      background: #2c2c2c;
+      border-left: 5px solid #fca311;
+      border-radius: 8px;
+      font-weight: bold;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: bold;
-      color: #f9f9f9;
+      flex-wrap: wrap;
     }
     .number-box a {
-      background: #00cc99;
-      color: #fff;
-      padding: 8px 12px;
+      color: #00ff95;
       text-decoration: none;
-      border-radius: 4px;
-      font-size: 0.95em;
+      margin-left: 10px;
+      font-weight: 600;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      background: #2e2e2e;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 5px;
+    }
+    button {
+      background: #fca311;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    a.email-link {
+      color: #00ffcc;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
+
 <nav>
   <a href="#" onclick="showSection('about')">About Me</a>
   <a href="#" onclick="showSection('numbers')">Fancy Numbers</a>
   <a href="#" onclick="showSection('contact')">Connect</a>
-</nav><section id="about" class="active">
+</nav>
+
+<section id="about" class="active">
   <h1>👋 About Me</h1>
   <p>🗓️ Born on <strong>June 20, 1995</strong> in Tenali, Andhra Pradesh.</p>
   <p>👪 Parents: <strong>Manne Venkateswara Rao</strong> & <strong>Manne Nagamani</strong></p>
+
   <h2>📘 Education</h2>
-  <p>🏫 Started schooling at <strong>Saraswathi High School, Uppugunduru</strong></p>
-  <p>📚 Completed Grade 10 at <strong>Sree Gurudatta High School, Ongole</strong></p>
-  <p>🏫 Class 12 at <strong>Viveka Junior College, Tenali</strong></p>
-  <p>🎓 Pursued Degree at <strong>ASN Degree College, Tenali</strong> after discontinuing CA</p>
+  <p>🏫 Saraswathi High School, Uppugunduru</p>
+  <p>📚 Sree Gurudatta High School, Ongole (10th)</p>
+  <p>🏫 Viveka Junior College, Tenali (12th)</p>
+  <p>🎓 ASN Degree College, Tenali – after discontinuing CA</p>
+
   <h2>💼 Career</h2>
   <p>📍 2015: Pay 1 Distributor, Prakasam District</p>
   <p>📍 2016–2018: Airtel Distributor</p>
-  <p>🎯 2018: Selected by ILM, Bangalore. Worked as Trainer, Team Leader & Zone Head</p>
-  <p>🌍 Worked in Kerala, Tamilnadu, MP, Maharashtra & AP</p>
+  <p>🎯 2018: Trainer, Team Leader & Zone Head at ILM, Bangalore</p>
+  <p>🌍 Worked in Kerala, Tamil Nadu, MP, Maharashtra & AP</p>
+
   <h2>🏢 Business</h2>
-  <p>💼 CEO & Founder of <strong>Manne Communications</strong> – <em>Number that Matters</em></p>
-  <p>🤝 Served 10,000+ clients across India</p>
+  <p>💼 CEO & Founder of <strong>Manne Communications</strong> – <em>"Number That Matters"</em></p>
+  <p>🤝 Served over 10,000 clients across India</p>
+
   <h2>🎯 Interests</h2>
-  <p>💻 Tech enthusiast | 📷 Gadgets | 🧳 Travel | 🍛 Foodie | 🚆 Train & 🛵 Bike rides</p>
-  <p>🎶 Fond of Rajasthani music & culture. Wants to settle in Rajasthan</p>
+  <p>💻 Tech enthusiast | 📷 Gadgets | 🧳 Travel | 🚆 Trains | 🛵 Rides | 🎶 Rajasthani music & culture</p>
+  <p>🛖 Loves village lifestyle | 🧭 Traveled 25 Indian states | 💭 Wants to settle in Rajasthan</p>
+
   <h2>👨‍👩‍👦 Personal Life</h2>
   <p>❤️ Married to <strong>Anupama</strong> (Met at ILM in 2022)</p>
   <p>👶 Blessed with a baby boy <strong>Lashvik Manne</strong> on Dec 12, 2024</p>
-  <p>🏠 Loves village lifestyle | 🌍 Travelled 25 Indian states</p>
-  <p>🎓 Currently serving as <strong>Admin Director</strong> at <strong>Niru's Pre School, Visakhapatnam</strong></p>
-</section><section id="numbers">
+  <p>🎓 Admin Director at <strong>Niru's Pre School, Visakhapatnam</strong></p>
+</section>
+
+<section id="numbers">
   <h1>📱 Fancy Numbers</h1>
-  <div class="number-box">9088333999 – ₹25,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209088333999" target="_blank">Enquire Now</a></div>
-  <div class="number-box">9444322999 – ₹10,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209444322999" target="_blank">Enquire Now</a></div>
-  <div class="number-box">9555666999 – ₹5,50,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209555666999" target="_blank">Enquire Now</a></div>
-  <div class="number-box">7449939999 – ₹30,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%207449939999" target="_blank">Enquire Now</a></div>
-  <div class="number-box">8436669999 – ₹40,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208436669999" target="_blank">Enquire Now</a></div>
+
+  <div class="number-box">
+    9088333999 – ₹25,000
+    <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209088333999" target="_blank">Enquire Now</a>
+  </div>
+
+  <div class="number-box">
+    9444322999 – ₹10,000
+    <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209444322999" target="_blank">Enquire Now</a>
+  </div>
+
+  <div class="number-box">
+    9555666999 – ₹5,50,000
+    <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209555666999" target="_blank">Enquire Now</a>
+  </div>
+
+  <div class="number-box">
+    7449939999 – ₹30,000
+    <a href="https://wa.me/919090900005?text=I'm%20interested%20in%207449939999" target="_blank">Enquire Now</a>
+  </div>
+
+  <div class="number-box">
+    8436669999 – ₹40,000
+    <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208436669999" target="_blank">Enquire Now</a>
+  </div>
+
+</section>
+
 <section id="contact">
-  <h1>📞 Connect</h1>
-  <p><i class="fas fa-envelope icon"></i>Email: <span style="color: white;">sureshchowdarymanne18@gmail.com</span></p>
+  <h1>📞 Connect With Me</h1>
+  <p><i class="fas fa-envelope icon"></i>Email:
+    <a href="mailto:sureshchowdarymanne18@gmail.com" class="email-link">sureshchowdarymanne18@gmail.com</a>
+  </p>
   <p><i class="fas fa-phone icon"></i>Phone: 9090900005</p>
 
   <div class="social-icons">
     <a href="https://www.facebook.com/share/156DqkFCDeB/" target="_blank"><i class="fab fa-facebook"></i></a>
     <a href="https://www.instagram.com/suresh_unexplained?igsh=a2MwNWw4MWY5a3l3" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://x.com/Suresh_Manne_5?t=d6GXOMjx6KtceZA0WAgKuw&s=09" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://x.com/Suresh_Manne_5" target="_blank"><i class="fab fa-twitter"></i></a>
   </div>
-  <h2>✉️ Contact Form</h2>
-  <form action="https://formspree.io/f/mqkryvwb" method="POST" style="max-width: 600px; margin-top: 20px;">
-    <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none;">
-    <input type="email" name="_replyto" placeholder="Your Email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none;">
-    <textarea name="message" rows="5" placeholder="Your Message" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: none;"></textarea>
-    <button type="submit" style="padding: 10px 20px; background-color: #00aaff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-      Send Message
-    </button>
+
+  <h2>📬 Send a Message</h2>
+  <form action="https://formspree.io/f/xjvnbygy" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send</button>
   </form>
 </section>
-</section><script>
+
+<script>
   function showSection(id) {
     document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
     document.getElementById(id).classList.add("active");
   }
-</script></body>
+</script>
+
+</body>
 </html>

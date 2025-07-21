@@ -63,17 +63,17 @@
       font-size: 1.1em;
     }
     .number-box {
-      margin: 10px 0;
+      margin: 10px;
       padding: 15px;
       background: #2c2c2c;
       border-left: 5px solid #fca311;
       border-radius: 8px;
       font-weight: bold;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
       transition: transform 0.3s;
+      width: calc(50% - 20px); /* Two columns with margin */
     }
     .number-box:hover {
       transform: translateY(-5px);
@@ -81,15 +81,28 @@
     .number-box a {
       color: #00ff95;
       text-decoration: none;
-      margin-left: 10px;
       font-weight: 600;
       padding: 8px 12px;
       border-radius: 5px;
       transition: background 0.3s;
+      margin-top: 10px;
     }
     .number-box a:hover {
       background: #00ff95;
       color: #000;
+    }
+    .number-box .price, .number-box .total {
+      margin: 5px 0;
+      font-size: 1em;
+      color: #fff;
+    }
+    .number-box .total {
+      color: #00ff95;
+    }
+    #numberList {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     input, textarea, select {
       width: 100%;
@@ -205,12 +218,7 @@
         padding: 20px;
       }
       .number-box {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .number-box a {
-        margin-left: 0;
-        margin-top: 10px;
+        width: 100%; /* Full width on mobile */
       }
       input, select, textarea, button {
         width: 100%;
@@ -290,26 +298,121 @@
     </select>
   </div>
   <div id="numberList">
-    <div class="number-box" data-number="8888389999" data-price="150000">8888 38 9999 – ₹1,50,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208888389999" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="8888479999" data-price="125000">8888 47 9999 – ₹1,25,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208888479999" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9777700005" data-price="300000">97777 00005 – ₹3,00,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209777700005" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9848000005" data-price="200000">9848 000005 – ₹2,00,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209848000005" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9647000005" data-price="110000">9647 000005 – ₹1,10,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209647000005" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="8888601234" data-price="40000">88886 01234 – ₹40,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208888601234" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="8888634567" data-price="40000">88886 34567 – ₹40,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208888634567" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9494894945" data-price="20000">94948 94945 – ₹20,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209494894945" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="8877123456" data-price="200000">8877 123456 – ₹2,00,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208877123456" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9649123456" data-price="150000">9649 123456 – ₹1,50,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209649123456" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="8919589196" data-price="5000">89195 89196 – ₹5,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208919589196" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="7772991313" data-price="3000">7772 99 1313 – ₹3,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%207772991313" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9111481313" data-price="4500">9111 48 1313 – ₹4,500 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209111481313" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9827104108" data-price="5000">9827 104 108 – ₹5,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209827104108" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9966668833" data-price="25000">99 6666 8833 – ₹25,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209966668833" target="_blank">Enquire Now</a></div>
-    <div class="number-box" data-number="9644245678" data-price="20000">96442 45678 – ₹20,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%209644245678" target="_blank">Enquire Now</a></div>
-    <!-- Additional number boxes omitted for brevity -->
+    <div class="number-box" data-number="8888389999" data-price="150000">
+      <span class="number">8888 38 9999</span>
+      <span class="price">₹1,50,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%208888389999" target="_blank" aria-label="Buy number 8888389999">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="8888479999" data-price="125000">
+      <span class="number">8888 47 9999</span>
+      <span class="price">₹1,25,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%208888479999" target="_blank" aria-label="Buy number 8888479999">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9777700005" data-price="300000">
+      <span class="number">97777 00005</span>
+      <span class="price">₹3,00,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209777700005" target="_blank" aria-label="Buy number 9777700005">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9848000005" data-price="200000">
+      <span class="number">9848 000005</span>
+      <span class="price">₹2,00,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209848000005" target="_blank" aria-label="Buy number 9848000005">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9647000005" data-price="110000">
+      <span class="number">9647 000005</span>
+      <span class="price">₹1,10,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209647000005" target="_blank" aria-label="Buy number 9647000005">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="8888601234" data-price="40000">
+      <span class="number">88886 01234</span>
+      <span class="price">₹40,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%208888601234" target="_blank" aria-label="Buy number 8888601234">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="8888634567" data-price="40000">
+      <span class="number">88886 34567</span>
+      <span class="price">₹40,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%208888634567" target="_blank" aria-label="Buy number 8888634567">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9494894945" data-price="20000">
+      <span class="number">94948 94945</span>
+      <span class="price">₹20,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209494894945" target="_blank" aria-label="Buy number 9494894945">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="8877123456" data-price="200000">
+      <span class="number">8877 123456</span>
+      <span class="price">₹2,00,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%208877123456" target="_blank" aria-label="Buy number 8877123456">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9649123456" data-price="150000">
+      <span class="number">9649 123456</span>
+      <span class="price">₹1,50,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209649123456" target="_blank" aria-label="Buy number 9649123456">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="8919589196" data-price="5000">
+      <span class="number">89195 89196</span>
+      <span class="price">₹5,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%208919589196" target="_blank" aria-label="Buy number 8919589196">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="7772991313" data-price="3000">
+      <span class="number">7772 99 1313</span>
+      <span class="price">₹3,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%207772991313" target="_blank" aria-label="Buy number 7772991313">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9111481313" data-price="4500">
+      <span class="number">9111 48 1313</span>
+      <span class="price">₹4,500</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209111481313" target="_blank" aria-label="Buy number 9111481313">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9827104108" data-price="5000">
+      <span class="number">9827 104 108</span>
+      <span class="price">₹5,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209827104108" target="_blank" aria-label="Buy number 9827104108">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9966668833" data-price="25000">
+      <span class="number">99 6666 8833</span>
+      <span class="price">₹25,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209966668833" target="_blank" aria-label="Buy number 9966668833">Buy Now</a>
+    </div>
+    <div class="number-box" data-number="9644245678" data-price="20000">
+      <span class="number">96442 45678</span>
+      <span class="price">₹20,000</span>
+      <span class="total"></span>
+      <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209644245678" target="_blank" aria-label="Buy number 9644245678">Buy Now</a>
+    </div>
   </div>
 
   <script>
+    // Function to calculate single-digit total of a number
+    function calculateNumberTotal(number) {
+      let sum = number.split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+      while (sum > 9) {
+        sum = sum.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+      }
+      return sum;
+    }
+
+    // Apply number totals to each number box
+    document.querySelectorAll('.number-box').forEach(box => {
+      const number = box.dataset.number;
+      const total = calculateNumberTotal(number);
+      box.querySelector('.total').textContent = `Total: ${total}`;
+    });
+
     const inputEl = document.getElementById("searchInput");
     const searchTypeEl = document.getElementById("searchType");
     const numberBoxes = document.querySelectorAll(".number-box");
@@ -336,7 +439,7 @@
           show = !isNaN(val) && val >= 0 && price <= val;
         }
 
-        box.style.display = show ? "flex" : "none";
+        box.style.display = show ? "inline-flex" : "none";
       });
     }
 
@@ -398,7 +501,6 @@
   <h1>🌟 Connect with Me</h1>
   <p>Let’s create something extraordinary together! Reach out for premium fancy numbers, business opportunities, or just to share ideas. 🚀</p>
 
-  <!-- Contact Information -->
   <div class="contact-info">
     <p>
       <i class="fas fa-envelope icon"></i>
@@ -418,7 +520,6 @@
     </p>
   </div>
 
-  <!-- Social Media Links -->
   <div class="social-links">
     <a href="https://www.facebook.com/share/156DqkFCDeB/" target="_blank" aria-label="Visit Suresh Manne's Facebook profile">
       <i class="fab fa-facebook"></i>
@@ -434,20 +535,17 @@
     </a>
   </div>
 
-  <!-- Partner with Me -->
   <div class="partner-section">
     <h2>🤝 Partner with Me</h2>
     <p>Looking for a business opportunity? Join me at <strong>Manne Communications</strong> to explore exciting ventures in telecom and beyond. Let’s grow together! 🌱</p>
     <p>Contact me to discuss partnerships, collaborations, or innovative ideas. 💡</p>
   </div>
 
-  <!-- Looking for Something? -->
   <div class="looking-section">
     <h2>🔍 Looking for Something?</h2>
     <p>Whether it’s a unique fancy number, a business proposal, or just a chat about tech and travel, I’m here for you. Drop me a message! 📩</p>
   </div>
 
-  <!-- Contact Form -->
   <h2>📬 Send a Message</h2>
   <form id="contact-form" action="https://formspree.io/f/xjvnbygy" method="POST" aria-label="Contact form">
     <div>

@@ -141,25 +141,24 @@
 
   <section id="numbers">
   <h1>📱 Fancy Numbers</h1>
-
   <div style="margin-bottom: 20px;">
     <input type="text" id="searchInput" placeholder="Search Number or Price..." oninput="liveSearch()" list="suggestions" />
     <datalist id="suggestions"></datalist>
-
     <select id="searchType" onchange="filterNumbers()">
       <option value="starts">Starts With</option>
       <option value="ends">Ends With</option>
       <option value="price">Price ≤</option>
     </select>
-
     <select id="sortType" onchange="sortNumbers()">
       <option value="">Sort By Price</option>
       <option value="low">Price: Low to High</option>
       <option value="high">Price: High to Low</option>
     </select>
   </div>
-
   <div id="numberList">
+    <!-- Number boxes here -->
+  </div>
+</section>
     <!-- Sample Number Boxes -->
     <div class="number-box" data-number="8888389999" data-price="150000">8888 38 9999 – ₹1,50,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208888389999" target="_blank">Enquire Now</a></div>
     <div class="number-box" data-number="8888479999" data-price="125000">8888 47 9999 – ₹1,25,000 <a href="https://wa.me/919090900005?text=I'm%20interested%20in%208888479999" target="_blank">Enquire Now</a></div>

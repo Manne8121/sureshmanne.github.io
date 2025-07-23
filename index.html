@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Suresh Manne | Manne Communications</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       margin: 0;
@@ -231,27 +232,32 @@
       margin: 10px 0;
       line-height: 1.6;
     }
-    /* Styles for Founder section to align with existing theme */
+    /* Tailwind overrides for Founder section to align with theme */
     #founder {
-      background-color: #000;
-      color: white;
+      background-color: #1e1e1e;
+      color: #ffffff;
       padding: 40px 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     }
-    #founder h1, #founder h2 {
-      color: cyan;
+    #founder h1 {
+      color: #00bcd4; /* Tailwind's cyan-500 to match provided style */
     }
-    #founder p {
-      line-height: 1.6;
-      font-size: 1.1em;
+    #founder h2 {
+      color: #00bcd4;
     }
-    #founder span.yellow {
-      color: yellow;
+    #founder p, #founder li {
+      color: #d1d5db; /* Tailwind's gray-300 for readability on dark background */
     }
-    #founder span.cyan {
-      color: cyan;
+    #founder blockquote {
+      border-left-color: #3b82f6; /* Tailwind's blue-500 */
+      color: #d1d5db;
     }
-    #founder span.lime {
-      color: lime;
+    #founder .font-semibold {
+      color: #f59e0b; /* Tailwind's amber-500 to match theme's #fca311 */
+    }
+    #founder a.text-blue-500:hover {
+      color: #00ff95;
     }
     @media (max-width: 600px) {
       nav a {
@@ -359,17 +365,141 @@
 </section>
 
 <!-- SECTION: Meet the Founder -->
-<section id="founder">
-  <h1>Meet the Founder – The Journey and the Mission</h1>
-  <p><span class="yellow">Suresh Manne</span> is not just a name — it's a vision in motion. From humble beginnings to revolutionizing the digital connectivity scene, his journey is a story of <span class="lime">grit, growth, and ground-breaking ideas</span>.</p>
-  <h2>🌱 Early Days</h2>
-  <p>Growing up in India, Suresh always believed that numbers weren't just digits — they had <span class="cyan">meaning, energy, and business potential</span>.</p>
-  <h2>📞 The Birth of Manne Communications</h2>
-  <p>Started with a simple goal: to provide people with the <span class="yellow">fanciest, most memorable mobile numbers</span>. And it became a brand people trust.</p>
-  <h2>🚀 Our Mission</h2>
-  <p>To make <span class="cyan">premium mobile connectivity</span> accessible, personalized, and futuristic. We believe in empowering people with numbers that stand out — in business and in life.</p>
-  <h2>🌍 Going Global</h2>
-  <p>The aim is not just India. It's the <span class="lime">world</span>. From expanding the digital SIM business to becoming a household name for number lovers — we’re on it.</p>
+<section id="founder" class="py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">
+        Mr. Suresh Manne – The Man Behind the Numbers That Matter 📱🔢
+      </h1>
+      <p class="text-lg">
+        From Tenali to a global vision, discover the journey of a visionary redefining connectivity.
+      </p>
+    </div>
+
+    <!-- Origin Story -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-semibold mb-4 flex items-center">
+        🌱 From Tenali to Telecom – The Origin Story
+      </h2>
+      <p class="leading-relaxed">
+        Growing up in the serene rural landscapes of <span class="font-semibold">Tenali, Andhra Pradesh</span> 🇮🇳, 
+        <span class="font-semibold">Mr. Suresh Manne</span> was captivated by the unique charm of <span class="font-semibold">car and bike number plates</span> 🚘🏍️. 
+        The distinctive 4-digit combinations sparked a revolutionary idea: 
+        <blockquote class="border-l-4 border-blue-500 pl-4 italic my-4">
+          “What if we had 10-digit mobile numbers that are just as special and unforgettable?”
+        </blockquote>
+        This vision became the cornerstone of <span class="font-semibold">Manne Communications</span> 🔰, igniting a journey to transform mobile connectivity.
+      </p>
+    </div>
+
+    <!-- Building Manne Communications -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-semibold mb-4 flex items-center">
+        🚀 Building Manne Communications – One Number at a Time
+      </h2>
+      <p class="leading-relaxed mb-4">
+        Starting from humble beginnings, Mr. Suresh Manne turned his passion into a trusted brand by offering:
+      </p>
+      <ul class="list-disc list-inside space-y-2">
+        <li>📌 <span class="font-semibold">Fancy & VIP Numbers</span></li>
+        <li>🧿 <span class="font-semibold">Numerology-Based Numbers</span></li>
+        <li>👨‍💼 <span class="font-semibold">Numbers for Business, Branding & Celebrities</span></li>
+        <li>📦 <span class="font-semibold">Bulk Numbers for Marketing & Enterprises</span></li>
+      </ul>
+      <p class="leading-relaxed mt-4">
+        Today, Manne Communications proudly serves <span class="font-semibold">10,000+ happy customers</span> across India—and the numbers keep growing! 🌟
+      </p>
+    </div>
+
+    <!-- Global Dream -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-semibold mb-4 flex items-center">
+        🌍 A Global Dream with Desi Roots
+      </h2>
+      <p class="leading-relaxed">
+        Rooted in Tenali, Mr. Suresh Manne’s vision extends far beyond India. Manne Communications is reaching customers:
+      </p>
+      <ul class="list-disc list-inside space-y-2 mt-2">
+        <li>🌐 Across India 🇮🇳</li>
+        <li>🌏 In the Gulf & NRI communities 🌍</li>
+        <li>📱 Online through <a href="https://www.sureshmanne.com" class="text-blue-500 hover:underline">www.sureshmanne.com</a></li>
+      </ul>
+    </div>
+
+    <!-- Vision -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-semibold mb-4 flex items-center">
+        🎯 Our Vision – Numbers with a Purpose
+      </h2>
+      <blockquote class="border-l-4 border-blue-500 pl-4 italic my-4">
+        “A mobile number is your identity. Let’s make it powerful, personal, and protected.”
+      </blockquote>
+      <p class="leading-relaxed">
+        <span class="font-semibold">Mr. Suresh Manne’s Vision:</span>
+      </p>
+      <ul class="list-disc list-inside space-y-2 mt-2">
+        <li>✨ Make meaningful numbers accessible to everyone</li>
+        <li>🛡️ Maintain the highest level of trust and transparency</li>
+        <li>🌐 Build a global platform for premium number seekers</li>
+      </ul>
+    </div>
+
+    <!-- Why Trust Us -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-semibold mb-4 flex items-center">
+        🔐 Why People Trust Manne Communications
+      </h2>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <li class="flex items-center">✅ <span class="ml-2">10,000+ Satisfied Customers 😊</span></li>
+        <li class="flex items-center">✅ <span class="ml-2">Secure, scam-free transactions 🔒</span></li>
+        <li class="flex items-center">✅ <span class="ml-2">Strictly No SIM Cards Sold 🚫📶</span></li>
+        <li class="flex items-center">✅ <span class="ml-2">No Used or Recycled Numbers ❌♻️</span></li>
+        <li class="flex items-center">✅ <span class="ml-2">Zero Tolerance for Betting, Gambling, or Malpractice Numbers 🎲⚠️</span></li>
+        <li class="flex items-center">✅ <span class="ml-2">In-Person Service for Instant Number Activation 🤝⚡</span></li>
+      </ul>
+    </div>
+
+    <!-- What Makes Us Stand Out -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-semibold mb-4 flex items-center">
+        🌟 What Makes Us Stand Out
+      </h2>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <li class="flex items-center">📲 <span class="ml-2">WhatsApp-first, easy ordering experience</span></li>
+        <li class="flex items-center">🔢 <span class="ml-2">Expert-curated VIP numbers</span></li>
+        <li class="flex items-center">🧿 <span class="ml-2">Numerology-aligned choices</span></li>
+        <li class="flex items-center">🙅‍♂️ <span class="ml-2">No shady business – only trust, safety & ethics</span></li>
+        <li class="flex items-center">🏠 <span class="ml-2">Local roots, global reach</span></li>
+        <li class="flex items-center">🧔🏻‍♂️ <span class="ml-2">Personal touch from Mr. Suresh Manne himself!</span></li>
+      </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="text-center">
+      <h2 class="text-3xl font-semibold mb-4 flex items-center justify-center">
+        📞 Contact Mr. Suresh Manne Today!
+      </h2>
+      <p class="mb-6">
+        Looking for your perfect number? Let’s connect:
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="https://www.sureshmanne.com" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition">🌐 Visit Website</a>
+        <a href="tel:+919090900005" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition">📱 Call: +91 90909 00005</a>
+        <a href="https://wa.me/919090900005" class="bg-teal-500 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition">💬 WhatsApp Now</a>
+      </div>
+      <p class="mt-4">
+        📍 <span class="font-semibold">Location:</span> Tenali, Andhra Pradesh
+      </p>
+    </div>
+
+    <!-- Quote -->
+    <div class="text-center mt-12">
+      <blockquote class="border-t-2 border-b-2 border-blue-500 py-4 italic text-lg">
+        “We don’t just sell numbers—we create identity, trust, and legacy.” – <span class="font-semibold">Mr. Suresh Manne</span>
+      </blockquote>
+    </div>
+  </div>
 </section>
 
 <!-- SECTION: Fancy Numbers -->

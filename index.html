@@ -303,11 +303,11 @@
 <section id="numbers">
   <h1>📱 Fancy Numbers</h1>
   <div style="margin-bottom: 20px;">
-    <label for="searchInput" class="sr-only">Search Numbers or Price</label>
+    <label for="searchInput" class="sr-only">Search Numbers, Price, or Total</label>
     <input 
       type="text" 
       id="searchInput" 
-      placeholder="Search Number or Price..." 
+      placeholder="Search Number, Price, or Total..." 
       oninput="liveSearch()" 
       list="suggestions" 
       aria-describedby="searchTypeDescription"
@@ -319,9 +319,10 @@
       <option value="ends">Ends With</option>
       <option value="anywhere">Contains</option>
       <option value="price">Price ≤</option>
+      <option value="total">Total</option>
     </select>
     <span id="searchTypeDescription" class="sr-only">
-      Search by number starting digits, ending digits, digits anywhere, or maximum price
+      Search by number starting digits, ending digits, digits anywhere, maximum price, or total of digits
     </span>
     <label for="sortType" class="sr-only">Sort Type</label>
     <select id="sortType" onchange="sortNumbers()" aria-label="Sort numbers by price">
@@ -956,6 +957,7 @@
       const number = box.dataset.number;
       const total = calculateNumberTotal(number);
       box.querySelector('.total').textContent = `Total: ${total}`;
+      box.dataset.total = total; // Store total in dataset for filtering
     });
 
     const inputEl = document.getElementById("searchInput");
@@ -969,6 +971,7 @@
       numberBoxes.forEach(box => {
         const number = box.dataset.number;
         const price = parseInt(box.dataset.price);
+        const total = parseInt(box.dataset.total);
         let show = false;
 
         if (input === "") {
@@ -982,6 +985,9 @@
         } else if (type === "price") {
           const val = parseInt(input.replace(/[,₹]/g, ""));
           show = !isNaN(val) && val >= 0 && price <= val;
+        } else if (type === "total") {
+          const val = parseInt(input);
+          show = !isNaN(val) && val >= 1 && val <= 9 && total === val;
         }
 
         box.style.display = show ? "inline-flex" : "none";
@@ -1002,6 +1008,7 @@
       numberBoxes.forEach(box => {
         const num = box.dataset.number;
         const price = parseInt(box.dataset.price);
+        const total = parseInt(box.dataset.total);
 
         if (type === "starts" && num.startsWith(val)) {
           suggestionSet.add(num);
@@ -1010,8 +1017,17 @@
         } else if (type === "anywhere" && num.includes(val)) {
           suggestionSet.add(num);
         } else if (type === "price") {
-          if (!isNaN(val) && parseInt(price) <= parseInt(val)) {
+          if (!isNaN(val) && parseInt(val) >= 0 && price <= parseInt(val)) {
             suggestionSet.add("₹" + price.toLocaleString("en-IN"));
+          }
+        } else if (type === "total") {
+          if (!isNaN(val) && parseInt(val) >= 1 && parseInt(val) <= 9 && total === parseInt(val)) {
+            suggestionSet.add(total.toString());
+          } else if (val === "") {
+            // Suggest all possible totals (1-9) when input is empty
+            for (let i = 1; i <= 9; i++) {
+              suggestionSet.add(i.toString());
+            }
           }
         }
       });
@@ -1041,7 +1057,6 @@
     }
   </script>
 </section>
-
 <section id="contact">
   <h1>🌟 Connect with Me</h1>
   <p>Let’s create something extraordinary together! Reach out for premium fancy numbers, business opportunities, or just to share ideas. 🚀</p>

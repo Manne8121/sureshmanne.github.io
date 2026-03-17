@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Manne Communications — Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Colus&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+/* ── VARIABLES ─────────────────────────── */
+:root{
+  --black:#04050a;
+  --deep:#080b12;
+  --surface:#0e1018;
+  --card:#13151e;
+  --card2:#181b25;
+  --border:rgba(255,255,255,.07);
+  --border-gold:rgba(201,168,76,.3);
+  --gold:#c9a84c;
+  --gold2:#e4c96a;
+  --gold3:#f7e8a8;
+  --gold-glow:rgba(201,168,76,.12);
+  --white:#f0ebe0;
+  --white2:#b8b2a4;
+  --muted:#55586a;
+  --muted2:#7a7d8e;
+  --green:#22c55e;
+  --red:#ef4444;
+  --red2:rgba(239,68,68,.12);
+  --orange:#f97316;
+  --C:'Colus',sans-serif;
+  --U:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{background:var(--black);color:var(--white);font-family:var(--U);font-weight:300;min-height:100vh;overflow-x:hidden}
+::selection{background:var(--gold);color:#000}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+a{text-decoration:none;color:inherit}
+
+/* ── LOGIN SCREEN ──────────────────────── */
+#loginScreen{
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;padding:20px;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(201,168,76,.05),transparent 70%);
+}
+.login-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:52px 48px;width:100%;max-width:420px;
+  position:relative;overflow:hidden;
+}
+.login-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),transparent);
+}
+.login-logo{text-align:center;margin-bottom:36px}
+.login-logo-name{
+  font-family:var(--C);font-size:22px;letter-spacing:4px;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.login-logo-tag{
+  font-family:var(--C);font-size:9px;letter-spacing:4px;
+  color:var(--gold);opacity:.6;margin-top:4px;display:block;
+}
+.login-title{
+  font-family:var(--C);font-size:20px;letter-spacing:2px;
+  text-align:center;margin-bottom:8px;
+}
+.login-sub{font-size:14px;color:var(--muted2);text-align:center;margin-bottom:36px}
+.login-fg{margin-bottom:20px}
+.login-label{
+  font-family:var(--C);font-size:10px;letter-spacing:2px;
+  color:var(--muted2);display:block;margin-bottom:8px;text-transform:uppercase;
+}
+.login-input{
+  width:100%;padding:14px 16px;
+  background:var(--deep);border:1px solid var(--border);border-radius:4px;
+  color:var(--white);font-family:var(--U);font-size:15px;outline:none;
+  transition:border-color .3s;
+}
+.login-input:focus{border-color:var(--border-gold);box-shadow:0 0 0 3px rgba(201,168,76,.06)}
+.login-input::placeholder{color:var(--muted)}
+.login-btn{
+  width:100%;padding:16px;border:none;border-radius:4px;cursor:pointer;
+  font-family:var(--C);font-size:15px;letter-spacing:3px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;transition:all .3s;margin-top:8px;
+}
+.login-btn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 10px 28px rgba(201,168,76,.3)}
+.login-error{
+  background:var(--red2);border:1px solid rgba(239,68,68,.3);
+  border-radius:4px;padding:12px 16px;
+  font-family:var(--C);font-size:11px;letter-spacing:1.5px;
+  color:var(--red);margin-top:12px;display:none;text-align:center;
+}
+.login-error.show{display:block}
+.login-hint{
+  font-size:12px;color:var(--muted);text-align:center;
+  margin-top:20px;font-style:italic;
+}
+
+/* ── ADMIN PANEL ───────────────────────── */
+#adminPanel{display:none}
+
+/* Top bar */
+.topbar{
+  background:rgba(8,11,18,.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:14px 32px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.topbar-brand{display:flex;flex-direction:column;gap:1px}
+.topbar-name{
+  font-family:var(--C);font-size:16px;letter-spacing:3px;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.topbar-tag{font-family:var(--C);font-size:8px;letter-spacing:3px;color:var(--gold);opacity:.5}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-badge{
+  font-family:var(--C);font-size:10px;letter-spacing:1.5px;
+  background:var(--gold-glow);border:1px solid var(--border-gold);
+  color:var(--gold);padding:6px 14px;border-radius:20px;
+}
+.logout-btn{
+  font-family:var(--C);font-size:11px;letter-spacing:2px;
+  background:none;border:1px solid var(--border);color:var(--muted2);
+  padding:7px 16px;border-radius:3px;cursor:pointer;transition:all .3s;
+}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* Main layout */
+.admin-main{max-width:1300px;margin:0 auto;padding:40px 32px 80px}
+
+/* Stats bar */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;
+}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:5px;
+  padding:24px 28px;position:relative;overflow:hidden;transition:border-color .3s;
+}
+.stat-card:hover{border-color:var(--border-gold)}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+}
+.stat-card.total::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.stat-card.diamond::before{background:linear-gradient(90deg,#b9f2ff,transparent)}
+.stat-card.gold-t::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.stat-card.silver::before{background:linear-gradient(90deg,var(--white2),transparent)}
+.stat-lbl{font-family:var(--C);font-size:10px;letter-spacing:3px;color:var(--muted2);text-transform:uppercase;margin-bottom:8px}
+.stat-num{
+  font-family:var(--C);font-size:38px;letter-spacing:2px;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+
+/* Section head */
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;flex-wrap:wrap;gap:12px;
+}
+.section-head-title{font-family:var(--C);font-size:22px;letter-spacing:2px;color:var(--white)}
+.section-head-sub{font-size:13px;color:var(--muted2);margin-top:2px}
+
+/* Add Number Form */
+.add-form-card{
+  background:var(--card);border:1px solid var(--border);border-radius:6px;
+  padding:36px;margin-bottom:40px;position:relative;
+}
+.add-form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);
+}
+.form-grid{display:grid;grid-template-columns:2fr 2fr 1.5fr 1fr auto;gap:14px;align-items:end}
+.fg{display:flex;flex-direction:column;gap:7px}
+.fl{font-family:var(--C);font-size:10px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase}
+.fi{
+  padding:13px 14px;background:var(--deep);border:1px solid var(--border);
+  border-radius:3px;color:var(--white);font-family:var(--U);font-size:15px;
+  outline:none;transition:border-color .3s;width:100%;
+}
+.fi:focus{border-color:var(--border-gold);box-shadow:0 0 0 3px rgba(201,168,76,.05)}
+.fi::placeholder{color:var(--muted)}
+.add-btn{
+  padding:13px 24px;border:none;border-radius:3px;cursor:pointer;
+  font-family:var(--C);font-size:13px;letter-spacing:2px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;transition:all .3s;white-space:nowrap;
+}
+.add-btn:hover{opacity:.9;box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.form-msg-inline{
+  font-family:var(--C);font-size:11px;letter-spacing:1.5px;
+  padding:10px 14px;border-radius:3px;margin-top:12px;display:none;
+}
+.fm-ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green)}
+.fm-err{background:var(--red2);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+
+/* Search & filter */
+.controls-row{
+  display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center;
+}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap input{
+  width:100%;padding:12px 16px 12px 42px;
+  background:var(--card);border:1px solid var(--border);border-radius:3px;
+  color:var(--white);font-family:var(--U);font-size:14px;outline:none;
+  transition:border-color .3s;
+}
+.search-wrap input:focus{border-color:var(--border-gold)}
+.search-wrap input::placeholder{color:var(--muted)}
+.s-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px}
+.filter-sel{
+  padding:12px 14px;background:var(--card);border:1px solid var(--border);
+  border-radius:3px;color:var(--white2);font-family:var(--U);font-size:14px;
+  outline:none;cursor:pointer;min-width:140px;
+}
+.filter-sel:focus{border-color:var(--border-gold)}
+.filter-sel option{background:var(--card)}
+
+/* Numbers table */
+.table-wrap{
+  background:var(--card);border:1px solid var(--border);border-radius:6px;
+  overflow:hidden;margin-bottom:40px;
+}
+table{width:100%;border-collapse:collapse}
+thead{background:var(--surface)}
+th{
+  padding:14px 18px;text-align:left;
+  font-family:var(--C);font-size:10px;letter-spacing:2px;
+  color:var(--muted2);text-transform:uppercase;
+  border-bottom:1px solid var(--border);white-space:nowrap;
+}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(201,168,76,.03)}
+td{padding:14px 18px;vertical-align:middle}
+.td-number{font-family:var(--C);font-size:17px;letter-spacing:3px;color:var(--white)}
+.td-price{
+  font-family:var(--C);font-size:16px;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.td-total{
+  font-family:var(--C);font-size:12px;letter-spacing:1.5px;
+  background:var(--gold-glow);border:1px solid rgba(201,168,76,.15);
+  color:var(--gold);padding:4px 10px;border-radius:2px;display:inline-block;
+}
+.td-tier{
+  font-family:var(--C);font-size:10px;letter-spacing:1.5px;
+  padding:4px 10px;border-radius:2px;border:1px solid currentColor;
+}
+.tier-d{color:#b9f2ff;border-color:rgba(185,242,255,.3);background:rgba(185,242,255,.05)}
+.tier-g{color:var(--gold);border-color:var(--border-gold);background:var(--gold-glow)}
+.tier-s{color:var(--white2);border-color:var(--border);background:rgba(255,255,255,.03)}
+
+/* Action buttons */
+.action-btns{display:flex;gap:8px;align-items:center}
+.btn-edit{
+  font-family:var(--C);font-size:10px;letter-spacing:1.5px;
+  padding:7px 14px;border-radius:2px;border:1px solid var(--border-gold);
+  color:var(--gold);background:var(--gold-glow);cursor:pointer;
+  transition:all .3s;white-space:nowrap;
+}
+.btn-edit:hover{background:rgba(201,168,76,.2)}
+.btn-del{
+  font-family:var(--C);font-size:10px;letter-spacing:1.5px;
+  padding:7px 14px;border-radius:2px;border:1px solid rgba(239,68,68,.3);
+  color:var(--red);background:var(--red2);cursor:pointer;
+  transition:all .3s;white-space:nowrap;
+}
+.btn-del:hover{background:rgba(239,68,68,.2)}
+
+/* Empty state */
+.empty-state{
+  text-align:center;padding:60px 20px;
+  font-family:var(--C);font-size:16px;letter-spacing:2px;color:var(--muted);
+}
+
+/* Edit Modal */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(4,5,10,.88);backdrop-filter:blur(12px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:44px;width:100%;max-width:520px;
+  position:relative;
+}
+.modal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),transparent);
+}
+.modal-title{font-family:var(--C);font-size:20px;letter-spacing:2px;margin-bottom:28px}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.modal-fg{display:flex;flex-direction:column;gap:7px}
+.modal-fg.full{grid-column:1/-1}
+.modal-btns{display:flex;gap:12px;margin-top:24px}
+.modal-save{
+  flex:1;padding:14px;border:none;border-radius:3px;cursor:pointer;
+  font-family:var(--C);font-size:14px;letter-spacing:2px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;transition:all .3s;
+}
+.modal-save:hover{opacity:.9}
+.modal-cancel{
+  flex:1;padding:14px;border-radius:3px;cursor:pointer;
+  font-family:var(--C);font-size:14px;letter-spacing:2px;
+  background:none;border:1px solid var(--border);color:var(--muted2);transition:all .3s;
+}
+.modal-cancel:hover{border-color:var(--red);color:var(--red)}
+.modal-x{
+  position:absolute;top:16px;right:20px;background:none;border:none;
+  color:var(--muted2);font-size:20px;cursor:pointer;transition:color .3s;
+}
+.modal-x:hover{color:var(--red)}
+
+/* Confirm Delete Modal */
+.confirm-modal{
+  background:var(--card);border:1px solid rgba(239,68,68,.25);
+  border-radius:8px;padding:44px;width:100%;max-width:420px;
+  text-align:center;
+}
+.confirm-icon{font-size:48px;margin-bottom:16px}
+.confirm-title{font-family:var(--C);font-size:20px;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+.confirm-sub{font-size:15px;color:var(--white2);margin-bottom:12px}
+.confirm-number{font-family:var(--C);font-size:24px;letter-spacing:3px;color:var(--white);margin-bottom:28px}
+.confirm-btns{display:flex;gap:12px}
+.btn-confirm-del{
+  flex:1;padding:14px;border:none;border-radius:3px;cursor:pointer;
+  font-family:var(--C);font-size:13px;letter-spacing:2px;
+  background:var(--red);color:#fff;transition:all .3s;
+}
+.btn-confirm-del:hover{background:#dc2626}
+.btn-confirm-cancel{
+  flex:1;padding:14px;border-radius:3px;cursor:pointer;
+  font-family:var(--C);font-size:13px;letter-spacing:2px;
+  background:none;border:1px solid var(--border);color:var(--muted2);transition:all .3s;
+}
+.btn-confirm-cancel:hover{border-color:var(--white2);color:var(--white)}
+
+/* Export section */
+.export-card{
+  background:var(--card);border:1px solid var(--border);border-radius:6px;
+  padding:36px;margin-bottom:40px;
+}
+.export-card::before{
+  content:'';display:block;height:2px;
+  background:linear-gradient(90deg,var(--green),rgba(34,197,94,.3),transparent);
+  margin-bottom:28px;border-radius:1px;
+}
+.export-title{font-family:var(--C);font-size:20px;letter-spacing:2px;margin-bottom:8px}
+.export-sub{font-size:14px;color:var(--muted2);margin-bottom:24px;line-height:1.6}
+.export-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-export{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--C);font-size:13px;letter-spacing:2px;
+  padding:13px 26px;border-radius:3px;cursor:pointer;border:none;transition:all .3s;
+}
+.btn-copy{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;
+}
+.btn-copy:hover{opacity:.9;box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.btn-json{
+  background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);
+  color:var(--green);
+}
+.btn-json:hover{background:rgba(34,197,94,.18)}
+.btn-reset{
+  background:var(--red2);border:1px solid rgba(239,68,68,.3);
+  color:var(--red);
+}
+.btn-reset:hover{background:rgba(239,68,68,.2)}
+.export-code{
+  background:var(--deep);border:1px solid var(--border);border-radius:4px;
+  padding:20px;margin-top:20px;font-family:monospace;font-size:13px;
+  color:var(--gold2);line-height:1.6;max-height:200px;overflow-y:auto;
+  word-break:break-all;display:none;white-space:pre-wrap;
+}
+.copy-toast{
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%);
+  background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);
+  border-radius:30px;padding:12px 28px;
+  font-family:var(--C);font-size:12px;letter-spacing:2px;color:var(--green);
+  opacity:0;transition:opacity .3s;pointer-events:none;z-index:900;
+}
+.copy-toast.show{opacity:1}
+
+/* Pagination */
+.pagination{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;background:var(--surface);border-top:1px solid var(--border);
+  flex-wrap:wrap;gap:10px;
+}
+.page-info{font-family:var(--C);font-size:11px;letter-spacing:1.5px;color:var(--muted2)}
+.page-btns{display:flex;gap:6px}
+.page-btn{
+  font-family:var(--C);font-size:11px;letter-spacing:1px;
+  padding:6px 14px;border:1px solid var(--border);border-radius:2px;
+  background:none;color:var(--muted2);cursor:pointer;transition:all .3s;
+}
+.page-btn:hover,.page-btn.on{border-color:var(--border-gold);color:var(--gold);background:var(--gold-glow)}
+.page-btn:disabled{opacity:.3;cursor:not-allowed}
+
+/* Responsive */
+@media(max-width:900px){
+  .form-grid{grid-template-columns:1fr 1fr}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .admin-main{padding:24px 16px 60px}
+  .topbar{padding:12px 16px}
+  .modal-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .form-grid{grid-template-columns:1fr}
+  .stats-bar{grid-template-columns:1fr 1fr}
+  .login-card{padding:36px 24px}
+  table{font-size:14px}
+  th,td{padding:10px 12px}
+  .td-number{font-size:14px;letter-spacing:2px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN SCREEN ══════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="login-logo-name">MANNE COMMUNICATIONS</span>
+      <span class="login-logo-tag">Admin Panel</span>
+    </div>
+    <div class="login-title">SECURE LOGIN</div>
+    <div class="login-sub">Enter your admin credentials to continue</div>
+    <div class="login-fg">
+      <label class="login-label" for="adminUser">Username</label>
+      <input class="login-input" type="text" id="adminUser" placeholder="Enter username" autocomplete="username"/>
+    </div>
+    <div class="login-fg">
+      <label class="login-label" for="adminPass">Password</label>
+      <input class="login-input" type="password" id="adminPass" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">LOGIN TO ADMIN PANEL</button>
+    <div class="login-error" id="loginErr">Incorrect username or password. Please try again.</div>
+    <div class="login-hint">Username: <strong>suresh</strong> · Password: <strong>manne2025</strong></div>
+  </div>
+</div>
+
+<!-- ══════════ ADMIN PANEL ══════════ -->
+<div id="adminPanel">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-name">MANNE COMMUNICATIONS</div>
+      <div class="topbar-tag">Numbers That Matter · Admin Panel</div>
+    </div>
+    <div class="topbar-right">
+      <a href="index.html" target="_blank" class="logout-btn" style="color:var(--gold);border-color:var(--border-gold)"><i class="fas fa-external-link-alt"></i> View Website</a>
+      <div class="topbar-badge" id="topBadge">0 Numbers</div>
+      <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+
+  <div class="admin-main">
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-card total"><div class="stat-lbl">Total Numbers</div><div class="stat-num" id="st-total">0</div></div>
+      <div class="stat-card diamond"><div class="stat-lbl">💎 Diamond (₹1L+)</div><div class="stat-num" id="st-dia" style="background:linear-gradient(135deg,#b9f2ff,#7dd3fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div></div>
+      <div class="stat-card gold-t"><div class="stat-lbl">⭐ Gold (₹20K–₹99K)</div><div class="stat-num" id="st-gld">0</div></div>
+      <div class="stat-card silver"><div class="stat-lbl">🔹 Silver (Under ₹20K)</div><div class="stat-num" id="st-slv" style="background:linear-gradient(135deg,var(--white2),#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">0</div></div>
+    </div>
+
+    <!-- Add Number -->
+    <div class="section-head">
+      <div>
+        <div class="section-head-title">Add New Number</div>
+        <div class="section-head-sub">Fill in the details below to add a number to your inventory</div>
+      </div>
+    </div>
+    <div class="add-form-card">
+      <div class="form-grid">
+        <div class="fg">
+          <label class="fl" for="addNum">Mobile Number *</label>
+          <input class="fi" type="text" id="addNum" placeholder="e.g. 9777700005" maxlength="10" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10);autoDisplay()"/>
+        </div>
+        <div class="fg">
+          <label class="fl" for="addDisp">Display Format *</label>
+          <input class="fi" type="text" id="addDisp" placeholder="e.g. 97777 00005" id="addDisp"/>
+        </div>
+        <div class="fg">
+          <label class="fl" for="addPrice">Price (₹) *</label>
+          <input class="fi" type="number" id="addPrice" placeholder="e.g. 300000" min="100"/>
+        </div>
+        <div class="fg">
+          <label class="fl">Numerology Total</label>
+          <input class="fi" type="text" id="addTotal" placeholder="Auto-calculated" readonly style="color:var(--gold);cursor:not-allowed"/>
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <button class="add-btn" onclick="addNumber()"><i class="fas fa-plus"></i> Add Number</button>
+        </div>
+      </div>
+      <div class="form-msg-inline" id="addMsg"></div>
+    </div>
+
+    <!-- Numbers List -->
+    <div class="section-head">
+      <div>
+        <div class="section-head-title">Manage Numbers</div>
+        <div class="section-head-sub">Edit or remove numbers from your inventory</div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <div class="search-wrap">
+        <i class="fas fa-search s-ico"></i>
+        <input type="text" id="adminSearch" placeholder="Search by number or price..." oninput="renderTable()"/>
+      </div>
+      <select class="filter-sel" id="adminTier" onchange="renderTable()">
+        <option value="">All Tiers</option>
+        <option value="diamond">💎 Diamond</option>
+        <option value="gold">⭐ Gold</option>
+        <option value="silver">🔹 Silver</option>
+      </select>
+      <select class="filter-sel" id="adminSort" onchange="renderTable()">
+        <option value="">Sort: Default</option>
+        <option value="low">Price: Low → High</option>
+        <option value="high">Price: High → Low</option>
+        <option value="num">Number A–Z</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Number</th>
+            <th>Display</th>
+            <th>Price</th>
+            <th>Numerology</th>
+            <th>Tier</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Export -->
+    <div class="export-card">
+      <div class="export-title">Export to Website</div>
+      <div class="export-sub">
+        After making changes, click <strong style="color:var(--gold)">Copy Code</strong> to copy the updated numbers data. Then paste it into your <strong style="color:var(--white)">manne_v2.html</strong> file — replace everything between <code style="color:var(--gold2);background:var(--deep);padding:2px 6px;border-radius:2px">const NUMS=[</code> and the closing <code style="color:var(--gold2);background:var(--deep);padding:2px 6px;border-radius:2px">];</code>
+      </div>
+      <div class="export-btns">
+        <button class="btn-export btn-copy" onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code for Website</button>
+        <button class="btn-export btn-json" onclick="toggleCode()"><i class="fas fa-code"></i> Preview Code</button>
+        <button class="btn-export btn-reset" onclick="confirmReset()"><i class="fas fa-undo"></i> Reset to Original</button>
+      </div>
+      <div class="export-code" id="exportCode"></div>
+    </div>
+
+  </div><!-- /admin-main -->
+</div><!-- /adminPanel -->
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-title">EDIT NUMBER</div>
+    <div class="modal-grid">
+      <div class="modal-fg">
+        <label class="fl" for="eNum">Mobile Number</label>
+        <input class="fi" type="text" id="eNum" maxlength="10" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10);eAutoDisp()"/>
+      </div>
+      <div class="modal-fg">
+        <label class="fl" for="eDisp">Display Format</label>
+        <input class="fi" type="text" id="eDisp" placeholder="e.g. 97777 00005"/>
+      </div>
+      <div class="modal-fg">
+        <label class="fl" for="ePrice">Price (₹)</label>
+        <input class="fi" type="number" id="ePrice" min="100"/>
+      </div>
+      <div class="modal-fg">
+        <label class="fl">Numerology Total</label>
+        <input class="fi" type="text" id="eTotal" readonly style="color:var(--gold);cursor:not-allowed"/>
+      </div>
+    </div>
+    <input type="hidden" id="eOrigNum"/>
+    <div class="modal-btns">
+      <button class="modal-save" onclick="saveEdit()">SAVE CHANGES</button>
+      <button class="modal-cancel" onclick="closeModal()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="confirm-modal">
+    <div class="confirm-icon">🗑️</div>
+    <div class="confirm-title">DELETE NUMBER?</div>
+    <div class="confirm-sub">You are about to permanently remove:</div>
+    <div class="confirm-number" id="deleteNumDisplay"></div>
+    <div class="confirm-btns">
+      <button class="btn-confirm-del" onclick="confirmDelete()"><i class="fas fa-trash"></i> Yes, Delete</button>
+      <button class="btn-confirm-cancel" onclick="closeDeleteModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Reset Modal -->
+<div class="modal-overlay" id="resetModal">
+  <div class="confirm-modal">
+    <div class="confirm-icon">⚠️</div>
+    <div class="confirm-title">RESET ALL DATA?</div>
+    <div class="confirm-sub" style="margin-bottom:24px">This will delete all your changes and reload the original 120 numbers. This cannot be undone.</div>
+    <div class="confirm-btns">
+      <button class="btn-confirm-del" onclick="doReset()">Yes, Reset All</button>
+      <button class="btn-confirm-cancel" onclick="document.getElementById('resetModal').classList.remove('open')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="copy-toast" id="copyToast"></div>
+
+<script>
+// ── CREDENTIALS (change these!) ────────────────
+const CREDS = { user: 'suresh', pass: 'manne2025' };
+
+// ── ORIGINAL DATA ──────────────────────────────
+const ORIGINAL_DATA = [
+  {n:"9777700005",d:"97777 00005",p:300000},{n:"8888234567",d:"8888 234567",p:200000},
+  {n:"9591299999",d:"95912 99999",p:200000},{n:"9188919191",d:"91 88 919191",p:150000},
+  {n:"8888636666",d:"8888 636666",p:150000},{n:"9127012345",d:"9127 012345",p:80000},
+  {n:"8888488808",d:"88884 88808",p:75000},{n:"8888666866",d:"8888 666866",p:75000},
+  {n:"8888601234",d:"88886 01234",p:40000},{n:"8333838338",d:"8333 838338",p:40000},
+  {n:"9117575757",d:"9117 575757",p:30000},{n:"9231234568",d:"923 1234568",p:30000},
+  {n:"9459639999",d:"9459 639999",p:30000},{n:"9090904456",d:"909090 4456",p:30000},
+  {n:"9907172737",d:"99 07172737",p:25000},{n:"9088789999",d:"9088 789999",p:25000},
+  {n:"9514539999",d:"9514 539999",p:25000},{n:"9694179999",d:"9694 179999",p:25000},
+  {n:"9090907709",d:"909090 7709",p:25000},{n:"9090902228",d:"909090 2228",p:25000},
+  {n:"9494894945",d:"9494 894945",p:25000},{n:"8307172737",d:"83 07172737",p:20000},
+  {n:"9917113456",d:"9917 113456",p:20000},{n:"6262662628",d:"62626 62628",p:20000},
+  {n:"9435319999",d:"9435 319999",p:20000},{n:"9674019999",d:"9674 019999",p:20000},
+  {n:"9674109999",d:"9674 109999",p:20000},{n:"9114169999",d:"9114 169999",p:20000},
+  {n:"9114179999",d:"9114 179999",p:20000},{n:"9114289999",d:"9114 289999",p:20000},
+  {n:"9114349999",d:"9114 349999",p:20000},{n:"9114389999",d:"9114 389999",p:20000},
+  {n:"9114589999",d:"9114 589999",p:20000},{n:"9114639999",d:"9114 639999",p:20000},
+  {n:"9114649999",d:"9114 649999",p:20000},{n:"9114679999",d:"9114 679999",p:20000},
+  {n:"9114719999",d:"9114 719999",p:20000},{n:"9114729999",d:"9114 729999",p:20000},
+  {n:"9114739999",d:"9114 739999",p:20000},{n:"9114749999",d:"9114 749999",p:20000},
+  {n:"9114769999",d:"9114 769999",p:20000},{n:"9114839999",d:"9114 839999",p:20000},
+  {n:"9114859999",d:"9114 859999",p:20000},{n:"9114869999",d:"9114 869999",p:20000},
+  {n:"9114879999",d:"9114 879999",p:20000},{n:"7992779999",d:"7992 779999",p:20000},
+  {n:"9781679999",d:"9781 679999",p:20000},{n:"9628539999",d:"9628 539999",p:20000},
+  {n:"9673469999",d:"9673 469999",p:20000},{n:"9468039999",d:"9468 039999",p:20000},
+  {n:"9609900006",d:"96099 00006",p:20000},{n:"8988019999",d:"8988 019999",p:12000},
+  {n:"9244561456",d:"9244 561456",p:15000},{n:"8888713111",d:"8888 713111",p:15000},
+  {n:"9644245678",d:"96442 45678",p:15000},{n:"9444352456",d:"9444 352456",p:8000},
+  {n:"8399949991",d:"8399 949991",p:7500},{n:"9114399399",d:"9114 399399",p:7000},
+  {n:"9114799799",d:"9114 799799",p:7000},{n:"9583599599",d:"9583 599599",p:7000},
+  {n:"9583799799",d:"9583 799799",p:7000},{n:"9000080240",d:"90000 80240",p:7000},
+  {n:"9000083010",d:"90000 83010",p:7000},{n:"9000085990",d:"90000 85990",p:7000},
+  {n:"9000088130",d:"90000 88130",p:7000},{n:"9000090489",d:"90000 90489",p:7000},
+  {n:"9000094740",d:"90000 94740",p:7000},{n:"9000095360",d:"90000 95360",p:7000},
+  {n:"9111874456",d:"9111 874456",p:6000},{n:"6363360633",d:"63633 60633",p:6000},
+  {n:"8000071997",d:"800007 1997",p:6000},{n:"9000015880",d:"90000 15880",p:6000},
+  {n:"9000018110",d:"90000 18110",p:6000},{n:"9000020880",d:"90000 20880",p:6000},
+  {n:"9000044820",d:"90000 44820",p:6000},{n:"9000055640",d:"90000 55640",p:6000},
+  {n:"9000056340",d:"90000 56340",p:6000},{n:"9000056550",d:"90000 56550",p:6000},
+  {n:"9000056690",d:"90000 56690",p:6000},{n:"9000076640",d:"90000 76640",p:6000},
+  {n:"9000077180",d:"90000 77180",p:6000},{n:"9000081850",d:"90000 81850",p:6000},
+  {n:"9000097590",d:"90000 97590",p:6000},{n:"9000098390",d:"90000 98390",p:6000},
+  {n:"9009169666",d:"9009 169666",p:5000},{n:"7666631118",d:"76666 31118",p:5000},
+  {n:"9111857111",d:"9111 857111",p:5000},{n:"9244264456",d:"9244 264456",p:5000},
+  {n:"9827900400",d:"9827 900400",p:5000},{n:"9391293922",d:"93912 93922",p:5000},
+  {n:"9391893928",d:"93918 93928",p:5000},{n:"8555025557",d:"85550 25557",p:5000},
+  {n:"8555915557",d:"85559 15557",p:5000},{n:"9347894478",d:"93478 94478",p:5000},
+  {n:"9391698916",d:"93916 98916",p:5000},{n:"9000018440",d:"90000 18440",p:5000},
+  {n:"9000031350",d:"90000 31350",p:5000},{n:"9000035650",d:"90000 35650",p:5000},
+  {n:"9000046690",d:"90000 46690",p:5000},{n:"9000063230",d:"90000 63230",p:5000},
+  {n:"9000063240",d:"90000 63240",p:5000},{n:"9000073630",d:"90000 73630",p:5000},
+  {n:"9000017910",d:"90000 17910",p:5000},{n:"9000019790",d:"90000 19790",p:5000},
+  {n:"9000097540",d:"90000 97540",p:5000},{n:"9009906960",d:"9009 906960",p:4000},
+  {n:"9009050559",d:"9009 050559",p:4000},{n:"9000019640",d:"90000 19640",p:4000},
+  {n:"9000026410",d:"90000 26410",p:4000},{n:"9000038570",d:"90000 38570",p:4000},
+  {n:"9000052380",d:"90000 52380",p:4000},{n:"9000053720",d:"90000 53720",p:4000},
+  {n:"9000058520",d:"90000 58520",p:4000},{n:"9000062850",d:"90000 62850",p:4000},
+  {n:"9000065180",d:"90000 65180",p:4000},{n:"9000069730",d:"90000 69730",p:4000},
+  {n:"9000073650",d:"90000 73650",p:4000},{n:"9000076380",d:"90000 76380",p:4000},
+  {n:"9111473999",d:"9111 473999",p:4000},{n:"9182641313",d:"9182 641313",p:3000},
+];
+
+// ── STATE ──────────────────────────────────────
+let DB = [];
+let curPage = 1;
+const PER_PAGE = 20;
+let deleteTarget = null;
+
+// ── STORAGE ────────────────────────────────────
+function save(){ localStorage.setItem('mc_numbers', JSON.stringify(DB)); }
+function load(){
+  const raw = localStorage.getItem('mc_numbers');
+  if(raw){ try{ DB = JSON.parse(raw); }catch{ DB = [...ORIGINAL_DATA]; save(); } }
+  else{ DB = [...ORIGINAL_DATA]; save(); }
+}
+
+// ── UTILS ──────────────────────────────────────
+function dTotal(n){
+  let s=String(n).split('').reduce((a,d)=>a+parseInt(d),0);
+  while(s>9) s=s.toString().split('').reduce((a,d)=>a+parseInt(d),0);
+  return s;
+}
+function tier(p){return p>=100000?'diamond':p>=20000?'gold':'silver';}
+function tierBadge(p){
+  if(p>=100000) return '<span class="td-tier tier-d">💎 Diamond</span>';
+  if(p>=20000)  return '<span class="td-tier tier-g">⭐ Gold</span>';
+  return '<span class="td-tier tier-s">🔹 Silver</span>';
+}
+function fmt(p){ return '₹'+parseInt(p).toLocaleString('en-IN'); }
+function autoFmt(n){
+  // Auto-format number into display with spaces every 5 digits
+  const s=String(n).replace(/\D/g,'');
+  if(s.length===10) return s.slice(0,5)+' '+s.slice(5);
+  return s;
+}
+function toast(msg, isOk=true){
+  const el=document.getElementById('copyToast');
+  el.textContent=msg;
+  el.style.background=isOk?'rgba(34,197,94,.15)':'rgba(239,68,68,.15)';
+  el.style.borderColor=isOk?'rgba(34,197,94,.4)':'rgba(239,68,68,.4)';
+  el.style.color=isOk?'var(--green)':'var(--red)';
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+// ── LOGIN ──────────────────────────────────────
+function doLogin(){
+  const u=document.getElementById('adminUser').value.trim();
+  const p=document.getElementById('adminPass').value;
+  if(u===CREDS.user && p===CREDS.pass){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    load();
+    updateStats();
+    renderTable();
+  } else {
+    document.getElementById('loginErr').classList.add('show');
+    document.getElementById('adminPass').value='';
+    setTimeout(()=>document.getElementById('loginErr').classList.remove('show'),3000);
+  }
+}
+function doLogout(){
+  document.getElementById('adminPanel').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('adminUser').value='';
+  document.getElementById('adminPass').value='';
+}
+
+// ── STATS ──────────────────────────────────────
+function updateStats(){
+  const total=DB.length;
+  const dia=DB.filter(x=>tier(x.p)==='diamond').length;
+  const gld=DB.filter(x=>tier(x.p)==='gold').length;
+  const slv=DB.filter(x=>tier(x.p)==='silver').length;
+  document.getElementById('st-total').textContent=total;
+  document.getElementById('st-dia').textContent=dia;
+  document.getElementById('st-gld').textContent=gld;
+  document.getElementById('st-slv').textContent=slv;
+  document.getElementById('topBadge').textContent=total+' Numbers';
+}
+
+// ── TABLE ──────────────────────────────────────
+function getFiltered(){
+  let l=[...DB];
+  const q=(document.getElementById('adminSearch').value||'').trim().toLowerCase();
+  const t=document.getElementById('adminTier').value;
+  const s=document.getElementById('adminSort').value;
+  if(q) l=l.filter(x=>x.n.includes(q)||String(x.p).includes(q)||x.d.toLowerCase().includes(q));
+  if(t) l=l.filter(x=>tier(x.p)===t);
+  if(s==='low') l.sort((a,b)=>a.p-b.p);
+  else if(s==='high') l.sort((a,b)=>b.p-a.p);
+  else if(s==='num') l.sort((a,b)=>a.n.localeCompare(b.n));
+  return l;
+}
+
+function renderTable(){
+  const filtered=getFiltered();
+  const total=filtered.length;
+  const totalPages=Math.max(1,Math.ceil(total/PER_PAGE));
+  if(curPage>totalPages) curPage=totalPages;
+  const start=(curPage-1)*PER_PAGE;
+  const page=filtered.slice(start,start+PER_PAGE);
+
+  const body=document.getElementById('adminTableBody');
+  if(!page.length){
+    body.innerHTML=`<tr><td colspan="7"><div class="empty-state">No numbers found</div></td></tr>`;
+  } else {
+    body.innerHTML=page.map((x,i)=>`
+      <tr>
+        <td style="color:var(--muted2);font-family:var(--C);font-size:12px">${start+i+1}</td>
+        <td><div class="td-number">${x.n}</div></td>
+        <td><div style="font-family:var(--C);font-size:15px;letter-spacing:2px;color:var(--white2)">${x.d}</div></td>
+        <td><div class="td-price">${fmt(x.p)}</div></td>
+        <td><span class="td-total">${dTotal(x.n)}</span></td>
+        <td>${tierBadge(x.p)}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn-edit" onclick="openEdit('${x.n}')"><i class="fas fa-pen"></i> Edit</button>
+            <button class="btn-del" onclick="openDelete('${x.n}')"><i class="fas fa-trash"></i> Delete</button>
+          </div>
+        </td>
+      </tr>`).join('');
+  }
+
+  // Pagination
+  const pg=document.getElementById('pagination');
+  if(total===0){ pg.innerHTML=''; return; }
+  let btns='';
+  for(let i=1;i<=totalPages;i++){
+    if(i===1||i===totalPages||Math.abs(i-curPage)<=1){
+      btns+=`<button class="page-btn${i===curPage?' on':''}" onclick="goPage(${i})">${i}</button>`;
+    } else if(Math.abs(i-curPage)===2){
+      btns+=`<span style="color:var(--muted);padding:0 4px">…</span>`;
+    }
+  }
+  pg.innerHTML=`
+    <div class="page-info">Showing ${start+1}–${Math.min(start+PER_PAGE,total)} of ${total} numbers</div>
+    <div class="page-btns">
+      <button class="page-btn" onclick="goPage(${curPage-1})" ${curPage<=1?'disabled':''}><i class="fas fa-chevron-left"></i></button>
+      ${btns}
+      <button class="page-btn" onclick="goPage(${curPage+1})" ${curPage>=totalPages?'disabled':''}><i class="fas fa-chevron-right"></i></button>
+    </div>`;
+}
+function goPage(p){ curPage=p; renderTable(); window.scrollTo({top:300,behavior:'smooth'}); }
+
+// ── ADD NUMBER ─────────────────────────────────
+function autoDisplay(){
+  const n=document.getElementById('addNum').value.replace(/\D/g,'');
+  document.getElementById('addDisp').value=autoFmt(n);
+  document.getElementById('addTotal').value=n.length===10?dTotal(n):'';
+}
+
+function addNumber(){
+  const n=document.getElementById('addNum').value.replace(/\D/g,'').trim();
+  const d=document.getElementById('addDisp').value.trim();
+  const p=parseInt(document.getElementById('addPrice').value);
+  const msg=document.getElementById('addMsg');
+
+  if(n.length!==10){ showMsg(msg,'Number must be exactly 10 digits','err'); return; }
+  if(!d){ showMsg(msg,'Display format is required','err'); return; }
+  if(isNaN(p)||p<100){ showMsg(msg,'Enter a valid price (minimum ₹100)','err'); return; }
+  if(DB.find(x=>x.n===n)){ showMsg(msg,'This number already exists in your inventory','err'); return; }
+
+  DB.unshift({n,d,p});
+  save();
+  updateStats();
+  curPage=1;
+  renderTable();
+  document.getElementById('addNum').value='';
+  document.getElementById('addDisp').value='';
+  document.getElementById('addPrice').value='';
+  document.getElementById('addTotal').value='';
+  showMsg(msg,`✓ ${d} (${fmt(p)}) added successfully!`,'ok');
+  toast('Number added successfully!');
+}
+
+function showMsg(el,txt,type){
+  el.textContent=txt;
+  el.className='form-msg-inline fm-'+type;
+  el.style.display='block';
+  setTimeout(()=>el.style.display='none',4000);
+}
+
+// ── EDIT ──────────────────────────────────────
+function openEdit(num){
+  const x=DB.find(i=>i.n===num);
+  if(!x) return;
+  document.getElementById('eNum').value=x.n;
+  document.getElementById('eDisp').value=x.d;
+  document.getElementById('ePrice').value=x.p;
+  document.getElementById('eTotal').value=dTotal(x.n);
+  document.getElementById('eOrigNum').value=x.n;
+  document.getElementById('editModal').classList.add('open');
+}
+function eAutoDisp(){
+  const n=document.getElementById('eNum').value.replace(/\D/g,'');
+  document.getElementById('eDisp').value=autoFmt(n);
+  document.getElementById('eTotal').value=n.length===10?dTotal(n):'';
+}
+function closeModal(){ document.getElementById('editModal').classList.remove('open'); }
+function saveEdit(){
+  const orig=document.getElementById('eOrigNum').value;
+  const n=document.getElementById('eNum').value.replace(/\D/g,'').trim();
+  const d=document.getElementById('eDisp').value.trim();
+  const p=parseInt(document.getElementById('ePrice').value);
+  if(n.length!==10||!d||isNaN(p)||p<100){ toast('Please fill all fields correctly','err'); return; }
+  if(n!==orig && DB.find(x=>x.n===n)){ toast('This number already exists!','err'); return; }
+  const idx=DB.findIndex(x=>x.n===orig);
+  if(idx!==-1){ DB[idx]={n,d,p}; save(); updateStats(); renderTable(); closeModal(); toast('Number updated successfully!'); }
+}
+
+// ── DELETE ────────────────────────────────────
+function openDelete(num){
+  const x=DB.find(i=>i.n===num);
+  if(!x) return;
+  deleteTarget=num;
+  document.getElementById('deleteNumDisplay').textContent=`${x.d}  ·  ${fmt(x.p)}`;
+  document.getElementById('deleteModal').classList.add('open');
+}
+function confirmDelete(){
+  if(!deleteTarget) return;
+  DB=DB.filter(x=>x.n!==deleteTarget);
+  save(); updateStats(); renderTable();
+  deleteTarget=null;
+  document.getElementById('deleteModal').classList.remove('open');
+  toast('Number removed from inventory');
+}
+function closeDeleteModal(){ document.getElementById('deleteModal').classList.remove('open'); deleteTarget=null; }
+
+// ── EXPORT ────────────────────────────────────
+function buildCode(){
+  return 'const NUMS=[\n' +
+    DB.map(x=>`  {n:"${x.n}",d:"${x.d}",p:${x.p}}`).join(',\n') +
+    '\n];';
+}
+function copyCode(){
+  const code=buildCode();
+  navigator.clipboard.writeText(code).then(()=>{
+    toast('✓ Code copied! Paste it into manne_v2.html');
+  }).catch(()=>{
+    document.getElementById('exportCode').style.display='block';
+    document.getElementById('exportCode').textContent=code;
+    toast('Clipboard blocked — code shown below for manual copy');
+  });
+}
+function toggleCode(){
+  const el=document.getElementById('exportCode');
+  if(el.style.display==='block'){ el.style.display='none'; return; }
+  el.textContent=buildCode();
+  el.style.display='block';
+}
+function confirmReset(){ document.getElementById('resetModal').classList.add('open'); }
+function doReset(){
+  DB=[...ORIGINAL_DATA];
+  save(); updateStats(); curPage=1; renderTable();
+  document.getElementById('resetModal').classList.remove('open');
+  document.getElementById('exportCode').style.display='none';
+  toast('Data reset to original 120 numbers');
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{ if(e.target===el){ el.classList.remove('open'); deleteTarget=null; } });
+});
+</script>
+</body>
+</html>

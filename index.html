@@ -844,55 +844,171 @@ footer{
 }
 .wa-float:hover{transform:scale(1.1);box-shadow:0 10px 36px rgba(34,197,94,.5)}
 
-/* ─── RESPONSIVE ─────────────────────────────────────── */
+/* TABLET (iPad: up to 1100px) */
 @media(max-width:1100px){
-  nav{padding:18px 32px}
-  nav.scrolled{padding:12px 32px}
+  nav{padding:16px 24px}
+  nav.scrolled{padding:12px 24px}
   .nav-links{display:none}
   .hamburger{display:flex}
-  #homeNumsSection{padding:52px 32px 60px !important}
-  #homeNumGrid{grid-template-columns:1fr 1fr !important}
-  .hero-inner{grid-template-columns:1fr;padding:120px 32px 100px;gap:48px}
+  .nav-logo-name{font-size:17px;letter-spacing:2px}
+  .nav-logo-tag{font-size:11px;letter-spacing:3px}
+  .hero-inner{grid-template-columns:1fr;padding:110px 24px 80px;gap:0}
   .hero-right{display:none}
-  .hero-stats{position:static;margin-top:0}
-  .hstat{padding:18px 22px}
-  .why-strip-inner{grid-template-columns:1fr 1fr;padding:0 32px}
+  .hero-company{font-size:clamp(34px,7vw,58px);letter-spacing:3px}
+  .hero-tagline{font-size:clamp(13px,2.5vw,19px);letter-spacing:4px}
+  .hero-desc{font-size:17px}
+  .hero-stats{position:static}
+  .sbar{padding:16px 14px}
+  .sbar-num{font-size:30px}
+  .sbar-lbl{font-size:9px}
+  .why-strip-inner{grid-template-columns:1fr 1fr;padding:0 24px}
   .why-item:nth-child(2){border-right:none}
   .why-item:nth-child(3){border-right:1px solid var(--border)}
-  .page-hero,.company-hero,.numbers-hero,.contact-hero{padding:90px 32px 60px}
-  .page-hero-inner{grid-template-columns:1fr;gap:40px}
-  .about-body{padding:48px 32px 60px;grid-template-columns:1fr}
+  #homeNumsSection{padding:48px 24px 56px !important}
+  #homeNumGrid{grid-template-columns:1fr 1fr !important}
+  .pg-hero{padding:90px 24px 52px}
+  #about .pg-hero-inner{grid-template-columns:1fr;gap:32px}
+  .about-name{font-size:clamp(34px,6vw,56px)}
+  .profile-card{position:static}
+  .about-body{padding:40px 24px 56px;grid-template-columns:1fr}
   .about-side{position:static}
-  .company-body,.num-grid-wrap,.num-controls,.num-cta,.contact-body{padding-left:32px;padding-right:32px}
   .ventures{grid-template-columns:1fr 1fr}
+  .company-body{padding-left:24px;padding-right:24px}
+  .company-title{font-size:clamp(28px,5vw,46px)}
   .origin{grid-template-columns:1fr}
-  .services-grid{grid-template-columns:1fr}
-  .values-grid{grid-template-columns:1fr 1fr}
+  .origin-year{font-size:80px}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .val-grid{grid-template-columns:1fr 1fr}
   .diff-grid{grid-template-columns:1fr}
-  .founder-cta{grid-template-columns:1fr;gap:32px}
+  .fcta{grid-template-columns:1fr;gap:28px}
+  .num-controls{padding-left:24px;padding-right:24px;grid-template-columns:1fr auto auto}
+  .num-grid-wrap{padding-left:24px;padding-right:24px}
+  .num-cta{padding-left:24px;padding-right:24px}
   #numberList{grid-template-columns:1fr 1fr}
+  .nb-num{font-size:24px;letter-spacing:3px}
   .contact-grid{grid-template-columns:1fr}
+  .contact-body{padding-left:24px;padding-right:24px}
+  footer{padding:36px 24px}
 }
+
+/* MOBILE (up to 640px) */
 @media(max-width:640px){
-  nav{padding:16px 20px}
-  nav.scrolled{padding:12px 20px}
-  .hero-inner{padding:110px 20px 80px}
-  #homeNumsSection{padding:36px 18px 48px !important}
-  #homeNumGrid{grid-template-columns:1fr !important}
-  .why-strip-inner{grid-template-columns:1fr;padding:0 20px}
-  .why-item{border-right:none;border-bottom:1px solid var(--border)}
+  nav{padding:12px 16px}
+  nav.scrolled{padding:10px 16px}
+  .nav-logo-name{font-size:14px;letter-spacing:1px}
+  .nav-logo-tag{font-size:10px;letter-spacing:2px}
+  .hero-inner{padding:95px 16px 64px}
+  .hero-company{font-size:clamp(28px,9vw,44px);letter-spacing:2px}
+  .hero-tagline{font-size:13px;letter-spacing:3px;margin-bottom:18px}
+  .hero-desc{font-size:15px;max-width:100%}
+  .hero-btns{flex-direction:column;align-items:stretch;gap:10px}
+  .btn-gold,.btn-white{width:100%;justify-content:center;padding:14px 20px;font-size:13px}
+  .stat-bar-inner{grid-template-columns:1fr 1fr}
+  .sbar{padding:14px 10px}
+  .sbar-num{font-size:26px}
+  .sbar-lbl{font-size:8px;letter-spacing:1px}
+  .sbar:nth-child(2){border-right:none}
+  .sbar:nth-child(3){border-right:1px solid var(--border)}
+  .why-strip-inner{grid-template-columns:1fr;padding:0 16px}
+  .why-item{border-right:none;border-bottom:1px solid var(--border);padding:20px 14px}
   .why-item:last-child{border-bottom:none}
-  .page-hero,.company-hero,.numbers-hero,.contact-hero{padding:80px 20px 50px}
-  .about-body,.company-body,.num-grid-wrap,.num-controls,.num-cta,.contact-body{padding-left:20px;padding-right:20px}
-  #numberList{grid-template-columns:1fr}
-  .num-controls{grid-template-columns:1fr;gap:10px}
+  .why-title{font-size:15px}
+  .why-desc{font-size:13px}
+  #homeNumsSection{padding:32px 16px 40px !important}
+  #homeNumGrid{grid-template-columns:1fr !important}
+  .pg-hero{padding:76px 16px 40px}
+  .about-name{font-size:clamp(30px,9vw,44px);letter-spacing:2px}
+  .about-role{font-size:12px;letter-spacing:1.5px}
+  .about-tagline-text{font-size:9px;letter-spacing:3px}
+  .about-intro{font-size:15px}
+  .chips{gap:6px}
+  .chip{font-size:9px;padding:5px 11px;letter-spacing:1.5px}
+  .about-body{padding:28px 16px 44px;grid-template-columns:1fr}
+  .block{padding:20px 16px;margin-bottom:16px}
+  .block-head{gap:10px;margin-bottom:16px}
+  .block-ico{width:38px;height:38px;font-size:15px}
+  .block-title{font-size:17px;letter-spacing:1.5px}
+  .tl-yr{font-size:11px;width:68px}
+  .tl-txt{font-size:13px}
+  .tl-txt strong{font-size:13px}
   .ventures{grid-template-columns:1fr}
-  .values-grid{grid-template-columns:1fr}
+  .v-title{font-size:12px}
+  .int-tag{font-size:10px;padding:7px 11px}
+  .fam-name{font-size:13px}
+  .quote-block{padding:20px 16px}
+  .quote-text{font-size:14px;line-height:1.75}
+  .side-card{padding:20px 16px}
+  .clink{padding:10px 12px}
+  .clink-val{font-size:11px;letter-spacing:.5px}
+  .company-body{padding:28px 16px 44px}
+  .company-title{font-size:clamp(22px,8vw,36px);letter-spacing:1.5px}
+  .company-lead{font-size:15px}
+  .origin-year{font-size:60px}
+  .origin-quote{font-size:14px}
+  .svc-grid{grid-template-columns:1fr}
+  .svc-card{padding:24px 18px}
+  .svc-title{font-size:16px}
+  .val-grid{grid-template-columns:1fr 1fr}
+  .val-title{font-size:11px;letter-spacing:1.5px}
+  .diff-block{padding:24px 16px}
+  .diff-title{font-size:19px}
+  .diff-strong{font-size:13px}
+  .diff-sub{font-size:12px}
+  .fcta{padding:24px 16px}
+  .fcta-title{font-size:19px}
+  .fcta-sub{font-size:14px}
+  .fcta-link{padding:12px 14px}
+  .num-controls{padding:0 16px 20px;grid-template-columns:1fr}
+  .search-box input{font-size:14px;padding:12px 14px 12px 42px}
+  .ctrl-sel{font-size:13px;min-width:100%}
+  .num-grid-wrap{padding:0 16px 44px}
+  .num-cta{padding:0 16px 44px}
+  #numberList{grid-template-columns:1fr}
+  .nb{padding:20px 16px}
+  .nb-num{font-size:22px;letter-spacing:2px}
+  .nb-tot{padding:5px 10px;min-width:50px}
+  .nb-tot-val{font-size:15px}
+  .nb-tot-lbl{font-size:8px}
+  .nb-price{font-size:19px}
+  .nb-buy{font-size:10px;padding:8px 13px}
+  .nb-tier-badge{font-size:9px;padding:3px 9px}
+  .ttabs{gap:7px}
+  .ttab{font-size:10px;padding:8px 14px;letter-spacing:1px}
+  .num-cta-inner{padding:28px 16px}
+  .num-cta-title{font-size:20px;letter-spacing:1.5px}
+  .num-cta-sub{font-size:14px}
+  .cta-btns{flex-direction:column;align-items:stretch}
+  .cta-btns .btn-wa,.cta-btns .btn-white{justify-content:center}
+  .contact-body{padding:28px 16px 44px}
+  .contact-title{font-size:clamp(22px,8vw,36px);letter-spacing:1.5px}
+  .contact-sub{font-size:14px}
+  .ci-title{font-size:18px}
+  .ci-sub{font-size:13px}
+  .ci{padding:12px 14px}
+  .ci-val{font-size:12px}
+  .soc-row{flex-wrap:wrap;gap:8px}
+  .soc-btn{font-size:10px;padding:8px 12px}
+  .wa-ch{padding:14px 16px;gap:12px}
+  .wa-ch i{font-size:20px}
+  .wa-ch-t{font-size:12px}
+  .wa-ch-s{font-size:12px}
+  .form-card{padding:20px 16px}
+  .form-title{font-size:17px}
+  .form-sub{font-size:12px}
   .form-row{grid-template-columns:1fr}
-  footer{padding:40px 20px}
-  .footer-inner{flex-direction:column;text-align:center}
-  .footer-nav{justify-content:center}
-  .hstat-num{font-size:28px}
+  .fi{font-size:14px;padding:12px 13px}
+  .fl{font-size:9px}
+  .form-submit{font-size:13px;letter-spacing:2px;padding:15px}
+  footer{padding:28px 16px}
+  .footer-inner{flex-direction:column;text-align:center;gap:14px}
+  .footer-brand-name{font-size:17px;letter-spacing:2px}
+  .footer-tagline{font-size:11px;letter-spacing:3px}
+  .footer-copy{font-size:10px}
+  .footer-nav{justify-content:center;flex-wrap:wrap;gap:14px}
+  .footer-nav a{font-size:11px}
+  .wa-float{width:50px;height:50px;font-size:22px;bottom:18px;right:14px}
+  .mob-overlay a{font-size:22px;letter-spacing:2px}
+  .mob-overlay{gap:28px}
 }
 </style>
 </head>

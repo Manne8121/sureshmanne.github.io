@@ -1476,8 +1476,100 @@ footer{
   </div>
 </footer>
 
-<!-- Floating WA -->
-<a href="https://wa.me/919090900005?text=Hello%20Suresh,%20I'm%20interested%20in%20VIP%20numbers" target="_blank" class="wa-float" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+<!-- WhatsApp Business Chat Widget -->
+<div id="waChatWidget" style="position:fixed;bottom:24px;right:20px;z-index:9999;font-family:'DM Sans',sans-serif">
+
+  <!-- Chat Popup -->
+  <div id="waChatBox" style="display:none;margin-bottom:14px;width:320px;background:#0d0f16;border:1px solid rgba(34,197,94,.25);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#128C7E,#25D366);padding:16px 18px;display:flex;align-items:center;gap:12px">
+      <div style="width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0;font-family:Colus,sans-serif;letter-spacing:1px">SM</div>
+      <div style="flex:1">
+        <div style="font-family:Colus,sans-serif;font-size:14px;letter-spacing:1.5px;color:#fff">Suresh Manne</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px">Manne Communications</div>
+        <div style="display:flex;align-items:center;gap:5px;margin-top:3px">
+          <div style="width:8px;height:8px;border-radius:50%;background:#4ade80"></div>
+          <span style="font-size:11px;color:rgba(255,255,255,.8)">Online · Replies instantly</span>
+        </div>
+      </div>
+      <button onclick="toggleWaChat()" style="background:none;border:none;color:rgba(255,255,255,.8);font-size:22px;cursor:pointer;padding:2px;line-height:1">&times;</button>
+    </div>
+
+    <!-- Verified badge -->
+    <div style="background:rgba(37,211,102,.08);border-bottom:1px solid rgba(34,197,94,.15);padding:8px 18px;display:flex;align-items:center;gap:8px">
+      <i class="fab fa-whatsapp" style="color:#25D366;font-size:13px"></i>
+      <span style="font-size:11px;color:#4ade80;letter-spacing:.5px">Verified WhatsApp Business Account</span>
+    </div>
+
+    <!-- Chat bubbles -->
+    <div style="padding:18px;background:#07090f;display:flex;flex-direction:column;gap:8px">
+      <div style="background:#1a1f2e;border-radius:12px 12px 12px 3px;padding:12px 14px;max-width:88%">
+        <p style="font-size:13px;color:#e8e2d4;line-height:1.6;margin:0">Hi! I'm Suresh from <strong style="color:#25D366">Manne Communications</strong>. How can I help you today?</p>
+      </div>
+      <div style="background:#1a1f2e;border-radius:12px 12px 12px 3px;padding:12px 14px;max-width:92%">
+        <p style="font-size:13px;color:#e8e2d4;line-height:1.6;margin:0">Looking for a <strong style="color:#e4c96a">VIP or Fancy number?</strong> Pick a category below and I'll send you the best options personally.</p>
+      </div>
+      <div style="font-size:11px;color:#55586a;padding-left:2px">Just now</div>
+    </div>
+
+    <!-- Quick replies -->
+    <div style="padding:0 18px 14px;background:#07090f;display:flex;flex-direction:column;gap:8px">
+      <a href="https://wa.me/919090900005?text=Hi%20Suresh!%20I%20want%20Diamond%20VIP%20numbers%20%E2%82%B91L%2B" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0d1017;border:1px solid rgba(185,242,255,.2);border-radius:8px;color:#b9f2ff;font-size:13px;text-decoration:none" onmouseenter="this.style.background='rgba(185,242,255,.07)'" onmouseleave="this.style.background='#0d1017'">
+        <span>💎</span><span>Diamond Numbers (&#x20B9;1L+)</span>
+      </a>
+      <a href="https://wa.me/919090900005?text=Hi%20Suresh!%20I%20want%20Gold%20VIP%20numbers%20%E2%82%B920K-99K" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0d1017;border:1px solid rgba(228,201,106,.2);border-radius:8px;color:#e4c96a;font-size:13px;text-decoration:none" onmouseenter="this.style.background='rgba(228,201,106,.07)'" onmouseleave="this.style.background='#0d1017'">
+        <span>⭐</span><span>Gold Numbers (&#x20B9;20K&ndash;&#x20B9;99K)</span>
+      </a>
+      <a href="https://wa.me/919090900005?text=Hi%20Suresh!%20I%20want%20Silver%20VIP%20numbers%20under%20%E2%82%B920K" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0d1017;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#ccc6b8;font-size:13px;text-decoration:none" onmouseenter="this.style.background='rgba(255,255,255,.05)'" onmouseleave="this.style.background='#0d1017'">
+        <span>&#x1F539;</span><span>Silver Numbers (Under &#x20B9;20K)</span>
+      </a>
+      <a href="https://wa.me/919090900005?text=Hi%20Suresh!%20I%20need%20a%20Numerology%20consultation" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:#0d1017;border:1px solid rgba(167,139,250,.2);border-radius:8px;color:#a78bfa;font-size:13px;text-decoration:none" onmouseenter="this.style.background='rgba(167,139,250,.07)'" onmouseleave="this.style.background='#0d1017'">
+        <span>&#x1F52E;</span><span>Numerology Consultation</span>
+      </a>
+    </div>
+
+    <!-- Type bar -->
+    <div style="padding:12px 18px;background:#0a0c13;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px">
+      <a href="https://wa.me/919090900005" target="_blank" style="flex:1;background:#1a1f2e;border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:10px 16px;font-size:13px;color:#55586a;text-decoration:none;display:block">Type a message...</a>
+      <a href="https://wa.me/919090900005" target="_blank" style="width:38px;height:38px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex-shrink:0;text-decoration:none"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <!-- Toggle button row -->
+  <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px">
+    <div id="waPulseLabel" onclick="toggleWaChat()" style="background:#0d0f16;border:1px solid rgba(34,197,94,.3);color:#4ade80;font-size:12px;font-family:Colus,sans-serif;letter-spacing:1px;padding:8px 14px;border-radius:20px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.4);cursor:pointer">Chat with Suresh</div>
+    <button onclick="toggleWaChat()" id="waToggleBtn" aria-label="Chat on WhatsApp" style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;box-shadow:0 6px 28px rgba(34,197,94,.4);position:relative;transition:all .3s">
+      <i class="fab fa-whatsapp"></i>
+      <div id="waDot" style="position:absolute;top:3px;right:3px;width:14px;height:14px;background:#ef4444;border-radius:50%;border:2px solid #04050a;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;font-weight:700">1</div>
+    </button>
+  </div>
+</div>
+
+<script>
+function toggleWaChat(){
+  var box=document.getElementById('waChatBox');
+  var lbl=document.getElementById('waPulseLabel');
+  var dot=document.getElementById('waDot');
+  var open=(box.style.display==='none'||box.style.display==='');
+  box.style.display=open?'block':'none';
+  if(open){
+    box.style.animation='waSlideUp .3s ease';
+    if(dot)dot.style.display='none';
+    if(lbl)lbl.style.display='none';
+  }
+}
+setTimeout(function(){var l=document.getElementById('waPulseLabel');if(l)l.style.display='none';},8000);
+</script>
+<style>
+@keyframes waSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media(max-width:640px){
+  #waChatWidget{bottom:14px;right:12px}
+  #waChatBox{width:calc(100vw - 28px);max-width:320px}
+  #waToggleBtn{width:52px;height:52px;font-size:24px}
+  #waPulseLabel{font-size:11px;padding:7px 12px}
+}
+</style>
 
 <!-- ══════════════════════════════════════════════════
      JAVASCRIPT

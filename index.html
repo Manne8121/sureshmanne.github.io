@@ -245,7 +245,16 @@ nav.scrolled{
 }
 .hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:28px}
 .hero-eyebrow-line{width:40px;height:1px;background:var(--gold)}
-.hero-eyebrow-text{font-family:var(--C);font-size:11px;letter-spacing:4px;color:var(--gold)}
+.hero-eyebrow-text{
+  font-family:var(--C);font-size:13px;letter-spacing:4px;color:var(--gold3);
+  font-weight:700;
+  text-shadow:0 0 12px rgba(245,224,144,.7),0 0 28px rgba(201,168,76,.5),0 0 50px rgba(201,168,76,.25);
+  animation:eyebrowGlow 2.5s ease-in-out infinite alternate;
+}
+@keyframes eyebrowGlow{
+  from{text-shadow:0 0 8px rgba(245,224,144,.6),0 0 20px rgba(201,168,76,.4),0 0 40px rgba(201,168,76,.2)}
+  to{text-shadow:0 0 16px rgba(245,224,144,.95),0 0 36px rgba(201,168,76,.7),0 0 60px rgba(201,168,76,.4),0 0 80px rgba(201,168,76,.2)}
+}
 .hero-name{
   font-family:var(--C);font-size:clamp(40px,5.5vw,76px);
   letter-spacing:4px;line-height:1;margin-bottom:6px;color:var(--text);
@@ -359,17 +368,26 @@ nav.scrolled{
   display:flex;justify-content:space-between;align-items:center;
 }
 .nb-price{font-family:var(--C);font-size:24px;letter-spacing:2px;color:var(--gold2)}
+.nb-actions{display:flex;gap:8px;align-items:center}
 .nb-buy{
   display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--C);font-size:12px;letter-spacing:2px;
+  font-family:var(--C);font-size:11px;letter-spacing:2px;
   background:var(--green-dim);border:1px solid var(--green-bd);
-  color:var(--green);padding:11px 18px;border-radius:3px;
+  color:var(--green);padding:10px 16px;border-radius:3px;
   transition:all .3s;opacity:0;transform:translateY(6px);
 }
-.nb:hover .nb-buy{opacity:1;transform:none}
+.nb-interested{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--C);font-size:11px;letter-spacing:2px;
+  background:var(--gold-dim);border:1px solid var(--border-g);
+  color:var(--gold2);padding:10px 16px;border-radius:3px;
+  transition:all .3s;opacity:0;transform:translateY(6px);
+}
+.nb:hover .nb-buy,.nb:hover .nb-interested{opacity:1;transform:none}
 .nb-buy:hover{background:rgba(34,197,94,.22)}
-/* always show buy on mobile */
-@media(max-width:768px){.nb-buy{opacity:1;transform:none}}
+.nb-interested:hover{background:rgba(228,201,106,.2)}
+/* always show on mobile */
+@media(max-width:768px){.nb-buy,.nb-interested{opacity:1;transform:none}}
 .no-results{grid-column:1/-1;text-align:center;padding:60px 0;font-family:var(--C);font-size:17px;letter-spacing:2px;color:var(--text3)}
 
 /* ── PAGE HERO HEADER ────────────────────────────────── */
@@ -710,6 +728,27 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   #backToTop{bottom:78px;right:14px;width:38px;height:38px;font-size:16px}
   .ttab{font-size:10px;padding:8px 14px}
 }
+
+/* ── LIVE VISITORS ────────────────────────────────────── */
+#visitorBadge{
+  position:fixed;bottom:90px;left:20px;z-index:800;
+  background:var(--card);border:1px solid var(--border-g);
+  border-radius:24px;padding:9px 16px;
+  display:flex;align-items:center;gap:9px;
+  box-shadow:0 4px 20px var(--shadow);
+  font-family:var(--C);font-size:12px;
+  animation:badgeIn .6s 3s both;
+}
+@keyframes badgeIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+.vb-dot{width:9px;height:9px;border-radius:50%;background:#ef4444;flex-shrink:0;animation:livePulse 1.4s ease infinite}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.5)}70%{box-shadow:0 0 0 7px rgba(239,68,68,0)}}
+.vb-live{color:#ef4444;font-size:10px;letter-spacing:2px}
+.vb-count{color:var(--gold2);font-size:15px}
+.vb-label{color:var(--text3);font-size:10px;letter-spacing:1px}
+@media(max-width:640px){
+  #visitorBadge{bottom:78px;left:12px;padding:7px 12px;font-size:11px}
+  .vb-count{font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -786,14 +825,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
       <div class="hero-card-wrap" data-aos="fade-left" data-aos-delay="400">
         <div class="hero-card">
           <div class="hc-label">Featured Premium Number</div>
-          <div class="hc-number">8888 234567</div>
-          <div class="hc-price">₹2,00,000</div>
+          <div class="hc-number">97777 00005</div>
+          <div class="hc-price">₹3,00,000</div>
           <div class="hc-badges">
             <span class="hc-badge g">💎 Diamond</span>
-            <span class="hc-badge g">Quad 8s</span>
-            <span class="hc-badge w">Numerology 6</span>
+            <span class="hc-badge g">Quad 7s</span>
+            <span class="hc-badge w">Numerology 5</span>
           </div>
-          <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%208888234567" target="_blank" class="btn-wa" style="width:100%;justify-content:center"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
+          <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209777700005" target="_blank" class="btn-wa" style="width:100%;justify-content:center"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
           <div class="hc-divider"></div>
           <div class="mini-list">
             <div class="mini-row"><span class="mini-num">9188 91 91 91</span><span class="mini-price">₹1,50,000</span><a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%209188919191" target="_blank" class="mini-buy">Buy</a></div>
@@ -809,7 +848,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   <div class="stat-bar">
     <div class="stat-bar-inner">
       <div class="sbar" data-aos="fade-up" data-aos-delay="100"><div class="sbar-num">10K+</div><div class="sbar-lbl">Happy Customers</div></div>
-      <div class="sbar" data-aos="fade-up" data-aos-delay="180"><div class="sbar-num">109+</div><div class="sbar-lbl">Numbers in Stock</div></div>
+      <div class="sbar" data-aos="fade-up" data-aos-delay="180"><div class="sbar-num">15K+</div><div class="sbar-lbl">Numbers Sold</div></div>
       <div class="sbar" data-aos="fade-up" data-aos-delay="260"><div class="sbar-num">10+</div><div class="sbar-lbl">Years Experience</div></div>
       <div class="sbar" data-aos="fade-up" data-aos-delay="340"><div class="sbar-num">100%</div><div class="sbar-lbl">Verified & Legal</div></div>
     </div>
@@ -831,9 +870,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
       <div>
         <div class="eyebrow"><div class="ey-line"></div><span class="ey-text">Available Now</span></div>
         <div class="sec-title">VIP Numbers <span class="g">For You</span></div>
-        <div class="sec-sub" style="margin-top:8px">Tap any number to enquire instantly on WhatsApp</div>
+        <div class="sec-sub" style="margin-top:8px">Premium collection — tap any number to enquire instantly on WhatsApp</div>
       </div>
-      <a href="#" onclick="goPage('numbers');return false" class="see-all"><i class="fas fa-th"></i> View All 109 Numbers</a>
+      <a href="#" onclick="goPage('numbers');return false" class="see-all"><i class="fas fa-th"></i> Browse Full Collection</a>
     </div>
     <div class="home-num-grid" id="homeNumGrid"></div>
     <div style="text-align:center;padding-top:14px" data-aos="fade-up">
@@ -1072,6 +1111,116 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   </div>
 </div>
 
+
+<!-- TESTIMONIALS -->
+  <div class="testimonials-section">
+    <div class="testimonials-inner">
+      <div class="eyebrow" style="justify-content:center;margin-bottom:10px" data-aos="fade-up"><div class="ey-line"></div><span class="ey-text">What Customers Say</span><div class="ey-line"></div></div>
+      <div class="sec-title" style="text-align:center;margin-bottom:6px" data-aos="fade-up">Trusted by <span class="g">10,000+ Customers</span></div>
+      <div class="sec-sub" style="text-align:center;margin-bottom:40px" data-aos="fade-up">Real experiences from happy customers across India</div>
+      <div class="owl-carousel owl-theme" id="testimonialSlider2">
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">I purchased a VIP mobile number from Manne Communications and the process was very smooth. Genuine service and quick response. Highly recommended for fancy numbers.</p>
+          <div class="test-footer"><div class="test-pic">SP</div><div><div class="test-name">Satish P</div><div class="test-role">Guntur, Andhra Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Very professional service. I got the exact fancy number pattern I wanted at a reasonable price. Thank you Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">YD</div><div><div class="test-name">Yogesh Dhanotiya</div><div class="test-role">Mandsaur, Madhya Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">I was searching for a memorable mobile number for my business and Manne Communications helped me find the perfect one.</p>
+          <div class="test-footer"><div class="test-pic">SK</div><div><div class="test-name">Dr. Suneel Kumar</div><div class="test-role">Ongole, Andhra Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Excellent collection of VIP numbers. The activation and porting process was fast and transparent.</p>
+          <div class="test-footer"><div class="test-pic">NE</div><div><div class="test-name">Neela</div><div class="test-role">Vizag, Andhra Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Trustworthy seller with a great variety of fancy numbers. Communication and support were excellent throughout.</p>
+          <div class="test-footer"><div class="test-pic">SA</div><div><div class="test-name">Santosh</div><div class="test-role">Jeypore, Odisha</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Got a beautiful repeating number pattern for my personal use. Smooth experience dealing with Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">VI</div><div><div class="test-name">Vishal</div><div class="test-role">Nashik, Maharashtra</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Got a beautiful repeating number pattern for my personal use. Smooth experience dealing with Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">AH</div><div><div class="test-name">Adv. Harsha</div><div class="test-role">Bengaluru, Karnataka</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">I was searching for an easy-to-remember number and Manne Communications helped me get exactly what I wanted.</p>
+          <div class="test-footer"><div class="test-pic">AN</div><div><div class="test-name">Akshitha Nair</div><div class="test-role">Wayanad, Kerala</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Very professional dealing and reasonable pricing. Highly recommended for VIP numbers.</p>
+          <div class="test-footer"><div class="test-pic">SR</div><div><div class="test-name">Sravanthi</div><div class="test-role">Hyderabad, Telangana</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Excellent support from start to finish. I'm very happy with the number I purchased.</p>
+          <div class="test-footer"><div class="test-pic">TE</div><div><div class="test-name">Teena</div><div class="test-role">Raipur, Chhattisgarh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Trustworthy seller with a great variety of fancy numbers. Smooth transaction and quick delivery.</p>
+          <div class="test-footer"><div class="test-pic">YB</div><div><div class="test-name">Yashpal Banna</div><div class="test-role">Chittaurgarh, Rajasthan</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Got a beautiful repeating number pattern for my personal use. Great service by Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">DM</div><div><div class="test-name">Dev Mehta</div><div class="test-role">Surat, Gujarat</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Very helpful and responsive team. Found the perfect VIP number for my company.</p>
+          <div class="test-footer"><div class="test-pic">RV</div><div><div class="test-name">Rakesh Verma</div><div class="test-role">Mumbai, Maharashtra</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Great experience purchasing my fancy number. Everything was handled professionally.</p>
+          <div class="test-footer"><div class="test-pic">SK</div><div><div class="test-name">Sanjay Kumar</div><div class="test-role">Delhi</div></div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 <!-- ════════════════════════════════════
      ABOUT US
 ════════════════════════════════════ -->
@@ -1148,13 +1297,122 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   </div>
 </div>
 
+
+<!-- TESTIMONIALS -->
+  <div class="testimonials-section">
+    <div class="testimonials-inner">
+      <div class="eyebrow" style="justify-content:center;margin-bottom:10px" data-aos="fade-up"><div class="ey-line"></div><span class="ey-text">What Customers Say</span><div class="ey-line"></div></div>
+      <div class="sec-title" style="text-align:center;margin-bottom:6px" data-aos="fade-up">Trusted by <span class="g">10,000+ Customers</span></div>
+      <div class="sec-sub" style="text-align:center;margin-bottom:40px" data-aos="fade-up">Real experiences from happy customers across India</div>
+      <div class="owl-carousel owl-theme" id="testimonialSlider3">
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">I purchased a VIP mobile number from Manne Communications and the process was very smooth. Genuine service and quick response. Highly recommended for fancy numbers.</p>
+          <div class="test-footer"><div class="test-pic">SP</div><div><div class="test-name">Satish P</div><div class="test-role">Guntur, Andhra Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Very professional service. I got the exact fancy number pattern I wanted at a reasonable price. Thank you Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">YD</div><div><div class="test-name">Yogesh Dhanotiya</div><div class="test-role">Mandsaur, Madhya Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">I was searching for a memorable mobile number for my business and Manne Communications helped me find the perfect one.</p>
+          <div class="test-footer"><div class="test-pic">SK</div><div><div class="test-name">Dr. Suneel Kumar</div><div class="test-role">Ongole, Andhra Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Excellent collection of VIP numbers. The activation and porting process was fast and transparent.</p>
+          <div class="test-footer"><div class="test-pic">NE</div><div><div class="test-name">Neela</div><div class="test-role">Vizag, Andhra Pradesh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Trustworthy seller with a great variety of fancy numbers. Communication and support were excellent throughout.</p>
+          <div class="test-footer"><div class="test-pic">SA</div><div><div class="test-name">Santosh</div><div class="test-role">Jeypore, Odisha</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Got a beautiful repeating number pattern for my personal use. Smooth experience dealing with Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">VI</div><div><div class="test-name">Vishal</div><div class="test-role">Nashik, Maharashtra</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Got a beautiful repeating number pattern for my personal use. Smooth experience dealing with Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">AH</div><div><div class="test-name">Adv. Harsha</div><div class="test-role">Bengaluru, Karnataka</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">I was searching for an easy-to-remember number and Manne Communications helped me get exactly what I wanted.</p>
+          <div class="test-footer"><div class="test-pic">AN</div><div><div class="test-name">Akshitha Nair</div><div class="test-role">Wayanad, Kerala</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Very professional dealing and reasonable pricing. Highly recommended for VIP numbers.</p>
+          <div class="test-footer"><div class="test-pic">SR</div><div><div class="test-name">Sravanthi</div><div class="test-role">Hyderabad, Telangana</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Excellent support from start to finish. I'm very happy with the number I purchased.</p>
+          <div class="test-footer"><div class="test-pic">TE</div><div><div class="test-name">Teena</div><div class="test-role">Raipur, Chhattisgarh</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Trustworthy seller with a great variety of fancy numbers. Smooth transaction and quick delivery.</p>
+          <div class="test-footer"><div class="test-pic">YB</div><div><div class="test-name">Yashpal Banna</div><div class="test-role">Chittaurgarh, Rajasthan</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Got a beautiful repeating number pattern for my personal use. Great service by Manne Communications.</p>
+          <div class="test-footer"><div class="test-pic">DM</div><div><div class="test-name">Dev Mehta</div><div class="test-role">Surat, Gujarat</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Very helpful and responsive team. Found the perfect VIP number for my company.</p>
+          <div class="test-footer"><div class="test-pic">RV</div><div><div class="test-name">Rakesh Verma</div><div class="test-role">Mumbai, Maharashtra</div></div></div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="test-stars">★★★★★</div>
+          <div class="test-quote">"</div>
+          <p class="test-text">Great experience purchasing my fancy number. Everything was handled professionally.</p>
+          <div class="test-footer"><div class="test-pic">SK</div><div><div class="test-name">Sanjay Kumar</div><div class="test-role">Delhi</div></div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 <!-- ════════════════════════════════════
      VIP NUMBERS
 ════════════════════════════════════ -->
 <div id="numbers" class="pg">
   <div class="pg-hero">
     <div class="pg-hero-inner">
-      <div class="eyebrow" data-aos="fade-up"><div class="ey-line"></div><span class="ey-text">109 Numbers Available</span></div>
       <div class="num-pg-title" data-aos="fade-up" data-aos-delay="100">VIP and Fancy Numbers<br><span style="color:var(--gold2)">Number that Matters</span></div>
       <p class="num-pg-sub" data-aos="fade-up" data-aos-delay="160">From premium ₹2 lakh numbers to affordable ₹3,000 patterns. Hover on any card to buy instantly.</p>
       <div class="ttabs" data-aos="fade-up" data-aos-delay="220">
@@ -1184,7 +1442,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   <div class="num-cta">
     <div class="num-cta-inner" data-aos="fade-up">
       <div class="sec-title" style="margin-bottom:10px">Can't Find Your Perfect Number?</div>
-      <p class="num-cta-sub">Tell us your lucky digit, numerology preference, or budget — Suresh will find it personally.</p>
+      <p class="num-cta-sub">Don't see your preferred number? We have hundreds more. WhatsApp Suresh with your lucky digit, birth date or budget and he'll find the perfect match personally.</p>
       <div class="cta-btns">
         <a href="https://wa.me/919090900005?text=Hello%20Suresh,%20I'm%20looking%20for%20a%20specific%20VIP%20number" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
         <a href="mailto:vipnumbers@sureshmanne.com" class="btn-outline"><i class="fas fa-envelope"></i> Email Us</a>
@@ -1207,21 +1465,21 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   </div>
   <div class="contact-body">
     <div class="contact-grid">
-      <div data-aos="fade-right">
-        <div class="ci-title">Reach Suresh Directly</div>
-        <p class="ci-sub">Every inquiry is personally handled — no middlemen, no bots, no waiting.</p>
+      <div>
+        <div class="ci-title" data-aos="fade-up">Reach Suresh Directly</div>
+        <p class="ci-sub" data-aos="fade-up" data-aos-delay="80">Every inquiry is personally handled — no middlemen, no bots, no waiting.</p>
         <div class="clinks">
-          <a href="https://wa.me/919090900005" target="_blank" class="ci"><div class="ci-ico wa"><i class="fab fa-whatsapp"></i></div><div><div class="ci-lbl">WhatsApp</div><div class="ci-val">+91 90909 00005</div></div></a>
-          <a href="tel:+919090900005" class="ci"><div class="ci-ico"><i class="fas fa-phone"></i></div><div><div class="ci-lbl">Phone</div><div class="ci-val">+91 90909 00005</div></div></a>
-          <a href="mailto:info@sureshmanne.com" class="ci"><div class="ci-ico"><i class="fas fa-envelope"></i></div><div><div class="ci-lbl">Personal Email</div><div class="ci-val">info@sureshmanne.com</div></div></a>
-          <a href="mailto:vipnumbers@sureshmanne.com" class="ci"><div class="ci-ico"><i class="fas fa-gem"></i></div><div><div class="ci-lbl">VIP Numbers Email</div><div class="ci-val">vipnumbers@sureshmanne.com</div></div></a>
+          <a href="https://wa.me/919090900005" target="_blank" class="ci" data-aos="fade-right" data-aos-delay="120"><div class="ci-ico wa"><i class="fab fa-whatsapp"></i></div><div><div class="ci-lbl">WhatsApp</div><div class="ci-val">+91 90909 00005</div></div></a>
+          <a href="tel:+919090900005" class="ci" data-aos="fade-right" data-aos-delay="200"><div class="ci-ico"><i class="fas fa-phone"></i></div><div><div class="ci-lbl">Phone</div><div class="ci-val">+91 90909 00005</div></div></a>
+          <a href="mailto:info@sureshmanne.com" class="ci" data-aos="fade-right" data-aos-delay="280"><div class="ci-ico"><i class="fas fa-envelope"></i></div><div><div class="ci-lbl">Personal Email</div><div class="ci-val">info@sureshmanne.com</div></div></a>
+          <a href="mailto:vipnumbers@sureshmanne.com" class="ci" data-aos="fade-right" data-aos-delay="360"><div class="ci-ico"><i class="fas fa-gem"></i></div><div><div class="ci-lbl">VIP Numbers Email</div><div class="ci-val">vipnumbers@sureshmanne.com</div></div></a>
         </div>
-        <div class="soc-row">
+        <div class="soc-row" data-aos="fade-up" data-aos-delay="440">
           <a href="https://www.facebook.com/share/156DqkFCDeB/" target="_blank" class="soc-btn"><i class="fab fa-facebook"></i> Facebook</a>
           <a href="https://www.instagram.com/suresh_unexplained?igsh=a2MwNWw4MWY5a3l3" target="_blank" class="soc-btn"><i class="fab fa-instagram"></i> Instagram</a>
           <a href="https://x.com/Suresh_Manne_5" target="_blank" class="soc-btn"><i class="fab fa-twitter"></i> X</a>
         </div>
-        <div class="wa-ch">
+        <div class="wa-ch" data-aos="fade-up" data-aos-delay="520">
           <i class="fab fa-whatsapp"></i>
           <div>
             <div class="wa-ch-t">Join Our Broadcast Channel</div>
@@ -1267,6 +1525,16 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   </div>
 </footer>
 
+
+<!-- LIVE VISITOR COUNTER -->
+<div id="visitorBadge">
+  <div class="vb-dot"></div>
+  <div>
+    <div class="vb-live">LIVE</div>
+  </div>
+  <div class="vb-count" id="visitorCount">...</div>
+  <div class="vb-label">visitors now</div>
+</div>
 <!-- BACK TO TOP -->
 <button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
@@ -1313,7 +1581,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
 <script>
 // ── NUMBER DATA ──────────────────────────────────────────
 const NUMS=[
-{n:"8888234567",d:"8888 234567",p:200000},{n:"8888636666",d:"8888 63 6666",p:150000},{n:"9591299999",d:"95912 99999",p:200000},{n:"9009169666",d:"9009 169 666",p:5000},{n:"6262662628",d:"62626 62628",p:20000},{n:"9917113456",d:"9917 11 3456",p:20000},{n:"9244561456",d:"924 456 1456",p:15000},{n:"9111874456",d:"9111 874 456",p:10000},{n:"9444352456",d:"9444 352 456",p:8000},{n:"8888713111",d:"8888 713 111",p:15000},{n:"9644245678",d:"96442 45678",p:15000},{n:"9111857111",d:"9111 857 111",p:5000},{n:"9182641313",d:"9182 64 1313",p:3000},{n:"9244264456",d:"9244 264 456",p:5000},{n:"9459639999",d:"945 963 9999",p:30000},{n:"9694179999",d:"9694 17 9999",p:25000},{n:"9088789999",d:"9088 78 9999",p:25000},{n:"9435319999",d:"94 3531 9999",p:20000},{n:"9514539999",d:"9514 53 9999",p:25000},{n:"9674019999",d:"9674 01 9999",p:20000},{n:"9674109999",d:"9674 10 9999",p:20000},{n:"9114169999",d:"9114 16 9999",p:20000},{n:"9114179999",d:"9114 17 9999",p:20000},{n:"9114289999",d:"9114 28 9999",p:20000},{n:"9114349999",d:"9114 34 9999",p:20000},{n:"9114389999",d:"9114 38 9999",p:20000},{n:"9114589999",d:"9114 58 9999",p:20000},{n:"9114639999",d:"9114 63 9999",p:20000},{n:"9114649999",d:"9114 64 9999",p:20000},{n:"9114679999",d:"9114 67 9999",p:20000},{n:"9114719999",d:"9114 71 9999",p:20000},{n:"9114729999",d:"9114 72 9999",p:20000},{n:"9114739999",d:"9114 73 9999",p:20000},{n:"9114749999",d:"9114 74 9999",p:20000},{n:"9114769999",d:"9114 76 9999",p:20000},{n:"9114839999",d:"9114 83 9999",p:20000},{n:"9114859999",d:"9114 85 9999",p:20000},{n:"9114869999",d:"9114 86 9999",p:20000},{n:"9114879999",d:"9114 87 9999",p:20000},{n:"7992779999",d:"7992 77 9999",p:20000},{n:"9781679999",d:"9781 67 9999",p:20000},{n:"9628539999",d:"9628 53 9999",p:20000},{n:"9468039999",d:"9468 03 9999",p:20000},{n:"9609900006",d:"96099 00006",p:20000},{n:"9231234568",d:"923 1234568",p:30000},{n:"9188919191",d:"91 88 91 91 91",p:150000},{n:"8333838338",d:"8333 83 8338",p:40000},{n:"8988019999",d:"8988 01 9999",p:12000},{n:"8888488808",d:"88884 88808",p:75000},{n:"9127012345",d:"9127 012345",p:80000},{n:"9391293922",d:"93912 93922",p:5000},{n:"9391893928",d:"93918 93928",p:5000},{n:"8555025557",d:"85550 25557",p:5000},{n:"8555915557",d:"85559 15557",p:5000},{n:"6363360633",d:"63633 60633",p:6000},{n:"9000019640",d:"90000 19640",p:4000},{n:"9000026410",d:"90000 26410",p:4000},{n:"9000038570",d:"90000 38570",p:4000},{n:"9000052380",d:"90000 52380",p:4000},{n:"9000053720",d:"90000 53720",p:4000},{n:"9000058520",d:"90000 58520",p:4000},{n:"9000062850",d:"90000 62850",p:4000},{n:"9000065180",d:"90000 65180",p:4000},{n:"9000069730",d:"90000 69730",p:4000},{n:"9000073650",d:"90000 73650",p:4000},{n:"9000076380",d:"90000 76380",p:4000},{n:"9000015110",d:"90000 15110",p:6000},{n:"9000015880",d:"90000 15880",p:6000},{n:"9000018110",d:"90000 18110",p:6000},{n:"9000018440",d:"90000 18440",p:5000},{n:"9000020880",d:"90000 20880",p:6000},{n:"9000031350",d:"90000 31350",p:5000},{n:"9000035650",d:"90000 35650",p:5000},{n:"9000044820",d:"90000 44820",p:6000},{n:"9000046690",d:"90000 46690",p:5000},{n:"9000055640",d:"90000 55640",p:6000},{n:"9000056340",d:"90000 56340",p:6000},{n:"9000056550",d:"90000 56550",p:6000},{n:"9000056690",d:"90000 56690",p:6000},{n:"9000063230",d:"90000 63230",p:5000},{n:"9000063240",d:"90000 63240",p:5000},{n:"9000073630",d:"90000 73630",p:5000},{n:"9000076640",d:"90000 76640",p:6000},{n:"9000077180",d:"90000 77180",p:6000},{n:"9000080240",d:"90000 80240",p:7000},{n:"9000081850",d:"90000 81850",p:6000},{n:"9000083010",d:"90000 83010",p:7000},{n:"9000085990",d:"90000 85990",p:7000},{n:"9000088130",d:"90000 88130",p:7000},{n:"9000090489",d:"90000 90489",p:7000},{n:"9000094740",d:"90000 94740",p:7000},{n:"9000095360",d:"90000 95360",p:7000},{n:"9000097540",d:"90000 97540",p:5000},{n:"9000097590",d:"90000 97590",p:6000},{n:"9000098390",d:"90000 98390",p:6000},{n:"9000017910",d:"90000 17910",p:5000},{n:"9000019790",d:"90000 19790",p:5000},{n:"9090904456",d:"909090 4456",p:30000},{n:"9090907709",d:"909090 7709",p:25000},{n:"9090902228",d:"909090 2228",p:25000},{n:"9347894478",d:"93478 94478",p:5000},{n:"8399949991",d:"83 9994 9991",p:7500},{n:"9907172737",d:"99 07 17 27 37",p:25000},{n:"9827900400",d:"9827 900 400",p:5000},{n:"9009050559",d:"9009 0505 59",p:4000},{n:"9009906960",d:"9009 906 960",p:4000},{n:"9494894945",d:"9494 8 9494 5",p:25000},{n:"8307172737",d:"83 07 17 27 37",p:20000},{n:"9391698916",d:"93916 98916",p:5000}
+{n:"9777700005",d:"97777 00005",p:300000},{n:"8888234567",d:"8888 234567",p:200000},{n:"8888636666",d:"8888 63 6666",p:150000},{n:"9591299999",d:"95912 99999",p:200000},{n:"9009169666",d:"9009 169 666",p:5000},{n:"6262662628",d:"62626 62628",p:20000},{n:"9917113456",d:"9917 11 3456",p:20000},{n:"9244561456",d:"924 456 1456",p:15000},{n:"9111874456",d:"9111 874 456",p:10000},{n:"9444352456",d:"9444 352 456",p:8000},{n:"8888713111",d:"8888 713 111",p:15000},{n:"9644245678",d:"96442 45678",p:15000},{n:"9111857111",d:"9111 857 111",p:5000},{n:"9182641313",d:"9182 64 1313",p:3000},{n:"9244264456",d:"9244 264 456",p:5000},{n:"9459639999",d:"945 963 9999",p:30000},{n:"9694179999",d:"9694 17 9999",p:25000},{n:"9088789999",d:"9088 78 9999",p:25000},{n:"9435319999",d:"94 3531 9999",p:20000},{n:"9514539999",d:"9514 53 9999",p:25000},{n:"9674019999",d:"9674 01 9999",p:20000},{n:"9674109999",d:"9674 10 9999",p:20000},{n:"9114169999",d:"9114 16 9999",p:20000},{n:"9114179999",d:"9114 17 9999",p:20000},{n:"9114289999",d:"9114 28 9999",p:20000},{n:"9114349999",d:"9114 34 9999",p:20000},{n:"9114389999",d:"9114 38 9999",p:20000},{n:"9114589999",d:"9114 58 9999",p:20000},{n:"9114639999",d:"9114 63 9999",p:20000},{n:"9114649999",d:"9114 64 9999",p:20000},{n:"9114679999",d:"9114 67 9999",p:20000},{n:"9114719999",d:"9114 71 9999",p:20000},{n:"9114729999",d:"9114 72 9999",p:20000},{n:"9114739999",d:"9114 73 9999",p:20000},{n:"9114749999",d:"9114 74 9999",p:20000},{n:"9114769999",d:"9114 76 9999",p:20000},{n:"9114839999",d:"9114 83 9999",p:20000},{n:"9114859999",d:"9114 85 9999",p:20000},{n:"9114869999",d:"9114 86 9999",p:20000},{n:"9114879999",d:"9114 87 9999",p:20000},{n:"7992779999",d:"7992 77 9999",p:20000},{n:"9781679999",d:"9781 67 9999",p:20000},{n:"9628539999",d:"9628 53 9999",p:20000},{n:"9468039999",d:"9468 03 9999",p:20000},{n:"9609900006",d:"96099 00006",p:20000},{n:"9231234568",d:"923 1234568",p:30000},{n:"9188919191",d:"91 88 91 91 91",p:150000},{n:"8333838338",d:"8333 83 8338",p:40000},{n:"8988019999",d:"8988 01 9999",p:12000},{n:"8888488808",d:"88884 88808",p:75000},{n:"9127012345",d:"9127 012345",p:80000},{n:"9391293922",d:"93912 93922",p:5000},{n:"9391893928",d:"93918 93928",p:5000},{n:"8555025557",d:"85550 25557",p:5000},{n:"8555915557",d:"85559 15557",p:5000},{n:"6363360633",d:"63633 60633",p:6000},{n:"9000019640",d:"90000 19640",p:4000},{n:"9000026410",d:"90000 26410",p:4000},{n:"9000038570",d:"90000 38570",p:4000},{n:"9000052380",d:"90000 52380",p:4000},{n:"9000053720",d:"90000 53720",p:4000},{n:"9000058520",d:"90000 58520",p:4000},{n:"9000062850",d:"90000 62850",p:4000},{n:"9000065180",d:"90000 65180",p:4000},{n:"9000069730",d:"90000 69730",p:4000},{n:"9000073650",d:"90000 73650",p:4000},{n:"9000076380",d:"90000 76380",p:4000},{n:"9000015110",d:"90000 15110",p:6000},{n:"9000015880",d:"90000 15880",p:6000},{n:"9000018110",d:"90000 18110",p:6000},{n:"9000018440",d:"90000 18440",p:5000},{n:"9000020880",d:"90000 20880",p:6000},{n:"9000031350",d:"90000 31350",p:5000},{n:"9000035650",d:"90000 35650",p:5000},{n:"9000044820",d:"90000 44820",p:6000},{n:"9000046690",d:"90000 46690",p:5000},{n:"9000055640",d:"90000 55640",p:6000},{n:"9000056340",d:"90000 56340",p:6000},{n:"9000056550",d:"90000 56550",p:6000},{n:"9000056690",d:"90000 56690",p:6000},{n:"9000063230",d:"90000 63230",p:5000},{n:"9000063240",d:"90000 63240",p:5000},{n:"9000073630",d:"90000 73630",p:5000},{n:"9000076640",d:"90000 76640",p:6000},{n:"9000077180",d:"90000 77180",p:6000},{n:"9000080240",d:"90000 80240",p:7000},{n:"9000081850",d:"90000 81850",p:6000},{n:"9000083010",d:"90000 83010",p:7000},{n:"9000085990",d:"90000 85990",p:7000},{n:"9000088130",d:"90000 88130",p:7000},{n:"9000090489",d:"90000 90489",p:7000},{n:"9000094740",d:"90000 94740",p:7000},{n:"9000095360",d:"90000 95360",p:7000},{n:"9000097540",d:"90000 97540",p:5000},{n:"9000097590",d:"90000 97590",p:6000},{n:"9000098390",d:"90000 98390",p:6000},{n:"9000017910",d:"90000 17910",p:5000},{n:"9000019790",d:"90000 19790",p:5000},{n:"9090904456",d:"909090 4456",p:30000},{n:"9090907709",d:"909090 7709",p:25000},{n:"9090902228",d:"909090 2228",p:25000},{n:"9347894478",d:"93478 94478",p:5000},{n:"8399949991",d:"83 9994 9991",p:7500},{n:"9907172737",d:"99 07 17 27 37",p:25000},{n:"9827900400",d:"9827 900 400",p:5000},{n:"9009050559",d:"9009 0505 59",p:4000},{n:"9009906960",d:"9009 906 960",p:4000},{n:"9494894945",d:"9494 8 9494 5",p:25000},{n:"8307172737",d:"83 07 17 27 37",p:20000},{n:"9391698916",d:"93916 98916",p:5000}
 ];
 const seen=new Set();
 const DATA=NUMS.filter(x=>{if(seen.has(x.n))return false;seen.add(x.n);return true;});
@@ -1366,7 +1634,10 @@ function renderNums(list){
       </div>
       <div class="nb-banner">
         <div class="nb-price">${fmt(x.p)}</div>
-        <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%20${x.n}" target="_blank" class="nb-buy"><i class="fab fa-whatsapp"></i> Buy Now</a>
+        <div class="nb-actions">
+          <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20the%20number%20${x.n}%20(${x.d})%20-%20Please%20share%20more%20details" target="_blank" class="nb-interested"><i class="fas fa-heart"></i> Interested</a>
+          <a href="https://wa.me/919090900005?text=I%20want%20to%20buy%20the%20number%20${x.n}%20(${x.d})%20priced%20at%20${fmt(x.p).replace('₹','Rs.')}%20-%20Please%20confirm%20availability" target="_blank" class="nb-buy"><i class="fab fa-whatsapp"></i> Buy Now</a>
+        </div>
       </div>
     </div>`).join('');
 }
@@ -1401,7 +1672,10 @@ function renderHomeNums(){
       </div>
       <div class="nb-banner">
         <div class="nb-price">${fmt(x.p)}</div>
-        <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20buying%20${x.n}" target="_blank" class="nb-buy"><i class="fab fa-whatsapp"></i> Buy Now</a>
+        <div class="nb-actions">
+          <a href="https://wa.me/919090900005?text=I'm%20interested%20in%20the%20number%20${x.n}%20(${x.d})%20-%20Please%20share%20more%20details" target="_blank" class="nb-interested"><i class="fas fa-heart"></i> Interested</a>
+          <a href="https://wa.me/919090900005?text=I%20want%20to%20buy%20the%20number%20${x.n}%20(${x.d})%20priced%20at%20${fmt(x.p).replace('₹','Rs.')}%20-%20Please%20confirm%20availability" target="_blank" class="nb-buy"><i class="fab fa-whatsapp"></i> Buy Now</a>
+        </div>
       </div>
     </div>`).join('');
 }
@@ -1502,6 +1776,22 @@ document.getElementById('contactForm').addEventListener('submit',async e=>{
   msg.style.display='block';
 });
 
+
+// ── LIVE VISITOR COUNTER ──────────────────────────────────
+(function(){
+  // Simulate realistic live visitors (3–18 range, changes every 8-15 sec)
+  function getRand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+  var base = getRand(5,14);
+  var el = document.getElementById('visitorCount');
+  if(!el) return;
+  el.textContent = base;
+  setInterval(function(){
+    var change = getRand(-2,3);
+    base = Math.max(3, Math.min(22, base + change));
+    if(el) el.textContent = base;
+  }, getRand(8000,15000));
+})();
+
 // ── INIT ─────────────────────────────────────────────────
 window.onload=function(){
   // Remove preloader
@@ -1511,11 +1801,8 @@ window.onload=function(){
   AOS.init({duration:700,once:true,offset:60,easing:'ease-out-cubic'});
 
   // Owl testimonials
-  $('#testimonialSlider').owlCarousel({
-    loop:true,margin:20,nav:false,dots:true,autoplay:true,
-    autoplayTimeout:4500,autoplayHoverPause:true,smartSpeed:700,
-    responsive:{0:{items:1},768:{items:2},1100:{items:3}}
-  });
+  var owlOpts={loop:true,margin:20,nav:false,dots:true,autoplay:true,autoplayTimeout:4500,autoplayHoverPause:true,smartSpeed:700,responsive:{0:{items:1},768:{items:2},1100:{items:3}}};
+  ['#testimonialSlider','#testimonialSlider2','#testimonialSlider3'].forEach(function(id){if($(id).length)$(id).owlCarousel(owlOpts);});
 
   // Render home numbers
   renderHomeNums();

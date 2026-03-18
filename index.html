@@ -322,8 +322,8 @@ nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(24px);padding:12px 60
 .fg{margin-bottom:14px}.fl{font-family:var(--C);font-size:9px;letter-spacing:2px;color:var(--text3);display:block;margin-bottom:6px;text-transform:uppercase}
 .fi{width:100%;padding:14px 15px;background:var(--bg2);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:var(--U);font-size:16px;outline:none;transition:all .3s}
 .fi:focus{border-color:var(--border-g);box-shadow:0 0 0 3px rgba(201,168,76,.05)}.fi::placeholder{color:var(--text3)}textarea.fi{resize:vertical;min-height:110px}
-.form-submit{width:100%;padding:17px;border:none;border-radius:4px;cursor:pointer;font-family:var(--C);font-size:16px;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;transition:all .3s}
-.form-submit:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 10px 28px rgba(201,168,76,.25)}
+.form-submit{width:100%;padding:17px;border:none;border-radius:4px;cursor:pointer;font-family:var(--C);font-size:16px;letter-spacing:3px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px}
+.form-submit:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 10px 28px rgba(34,197,94,.35)}
 .fm{margin-top:12px;padding:12px;border-radius:3px;display:none;font-size:13px;font-family:var(--C);letter-spacing:1px}
 .fm-ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--green)}
 .fm-err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#f87171}
@@ -1379,16 +1379,16 @@ footer{padding:28px 16px}.footer-inner{flex-direction:column;text-align:center}.
         <div class="form-card">
           <div class="form-title">Send a Message</div>
           <div class="form-sub">Mr. Suresh typically responds within minutes on WhatsApp</div>
-          <form id="contactForm" action="https://formspree.io/f/xjvnbygy" method="POST">
+          <div id="contactForm">
             <div class="form-row">
-              <div class="fg"><label class="fl">Your Name</label><input class="fi" type="text" name="name" placeholder="Your full name" required/></div>
-              <div class="fg"><label class="fl">Phone Number</label><input class="fi" type="tel" name="phone" placeholder="+91 98765 43210"/></div>
+              <div class="fg"><label class="fl">Your Name</label><input class="fi" type="text" id="fName" placeholder="Your full name"/></div>
+              <div class="fg"><label class="fl">Phone Number</label><input class="fi" type="tel" id="fPhone" placeholder="+91 98765 43210"/></div>
             </div>
-            <div class="fg"><label class="fl">Email Address</label><input class="fi" type="email" name="email" placeholder="you@example.com" required/></div>
-            <div class="fg"><label class="fl">Your Message</label><textarea class="fi" name="message" rows="5" placeholder="I'm looking for a VIP number with..." required></textarea></div>
-            <button type="submit" class="form-submit">SEND MESSAGE</button>
+            <div class="fg"><label class="fl">Email Address</label><input class="fi" type="email" id="fEmail" placeholder="you@example.com"/></div>
+            <div class="fg"><label class="fl">Your Message</label><textarea class="fi" id="fMsg" rows="5" placeholder="I'm looking for a VIP number with..."></textarea></div>
+            <button type="button" class="form-submit" onclick="submitToWA()"><i class="fab fa-whatsapp" style="margin-right:10px"></i>SEND ON WHATSAPP</button>
             <div id="formMsg" class="fm"></div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -1730,14 +1730,46 @@ function toggleFaq(el){
   document.querySelectorAll('.faq-q.open').forEach(function(x){x.classList.remove('open');x.querySelector('i').className='fas fa-plus';});
   if(!isOpen){a.classList.add('show');el.classList.add('open');i.className='fas fa-times';}
 }
-document.getElementById('contactForm').addEventListener('submit',async e=>{
-  e.preventDefault();const msg=document.getElementById('formMsg');msg.style.display='none';
-  try{const r=await fetch(e.target.action,{method:'POST',body:new FormData(e.target),headers:{Accept:'application/json'}});
-    if(r.ok){msg.textContent='Message sent! Mr. Suresh will reply within minutes on WhatsApp.';msg.className='fm fm-ok';e.target.reset();}
-    else throw 0;}
-  catch{msg.textContent='Error sending. Please WhatsApp +91 90909 00005 directly.';msg.className='fm fm-err';}
-  msg.style.display='block';
-});
+function submitToWA(){
+  var name  = (document.getElementById('fName')||{value:''}).value.trim();
+  var phone = (document.getElementById('fPhone')||{value:''}).value.trim();
+  var email = (document.getElementById('fEmail')||{value:''}).value.trim();
+  var msg   = (document.getElementById('fMsg')||{value:''}).value.trim();
+  var info  = document.getElementById('formMsg');
+
+  if(!name){
+    info.textContent='Please enter your name.';
+    info.className='fm fm-err';info.style.display='block';
+    document.getElementById('fName').focus();return;
+  }
+  if(!msg){
+    info.textContent='Please enter your message.';
+    info.className='fm fm-err';info.style.display='block';
+    document.getElementById('fMsg').focus();return;
+  }
+
+  // Build WhatsApp message
+  var text = 'Hi Mr. Suresh!%0A%0A';
+  text += '*Name:* ' + encodeURIComponent(name) + '%0A';
+  if(phone) text += '*Phone:* ' + encodeURIComponent(phone) + '%0A';
+  if(email) text += '*Email:* ' + encodeURIComponent(email) + '%0A';
+  text += '%0A*Message:*%0A' + encodeURIComponent(msg);
+
+  // Show success and open WhatsApp
+  info.textContent='Opening WhatsApp... Mr. Suresh will reply instantly!';
+  info.className='fm fm-ok';info.style.display='block';
+
+  // Clear form
+  document.getElementById('fName').value='';
+  document.getElementById('fPhone').value='';
+  document.getElementById('fEmail').value='';
+  document.getElementById('fMsg').value='';
+
+  // Open WhatsApp
+  setTimeout(function(){
+    window.open('https://wa.me/919090900005?text='+text,'_blank');
+  },400);
+}
 (function(){
   var base=Math.floor(Math.random()*20)+108;
   var el=document.getElementById('visitorCount');if(el)el.textContent=base;

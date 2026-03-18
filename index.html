@@ -749,6 +749,61 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   #visitorBadge{bottom:78px;left:12px;padding:7px 12px;font-size:11px}
   .vb-count{font-size:13px}
 }
+
+/* ── SOLD POPUP ───────────────────────────────────────── */
+#soldPopup{
+  position:fixed;bottom:160px;left:20px;z-index:9000;
+  width:290px;
+  background:var(--card);
+  border:1px solid var(--border-g);
+  border-left:4px solid #ef4444;
+  border-radius:10px;
+  padding:14px 16px;
+  box-shadow:0 8px 32px var(--shadow);
+  display:none;
+  animation:soldSlideIn .4s var(--ease);
+  pointer-events:none;
+}
+@keyframes soldSlideIn{
+  from{opacity:0;transform:translateX(-24px)}
+  to{opacity:1;transform:none}
+}
+@keyframes soldSlideOut{
+  from{opacity:1;transform:none}
+  to{opacity:0;transform:translateX(-24px)}
+}
+.sold-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sold-badge{
+  background:#ef4444;color:#fff;
+  font-family:var(--C);font-size:9px;letter-spacing:2px;
+  padding:3px 8px;border-radius:2px;
+  animation:badgePulse 1s ease infinite alternate;
+}
+@keyframes badgePulse{from{opacity:.8}to{opacity:1}}
+.sold-title{font-family:var(--C);font-size:10px;letter-spacing:2px;color:var(--text3)}
+.sold-number{
+  font-family:var(--C);font-size:22px;letter-spacing:4px;
+  color:var(--text);line-height:1;margin-bottom:6px;
+}
+.sold-meta{display:flex;justify-content:space-between;align-items:center}
+.sold-city{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--C);font-size:11px;letter-spacing:1px;color:var(--text2);
+}
+.sold-city i{color:var(--gold2);font-size:11px}
+.sold-time{font-size:11px;color:var(--text3);font-style:italic}
+.sold-close{
+  position:absolute;top:8px;right:10px;
+  background:none;border:none;color:var(--text3);
+  font-size:14px;cursor:pointer;line-height:1;
+  pointer-events:all;
+}
+.sold-close:hover{color:var(--text)}
+@media(max-width:640px){
+  #soldPopup{bottom:140px;left:12px;width:260px}
+  .sold-number{font-size:19px;letter-spacing:3px}
+}
+
 </style>
 </head>
 <body>
@@ -816,7 +871,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
           <span class="hero-badge"><i class="fas fa-shield-alt"></i> 100% Legal</span>
           <span class="hero-badge"><i class="fab fa-whatsapp"></i> WhatsApp First</span>
         </div>
-        <p class="hero-desc" data-aos="fade-up" data-aos-delay="440">We don't just sell numbers — we craft identities. From <strong>₹3,000 to ₹2,00,000</strong>, every VIP number carries meaning, pattern, and purpose. Personal service. Zero middlemen. 100% trust.</p>
+        <p class="hero-desc" data-aos="fade-up" data-aos-delay="440">We don't just sell numbers — we craft identities. Every VIP number carries meaning, pattern, and purpose. Starting from just <strong>₹999</strong> — there's a perfect number for every budget. Personal service. Zero middlemen. 100% trust.</p>
         <div class="hero-btns" data-aos="fade-up" data-aos-delay="520">
           <a href="#" onclick="goPage('numbers');return false" class="btn-gold"><i class="fas fa-gem"></i> Browse VIP Numbers</a>
           <a href="#" onclick="goPage('company');return false" class="btn-outline"><i class="fas fa-building"></i> Our Story</a>
@@ -1414,7 +1469,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
   <div class="pg-hero">
     <div class="pg-hero-inner">
       <div class="num-pg-title" data-aos="fade-up" data-aos-delay="100">VIP and Fancy Numbers<br><span style="color:var(--gold2)">Number that Matters</span></div>
-      <p class="num-pg-sub" data-aos="fade-up" data-aos-delay="160">From premium ₹2 lakh numbers to affordable ₹3,000 patterns. Hover on any card to buy instantly.</p>
+      <p class="num-pg-sub" data-aos="fade-up" data-aos-delay="160">We have a wide range of collection starting from ₹999. All India delivery available. Numbers are sold out as soon as they go live — enquire fast!</p>
       <div class="ttabs" data-aos="fade-up" data-aos-delay="220">
         <button class="ttab on" onclick="filterTier('all',this)"><i class="fas fa-th"></i> All <span class="tc" id="cnt-all">0</span></button>
         <button class="ttab" onclick="filterTier('diamond',this)">💎 Diamond ₹1L+ <span class="tc" id="cnt-dia">0</span></button>
@@ -1533,7 +1588,21 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 60p
     <div class="vb-live">LIVE</div>
   </div>
   <div class="vb-count" id="visitorCount">...</div>
-  <div class="vb-label">visitors now</div>
+  <div class="vb-label">viewing now</div>
+</div>
+
+<!-- SOLD POPUP -->
+<div id="soldPopup">
+  <button class="sold-close" onclick="hideSoldPopup()" aria-label="Close">&#x2715;</button>
+  <div class="sold-header">
+    <span class="sold-badge">SOLD OUT</span>
+    <span class="sold-title">NUMBER JUST SOLD</span>
+  </div>
+  <div class="sold-number" id="soldNum">96733 39999</div>
+  <div class="sold-meta">
+    <div class="sold-city"><i class="fas fa-map-marker-alt"></i><span id="soldCity">Hyderabad</span></div>
+    <div class="sold-time" id="soldTime">just now</div>
+  </div>
 </div>
 <!-- BACK TO TOP -->
 <button id="backToTop" onclick="scrollToTop()" title="Back to top"><i class="fas fa-arrow-up"></i></button>
@@ -1781,15 +1850,122 @@ document.getElementById('contactForm').addEventListener('submit',async e=>{
 (function(){
   // Simulate realistic live visitors (3–18 range, changes every 8-15 sec)
   function getRand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
-  var base = getRand(5,14);
+  var base = getRand(108,127);
   var el = document.getElementById('visitorCount');
   if(!el) return;
   el.textContent = base;
   setInterval(function(){
     var change = getRand(-2,3);
-    base = Math.max(3, Math.min(22, base + change));
+    base = Math.max(98, Math.min(148, base + change));
     if(el) el.textContent = base;
   }, getRand(8000,15000));
+})();
+
+
+// ── SOLD POPUP ─────────────────────────────────────────
+const SOLD=[
+  {n:"96733 39999",c:"Hyderabad",t:"just now"},
+  {n:"96730 69999",c:"Mumbai",t:"2 mins ago"},
+  {n:"96730 23456",c:"Delhi",t:"5 mins ago"},
+  {n:"97039 00900",c:"Chennai",t:"8 mins ago"},
+  {n:"99231 29999",c:"Bengaluru",t:"12 mins ago"},
+  {n:"96736 29999",c:"Pune",t:"15 mins ago"},
+  {n:"92061 23456",c:"Kolkata",t:"20 mins ago"},
+  {n:"96446 45678",c:"Vijayawada",t:"25 mins ago"},
+  {n:"96730 19999",c:"Vizag",t:"30 mins ago"},
+  {n:"90903 39090",c:"Guntur",t:"45 mins ago"},
+  {n:"98237 59999",c:"Tenali",t:"1 hour ago"},
+  {n:"88886 34567",c:"Kurnool",t:"1.5 hours ago"},
+  {n:"98231 56789",c:"Tirupati",t:"2 hours ago"},
+  {n:"99232 45678",c:"Warangal",t:"3 hours ago"},
+  {n:"96736 49999",c:"Surat",t:"Today"},
+  {n:"98230 29999",c:"Ahmedabad",t:"just now"},
+  {n:"96738 89999",c:"Jaipur",t:"2 mins ago"},
+  {n:"96734 34567",c:"Lucknow",t:"5 mins ago"},
+  {n:"96732 09999",c:"Bhopal",t:"8 mins ago"},
+  {n:"96735 34567",c:"Indore",t:"12 mins ago"},
+  {n:"96738 34567",c:"Nagpur",t:"15 mins ago"},
+  {n:"99236 45678",c:"Coimbatore",t:"20 mins ago"},
+  {n:"96739 67890",c:"Madurai",t:"25 mins ago"},
+  {n:"96737 34567",c:"Mysuru",t:"30 mins ago"},
+  {n:"96736 67890",c:"Mangaluru",t:"45 mins ago"},
+  {n:"96735 23456",c:"Hubballi",t:"1 hour ago"},
+  {n:"88883 34567",c:"Belagavi",t:"1.5 hours ago"},
+  {n:"98235 29999",c:"Patna",t:"2 hours ago"},
+  {n:"99237 56789",c:"Ranchi",t:"3 hours ago"},
+  {n:"99233 45678",c:"Bhubaneswar",t:"Today"},
+  {n:"91213 14121",c:"Raipur",t:"just now"},
+  {n:"99231 49999",c:"Guwahati",t:"2 mins ago"},
+  {n:"99236 69999",c:"Chandigarh",t:"5 mins ago"},
+  {n:"99238 69999",c:"Nashik",t:"8 mins ago"},
+  {n:"96733 19999",c:"Aurangabad",t:"12 mins ago"},
+  {n:"99234 45678",c:"Rajkot",t:"15 mins ago"},
+  {n:"96731 23456",c:"Vadodara",t:"20 mins ago"},
+  {n:"98233 56789",c:"Kochi",t:"25 mins ago"},
+  {n:"90909 07700",c:"Thiruvananthapuram",t:"30 mins ago"},
+  {n:"88886 45678",c:"Hyderabad",t:"45 mins ago"},
+  {n:"98238 19999",c:"Mumbai",t:"1 hour ago"},
+  {n:"96735 19999",c:"Delhi",t:"1.5 hours ago"},
+  {n:"99233 34567",c:"Chennai",t:"2 hours ago"},
+  {n:"96734 09999",c:"Bengaluru",t:"3 hours ago"},
+  {n:"96735 39999",c:"Pune",t:"Today"},
+  {n:"98233 19999",c:"Kolkata",t:"just now"},
+  {n:"90009 59090",c:"Vijayawada",t:"2 mins ago"},
+  {n:"98234 23456",c:"Vizag",t:"5 mins ago"},
+  {n:"90000 86000",c:"Guntur",t:"8 mins ago"},
+  {n:"99231 56789",c:"Tenali",t:"12 mins ago"},
+  {n:"99238 89999",c:"Kurnool",t:"15 mins ago"},
+  {n:"98237 49999",c:"Tirupati",t:"20 mins ago"},
+  {n:"90000 50090",c:"Warangal",t:"25 mins ago"},
+  {n:"96738 69999",c:"Surat",t:"30 mins ago"},
+  {n:"98239 23456",c:"Ahmedabad",t:"45 mins ago"},
+  {n:"98236 09999",c:"Jaipur",t:"1 hour ago"},
+  {n:"99234 49999",c:"Lucknow",t:"1.5 hours ago"},
+  {n:"99234 69999",c:"Bhopal",t:"2 hours ago"},
+  {n:"98233 45678",c:"Indore",t:"3 hours ago"},
+  {n:"90000 15110",c:"Nagpur",t:"Today"}
+];
+
+(function(){
+  var idx = 0;
+  var shuffled = SOLD.slice().sort(function(){return Math.random()-.5;});
+  var popup = document.getElementById('soldPopup');
+  var timer;
+
+  function showNext(){
+    if(!popup) return;
+    var entry = shuffled[idx % shuffled.length];
+    idx++;
+    document.getElementById('soldNum').textContent  = entry.n;
+    document.getElementById('soldCity').textContent = entry.c;
+    document.getElementById('soldTime').textContent = entry.t;
+    popup.style.display = 'block';
+    popup.style.animation = 'soldSlideIn .4s cubic-bezier(.4,0,.2,1)';
+    // auto hide after 5 seconds
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      popup.style.animation = 'soldSlideOut .4s cubic-bezier(.4,0,.2,1) forwards';
+      setTimeout(function(){popup.style.display='none';}, 380);
+    }, 5000);
+  }
+
+  function hideSoldPopup(){
+    clearTimeout(timer);
+    if(popup){
+      popup.style.animation = 'soldSlideOut .4s cubic-bezier(.4,0,.2,1) forwards';
+      setTimeout(function(){popup.style.display='none';}, 380);
+    }
+  }
+  window.hideSoldPopup = hideSoldPopup;
+
+  // First popup after 6 seconds, then every 25-40 seconds
+  setTimeout(function(){
+    showNext();
+    setInterval(function(){
+      var delay = 25000 + Math.random()*15000;
+      setTimeout(showNext, delay);
+    }, 40000);
+  }, 6000);
 })();
 
 // ── INIT ─────────────────────────────────────────────────

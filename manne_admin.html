@@ -481,9 +481,16 @@ async function publish(){
     var curr=decodeURIComponent(escape(atob(gd.content.replace(/\n/g,''))));
     step('ps2','done','Fetched \u2713 ('+sha.slice(0,7)+')');
     step('ps3','act','Updating numbers...');
-    var ns=curr.indexOf('const NUMS=[');
+    // Try multiple patterns to find NUMS array
+    var ns=-1;
+    var numsPatterns=['const NUMS=[','const NUMS = [','var NUMS=[','NUMS=[\n'];
+    for(var pi=0;pi<numsPatterns.length;pi++){
+      var idx=curr.indexOf(numsPatterns[pi]);
+      if(idx>-1){ns=idx;break;}
+    }
+    if(ns===-1)throw new Error('Could not find NUMS array in index.html. The file on GitHub (commit '+sha.slice(0,7)+') may be the old version. Please upload the new index.html to GitHub first, then try publishing again.');
+    // Find the closing ]; after the NUMS array
     var ne=curr.indexOf('];',ns)+2;
-    if(ns===-1)throw new Error('Could not find NUMS array in index.html — make sure your index.html is the correct file');
     var newC=curr.slice(0,ns)+numsCode()+curr.slice(ne);
     step('ps3','done',NUMS.length+' numbers updated \u2713');
     step('ps4','act','Pushing to GitHub...');

@@ -471,10 +471,544 @@ async function publish(){
   try{
     step('ps1','act','Connecting to GitHub...');
     var api='https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+GH_FILE;
-    var hdrs={'Authorization':'token '+tok,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};
+    var hdrs={'Authorization':'token '+tok,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json','Cache-Control':'no-cache','Pragma':'no-cache'};
     step('ps1','done','Connected \u2713');
-    step('ps2','act','Fetching index.html...');
-    var gr=await fetch(api+'?ref='+GH_BRANCH,{headers:hdrs});
+    step('ps2','act','Fetching latest index.html ('+new Date().toLocaleTimeString()+')');
+    var gr=await fetch(api+'?ref='+GH_BRANCH+'&t='+Date.now(),{headers:hdrs,cache:'no-store'});
+    if(!gr.ok){var ge=await gr.json();throw new Error(ge.message||'Fetch failed ('+gr.status+')');}
+    var gd=await gr.json();
+    var sha=gd.sha;
+    var curr=decodeURIComponent(escape(atob(gd.content.replace(/\n/g,''))));
+    step('ps2','done','Fetched \u2713 ('+sha.slice(0,7)+')');
+    step('ps3','act','Updating numbers...');
+    // Try multiple patterns to find NUMS array
+    var ns=-1;
+    var numsPatterns=['const NUMS=[','const NUMS = [','var NUMS=[','NUMS=[\n'];
+    for(var pi=0;pi<numsPatterns.length;pi++){
+      var idx=curr.indexOf(numsPatterns[pi]);
+      if(idx>-1){ns=idx;break;}
+    }
+    if(ns===-1)throw new Error('Could not find NUMS array in index.html. The file on GitHub (commit '+sha.slice(0,7)+') may be the old version. Please upload the new index.html to GitHub first, then try publishing again.');
+    // Find the closing ]; after the NUMS array
+    var ne=curr.indexOf('];',ns)+2;
+    var newC=curr.slice(0,ns)+numsCode()+curr.slice(ne);
+    step('ps3','done',NUMS.length+' numbers updated \u2713');
+    step('ps4','act','Pushing to GitHub...');
+    var enc=btoa(unescape(encodeURIComponent(newC)));
+    var pr=await fetch(api,{method:'PUT',headers:hdrs,body:JSON.stringify({message:'Update VIP numbers ('+NUMS.length+') via Admin Panel',content:enc,sha:sha,branch:GH_BRANCH})});
+    if(!pr.ok){var pe=await pr.json();throw new Error(pe.message||'Push failed ('+pr.status+')');}
+    var pd=await pr.json();
+    step('ps4','done','Pushed \u2713 (commit '+pd.commit.sha.slice(0,7)+')');
+    step('ps5','done','\u2705 Live at sureshmanne.com in ~60 seconds!');
+    setSt('ok','PUBLISHED \u2713'); clean(); toast('\ud83d\ude80 Published! Live in ~60 seconds','ok');
+    setTimeout(function(){plog.style.display='none';},10000);
+  } catch(err){
+    var active=['ps1','ps2','ps3','ps4','ps5'].find(function(id){return document.getElementById(id).className==='ps act';});
+    step(active||'ps1','err',err.message);
+    setSt('err','FAILED'); toast('\u274c '+err.message,'err');
+  }
+  setBtn(false);
+}
+function setSt(t,txt){
+  var e=document.getElementById('pubSt');
+  e.className='pbs pbs-'+t; e.textContent=txt;
+  var msgs={pub:'Publishing... please wait',ok:'Last published: '+new Date().toLocaleTimeString('en-IN'),err:'Failed — check Settings',idle:'Edit numbers then Publish'};
+  if(msgs[t])document.getElementById('pbSub').textContent=msgs[t];
+}
+function setBtn(dis){
+  document.getElementById('pubBtn').disabled=dis;
+  document.getElementById('pubBtn2').disabled=dis;
+}
+
+// TOAST
+var _tt;
+function toast(msg,type){
+  var t=document.getElementById('toast'); t.textContent=msg;
+  t.className='show '+(type||'ok'); clearTimeout(_tt);
+  _tt=setTimeout(function(){t.className='';},3500);
+}
+
+// DEFAULT NUMS
+var DEF = [{n:"9777700005",d:"97777 00005",p:300000},{n:"8888234567",d:"8888 234567",p:200000},{n:"8888636666",d:"8888 63 6666",p:150000},{n:"9591299999",d:"95912 99999",p:200000},{n:"9009169666",d:"9009 169 666",p:5000},{n:"6262662628",d:"62626 62628",p:20000},{n:"9917113456",d:"9917 11 3456",p:20000},{n:"9244561456",d:"924 456 1456",p:15000},{n:"9111874456",d:"9111 874 456",p:10000},{n:"9444352456",d:"9444 352 456",p:8000},{n:"8888713111",d:"8888 713 111",p:15000},{n:"9644245678",d:"96442 45678",p:15000},{n:"9111857111",d:"9111 857 111",p:5000},{n:"9182641313",d:"9182 64 1313",p:3000},{n:"9244264456",d:"9244 264 456",p:5000},{n:"9459639999",d:"945 963 9999",p:30000},{n:"9694179999",d:"9694 17 9999",p:25000},{n:"9088789999",d:"9088 78 9999",p:25000},{n:"9435319999",d:"94 3531 9999",p:20000},{n:"9514539999",d:"9514 53 9999",p:25000},{n:"9674019999",d:"9674 01 9999",p:20000},{n:"9674109999",d:"9674 10 9999",p:20000},{n:"9114169999",d:"9114 16 9999",p:20000},{n:"9114179999",d:"9114 17 9999",p:20000},{n:"9114289999",d:"9114 28 9999",p:20000},{n:"9114349999",d:"9114 34 9999",p:20000},{n:"9114389999",d:"9114 38 9999",p:20000},{n:"9114589999",d:"9114 58 9999",p:20000},{n:"9114639999",d:"9114 63 9999",p:20000},{n:"9114649999",d:"9114 64 9999",p:20000},{n:"9114679999",d:"9114 67 9999",p:20000},{n:"9114719999",d:"9114 71 9999",p:20000},{n:"9114729999",d:"9114 72 9999",p:20000},{n:"9114739999",d:"9114 73 9999",p:20000},{n:"9114749999",d:"9114 74 9999",p:20000},{n:"9114769999",d:"9114 76 9999",p:20000},{n:"9114839999",d:"9114 83 9999",p:20000},{n:"9114859999",d:"9114 85 9999",p:20000},{n:"9114869999",d:"9114 86 9999",p:20000},{n:"9114879999",d:"9114 87 9999",p:20000},{n:"7992779999",d:"7992 77 9999",p:20000},{n:"9781679999",d:"9781 67 9999",p:20000},{n:"9628539999",d:"9628 53 9999",p:20000},{n:"9468039999",d:"9468 03 9999",p:20000},{n:"9609900006",d:"96099 00006",p:20000},{n:"9231234568",d:"923 1234568",p:30000},{n:"9188919191",d:"91 88 91 91 91",p:150000},{n:"8333838338",d:"8333 83 8338",p:40000},{n:"8988019999",d:"8988 01 9999",p:12000},{n:"8888488808",d:"88884 88808",p:75000},{n:"9127012345",d:"9127 012345",p:80000},{n:"9391293922",d:"93912 93922",p:5000},{n:"9391893928",d:"93918 93928",p:5000},{n:"8555025557",d:"85550 25557",p:5000},{n:"8555915557",d:"85559 15557",p:5000},{n:"6363360633",d:"63633 60633",p:6000},{n:"9000019640",d:"90000 19640",p:4000},{n:"9000026410",d:"90000 26410",p:4000},{n:"9000038570",d:"90000 38570",p:4000},{n:"9000052380",d:"90000 52380",p:4000},{n:"9000053720",d:"90000 53720",p:4000},{n:"9000058520",d:"90000 58520",p:4000},{n:"9000062850",d:"90000 62850",p:4000},{n:"9000065180",d:"90000 65180",p:4000},{n:"9000069730",d:"90000 69730",p:4000},{n:"9000073650",d:"90000 73650",p:4000},{n:"9000076380",d:"90000 76380",p:4000},{n:"9000015110",d:"90000 15110",p:6000},{n:"9000015880",d:"90000 15880",p:6000},{n:"9000018110",d:"90000 18110",p:6000},{n:"9000018440",d:"90000 18440",p:5000},{n:"9000020880",d:"90000 20880",p:6000},{n:"9000031350",d:"90000 31350",p:5000},{n:"9000035650",d:"90000 35650",p:5000},{n:"9000044820",d:"90000 44820",p:6000},{n:"9000046690",d:"90000 46690",p:5000},{n:"9000055640",d:"90000 55640",p:6000},{n:"9000056340",d:"90000 56340",p:6000},{n:"9000056550",d:"90000 56550",p:6000},{n:"9000056690",d:"90000 56690",p:6000},{n:"9000063230",d:"90000 63230",p:5000},{n:"9000063240",d:"90000 63240",p:5000},{n:"9000073630",d:"90000 73630",p:5000},{n:"9000076640",d:"90000 76640",p:6000},{n:"9000077180",d:"90000 77180",p:6000},{n:"9000080240",d:"90000 80240",p:7000},{n:"9000081850",d:"90000 81850",p:6000},{n:"9000083010",d:"90000 83010",p:7000},{n:"9000085990",d:"90000 85990",p:7000},{n:"9000088130",d:"90000 88130",p:7000},{n:"9000090489",d:"90000 90489",p:7000},{n:"9000094740",d:"90000 94740",p:7000},{n:"9000095360",d:"90000 95360",p:7000},{n:"9000097540",d:"90000 97540",p:5000},{n:"9000097590",d:"90000 97590",p:6000},{n:"9000098390",d:"90000 98390",p:6000},{n:"9000017910",d:"90000 17910",p:5000},{n:"9000019790",d:"90000 19790",p:5000},{n:"9090904456",d:"909090 4456",p:30000},{n:"9090907709",d:"909090 7709",p:25000},{n:"9090902228",d:"909090 2228",p:25000},{n:"9347894478",d:"93478 94478",p:5000},{n:"8399949991",d:"83 9994 9991",p:7500},{n:"9907172737",d:"99 07 17 27 37",p:25000},{n:"9827900400",d:"9827 900 400",p:5000},{n:"9009050559",d:"9009 0505 59",p:4000},{n:"9009906960",d:"9009 906 960",p:4000},{n:"9494894945",d:"9494 8 9494 5",p:25000},{n:"8307172737",d:"83 07 17 27 37",p:20000},{n:"9391698916",d:"93916 98916",p:5000}];
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Manne Communications — Admin Panel</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Colus&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--gold:#c9a84c;--gold2:#e4c96a;--green:#22c55e;--red:#ef4444;--navy:#2e6aad;
+--bg:#04060e;--card:#111628;--surface:#0c1020;
+--border:rgba(255,255,255,.08);--border-g:rgba(201,168,76,.3);--border-n:rgba(46,106,173,.4);
+--text:#f2eddf;--text2:#d4ccb8;--text3:#7a8099;
+--C:'Colus',sans-serif;--U:'DM Sans',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--U);font-size:15px;min-height:100vh}
+button{cursor:pointer}
+/* LOGIN */
+#ls{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
+.lb{background:var(--card);border:1px solid var(--border-g);border-radius:14px;padding:48px 40px;width:100%;max-width:420px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lb-logo{font-family:var(--C);font-size:20px;letter-spacing:3px;color:var(--gold2);margin-bottom:3px}
+.lb-tag{font-family:var(--C);font-size:10px;letter-spacing:4px;color:var(--gold);opacity:.8;display:block;margin-bottom:28px}
+.li{width:100%;padding:13px 16px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:15px;outline:none;margin-bottom:12px;transition:border .3s;font-family:var(--U)}
+.li:focus{border-color:var(--border-g)}
+.lbtn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-family:var(--C);font-size:13px;letter-spacing:2px;border:none;border-radius:6px;transition:all .3s}
+.lbtn:hover{opacity:.9;transform:translateY(-1px)}
+.lerr{color:var(--red);font-size:13px;margin-top:10px;display:none}
+/* APP */
+#app{display:none}
+/* TOPBAR */
+.tb{background:var(--card);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.4);flex-wrap:wrap;gap:10px}
+.tb-l .tbl{font-family:var(--C);font-size:16px;letter-spacing:3px;color:var(--gold2)}
+.tb-l .tbs{font-family:var(--C);font-size:9px;letter-spacing:3px;color:var(--text3)}
+.tb-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--C);font-size:11px;letter-spacing:1.5px;padding:9px 16px;border-radius:6px;border:none;transition:all .3s;white-space:nowrap;cursor:pointer}
+.bg{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}.bg:hover{opacity:.9;transform:translateY(-1px)}
+.bn{background:rgba(46,106,173,.15);border:1px solid var(--border-n);color:#7ab3e0}.bn:hover{background:rgba(46,106,173,.3)}
+.bo{background:transparent;border:1px solid var(--border-g);color:var(--gold2)}.bo:hover{background:rgba(201,168,76,.1)}
+.br{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--red)}.br:hover{background:rgba(239,68,68,.22)}
+.bgrn{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:var(--green)}.bgrn:hover{background:rgba(34,197,94,.22)}
+.btn-sm{padding:7px 12px;font-size:10px}
+.lout{background:none;border:1px solid var(--border);color:var(--text3);font-family:var(--C);font-size:10px;letter-spacing:1px;padding:7px 12px;border-radius:4px;cursor:pointer;transition:all .3s}.lout:hover{color:var(--red);border-color:rgba(239,68,68,.4)}
+/* MAIN */
+.main{padding:20px 24px;max-width:1440px;margin:0 auto}
+/* SETTINGS */
+.sp{background:var(--card);border:1px solid var(--border-n);border-radius:10px;padding:22px 24px;margin-bottom:20px;display:none}
+.sp-title{font-family:var(--C);font-size:13px;letter-spacing:2px;color:#7ab3e0;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sp-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.ts{font-size:13px;margin-top:10px;display:flex;align-items:center;gap:6px}
+.ts-ok{color:var(--green)}.ts-no{color:var(--red)}
+.sp-hint{font-size:12px;color:var(--text3);line-height:1.7;margin-top:12px;padding:12px;background:var(--surface);border-radius:6px;border-left:3px solid var(--border-n)}
+.sp-hint a{color:#7ab3e0}
+/* PUBLISH BAR */
+.pb{background:linear-gradient(135deg,rgba(46,106,173,.2),rgba(201,168,76,.08));border:1px solid var(--border-g);border-radius:10px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+.pb-t{font-family:var(--C);font-size:13px;letter-spacing:1.5px;color:var(--gold2);margin-bottom:4px}
+.pb-s{font-size:13px;color:var(--text3)}
+.pbs{font-family:var(--C);font-size:10px;letter-spacing:1.5px;padding:5px 12px;border-radius:4px}
+.pbs-idle{background:rgba(255,255,255,.05);color:var(--text3);border:1px solid var(--border)}
+.pbs-pub{background:rgba(46,106,173,.15);color:#7ab3e0;border:1px solid var(--border-n)}
+.pbs-ok{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.pbs-err{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+/* LOG */
+.pl{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:2;display:none}
+.ps{display:flex;align-items:center;gap:8px}.ps i{width:16px;text-align:center}
+.ps.done{color:var(--green)}.ps.act{color:var(--gold2)}.ps.err{color:var(--red)}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 20px;transition:border .3s}.stat:hover{border-color:var(--border-g)}
+.sv{font-family:var(--C);font-size:36px;color:var(--gold2);line-height:1;margin-bottom:4px}
+.sl{font-size:11px;letter-spacing:2px;color:var(--text3);text-transform:uppercase}
+/* CONTROLS */
+.ctrls{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.srch-w{position:relative;flex:1;min-width:180px}
+.srch-w i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:13px;pointer-events:none}
+.fi{width:100%;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:14px;outline:none;transition:border .3s;font-family:var(--U)}
+.fi:focus{border-color:var(--border-g)}.fi::placeholder{color:var(--text3)}
+.srch-i{padding-left:36px}
+.sel{padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-size:14px;outline:none;font-family:var(--U)}.sel option{background:var(--card)}
+/* TABLE */
+.tw{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:auto;margin-bottom:20px}
+table{width:100%;border-collapse:collapse;min-width:580px}
+thead th{background:var(--surface);font-family:var(--C);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(201,168,76,.03)}
+td{padding:11px 14px;font-size:14px;color:var(--text2);vertical-align:middle}
+.nc{font-family:var(--C);font-size:17px;letter-spacing:3px;color:var(--text);white-space:nowrap}
+.pc{font-family:var(--C);font-size:14px;color:var(--gold2);white-space:nowrap}
+.dc{font-family:var(--C);font-size:16px;color:var(--gold2)}
+.tbadge{font-family:var(--C);font-size:9px;letter-spacing:2px;padding:3px 10px;border-radius:3px;border:1px solid currentColor;display:inline-block;font-weight:700;white-space:nowrap}
+.td{color:#b9f2ff;border-color:rgba(185,242,255,.3);background:rgba(185,242,255,.06)}
+.tg{color:var(--gold2);border-color:rgba(228,201,106,.3);background:rgba(228,201,106,.07)}
+.ts2{color:var(--text2);border-color:var(--border)}
+.ra{display:flex;gap:6px}
+.ac{width:30px;height:30px;border-radius:4px;border:none;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;cursor:pointer}
+.ae{background:rgba(46,106,173,.12);color:#7ab3e0}.ae:hover{background:rgba(46,106,173,.28)}
+.ad{background:rgba(239,68,68,.08);color:var(--red)}.ad:hover{background:rgba(239,68,68,.22)}
+.empty td{text-align:center;padding:48px;color:var(--text3);font-family:var(--C);letter-spacing:2px;font-size:12px}
+/* MODAL */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:16px}
+.mbg.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border-g);border-radius:12px;padding:30px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto}
+.mt{font-family:var(--C);font-size:16px;letter-spacing:2px;color:var(--gold2);margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.fg{margin-bottom:14px}
+.fl{font-family:var(--C);font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;display:block;margin-bottom:6px}
+.mprev{background:var(--surface);border:1px solid var(--border-g);border-radius:6px;padding:14px;margin-bottom:18px;display:none}
+.mp-n{font-family:var(--C);font-size:22px;letter-spacing:4px;color:var(--text);margin-bottom:8px}
+.mp-d{display:flex;flex-wrap:wrap;gap:8px}
+.mp-c{font-size:12px;color:var(--text3);background:var(--card);border:1px solid var(--border);border-radius:4px;padding:3px 10px}
+.mp-c b{color:var(--gold2)}
+.merr{color:var(--red);font-size:13px;margin-bottom:12px;padding:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px;display:none}
+.ma{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+/* UNSAVED */
+.unsaved{display:none;font-family:var(--C);font-size:10px;letter-spacing:1px;color:var(--gold2);background:rgba(201,168,76,.1);border:1px solid var(--border-g);padding:5px 10px;border-radius:4px}
+/* TOAST */
+#toast{position:fixed;bottom:22px;right:22px;font-family:var(--C);font-size:11px;letter-spacing:1.5px;padding:12px 20px;border-radius:6px;transform:translateY(70px);opacity:0;transition:all .35s;z-index:9999;pointer-events:none;max-width:300px;text-align:center}
+#toast.show{transform:none;opacity:1}
+#toast.ok{background:var(--green);color:#000}
+#toast.err{background:var(--red);color:#fff}
+#toast.info{background:rgba(46,106,173,.95);color:#fff}
+@media(max-width:768px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .tb,.main{padding:10px 14px}
+  .ctrls{flex-direction:column}.ctrls>*{width:100%}
+  .pb{flex-direction:column;align-items:flex-start}
+  .sp-row{grid-template-columns:1fr}
+  #toast{right:12px;left:12px;max-width:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="ls">
+  <div class="lb">
+    <div class="lb-logo">MANNE COMMUNICATIONS</div>
+    <span class="lb-tag">ADMIN PANEL</span>
+    <input class="li" type="text" id="lu" placeholder="Username" autocomplete="off" onkeydown="if(event.key==='Enter')login()"/>
+    <input class="li" type="password" id="lp" placeholder="Password" onkeydown="if(event.key==='Enter')login()"/>
+    <button class="lbtn" onclick="login()"><i class="fas fa-lock"></i>&nbsp; LOGIN</button>
+    <div class="lerr" id="lerr"><i class="fas fa-exclamation-circle"></i> Invalid credentials</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- TOPBAR -->
+  <div class="tb">
+    <div class="tb-l"><div class="tbl">MANNE COMMUNICATIONS</div><div class="tbs">ADMIN PANEL</div></div>
+    <div class="tb-r">
+      <span class="unsaved" id="udBadge">⚠️ UNSAVED</span>
+      <button class="btn bg" onclick="openAdd()"><i class="fas fa-plus"></i> Add Number</button>
+      <button class="btn bgrn" id="pubBtn" onclick="publish()"><i class="fas fa-rocket"></i> Publish to Website</button>
+      <button class="btn bn btn-sm" onclick="toggleSP()" title="GitHub Settings"><i class="fas fa-cog"></i> Settings</button>
+      <a href="https://sureshmanne.com" target="_blank" class="btn bo btn-sm"><i class="fas fa-globe"></i> View Site</a>
+      <button class="lout" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- SETTINGS PANEL -->
+    <div class="sp" id="spanel">
+      <div class="sp-title"><i class="fab fa-github"></i> GitHub Auto-Publish Settings</div>
+      <div class="sp-row">
+        <div class="fg" style="margin:0">
+          <label class="fl">GitHub Personal Access Token</label>
+          <input class="fi" type="password" id="ghTok" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off"/>
+        </div>
+        <button class="btn bn" style="height:44px;margin-top:22px" onclick="saveTok()"><i class="fas fa-save"></i> Save</button>
+      </div>
+      <div class="ts" id="tokSt"></div>
+      <div class="sp-hint">
+        <strong style="color:#7ab3e0;font-family:var(--C);font-size:10px;letter-spacing:1px">HOW TO GET YOUR TOKEN:</strong><br>
+        1. Go to <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a><br>
+        2. Click <strong>Generate new token (classic)</strong><br>
+        3. Set expiration: <strong>No expiration</strong><br>
+        4. Tick only the <strong>repo</strong> checkbox<br>
+        5. Click Generate → Copy token → Paste above → Save<br><br>
+        <strong style="color:var(--gold2);font-family:var(--C);font-size:10px;letter-spacing:1px">SECURITY:</strong> Token stored only in your browser. Never visible to anyone else.
+      </div>
+    </div>
+
+    <!-- PUBLISH BAR -->
+    <div class="pb">
+      <div>
+        <div class="pb-t">🚀 Auto-Publish to sureshmanne.com</div>
+        <div class="pb-s" id="pbSub">Edit numbers then click <strong style="color:var(--gold2)">Publish to Website</strong> — goes live in ~60 seconds</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span class="pbs pbs-idle" id="pubSt">READY</span>
+        <button class="btn bg" onclick="publish()" id="pubBtn2"><i class="fas fa-rocket"></i> Publish Now</button>
+      </div>
+    </div>
+
+    <!-- PUBLISH LOG -->
+    <div class="pl" id="plog">
+      <div class="ps" id="ps1"><i class="fas fa-circle"></i> Connecting to GitHub...</div>
+      <div class="ps" id="ps2"><i class="fas fa-circle"></i> Fetching index.html from repository...</div>
+      <div class="ps" id="ps3"><i class="fas fa-circle"></i> Updating numbers array...</div>
+      <div class="ps" id="ps4"><i class="fas fa-circle"></i> Committing and pushing to GitHub...</div>
+      <div class="ps" id="ps5"><i class="fas fa-circle"></i> Published! Live at sureshmanne.com in ~60 seconds.</div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat"><div class="sv" id="sTot">0</div><div class="sl">Total Numbers</div></div>
+      <div class="stat"><div class="sv" id="sDia" style="color:#b9f2ff">0</div><div class="sl">💎 Diamond</div></div>
+      <div class="stat"><div class="sv" id="sGld">0</div><div class="sl">⭐ Gold</div></div>
+      <div class="stat"><div class="sv" id="sSlv" style="color:var(--text2)">0</div><div class="sl">🔹 Silver</div></div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="ctrls">
+      <div class="srch-w"><i class="fas fa-search"></i><input type="text" class="fi srch-i" id="srch" placeholder="Search number or price..." oninput="renderT()"/></div>
+      <select class="sel" id="flt" onchange="renderT()">
+        <option value="">All Tiers</option>
+        <option value="diamond">💎 Diamond</option>
+        <option value="gold">⭐ Gold</option>
+        <option value="silver">🔹 Silver</option>
+      </select>
+      <select class="sel" id="srt" onchange="renderT()">
+        <option value="">Default</option>
+        <option value="ph">Price: High → Low</option>
+        <option value="pl">Price: Low → High</option>
+        <option value="na">Number: A → Z</option>
+      </select>
+      <button class="btn br btn-sm" onclick="clearAll()"><i class="fas fa-trash"></i> Clear All</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Number</th><th>Raw</th><th>Tier</th>
+            <th>Price</th><th>2 Digit</th><th>1 Digit</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbl"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="mbg" id="mbg">
+  <div class="modal">
+    <div class="mt" id="mtitle"><i class="fas fa-plus-circle"></i> Add Number</div>
+    <div class="merr" id="merr"></div>
+    <input type="hidden" id="eidx" value="-1"/>
+    <div class="fg">
+      <label class="fl">Mobile Number (10 digits)</label>
+      <input class="fi" type="text" id="fNum" placeholder="9876543210" maxlength="10" oninput="autoD();prevw()"/>
+    </div>
+    <div class="fg">
+      <label class="fl">Display Format (how it shows on website)</label>
+      <input class="fi" type="text" id="fDisp" placeholder="98765 43210" oninput="prevw()"/>
+    </div>
+    <div class="fg">
+      <label class="fl">Price in Rupees (e.g. 25000)</label>
+      <input class="fi" type="number" id="fPrc" placeholder="25000" min="999" oninput="prevw()"/>
+    </div>
+    <div class="mprev" id="mprev">
+      <div class="mp-n" id="pvN">—</div>
+      <div class="mp-d">
+        <span class="mp-c" id="pvTier">—</span>
+        <span class="mp-c">2 Digit: <b id="pv2d">—</b></span>
+        <span class="mp-c">1 Digit: <b id="pv1d">—</b></span>
+        <span class="mp-c">Price: <b id="pvPrc">—</b></span>
+      </div>
+    </div>
+    <div class="ma">
+      <button class="btn bo" onclick="closeM()"><i class="fas fa-times"></i> Cancel</button>
+      <button class="btn bg" onclick="saveN()"><i class="fas fa-save"></i> Save Number</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+var GH_USER='Manne8121', GH_REPO='sureshmanne.github.io', GH_FILE='index.html', GH_BRANCH='main';
+var CREDS={u:'suresh',p:'manne2025'};
+var NUMS=[], _dirty=false;
+
+// AUTH
+function login(){
+  var u=document.getElementById('lu').value.trim();
+  var p=document.getElementById('lp').value;
+  if(u===CREDS.u&&p===CREDS.p){
+    document.getElementById('ls').style.display='none';
+    document.getElementById('app').style.display='block';
+    init();
+  } else {
+    var e=document.getElementById('lerr'); e.style.display='block';
+    document.getElementById('lp').value='';
+    setTimeout(function(){e.style.display='none';},3000);
+  }
+}
+function logout(){
+  document.getElementById('ls').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('lu').value=''; document.getElementById('lp').value='';
+}
+
+// INIT
+function init(){
+  var s=localStorage.getItem('mc_nums');
+  if(s){try{NUMS=JSON.parse(s);}catch(e){NUMS=DEF.slice();}}
+  else{NUMS=DEF.slice();save();}
+  checkTok(); stats(); renderT();
+}
+function save(){localStorage.setItem('mc_nums',JSON.stringify(NUMS));}
+function dirty(){_dirty=true; document.getElementById('udBadge').style.display='inline-block';}
+function clean(){_dirty=false; document.getElementById('udBadge').style.display='none';}
+
+// HELPERS
+function dT(n){var s=n.replace(/\D/g,'').split('').reduce(function(a,d){return a+parseInt(d);},0);while(s>9)s=s.toString().split('').reduce(function(a,d){return a+parseInt(d);},0);return s;}
+function d2(n){return n.replace(/\D/g,'').split('').reduce(function(a,d){return a+parseInt(d);},0);}
+function fmt(p){return '\u20b9'+parseInt(p).toLocaleString('en-IN');}
+function tier(p){return p>=100000?'diamond':p>=20000?'gold':'silver';}
+function tbadge(p){
+  if(p>=100000)return'<span class="tbadge td">\ud83d\udc8e Diamond</span>';
+  if(p>=20000)return'<span class="tbadge tg">\u2b50 Gold</span>';
+  return'<span class="tbadge ts2">\ud83d\udd39 Silver</span>';
+}
+function tname(p){return p>=100000?'\ud83d\udc8e Diamond':p>=20000?'\u2b50 Gold':'\ud83d\udd39 Silver';}
+
+// STATS
+function stats(){
+  document.getElementById('sTot').textContent=NUMS.length;
+  document.getElementById('sDia').textContent=NUMS.filter(function(x){return tier(x.p)==='diamond';}).length;
+  document.getElementById('sGld').textContent=NUMS.filter(function(x){return tier(x.p)==='gold';}).length;
+  document.getElementById('sSlv').textContent=NUMS.filter(function(x){return tier(x.p)==='silver';}).length;
+}
+
+// TABLE
+function renderT(){
+  var q=(document.getElementById('srch').value||'').trim().toLowerCase();
+  var f=document.getElementById('flt').value;
+  var s=document.getElementById('srt').value;
+  var l=NUMS.slice();
+  if(q)l=l.filter(function(x){return x.n.includes(q)||x.d.toLowerCase().includes(q)||String(x.p).includes(q);});
+  if(f)l=l.filter(function(x){return tier(x.p)===f;});
+  if(s==='ph')l.sort(function(a,b){return b.p-a.p;});
+  else if(s==='pl')l.sort(function(a,b){return a.p-b.p;});
+  else if(s==='na')l.sort(function(a,b){return a.n.localeCompare(b.n);});
+  var tb=document.getElementById('tbl');
+  if(!l.length){tb.innerHTML='<tr class="empty"><td colspan="8"><i class="fas fa-inbox" style="margin-right:8px"></i>NO NUMBERS FOUND</td></tr>';return;}
+  tb.innerHTML=l.map(function(x,i){
+    var ri=NUMS.findIndex(function(n){return n.n===x.n;});
+    return'<tr><td style="color:var(--text3);font-size:12px">'+(i+1)+'</td>'+
+      '<td class="nc">'+x.d+'</td>'+
+      '<td style="color:var(--text3);font-size:11px;font-family:monospace">'+x.n+'</td>'+
+      '<td>'+tbadge(x.p)+'</td>'+
+      '<td class="pc">'+fmt(x.p)+'</td>'+
+      '<td class="dc">'+d2(x.n)+'</td>'+
+      '<td class="dc">'+dT(x.n)+'</td>'+
+      '<td><div class="ra">'+
+        '<button class="ac ae" onclick="openEdit('+ri+')" title="Edit"><i class="fas fa-pen"></i></button>'+
+        '<button class="ac ad" onclick="delN('+ri+')" title="Delete"><i class="fas fa-trash"></i></button>'+
+      '</div></td></tr>';
+  }).join('');
+}
+
+// MODAL
+function openAdd(){
+  document.getElementById('eidx').value='-1';
+  document.getElementById('mtitle').innerHTML='<i class="fas fa-plus-circle"></i> Add New Number';
+  document.getElementById('fNum').value=''; document.getElementById('fDisp').value=''; document.getElementById('fPrc').value='';
+  document.getElementById('mprev').style.display='none'; document.getElementById('merr').style.display='none';
+  document.getElementById('mbg').classList.add('open');
+  setTimeout(function(){document.getElementById('fNum').focus();},120);
+}
+function openEdit(i){
+  var x=NUMS[i];
+  document.getElementById('eidx').value=i;
+  document.getElementById('mtitle').innerHTML='<i class="fas fa-pen"></i> Edit Number';
+  document.getElementById('fNum').value=x.n; document.getElementById('fDisp').value=x.d; document.getElementById('fPrc').value=x.p;
+  document.getElementById('merr').style.display='none';
+  prevw(); document.getElementById('mbg').classList.add('open');
+}
+function closeM(){document.getElementById('mbg').classList.remove('open');}
+document.getElementById('mbg').addEventListener('click',function(e){if(e.target===this)closeM();});
+window.addEventListener('keydown',function(e){if(e.key==='Escape')closeM();});
+
+function autoD(){
+  var n=document.getElementById('fNum').value.replace(/\D/g,'');
+  if(n.length===10&&!document.getElementById('fDisp').value)
+    document.getElementById('fDisp').value=n.slice(0,5)+' '+n.slice(5);
+}
+function prevw(){
+  var n=document.getElementById('fNum').value.replace(/\D/g,'');
+  var d=document.getElementById('fDisp').value||n;
+  var p=parseInt(document.getElementById('fPrc').value)||0;
+  if(n.length<5){document.getElementById('mprev').style.display='none';return;}
+  document.getElementById('mprev').style.display='block';
+  document.getElementById('pvN').textContent=d||n;
+  document.getElementById('pvTier').innerHTML='Tier: <b>'+tname(p)+'</b>';
+  document.getElementById('pv2d').textContent=d2(n);
+  document.getElementById('pv1d').textContent=dT(n);
+  document.getElementById('pvPrc').textContent=p?fmt(p):'—';
+}
+function saveN(){
+  var n=document.getElementById('fNum').value.replace(/\D/g,'');
+  var d=document.getElementById('fDisp').value.trim()||n.slice(0,5)+' '+n.slice(5);
+  var p=parseInt(document.getElementById('fPrc').value);
+  var ee=document.getElementById('merr'); ee.style.display='none';
+  if(n.length!==10){ee.innerHTML='<i class="fas fa-exclamation-circle"></i> Number must be exactly 10 digits';ee.style.display='block';return;}
+  if(!p||p<999){ee.innerHTML='<i class="fas fa-exclamation-circle"></i> Enter valid price (min \u20b9999)';ee.style.display='block';return;}
+  var idx=parseInt(document.getElementById('eidx').value);
+  if(idx===-1){
+    if(NUMS.find(function(x){return x.n===n;})){ee.innerHTML='<i class="fas fa-exclamation-circle"></i> Number already exists!';ee.style.display='block';return;}
+    NUMS.unshift({n:n,d:d,p:p}); toast('\u2705 Number added!','ok');
+  } else {
+    NUMS[idx]={n:n,d:d,p:p}; toast('\u2705 Number updated!','ok');
+  }
+  save(); dirty(); stats(); renderT(); closeM();
+}
+function delN(i){
+  if(!confirm('Delete '+NUMS[i].d+' ('+fmt(NUMS[i].p)+')?\nThis cannot be undone.'))return;
+  NUMS.splice(i,1); save(); dirty(); stats(); renderT(); toast('\ud83d\uddd1\ufe0f Number deleted','info');
+}
+function clearAll(){
+  if(!confirm('DELETE ALL '+NUMS.length+' numbers? Cannot be undone!'))return;
+  if(!confirm('FINAL CONFIRM — Delete all permanently?'))return;
+  NUMS=[]; save(); dirty(); stats(); renderT(); toast('All numbers cleared','err');
+}
+
+// TOKEN
+function toggleSP(){
+  var p=document.getElementById('spanel');
+  p.style.display=p.style.display==='block'?'none':'block';
+  if(p.style.display==='block'){var t=getTok();document.getElementById('ghTok').value=t?'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022':'';checkTok();}
+}
+function saveTok(){
+  var t=document.getElementById('ghTok').value.trim();
+  if(!t||t.startsWith('\u2022')){toast('Paste your GitHub token first','err');return;}
+  localStorage.setItem('mc_gh_tok',t); checkTok(); toast('\u2705 Token saved!','ok');
+}
+function getTok(){return localStorage.getItem('mc_gh_tok')||'';}
+function checkTok(){
+  var el=document.getElementById('tokSt'); if(!el)return;
+  var t=getTok();
+  el.innerHTML=t?'<span class="ts-ok"><i class="fas fa-check-circle"></i> Token saved — ready to publish</span>':'<span class="ts-no"><i class="fas fa-times-circle"></i> No token saved — enter your GitHub token above</span>';
+}
+
+// BUILD CODE
+function numsCode(){
+  return 'const NUMS=[\n'+NUMS.map(function(x){return'{n:"'+x.n+'",d:"'+x.d+'",p:'+x.p+'}';}).join(',\n')+'\n];';
+}
+
+// PUBLISH
+async function publish(){
+  var tok=getTok();
+  if(!tok){toast('\u26a0\ufe0f Set GitHub token in Settings first','err');document.getElementById('spanel').style.display='block';checkTok();return;}
+  var plog=document.getElementById('plog'); plog.style.display='block';
+  plog.scrollIntoView({behavior:'smooth',block:'nearest'});
+  ['ps1','ps2','ps3','ps4','ps5'].forEach(function(id){var e=document.getElementById(id);e.className='ps';e.querySelector('i').className='fas fa-circle';});
+  setSt('pub','PUBLISHING...'); setBtn(true);
+  function step(id,st,txt){
+    var e=document.getElementById(id); e.className='ps '+st;
+    var ic={act:'fas fa-circle-notch fa-spin',done:'fas fa-check-circle',err:'fas fa-times-circle'};
+    e.querySelector('i').className=ic[st]||'fas fa-circle';
+    if(txt)e.lastChild.textContent=' '+txt;
+  }
+  try{
+    step('ps1','act','Connecting to GitHub...');
+    var api='https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+GH_FILE;
+    var hdrs={'Authorization':'token '+tok,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json','Cache-Control':'no-cache','Pragma':'no-cache'};
+    step('ps1','done','Connected \u2713');
+    step('ps2','act','Fetching latest index.html ('+new Date().toLocaleTimeString()+')');
+    var gr=await fetch(api+'?ref='+GH_BRANCH+'&t='+Date.now(),{headers:hdrs,cache:'no-store'});
     if(!gr.ok){var ge=await gr.json();throw new Error(ge.message||'Fetch failed ('+gr.status+')');}
     var gd=await gr.json();
     var sha=gd.sha;

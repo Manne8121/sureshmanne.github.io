@@ -1944,6 +1944,14 @@ function tier(p){return p>=100000?'diamond':p>=20000?'gold':'silver';}
 function tbadge(p){if(p>=100000)return'<span class="nb-tier t-dia">💎 Diamond</span>';if(p>=20000)return'<span class="nb-tier t-gld">⭐ Gold</span>';return'<span class="nb-tier t-slv">🔹 Silver</span>';}
 function fmt(p){return'₹'+p.toLocaleString('en-IN');}
 let curTier='all',curSort='';
+// Different shuffle every page reload
+var _seed=Math.random();
+function shuffle(arr){
+  var a=arr.slice(),s=_seed;
+  for(var i=a.length-1;i>0;i--){s=(s*9301+49297)%233280;var j=Math.floor(s/233280*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+function seededShuffle(arr){return shuffle(arr);}
 function getList(){
   let l=[...DATA];
   const q=(document.getElementById('searchInput')||{value:''}).value.trim().replace(/\s/g,'');
@@ -1951,6 +1959,7 @@ function getList(){
   if(curTier!=='all')l=l.filter(x=>tier(x.p)===curTier);
   if(curSort==='low')l.sort((a,b)=>a.p-b.p);
   else if(curSort==='high')l.sort((a,b)=>b.p-a.p);
+  else l=shuffle(l); // Shuffle when no sort — different every page load!
   return l;
 }
 function simClass(p){return p>=100000?'sim-dia':p>=20000?'sim-gld':'sim-slv';}
@@ -1997,9 +2006,10 @@ function runFilter(){renderNums(getList());}
 function runSort(){curSort=document.getElementById('sortType').value;renderNums(getList());}
 function renderHome(){
   const g=document.getElementById('homeNumGrid');if(!g)return;
-  const dia=DATA.filter(x=>tier(x.p)==='diamond').slice(0,3);
-  const gld=DATA.filter(x=>tier(x.p)==='gold').slice(0,3);
-  const slv=DATA.filter(x=>tier(x.p)==='silver').slice(0,3);
+  // Shuffle each tier so home page shows different numbers each visit
+  const dia=seededShuffle(DATA.filter(x=>tier(x.p)==='diamond')).slice(0,3);
+  const gld=seededShuffle(DATA.filter(x=>tier(x.p)==='gold')).slice(0,3);
+  const slv=seededShuffle(DATA.filter(x=>tier(x.p)==='silver')).slice(0,3);
   g.innerHTML=[...dia,...gld,...slv].map((x,i)=>makeCard(x,(i%3)*100)).join('');
   setTimeout(()=>glowDigits(g),200);AOS.refresh();
 }

@@ -886,18 +886,14 @@ footer{padding:28px 16px}.footer-inner{flex-direction:column;text-align:center}.
         </div>
       </div>
       <div class="hero-card-wrap" data-aos="fade-left" data-aos-delay="400">
-        <div class="hero-card">
+        <div class="hero-card" id="heroCard">
           <div class="hc-label">Featured Premium Number</div>
-          <div class="hc-number">97777 00005</div>
-          <div class="hc-price">₹3,00,000</div>
-          <div class="hc-badges"><span class="hc-badge g">💎 Diamond</span><span class="hc-badge g">Quad 7s</span><span class="hc-badge w">Numerology 5</span></div>
-          <a href="https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%209777700005%20priced%20at%20Rs.3%2C00%2C000" target="_blank" class="btn-wa" style="width:100%;justify-content:center"><i class="fab fa-whatsapp"></i> Buy on WhatsApp</a>
+          <div class="hc-number" id="hcNumber">—</div>
+          <div class="hc-price" id="hcPrice">—</div>
+          <div class="hc-badges" id="hcBadges"></div>
+          <a id="hcBuyBtn" href="#" target="_blank" class="btn-wa" style="width:100%;justify-content:center"><i class="fab fa-whatsapp"></i> Buy on WhatsApp</a>
           <div class="hc-divider"></div>
-          <div class="mini-list">
-            <div class="mini-row"><span class="mini-num">9188 91 91 91</span><span class="mini-price">₹1,50,000</span><a href="https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%209188919191%20priced%20at%20Rs.1%2C50%2C000" target="_blank" class="mini-buy">Buy</a></div>
-            <div class="mini-row"><span class="mini-num">8888 488808</span><span class="mini-price">₹75,000</span><a href="https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%208888488808%20priced%20at%20Rs.75%2C000" target="_blank" class="mini-buy">Buy</a></div>
-            <div class="mini-row"><span class="mini-num">9127 012345</span><span class="mini-price">₹80,000</span><a href="https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%209127012345%20priced%20at%20Rs.80%2C000" target="_blank" class="mini-buy">Buy</a></div>
-          </div>
+          <div class="mini-list" id="miniList"></div>
         </div>
       </div>
     </div>
@@ -2292,7 +2288,56 @@ function updateCounts(){
 function filterTier(t,btn){curTier=t;document.querySelectorAll('.ttab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderNums(getList());}
 function runFilter(){renderNums(getList());}
 function runSort(){curSort=document.getElementById('sortType').value;renderNums(getList());}
+function fmt(p){return '₹'+parseInt(p).toLocaleString('en-IN');}
+function getNumBadges(x){
+  var badges=[];
+  var n=x.n, d=x.d;
+  // Tier badge
+  var t=tierInfo(x.p);
+  badges.push({cls:'g',label:t.label});
+  // Pattern badges
+  var digits=n.split('');
+  var unique=[...new Set(digits)];
+  if(unique.length===1) badges.push({cls:'g',label:'All Same Digits'});
+  else if(unique.length===2) badges.push({cls:'g',label:'2-Digit Pattern'});
+  // Repeating pairs
+  if(n.slice(0,5)===n.slice(5)) badges.push({cls:'g',label:'Mirror Number'});
+  // Sequential
+  var seq=true; for(var i=1;i<digits.length;i++) if(parseInt(digits[i])-parseInt(digits[i-1])!==1){seq=false;break;}
+  if(seq) badges.push({cls:'g',label:'Sequential'});
+  // Numerology
+  var tot=dT(n);
+  badges.push({cls:'w',label:'Numerology '+tot});
+  return badges.slice(0,3);
+}
+function loadHeroCard(){
+  // Pick a random top-tier number each page load from Elite+ (₹1L+)
+  var topNums=DATA.filter(function(x){return x.p>=100000;});
+  if(!topNums.length) topNums=DATA.filter(function(x){return x.p>=50000;});
+  if(!topNums.length) topNums=DATA.slice(0,10);
+  // Random pick — changes every refresh
+  var pick=topNums[Math.floor(Math.random()*topNums.length)];
+  // Update featured card
+  document.getElementById('hcNumber').textContent=pick.d;
+  document.getElementById('hcPrice').textContent=fmt(pick.p);
+  // Badges
+  var badges=getNumBadges(pick);
+  document.getElementById('hcBadges').innerHTML=badges.map(function(b){
+    return'<span class="hc-badge '+b.cls+'">'+b.label+'</span>';
+  }).join('');
+  // Buy button
+  var waText='Hi%20Mr.Suresh!%20I%20want%20to%20buy%20'+pick.n+'%20('+encodeURIComponent(pick.d)+')%20priced%20at%20'+encodeURIComponent(fmt(pick.p).replace('₹','Rs.'));
+  document.getElementById('hcBuyBtn').href='https://wa.me/919090900005?text='+waText;
+  // Mini list — 3 random numbers from same or next tier, different from featured
+  var others=DATA.filter(function(x){return x.n!==pick.n&&x.p>=25000;});
+  others=shuffle(others).slice(0,3);
+  document.getElementById('miniList').innerHTML=others.map(function(x){
+    var wa='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20'+x.n+'%20priced%20at%20'+encodeURIComponent(fmt(x.p).replace('₹','Rs.'));
+    return'<div class="mini-row"><span class="mini-num">'+x.d+'</span><span class="mini-price">'+fmt(x.p)+'</span><a href="'+wa+'" target="_blank" class="mini-buy">Buy</a></div>';
+  }).join('');
+}
 function renderHome(){
+  loadHeroCard();
   const g=document.getElementById('homeNumGrid');if(!g)return;
   // Shuffle each tier so home page shows different numbers each visit
   const dia=seededShuffle(DATA.filter(x=>tier(x.p)==='diamond')).slice(0,3);

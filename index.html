@@ -973,10 +973,7 @@ footer{padding:28px 16px}.footer-inner{flex-direction:column;text-align:center}.
 
   <div class="tst-section">
     <div class="tst-inner">
-      <div class="eyebrow" style="justify-content:center;margin-bottom:10px" data-aos="fade-up"><div class="ey-line"></div><span class="ey-text">What Customers Say</span><div class="ey-line"></div></div>
-      <div class="sec-title" style="text-align:center;margin-bottom:6px" data-aos="fade-up">Trusted by <span class="g">10,000+ Customers</span></div>
-      <div class="sec-sub" style="text-align:center;margin-bottom:40px" data-aos="fade-up">Real experiences from happy customers across India</div>
-      <div class="owl-carousel owl-theme" id="tsl1">
+      <div class="eyebrow" style="justify-cl1">
 
         <div class="testimonial-card">
           <div class="test-stars">★★★★★</div>
@@ -1220,9 +1217,7 @@ footer{padding:28px 16px}.footer-inner{flex-direction:column;text-align:center}.
   </div>
 
   <div class="tst-section"><div class="tst-inner">
-    <div class="eyebrow" style="justify-content:center;margin-bottom:10px"><div class="ey-line"></div><span class="ey-text">What Customers Say</span><div class="ey-line"></div></div>
-    <div class="sec-title" style="text-align:center;margin-bottom:40px">Trusted by <span class="g">10,000+ Customers</span></div>
-    <div class="owl-carousel owl-theme" id="tsl2">
+    l2">
 
         <div class="testimonial-card">
           <div class="test-stars">★★★★★</div>
@@ -1412,9 +1407,7 @@ footer{padding:28px 16px}.footer-inner{flex-direction:column;text-align:center}.
   </div>
 
   <div class="tst-section"><div class="tst-inner">
-    <div class="eyebrow" style="justify-content:center;margin-bottom:10px"><div class="ey-line"></div><span class="ey-text">What Customers Say</span><div class="ey-line"></div></div>
-    <div class="sec-title" style="text-align:center;margin-bottom:40px">Trusted by <span class="g">10,000+ Customers</span></div>
-    <div class="owl-carousel owl-theme" id="tsl3">
+    l3">
 
         <div class="testimonial-card">
           <div class="test-stars">★★★★★</div>
@@ -1617,9 +1610,7 @@ footer{padding:28px 16px}.footer-inner{flex-direction:column;text-align:center}.
   </div>
 
   <div class="tst-section"><div class="tst-inner">
-    <div class="eyebrow" style="justify-content:center;margin-bottom:10px"><div class="ey-line"></div><span class="ey-text">What Customers Say</span><div class="ey-line"></div></div>
-    <div class="sec-title" style="text-align:center;margin-bottom:40px">Trusted by <span class="g">10,000+ Customers</span></div>
-    <div class="owl-carousel owl-theme" id="tsl4">
+    l4">
 
         <div class="testimonial-card">
           <div class="test-stars">★★★★★</div>
@@ -1971,7 +1962,7 @@ const NUMS=[
 {n:"7777898989",d:"7777 898989",p:200000},
 {n:"8399997777",d:"83 9999 7777",p:160000},
 {n:"8888636666",d:"8888 63 6666",p:150000},
-{n:"9188919191",d:"91 88 919191",p:150000},
+{n:"9188919191",d:"91 88 91 91 91",p:150000},
 {n:"9767896789",d:"97 6789 6789",p:150000},
 {n:"8111991119",d:"81119 91119",p:125000},
 {n:"8105100100",d:"8 105 100100",p:105000},
@@ -2021,7 +2012,7 @@ const NUMS=[
 {n:"9514539999",d:"9514 53 9999",p:25000},
 {n:"9090907709",d:"909090 7709",p:25000},
 {n:"9090902228",d:"909090 2228",p:25000},
-{n:"9907172737",d:"99 0717 2737",p:25000},
+{n:"9907172737",d:"99 07 17 27 37",p:25000},
 {n:"9494894945",d:"9494 8 9494 5",p:25000},
 {n:"8929567567",d:"8929 567567",p:25000},
 {n:"7288860006",d:"72888 60006",p:25000},
@@ -2054,7 +2045,7 @@ const NUMS=[
 {n:"9628539999",d:"9628 53 9999",p:20000},
 {n:"9468039999",d:"9468 03 9999",p:20000},
 {n:"9609900006",d:"96099 00006",p:20000},
-{n:"8307172737",d:"83 0717 2737",p:20000},
+{n:"8307172737",d:"83 07 17 27 37",p:20000},
 {n:"8258884888",d:"82 5888 4888",p:18000},
 {n:"8008002229",d:"800800 2229",p:17000},
 {n:"8885888778",d:"8885 888 778",p:17000},
@@ -2382,7 +2373,7 @@ function goPage(id){
   AOS.refresh();
   if(id==='numbers'&&!window._ni){window._ni=true;updateCounts();renderNums(getList());}
   setTimeout(applyHeadingGlows, 100);
-  var tslMap={whoweare:'#tsl2',numbers:'#tsl3',howtobuy:'#tsl4',contact:'#tsl5'};
+  var tslMap={contact:'#tsl5'};
   if(tslMap[id]&&!window['_owl_'+id]){window['_owl_'+id]=true;$(tslMap[id]).owlCarousel({loop:true,margin:20,nav:false,dots:true,autoplay:true,autoplayTimeout:4500,autoplayHoverPause:true,smartSpeed:700,responsive:{0:{items:1},768:{items:2},1100:{items:3}}});}
 }
 function showHome(){
@@ -2640,7 +2631,7 @@ window.onload=function(){
   setTimeout(function(){document.getElementById('preloader').classList.add('done');},1800);
   AOS.init({duration:700,once:true,offset:60,easing:'ease-out-cubic'});
   var owlOpts={loop:true,margin:20,nav:false,dots:true,autoplay:true,autoplayTimeout:4500,autoplayHoverPause:true,smartSpeed:700,responsive:{0:{items:1},768:{items:2},1100:{items:3}}};
-  $('#tsl1').owlCarousel(owlOpts);
+  // testimonials only on Connect page
   renderHome();applyGlow();applyHeadingGlows();
   const hash=window.location.hash.replace('#','');
   if(['whoweare','numbers','howtobuy','contact'].includes(hash)){goPage(hash);}else{showHome();}

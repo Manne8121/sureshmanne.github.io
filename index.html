@@ -472,6 +472,84 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 56p
   .hnc-matches,.nc-inv-grid,.nc-ref-grid{grid-template-columns:1fr}.hnc-form,.nc-full-form{grid-template-columns:1fr}
   .hero-stats{gap:14px}.nc-big-num{font-size:64px}
 }
+
+/* ══ NUMEROLOGY ENHANCED CSS ══ */
+.nf-page-hero{padding:52px 56px 44px;border-bottom:1px solid var(--border);text-align:center;background:linear-gradient(135deg,#08081a,#080808)}
+[data-theme="light"] .nf-page-hero{background:linear-gradient(135deg,#f0f0f8,#f8f8f5)}
+.completeness-bar-wrap{background:var(--card);border:1px solid var(--border-g);border-radius:12px;padding:18px;margin-bottom:20px}
+.cb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cb-label{font-family:var(--C);font-size:8.5px;letter-spacing:2.5px;color:var(--text3)}
+.cb-pct{font-family:var(--C);font-size:14px;color:var(--gold2);font-weight:700}
+.cb-track{height:6px;background:var(--surface);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.cb-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--blue));transition:width .5s ease}
+.cb-msg{font-family:var(--C);font-size:8px;letter-spacing:2px;color:var(--text3)}
+.cb-msg.good{color:var(--green)}.cb-msg.full{color:var(--gold2)}
+.cb-checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.cb-check{font-family:var(--C);font-size:7.5px;letter-spacing:1.5px;padding:4px 10px;border-radius:3px;display:flex;align-items:center;gap:5px}
+.cb-check.done{background:var(--green-dim);border:1px solid var(--green-bd);color:var(--green)}
+.cb-check.pend{background:var(--surface);border:1px solid var(--border);color:var(--text3)}
+.nf-form-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr 140px;gap:10px;margin:20px 0 14px;align-items:end}
+.nf-report-wrap{margin-top:28px;display:none;animation:fadeUp .4s ease}
+.nf-report-wrap.show{display:block}
+.lang-selector{background:var(--card);border:1px solid var(--border-g);border-radius:12px;padding:20px;margin-bottom:22px}
+.ls-title{font-family:var(--C);font-size:8.5px;letter-spacing:2.5px;color:var(--gold2);margin-bottom:10px}
+.ls-note{font-size:12px;color:var(--text3);margin-bottom:12px}
+.ls-options{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.ls-btn{font-family:var(--C);font-size:9px;letter-spacing:2px;padding:10px 20px;border:1px solid var(--border);border-radius:6px;color:var(--text3);background:var(--surface);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px}
+.ls-btn.sel{border-color:var(--gold);color:#000;background:var(--gold);font-weight:700}
+.ls-btn:hover:not(.sel){border-color:var(--gold-bd);color:var(--gold2);background:var(--gold-dim)}
+.dl-btn{width:100%;font-family:var(--C);font-size:10px;letter-spacing:2px;padding:14px;border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .25s;font-weight:700;background:var(--gold);color:#000}
+.dl-btn:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.35)}
+.dl-btn:disabled{background:var(--surface);color:var(--text3);cursor:not-allowed}
+.report-lang-section{margin-bottom:32px;border:1px solid var(--border-g);border-radius:12px;overflow:hidden}
+.rls-header{background:linear-gradient(135deg,var(--gold-dim),var(--blue-dim));padding:14px 20px;display:flex;align-items:center;gap:10px}
+.rls-lang{font-family:var(--C);font-size:11px;letter-spacing:3px;color:var(--gold2)}
+.rls-body{padding:24px 20px}
+.report-block{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.report-block:last-child{border:none;margin-bottom:0;padding-bottom:0}
+.rb-title{font-family:var(--C);font-size:8.5px;letter-spacing:2.5px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.rb-title::after{content:"";flex:1;height:1px;background:var(--border)}
+.rb-number{font-family:var(--C);font-size:60px;color:var(--gold2);line-height:1;text-align:center;margin-bottom:4px}
+.rb-name{font-family:var(--C);font-size:14px;letter-spacing:3px;color:var(--text);text-align:center;margin-bottom:4px}
+.rb-planet{font-family:var(--C);font-size:9px;letter-spacing:2px;color:var(--blue2);text-align:center;margin-bottom:14px}
+.rb-traits{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px}
+.rb-trait{font-family:var(--C);font-size:8px;letter-spacing:1.5px;padding:4px 12px;border-radius:20px;background:var(--blue-dim);border:1px solid var(--blue-bd);color:var(--blue2)}
+.rb-body{font-size:14px;color:var(--text2);line-height:1.85;text-align:center;margin-bottom:0;font-style:italic}
+.lucky-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+.ls-item{background:var(--surface);border-radius:8px;padding:10px;text-align:center}
+.ls-item-lbl{font-family:var(--C);font-size:7px;letter-spacing:1.5px;color:var(--text3);margin-bottom:4px}
+.ls-item-val{font-family:var(--C);font-size:11px;color:var(--gold2)}
+.digits-section{background:var(--surface);border-radius:10px;padding:16px;margin-bottom:14px}
+.digit-good{width:34px;height:34px;border-radius:50%;background:var(--green-dim);border:2px solid var(--green-bd);color:var(--green);font-family:var(--C);font-size:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.digit-bad{width:34px;height:34px;border-radius:50%;background:rgba(239,68,68,.1);border:2px solid rgba(239,68,68,.3);color:#ef4444;font-family:var(--C);font-size:14px;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.digit-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.ds-title{font-family:var(--C);font-size:8px;letter-spacing:2px;color:var(--gold2);margin-bottom:8px;margin-top:12px}
+.ds-title:first-child{margin-top:0}
+.totals-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.total-chip{font-family:var(--C);font-size:9px;letter-spacing:1px;padding:5px 12px;border-radius:4px;background:var(--gold-dim);border:1px solid var(--gold-bd);color:var(--gold2)}
+.pattern-chips{display:flex;flex-wrap:wrap;gap:6px}
+.pattern-chip{font-family:var(--C);font-size:8px;letter-spacing:1.5px;padding:5px 12px;border-radius:4px;background:var(--blue-dim);border:1px solid var(--blue-bd);color:var(--blue2)}
+.cycle-display{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:12px}
+.cycle-num{text-align:center;padding:8px 4px;border-radius:6px;font-family:var(--C);font-size:11px;background:var(--surface);border:1px solid var(--border);color:var(--text3)}
+.cycle-num.current{background:var(--gold);color:#000;border-color:var(--gold);font-weight:700}
+.inv-section{background:linear-gradient(135deg,var(--gold-dim),var(--blue-dim));border:1px solid var(--gold-bd);border-radius:12px;padding:24px;margin-top:24px}
+.inv-title{font-family:var(--C);font-size:10px;letter-spacing:2.5px;color:var(--gold2);margin-bottom:6px}
+.inv-sub{font-size:13px;color:var(--text3);margin-bottom:16px;line-height:1.6}
+.inv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.inv-card{background:var(--card);border:1px solid var(--border-g);border-radius:8px;padding:14px;text-align:center}
+.inv-num{font-family:var(--C);font-size:13px;letter-spacing:2px;color:var(--text);margin-bottom:4px}
+.inv-price{font-family:var(--C);font-size:12px;color:var(--gold);margin-bottom:6px}
+.inv-match{font-family:var(--C);font-size:7px;letter-spacing:1.5px;color:var(--green);margin-bottom:8px}
+.inv-btn{font-family:var(--C);font-size:7.5px;letter-spacing:1.5px;color:var(--green);background:var(--green-dim);border:1px solid var(--green-bd);padding:5px 12px;border-radius:4px;display:inline-block;transition:all .2s}
+.inv-btn:hover{background:var(--green);color:#000}
+.suresh-msg{background:var(--card);border:1px solid var(--gold-bd);border-radius:12px;padding:24px;text-align:center}
+.sm-icon{font-size:36px;margin-bottom:10px}
+.sm-title{font-family:var(--C);font-size:12px;letter-spacing:2px;color:var(--gold2);margin-bottom:8px}
+.sm-body{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:16px}
+@media print{nav,footer,#waWidget,.trust-bar,.mob-btm-nav,.live-badge,#lowestBadge,.lang-selector,.nf-page-hero,.completeness-bar-wrap,.nf-form-wrap,.nc-ref-grid,.nc-ref-section{display:none!important}body,html{background:#fff!important;color:#000!important;padding:0!important}.nf-report-wrap{display:block!important}.report-lang-section{border:1px solid #ddd!important;margin-bottom:20px;break-inside:avoid;page-break-inside:avoid}.rls-header{background:#faf5e8!important}.rls-lang{color:#8b6914!important}.rb-number,.ls-item-val,.total-chip{color:#8b6914!important}.rb-name,.rb-cell-val{color:#000!important}.rb-trait{background:#e8f0fe!important;color:#1a56db!important}.ls-item,.rb-cell,.digits-section{background:#f5f5f5!important}.digit-good{background:#e8f5e9!important;color:#2e7d32!important}.digit-bad{background:#ffebee!important;color:#c62828!important}.cycle-num.current{background:#c9a84c!important;color:#000!important}.inv-section,.suresh-msg{background:#faf5e8!important}}
+@media(max-width:1100px){.nf-form-grid{grid-template-columns:1fr 1fr 1fr}.lucky-strip{grid-template-columns:repeat(3,1fr)}.inv-grid{grid-template-columns:1fr 1fr}.cycle-display{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:768px){.nf-form-grid{grid-template-columns:1fr 1fr}.inv-grid{grid-template-columns:1fr}.lucky-strip{grid-template-columns:repeat(2,1fr)}}
+
 </style>
 </head>
 <body>
@@ -809,50 +887,62 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 56p
 </div></div>
 <!-- NUMEROLOGY PAGE -->
 <div id="numerology" class="pg">
-<div class="num-page-hero">
-  <div style="max-width:760px;margin:0 auto">
+<input type="hidden" id="nf-lp-hidden" value="1"/>
+<input type="hidden" id="nf-nm-hidden" value="0"/>
+<div class="nf-page-hero">
+  <div style="max-width:700px;margin:0 auto">
     <div class="eyebrow" style="justify-content:center;margin-bottom:14px"><div class="ey-line"></div><span class="ey-text">ANCIENT CHALDEAN SYSTEM</span></div>
-    <div class="sec-title" style="font-size:clamp(26px,4vw,52px);text-align:center;margin-bottom:10px">Your Phone Number<br><span style="color:var(--gold2)">Carries Energy</span></div>
-    <div class="sec-sub" style="text-align:center;max-width:580px;margin:0 auto">The Chaldean system assigns vibrational energy to every digit. Your lucky number, derived from your date of birth, reveals which number will amplify your success and fortune.</div>
+    <div class="sec-title" style="font-size:clamp(26px,4vw,52px);text-align:center;margin-bottom:12px">Your Complete<br><span style="color:var(--gold2)">Numerology Report</span></div>
+    <div class="sec-sub" style="text-align:center;max-width:580px;margin:0 auto 16px">Enter your full name and date of birth. Get your personalised report in English, Telugu or Hindi and download it as PDF.</div>
+    <div style="display:inline-flex;gap:8px;background:var(--gold-dim);border:1px solid var(--gold-bd);border-radius:6px;padding:8px 16px;font-family:var(--C);font-size:8px;letter-spacing:2px;color:var(--gold2)"><i class="fas fa-lightbulb"></i> Add birth time for 100% accuracy</div>
   </div>
 </div>
-<div class="nc-full-section"><div class="nc-full-inner">
-  <div class="eyebrow"><div class="ey-line"></div><span class="ey-text">FULL BIRTH READING</span></div>
-  <div class="sec-title">Enter Your <span class="g">Birth Details</span></div>
-  <div class="nc-full-form">
-    <div class="nc-field"><label>DAY</label><input type="number" id="nc-dd" placeholder="DD" min="1" max="31"/></div>
-    <div class="nc-field"><label>MONTH</label><input type="number" id="nc-mm" placeholder="MM" min="1" max="12"/></div>
-    <div class="nc-field"><label>YEAR</label><input type="number" id="nc-yy" placeholder="YYYY" min="1900" max="2025"/></div>
-    <div class="nc-field"><label>TIME (OPTIONAL)</label><input type="time" id="nc-time"/></div>
-    <div class="nc-field"><label>&nbsp;</label><button class="btn-gold" style="width:100%;padding:11px 14px;font-size:9.5px" onclick="runFullNumerology()"><i class="fas fa-star"></i> Calculate</button></div>
+<div style="max-width:900px;margin:0 auto;padding:36px 24px 56px" class="nf-form-wrap">
+  <div class="completeness-bar-wrap">
+    <div class="cb-header"><span class="cb-label">REPORT COMPLETENESS</span><span class="cb-pct" id="cbPct">0%</span></div>
+    <div class="cb-track"><div class="cb-fill" id="cbFill" style="width:0%"></div></div>
+    <div class="cb-msg" id="cbMsg">Start filling your details above</div>
+    <div class="cb-checks" id="cbChecks"></div>
   </div>
-  <div class="nc-full-result" id="ncFullResult"></div>
-</div></div>
-<div style="max-width:780px;margin:0 auto;padding:0 56px 48px">
-  <div class="nc-custom-cta">
-    <div style="font-size:28px;margin-bottom:10px">&#x1F52E;</div>
-    <div class="nc-custom-title">Want a Number Matching Your Lucky Number?</div>
-    <div class="nc-custom-sub">Mr. Suresh can source any pattern from across India. Send your requirement and he will personally find your perfect number.</div>
-    <a href="https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20a%20custom%20VIP%20number%20matching%20my%20lucky%20number." target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> Send Custom Request</a>
+  <div class="nf-form-grid">
+    <div class="nc-field"><label>FULL NAME (English)</label><input type="text" id="nf-name" placeholder="e.g. Suresh Manne" oninput="updateCompleteness()"/></div>
+    <div class="nc-field"><label>DAY</label><input type="number" id="nf-dd2" placeholder="DD" min="1" max="31" oninput="updateCompleteness()"/></div>
+    <div class="nc-field"><label>MONTH</label><input type="number" id="nf-mm2" placeholder="MM" min="1" max="12" oninput="updateCompleteness()"/></div>
+    <div class="nc-field"><label>YEAR</label><input type="number" id="nf-yy2" placeholder="YYYY" min="1900" max="2025" oninput="updateCompleteness()"/></div>
+    <div class="nc-field"><label>BIRTH TIME (Optional)</label><input type="time" id="nf-time2" oninput="updateCompleteness()"/></div>
+    <div class="nc-field"><label>&nbsp;</label><button class="btn-gold" style="width:100%;padding:12px 14px;font-size:9.5px" onclick="runNumerologyFull()"><i class="fas fa-star"></i> Generate Report</button></div>
+  </div>
+  <div class="nf-report-wrap" id="nfReportWrap">
+    <div class="lang-selector">
+      <div class="ls-title">SELECT REPORT LANGUAGE(S)</div>
+      <div class="ls-note">Select 1 or 2 languages. Your report shows in both. Then download as PDF.</div>
+      <div class="ls-options">
+        <button class="ls-btn sel" data-lang="en" onclick="toggleLang('en')"><i class="fas fa-check"></i> English</button>
+        <button class="ls-btn" data-lang="te" onclick="toggleLang('te')">తెలుగు</button>
+        <button class="ls-btn" data-lang="hi" onclick="toggleLang('hi')">&#2361;&#2367;&#2306;&#2342;&#2368;</button>
+      </div>
+      <button class="dl-btn" id="dlBtn" onclick="downloadNumerologyReport()"><i class="fas fa-download"></i> Download Report as PDF</button>
+    </div>
+    <div id="reportSections"></div>
+    <div id="reportInventory"></div>
   </div>
 </div>
-<div class="nc-ref-section"><div class="nc-ref-inner">
+<div style="background:var(--bg2);border-top:1px solid var(--border);padding:48px 0"><div style="max-width:1280px;margin:0 auto;padding:0 56px">
   <div class="eyebrow" style="margin-bottom:14px"><div class="ey-line"></div><span class="ey-text">CHALDEAN REFERENCE</span></div>
   <div class="sec-title" style="margin-bottom:24px">What Each <span class="g">Lucky Number Means</span></div>
   <div class="nc-ref-grid">
-    <div class="nc-ref-card"><div class="nc-ref-num">1</div><div class="nc-ref-name">THE LEADER</div><div class="nc-ref-traits">Sun energy &middot; Confident &middot; Ambitious &middot; Attracts authority and recognition</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">2</div><div class="nc-ref-name">THE DIPLOMAT</div><div class="nc-ref-traits">Moon energy &middot; Sensitive &middot; Cooperative &middot; Attracts partnerships and peace</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">3</div><div class="nc-ref-name">THE CREATOR</div><div class="nc-ref-traits">Jupiter energy &middot; Expressive &middot; Joyful &middot; Attracts creativity and opportunity</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">4</div><div class="nc-ref-name">THE BUILDER</div><div class="nc-ref-traits">Rahu energy &middot; Practical &middot; Disciplined &middot; Attracts structure and success</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">5</div><div class="nc-ref-name">THE EXPLORER</div><div class="nc-ref-traits">Mercury energy &middot; Adventurous &middot; Versatile &middot; Attracts opportunities and change</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">6</div><div class="nc-ref-name">THE NURTURER</div><div class="nc-ref-traits">Venus energy &middot; Caring &middot; Harmonious &middot; Attracts love and abundance</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">7</div><div class="nc-ref-name">THE SEEKER</div><div class="nc-ref-traits">Ketu energy &middot; Spiritual &middot; Analytical &middot; Attracts wisdom and growth</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">8</div><div class="nc-ref-name">THE ACHIEVER</div><div class="nc-ref-traits">Saturn energy &middot; Powerful &middot; Ambitious &middot; Attracts wealth and power</div></div>
-    <div class="nc-ref-card"><div class="nc-ref-num">9</div><div class="nc-ref-name">THE HUMANITARIAN</div><div class="nc-ref-traits">Mars energy &middot; Compassionate &middot; Universal &middot; Attracts respect and completion</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">1</div><div class="nc-ref-name">THE LEADER</div><div class="nc-ref-traits">Sun &middot; Confident &middot; Ambitious &middot; Authority</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">2</div><div class="nc-ref-name">THE DIPLOMAT</div><div class="nc-ref-traits">Moon &middot; Sensitive &middot; Cooperative &middot; Harmony</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">3</div><div class="nc-ref-name">THE CREATOR</div><div class="nc-ref-traits">Jupiter &middot; Expressive &middot; Joyful &middot; Creative</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">4</div><div class="nc-ref-name">THE BUILDER</div><div class="nc-ref-traits">Rahu &middot; Practical &middot; Disciplined &middot; Stable</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">5</div><div class="nc-ref-name">THE EXPLORER</div><div class="nc-ref-traits">Mercury &middot; Adventurous &middot; Versatile &middot; Dynamic</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">6</div><div class="nc-ref-name">THE NURTURER</div><div class="nc-ref-traits">Venus &middot; Caring &middot; Harmonious &middot; Loving</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">7</div><div class="nc-ref-name">THE SEEKER</div><div class="nc-ref-traits">Ketu &middot; Spiritual &middot; Analytical &middot; Wise</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">8</div><div class="nc-ref-name">THE ACHIEVER</div><div class="nc-ref-traits">Saturn &middot; Powerful &middot; Ambitious &middot; Wealth</div></div>
+    <div class="nc-ref-card"><div class="nc-ref-num">9</div><div class="nc-ref-name">THE HUMANITARIAN</div><div class="nc-ref-traits">Mars &middot; Compassionate &middot; Universal &middot; Respect</div></div>
   </div>
 </div></div>
 </div>
-<!-- HOW TO BUY -->
 <div id="howtobuy" class="pg">
 <div class="pg-hero"><div class="pg-hero-inner">
   <div class="eyebrow"><div class="ey-line"></div><span class="ey-text">SIMPLE PROCESS</span></div>
@@ -1315,6 +1405,187 @@ window.onload=function(){
   setTimeout(function(){var p=document.getElementById("preloader");if(p)p.classList.add("done");},1900);
   updateViewers();renderHome();goPage("home");
 };
+
+
+// ══ CHALDEAN NAME NUMBER ══
+var CHAL={A:1,I:1,J:1,Q:1,Y:1,B:2,K:2,R:2,C:3,G:3,L:3,S:3,D:4,M:4,T:4,E:5,H:5,N:5,X:5,U:6,V:6,W:6,O:7,Z:7,F:8,P:8};
+function nameNum(name){var s=name.toUpperCase().split("").reduce(function(a,c){return a+(CHAL[c]||0);},0);while(s>9)s=String(s).split("").reduce(function(a,d){return a+parseInt(d);},0);return s||9;}
+function lifePathNum(dd,mm,yy){return chalSum(String(dd)+String(mm)+String(yy));}
+function destinyNum(lp,nm){var s=lp+nm;while(s>9)s=String(s).split("").reduce(function(a,d){return a+parseInt(d);},0);return s||9;}
+function personalYear(dd,mm){return chalSum("2025"+String(mm)+String(dd));}
+// ══ COMPLETENESS BAR ══
+function updateCompleteness(){
+  var name=(document.getElementById("nf-name")||{value:""}).value.trim();
+  var dd=(document.getElementById("nf-dd2")||{value:""}).value;
+  var mm=(document.getElementById("nf-mm2")||{value:""}).value;
+  var yy=(document.getElementById("nf-yy2")||{value:""}).value;
+  var tt=(document.getElementById("nf-time2")||{value:""}).value;
+  var score=0;var checks=[];
+  if(name){score+=25;checks.push({t:"Name entered",d:true});}else{checks.push({t:"Enter full name",d:false});}
+  if(dd){score+=15;checks.push({t:"Day entered",d:true});}else{checks.push({t:"Enter day",d:false});}
+  if(mm){score+=15;checks.push({t:"Month entered",d:true});}else{checks.push({t:"Enter month",d:false});}
+  if(yy){score+=15;checks.push({t:"Year entered",d:true});}else{checks.push({t:"Enter year",d:false});}
+  if(tt){score+=30;checks.push({t:"Birth time added - Full reading unlocked!",d:true});}else{checks.push({t:"Add birth time for 100% accurate reading",d:false});}
+  var fill=document.getElementById("cbFill"),pctEl=document.getElementById("cbPct"),msgEl=document.getElementById("cbMsg"),checksEl=document.getElementById("cbChecks");
+  if(fill)fill.style.width=score+"%";
+  if(pctEl)pctEl.textContent=score+"%";
+  if(msgEl){if(score===100){msgEl.textContent="Complete Chaldean Reading Ready";msgEl.className="cb-msg full";}else if(score>=70){msgEl.textContent="Good reading - add birth time for full accuracy";msgEl.className="cb-msg good";}else if(score>=40){msgEl.textContent="Basic reading - fill more details for deeper insight";msgEl.className="cb-msg";}else{msgEl.textContent="Start filling your details above";msgEl.className="cb-msg";}}
+  if(checksEl)checksEl.innerHTML=checks.map(function(c){return "<div class='cb-check "+(c.d?"done":"pend")+"'><i class='fas fa-"+(c.d?"check":"circle")+"'></i>"+c.t+"</div>";}).join("");
+}
+// ══ NUMEROLOGY DATA ══
+var NR_NUM={1:{compatible:[1,5,7],avoid:[2,4,8],best_digits:[1,5,7],avoid_digits:[2,4,8],two_d:[10,19,28,37,46],one_d:1,patterns:["Sequential","Mirror"],color:"Red and Gold",day:"Sunday",gem:"Ruby",metal:"Gold",dir:"East"},2:{compatible:[2,4,8],avoid:[1,7],best_digits:[2,6,8],avoid_digits:[1,7],two_d:[11,20,29,38,47],one_d:2,patterns:["XYXYXY","Semi-Mirror"],color:"White and Silver",day:"Monday",gem:"Pearl",metal:"Silver",dir:"Northwest"},3:{compatible:[3,6,9],avoid:[5],best_digits:[3,6,9],avoid_digits:[5],two_d:[12,21,30,39,48],one_d:3,patterns:["Penta","Hexa"],color:"Yellow and Gold",day:"Thursday",gem:"Yellow Sapphire",metal:"Gold",dir:"North"},4:{compatible:[2,8],avoid:[1,9],best_digits:[2,4,8],avoid_digits:[1,9],two_d:[13,22,31,40,49],one_d:4,patterns:["Sequential","Quadra"],color:"Blue and Grey",day:"Saturday",gem:"Hessonite (Gomed)",metal:"Iron",dir:"West"},5:{compatible:[1,5],avoid:[2,3,4,6],best_digits:[1,5,9],avoid_digits:[2,4,6],two_d:[14,23,32,41,50],one_d:5,patterns:["Any Pattern","Mirror"],color:"Green and Silver",day:"Wednesday",gem:"Emerald",metal:"Quicksilver",dir:"North"},6:{compatible:[3,6,9],avoid:[5],best_digits:[3,6,9],avoid_digits:[5],two_d:[15,24,33,42,51],one_d:6,patterns:["Mirror","XYXYXY"],color:"White and Pink",day:"Friday",gem:"Diamond",metal:"Silver",dir:"Southeast"},7:{compatible:[1,7],avoid:[2,4],best_digits:[1,7],avoid_digits:[2,4,8],two_d:[16,25,34,43,52],one_d:7,patterns:["Septa","Penta"],color:"Violet and Purple",day:"Monday",gem:"Cat's Eye (Lehsunia)",metal:"Iron",dir:"Southwest"},8:{compatible:[2,4,8],avoid:[1,5],best_digits:[2,4,8],avoid_digits:[1,5],two_d:[17,26,35,44,53],one_d:8,patterns:["Hexa","Septa"],color:"Black and Blue",day:"Saturday",gem:"Blue Sapphire (Neelam)",metal:"Iron",dir:"West"},9:{compatible:[3,6,9],avoid:[4],best_digits:[3,6,9],avoid_digits:[4],two_d:[18,27,36,45,54],one_d:9,patterns:["Mirror","Sequential"],color:"Red and Orange",day:"Tuesday",gem:"Red Coral (Moonga)",metal:"Copper",dir:"South"}};
+var CYCLE_TEXT={en:["Fresh Start","Partnership","Growth","Foundation","Change","Love & Home","Wisdom","Power","Completion"],te:["కొత్త ప్రారంభం","భాగస్వామ్యం","వృద్ధి","పునాది","మార్పు","ప్రేమ & గృహం","జ్ఞానం","శక్తి","పూర్తి"],hi:["नई शुरुआत","साझेदारी","विकास","नींव","परिवर्तन","प्रेम और घर","ज्ञान","शक्ति","पूर्णता"]};
+var LANG_LABELS={en:"English",te:"తెలుగు",hi:"हिंदी"};
+
+var NR_TEXT={
+en:{
+1:{name:"The Leader",planet:"Sun",traits:["Confident","Ambitious","Pioneering","Authoritative"],body:"Sun energy brings natural leadership. You are driven by achievement and recognition. Your presence commands authority and inspires those around you.",career:"Leadership, entrepreneurship, management, politics, military",relation:"Strong, protective partner who leads with love and loyalty",phone:"A phone number totalling 1 attracts new beginnings, career recognition and leadership success. Ideal for business owners.",cycle:"New beginnings — perfect time to start, initiate and lead",color:"Red and Gold",day:"Sunday",gem:"Ruby",metal:"Gold",dir:"East"},
+2:{name:"The Diplomat",planet:"Moon",traits:["Sensitive","Cooperative","Harmonious","Intuitive"],body:"Moon energy makes you deeply intuitive and empathetic. You thrive in partnerships and bring peace wherever you go. Relationships are your greatest strength.",career:"Counselling, arts, music, partnerships, healthcare, education",relation:"Empathetic, devoted partner who nurtures and listens deeply",phone:"A phone number totalling 2 enhances relationships, attracts harmony and brings emotional fulfilment.",cycle:"Patience and partnership — nurture what was started, trust the process",color:"White and Silver",day:"Monday",gem:"Pearl",metal:"Silver",dir:"Northwest"},
+3:{name:"The Creator",planet:"Jupiter",traits:["Expressive","Joyful","Artistic","Communicative"],body:"Jupiter energy fills you with creativity and optimism. You are a natural communicator who inspires others with joy and artistic vision.",career:"Arts, writing, teaching, entertainment, public speaking, media, design",relation:"Joyful, expressive partner who keeps the relationship vibrant",phone:"A phone number totalling 3 boosts creativity, communication and attracts joy and abundance.",cycle:"Growth and expression — share your gifts, communicate boldly",color:"Yellow and Gold",day:"Thursday",gem:"Yellow Sapphire",metal:"Gold",dir:"North"},
+4:{name:"The Builder",planet:"Rahu",traits:["Practical","Disciplined","Stable","Hardworking"],body:"Rahu energy makes you a foundation builder. You work methodically and create lasting structures in life and business. Stability is your gift.",career:"Engineering, construction, finance, law, architecture, government",relation:"Reliable, stable partner who builds a secure and lasting relationship",phone:"A phone number totalling 4 attracts structure, stability and steady material growth.",cycle:"Foundation building — work hard, be methodical, build for the future",color:"Blue and Grey",day:"Saturday",gem:"Hessonite (Gomed)",metal:"Iron",dir:"West"},
+5:{name:"The Explorer",planet:"Mercury",traits:["Adventurous","Versatile","Free-spirited","Dynamic"],body:"Mercury energy makes you adaptable and quick-thinking. You embrace change and excel in dynamic environments where others feel lost.",career:"Trading, travel, technology, sales, media, entrepreneurship",relation:"Exciting, dynamic partner who keeps life interesting and adventurous",phone:"A phone number totalling 5 attracts new opportunities, successful travel and diverse business ventures.",cycle:"Change and freedom — embrace the new, expand your horizons boldly",color:"Green and Silver",day:"Wednesday",gem:"Emerald",metal:"Quicksilver",dir:"North"},
+6:{name:"The Nurturer",planet:"Venus",traits:["Caring","Responsible","Harmonious","Loving"],body:"Venus energy fills you with beauty, love and responsibility. You are the caretaker who creates harmony wherever you are.",career:"Healthcare, education, hospitality, design, social work, counselling",relation:"Devoted, caring partner who creates a beautiful and harmonious home",phone:"A phone number totalling 6 attracts harmony, love, domestic happiness and material abundance.",cycle:"Responsibility and love — nurture family, home and relationships first",color:"White and Pink",day:"Friday",gem:"Diamond",metal:"Silver",dir:"Southeast"},
+7:{name:"The Seeker",planet:"Ketu",traits:["Spiritual","Analytical","Intuitive","Wise"],body:"Ketu energy makes you a deep thinker and spiritual seeker. You seek truth beyond the surface and possess rare wisdom that guides others.",career:"Research, science, spirituality, philosophy, medicine, technology",relation:"Thoughtful, wise partner who offers depth, meaning and spiritual connection",phone:"A phone number totalling 7 opens channels for wisdom, intuition and deep analytical insight.",cycle:"Reflection and wisdom — go within, study, meditate and seek deeper truth",color:"Violet and Purple",day:"Monday",gem:"Cat's Eye (Lehsunia)",metal:"Iron",dir:"Southwest"},
+8:{name:"The Achiever",planet:"Saturn",traits:["Powerful","Ambitious","Authoritative","Persistent"],body:"Saturn energy makes you a powerhouse of ambition. You are built for material success and leaving a lasting legacy that transcends generations.",career:"Business, investments, law, real estate, banking, politics, corporate leadership",relation:"Strong, protective partner who provides security, stability and unwavering loyalty",phone:"A phone number totalling 8 is the most powerful for business wealth, authority and lasting material achievement.",cycle:"Power and achievement — push hard, financial gains and recognition come now",color:"Black and Blue",day:"Saturday",gem:"Blue Sapphire (Neelam)",metal:"Iron",dir:"West"},
+9:{name:"The Humanitarian",planet:"Mars",traits:["Compassionate","Courageous","Universal","Energetic"],body:"Mars energy makes you a warrior with a compassionate heart. You fight for justice and have a universal outlook that transcends all boundaries.",career:"Medicine, social work, military, law, leadership, healing arts, NGO",relation:"Passionate, courageous partner who fights fiercely for love and justice",phone:"A phone number totalling 9 brings universal recognition, lasting respect and completion of goals.",cycle:"Completion and release — finish what was started, give back, prepare for renewal",color:"Red and Orange",day:"Tuesday",gem:"Red Coral (Moonga)",metal:"Copper",dir:"South"}
+},
+te:{
+1:{name:"నాయకుడు",planet:"సూర్యుడు",traits:["ఆత్మవిశ్వాసం","లక్ష్యశీలత","మార్గదర్శి","అధికారం"],body:"సూర్య శక్తి సహజ నాయకత్వాన్ని తెస్తుంది. మీరు విజయం మరియు గుర్తింపు కోసం ముందుకు వెళతారు. మీ ఉనికి అధికారాన్ని ఆదేశిస్తుంది.",career:"నాయకత్వం, వ్యవస్థాపకత, నిర్వహణ, రాజకీయాలు, సైన్యం",relation:"ప్రేమ మరియు విధేయతతో నాయకత్వం వహించే బలమైన, రక్షణాత్మక భాగస్వామి",phone:"1 మొత్తం ఉన్న ఫోన్ నంబర్ కొత్త ప్రారంభాలు, వృత్తి గుర్తింపు మరియు నాయకత్వ విజయాన్ని ఆకర్షిస్తుంది.",cycle:"కొత్త ప్రారంభాలు — ప్రారంభించండి, చొరవ తీసుకోండి మరియు నాయకత్వం వహించండి",color:"ఎర్రని మరియు బంగారు",day:"ఆదివారం",gem:"మాణిక్యం",metal:"బంగారం",dir:"తూర్పు"},
+2:{name:"దౌత్యకారుడు",planet:"చంద్రుడు",traits:["సున్నితత్వం","సహకారం","సామరస్యం","అంతర్దృష్టి"],body:"చంద్ర శక్తి మిమ్మల్ని లోతైన అంతర్జ్ఞానం మరియు సానుభూతితో నింపుతుంది. మీరు భాగస్వామ్యాలలో వర్ధిల్లుతారు మరియు శాంతిని తెస్తారు.",career:"కౌన్సెలింగ్, కళలు, సంగీతం, భాగస్వామ్యాలు, ఆరోగ్య సంరక్షణ",relation:"సంబంధాలను పోషించే సానుభూతిగల, అంకితభావంతో కూడిన భాగస్వామి",phone:"2 మొత్తం ఉన్న ఫోన్ నంబర్ సంబంధాలను మెరుగుపరచి, సామరస్యాన్ని ఆకర్షిస్తుంది.",cycle:"సహనం మరియు భాగస్వామ్యం — ప్రక్రియను విశ్వసించండి, పోషించండి",color:"తెలుపు మరియు వెండి",day:"సోమవారం",gem:"ముత్యం",metal:"వెండి",dir:"వాయవ్యం"},
+3:{name:"సృష్టికర్త",planet:"గురుడు",traits:["వ్యక్తీకరణ","ఆనందం","కళాత్మకత","సంభాషణ"],body:"గురు శక్తి మీలో సృజనాత్మకత మరియు ఆశావాదాన్ని నింపుతుంది. మీరు ఇతరులను ప్రేరేపించే సహజ సంభాషణకర్త.",career:"కళలు, రచన, బోధన, వినోదం, ప్రజా ప్రసంగం, మీడియా",relation:"సంబంధాన్ని చైతన్యవంతంగా ఉంచే ఆనందకరమైన భాగస్వామి",phone:"3 మొత్తం ఉన్న ఫోన్ నంబర్ సృజనాత్మకత, సంభాషణ అవకాశాలు మరియు ఆనందాన్ని ఆకర్షిస్తుంది.",cycle:"వృద్ధి మరియు వ్యక్తీకరణ — మీ బహుమతులను పంచుకోండి, ధైర్యంగా సంభాషించండి",color:"పసుపు మరియు బంగారు",day:"గురువారం",gem:"పుష్యరాగం",metal:"బంగారం",dir:"ఉత్తరం"},
+4:{name:"నిర్మాత",planet:"రాహువు",traits:["ఆచరణాత్మకత","క్రమశిక్షణ","స్థిరత్వం","కష్టపడి పని"],body:"రాహు శక్తి మిమ్మల్ని పునాది నిర్మాతగా చేస్తుంది. మీరు క్రమపద్ధతిలో పని చేసి జీవితంలో శాశ్వతమైన నిర్మాణాలు సృష్టిస్తారు.",career:"ఇంజినీరింగ్, నిర్మాణం, ఆర్థికం, న్యాయం, వాస్తుశిల్పం",relation:"సురక్షితమైన మరియు శాశ్వతమైన సంబంధాన్ని నిర్మించే విశ్వసనీయ భాగస్వామి",phone:"4 మొత్తం ఉన్న ఫోన్ నంబర్ నిర్మాణం, స్థిరత్వం మరియు స్థిరమైన భౌతిక వృద్ధిని ఆకర్షిస్తుంది.",cycle:"పునాది నిర్మాణం — కష్టపడి పని చేయండి, భవిష్యత్తు కోసం నిర్మించండి",color:"నీలం మరియు బూడిద",day:"శనివారం",gem:"గోమేదం",metal:"ఇనుము",dir:"పశ్చిమం"},
+5:{name:"అన్వేషకుడు",planet:"బుధుడు",traits:["సాహసం","బహుముఖ ప్రజ్ఞ","స్వేచ్ఛా స్వభావం","చైతన్యం"],body:"బుధ శక్తి మిమ్మల్ని అనుకూలంగా మరియు వేగంగా ఆలోచించేలా చేస్తుంది. మీరు మార్పును ఆహ్వానిస్తారు.",career:"వ్యాపారం, ప్రయాణం, సాంకేతికత, అమ్మకాలు, మీడియా",relation:"జీవితాన్ని ఆసక్తికరంగా మరియు సాహసంతో నింపే చైతన్యవంతమైన భాగస్వామి",phone:"5 మొత్తం ఉన్న ఫోన్ నంబర్ కొత్త అవకాశాలు, విజయవంతమైన ప్రయాణం మరియు వ్యాపార సాహసాలను ఆకర్షిస్తుంది.",cycle:"మార్పు మరియు స్వేచ్ఛ — కొత్తవాటిని ఆహ్వానించండి, దిగంతాలను విస్తరించండి",color:"ఆకుపచ్చ మరియు వెండి",day:"బుధవారం",gem:"పచ్చ",metal:"పాదరసం",dir:"ఉత్తరం"},
+6:{name:"పోషకుడు",planet:"శుక్రుడు",traits:["శ్రద్ధ","బాధ్యత","సామరస్యం","ప్రేమ"],body:"శుక్ర శక్తి మిమ్మల్ని అందం, ప్రేమ మరియు బాధ్యతతో నింపుతుంది. మీరు వెళ్ళిన చోటల్లా సామరస్యాన్ని సృష్టించే సంరక్షకుడు.",career:"ఆరోగ్య సంరక్షణ, విద్య, ఆతిథ్యం, డిజైన్, సామాజిక సేవ",relation:"అందమైన మరియు సామరస్యమైన గృహాన్ని సృష్టించే అంకితమైన భాగస్వామి",phone:"6 మొత్తం ఉన్న ఫోన్ నంబర్ సామరస్యం, ప్రేమ మరియు భౌతిక సమృద్ధిని ఆకర్షిస్తుంది.",cycle:"బాధ్యత మరియు ప్రేమ — కుటుంబం, గృహం మరియు సంబంధాలను పోషించండి",color:"తెలుపు మరియు గులాబీ",day:"శుక్రవారం",gem:"వజ్రం",metal:"వెండి",dir:"ఆగ్నేయం"},
+7:{name:"అన్వేషి",planet:"కేతువు",traits:["ఆధ్యాత్మికత","విశ్లేషణ","అంతర్దృష్టి","జ్ఞానం"],body:"కేతు శక్తి మిమ్మల్ని లోతైన ఆలోచనాపరుడు మరియు ఆధ్యాత్మిక అన్వేషిగా చేస్తుంది. మీరు సత్యాన్ని వెతుకుతారు.",career:"పరిశోధన, విజ్ఞానం, ఆధ్యాత్మికత, తత్వశాస్త్రం, వైద్యం",relation:"లోతు, అర్థం మరియు ఆధ్యాత్మిక సంబంధాన్ని అందించే జ్ఞానవంతమైన భాగస్వామి",phone:"7 మొత్తం ఉన్న ఫోన్ నంబర్ జ్ఞానం, అంతర్దృష్టి మరియు ఆధ్యాత్మిక వృద్ధి చానెళ్ళను తెరుస్తుంది.",cycle:"ప్రతిబింబం మరియు జ్ఞానం — లోపలికి వెళ్ళండి, అధ్యయనం చేయండి, ధ్యానించండి",color:"వంగ మరియు ఊదా",day:"సోమవారం",gem:"వైడూర్యం",metal:"ఇనుము",dir:"నైరుతి"},
+8:{name:"విజేత",planet:"శని",traits:["శక్తివంతం","మహాత్మాకాంక్ష","అధికారం","పట్టుదల"],body:"శని శక్తి మిమ్మల్ని మహాత్మాకాంక్ష మరియు పట్టుదల యొక్క శక్తిగృహంగా చేస్తుంది. మీరు భౌతిక విజయం కోసం నిర్మించబడ్డారు.",career:"వ్యాపారం, పెట్టుబడులు, న్యాయం, రియల్ ఎస్టేట్, బ్యాంకింగ్",relation:"భద్రత, స్థిరత్వం మరియు అచంచలమైన విధేయతను అందించే బలమైన భాగస్వామి",phone:"8 మొత్తం ఉన్న ఫోన్ నంబర్ వ్యాపార సంపద, అధికారం మరియు శాశ్వతమైన భౌతిక విజయానికి అత్యంత శక్తివంతమైనది.",cycle:"శక్తి మరియు విజయం — కష్టంగా నెట్టండి, ఆర్థిక లాభాలు మరియు గుర్తింపు ఇప్పుడే వస్తాయి",color:"నలుపు మరియు నీలం",day:"శనివారం",gem:"నీలమణి",metal:"ఇనుము",dir:"పశ్చిమం"},
+9:{name:"మానవతావాది",planet:"అంగారకుడు",traits:["కరుణ","ధైర్యం","విశ్వజనీనత","శక్తి"],body:"అంగారక శక్తి మిమ్మల్ని కరుణాహృదయంతో కూడిన యోధుడిగా చేస్తుంది. మీరు న్యాయం కోసం పోరాడుతారు.",career:"వైద్యం, సామాజిక సేవ, సైన్యం, న్యాయం, నాయకత్వం",relation:"ప్రేమ మరియు న్యాయం కోసం తీవ్రంగా పోరాడే మనోవేగమైన భాగస్వామి",phone:"9 మొత్తం ఉన్న ఫోన్ నంబర్ విశ్వ గుర్తింపు, శాశ్వతమైన గౌరవం మరియు లక్ష్యాల పూర్తిని తెస్తుంది.",cycle:"పూర్తి మరియు విముక్తి — ప్రారంభించినది పూర్తి చేయండి, తిరిగి ఇవ్వండి",color:"ఎర్రని మరియు నారంగి",day:"మంగళవారం",gem:"పగడం",metal:"రాగి",dir:"దక్షిణం"}
+},
+hi:{
+1:{name:"नेता",planet:"सूर्य",traits:["आत्मविश्वासी","महत्वाकांक्षी","अग्रणी","अधिकारपूर्ण"],body:"सूर्य ऊर्जा प्राकृतिक नेतृत्व लाती है। आप उपलब्धि और पहचान से प्रेरित हैं। आपकी उपस्थिति अधिकार का आदेश देती है।",career:"नेतृत्व, उद्यमिता, प्रबंधन, राजनीति, सेना",relation:"प्यार और वफादारी के साथ नेतृत्व करने वाले मजबूत, सुरक्षात्मक साथी",phone:"1 कुल वाली फोन संख्या नई शुरुआत, करियर की पहचान और नेतृत्व सफलता को आकर्षित करती है।",cycle:"नई शुरुआत — शुरू करें, पहल करें और नेतृत्व करें",color:"लाल और सोना",day:"रविवार",gem:"माणिक",metal:"सोना",dir:"पूर्व"},
+2:{name:"राजनयिक",planet:"चंद्रमा",traits:["संवेदनशील","सहयोगी","सामंजस्यपूर्ण","सहज"],body:"चंद्र ऊर्जा आपको गहराई से सहज और सहानुभूतिपूर्ण बनाती है। आप साझेदारी में फलते-फूलते हैं।",career:"परामर्श, कला, संगीत, साझेदारी, स्वास्थ्य सेवा",relation:"रिश्तों को पोषित करने वाले सहानुभूतिपूर्ण, समर्पित साथी",phone:"2 कुल वाली फोन संख्या रिश्तों को बेहतर बनाती है और भावनात्मक संतुष्टि लाती है।",cycle:"धैर्य और साझेदारी — प्रक्रिया पर भरोसा करें",color:"सफेद और चांदी",day:"सोमवार",gem:"मोती",metal:"चांदी",dir:"उत्तर-पश्चिम"},
+3:{name:"सृजनकर्ता",planet:"बृहस्पति",traits:["अभिव्यक्तिशील","आनंदमय","कलात्मक","संचारी"],body:"बृहस्पति ऊर्जा आपको रचनात्मकता और आशावाद से भरती है। आप दूसरों को प्रेरित करने वाले स्वाभाविक संचारक हैं।",career:"कला, लेखन, शिक्षण, मनोरंजन, सार्वजनिक भाषण, मीडिया",relation:"रिश्ते को जीवंत रखने वाले आनंदमय, अभिव्यक्तिशील साथी",phone:"3 कुल वाली फोन संख्या रचनात्मकता, संचार और खुशी व समृद्धि को आकर्षित करती है।",cycle:"विकास और अभिव्यक्ति — अपने उपहार साझा करें",color:"पीला और सोना",day:"गुरुवार",gem:"पुखराज",metal:"सोना",dir:"उत्तर"},
+4:{name:"निर्माता",planet:"राहु",traits:["व्यावहारिक","अनुशासित","स्थिर","परिश्रमी"],body:"राहु ऊर्जा आपको नींव बनाने वाला बनाती है। आप व्यवस्थित रूप से काम करते हैं और स्थायी संरचनाएं बनाते हैं।",career:"इंजीनियरिंग, निर्माण, वित्त, कानून, वास्तुकला",relation:"एक सुरक्षित और स्थायी रिश्ता बनाने वाले विश्वसनीय साथी",phone:"4 कुल वाली फोन संख्या संरचना, स्थिरता और स्थिर भौतिक विकास को आकर्षित करती है।",cycle:"नींव बनाना — कठिन परिश्रम करें, भविष्य के लिए निर्माण करें",color:"नीला और ग्रे",day:"शनिवार",gem:"गोमेद",metal:"लोहा",dir:"पश्चिम"},
+5:{name:"अन्वेषक",planet:"बुध",traits:["साहसी","बहुमुखी","स्वतंत्र","गतिशील"],body:"बुध ऊर्जा आपको अनुकूलनीय और तेज़ सोचने वाला बनाती है। आप परिवर्तन को अपनाते हैं।",career:"व्यापार, यात्रा, प्रौद्योगिकी, बिक्री, मीडिया",relation:"जीवन को रोचक और साहसपूर्ण रखने वाले गतिशील साथी",phone:"5 कुल वाली फोन संख्या नए अवसर, सफल यात्रा और व्यावसायिक उद्यमों को आकर्षित करती है।",cycle:"परिवर्तन और स्वतंत्रता — नए को अपनाएं, क्षितिज विस्तारित करें",color:"हरा और चांदी",day:"बुधवार",gem:"पन्ना",metal:"पारा",dir:"उत्तर"},
+6:{name:"पोषणकर्ता",planet:"शुक्र",traits:["देखभाल करने वाले","जिम्मेदार","सामंजस्यपूर्ण","प्रेमी"],body:"शुक्र ऊर्जा आपको सौंदर्य, प्रेम और जिम्मेदारी से भरती है। आप जहां भी होते हैं सद्भाव बनाते हैं।",career:"स्वास्थ्य सेवा, शिक्षा, आतिथ्य, डिज़ाइन, सामाजिक कार्य",relation:"एक सुंदर और सामंजस्यपूर्ण घर बनाने वाले समर्पित साथी",phone:"6 कुल वाली फोन संख्या सद्भाव, प्रेम और भौतिक समृद्धि को आकर्षित करती है।",cycle:"जिम्मेदारी और प्रेम — परिवार, घर और रिश्तों को पोषित करें",color:"सफेद और गुलाबी",day:"शुक्रवार",gem:"हीरा",metal:"चांदी",dir:"दक्षिण-पूर्व"},
+7:{name:"साधक",planet:"केतु",traits:["आध्यात्मिक","विश्लेषणात्मक","सहज","बुद्धिमान"],body:"केतु ऊर्जा आपको गहरे विचारक और आध्यात्मिक साधक बनाती है। आप सत्य की खोज करते हैं।",career:"अनुसंधान, विज्ञान, आध्यात्मिकता, दर्शन, चिकित्सा",relation:"गहराई, अर्थ और आध्यात्मिक संबंध प्रदान करने वाले बुद्धिमान साथी",phone:"7 कुल वाली फोन संख्या ज्ञान, अंतर्ज्ञान और आध्यात्मिक विकास के चैनल खोलती है।",cycle:"चिंतन और ज्ञान — अंदर जाएं, अध्ययन करें, ध्यान करें",color:"बैंगनी और जामुनी",day:"सोमवार",gem:"लहसुनिया",metal:"लोहा",dir:"दक्षिण-पश्चिम"},
+8:{name:"उपलब्धिकर्ता",planet:"शनि",traits:["शक्तिशाली","महत्वाकांक्षी","अधिकारपूर्ण","दृढ़"],body:"शनि ऊर्जा आपको महत्वाकांक्षा और दृढ़ता का पावरहाउस बनाती है। आप भौतिक सफलता के लिए बने हैं।",career:"व्यापार, निवेश, कानून, रियल एस्टेट, बैंकिंग",relation:"सुरक्षा, स्थिरता और अटूट वफादारी प्रदान करने वाले मजबूत साथी",phone:"8 कुल वाली फोन संख्या व्यावसायिक धन, अधिकार और स्थायी उपलब्धि के लिए सबसे शक्तिशाली है।",cycle:"शक्ति और उपलब्धि — जोर से आगे बढ़ें, लाभ और पहचान अब आती है",color:"काला और नीला",day:"शनिवार",gem:"नीलम",metal:"लोहा",dir:"पश्चिम"},
+9:{name:"मानवतावादी",planet:"मंगल",traits:["दयालु","साहसी","सार्वभौमिक","ऊर्जावान"],body:"मंगल ऊर्जा आपको दयालु हृदय वाला योद्धा बनाती है। आप न्याय के लिए लड़ते हैं।",career:"चिकित्सा, सामाजिक कार्य, सेना, कानून, नेतृत्व",relation:"प्यार और न्याय के लिए तीव्रता से लड़ने वाले जोशीले साथी",phone:"9 कुल वाली फोन संख्या सार्वभौमिक पहचान, स्थायी सम्मान और लक्ष्यों की पूर्ति लाती है।",cycle:"पूर्णता और मुक्ति — जो शुरू किया उसे पूरा करें, वापस दें",color:"लाल और नारंगी",day:"मंगलवार",gem:"मूंगा",metal:"तांबा",dir:"दक्षिण"}
+}
+};
+
+
+var selLangs=["en"];
+function toggleLang(lang){
+  var idx=selLangs.indexOf(lang);
+  if(idx>=0){if(selLangs.length>1)selLangs.splice(idx,1);}
+  else{if(selLangs.length>=2){alert("Maximum 2 languages. Deselect one first.");return;}selLangs.push(lang);}
+  document.querySelectorAll(".ls-btn").forEach(function(b){b.classList.toggle("sel",selLangs.indexOf(b.dataset.lang)>=0);});
+  buildReport();
+}
+function dglabel(type,lang){
+  var L={good:{en:"Include in your phone number:",te:"మీ ఫోన్ నంబర్లో చేర్చండి:",hi:"फोन नंबर में शामिल करें:"},bad:{en:"Avoid in your phone number:",te:"మీ ఫోన్ నంబర్లో నివారించండి:",hi:"फोन नंबर में से बचें:"},t2:{en:"Best 2-digit totals:",te:"అత్యుత్తమ 2-అంకెల మొత్తాలు:",hi:"सर्वश्रेष्ठ 2-अंकीय योग:"},t1:{en:"Best single digit total:",te:"అత్యుత్తమ ఒకే అంక మొత్తం:",hi:"सर्वश्रेष्ठ एकल अंक योग:"},pat:{en:"Best number patterns:",te:"అత్యుత్తమ నంబర్ నమూనాలు:",hi:"सर्वश्रेष्ठ संख्या पैटर्न:"},comp:{en:"Compatible Numbers:",te:"అనుకూల సంఖ్యలు:",hi:"अनुकूल संख्याएं:"},lucky:{en:"Lucky Attributes",te:"అదృష్ట లక్షణాలు",hi:"भाग्यशाली गुण"},digits:{en:"Phone Number Digit Guide",te:"ఫోన్ నంబర్ అంకెల మార్గదర్శకం",hi:"फोन नंबर अंक मार्गदर्शिका"},career:{en:"Career & Purpose",te:"వృత్తి & లక్ష్యం",hi:"करियर और उद्देश्य"},relation:{en:"Relationships",te:"సంబంధాలు",hi:"रिश्ते"},phone:{en:"Phone Number Insight",te:"ఫోన్ నంబర్ అంతర్దృష్టి",hi:"फोन नंबर अंतर्दृष्टि"},cycle:{en:"Current Life Cycle (2025)",te:"ప్రస్తుత జీవన చక్రం (2025)",hi:"वर्तमान जीवन चक्र (2025)"},lp:{en:"Life Path Number",te:"జీవన మార్గ సంఖ్య",hi:"जीवन पथ संख्या"},nm:{en:"Name Number (Chaldean)",te:"పేరు సంఖ్య (చాల్డియన్)",hi:"नाम संख्या (चाल्डियन)"},dn:{en:"Destiny Number",te:"విధి సంఖ్య",hi:"भाग्य संख्या"},py:{en:"Personal Year 2025",te:"వ్యక్తిగత సంవత్సరం 2025",hi:"व्यक्तिगत वर्ष 2025"}};
+  return (L[type]&&L[type][lang])||((L[type]&&L[type]["en"])||type);
+}
+function numBlock(sectionKey,num,data,lang){
+  return "<div class='report-block'><div class='rb-title'>"+dglabel(sectionKey,lang)+"</div><div class='rb-number'>"+num+"</div><div class='rb-name'>"+data.name+"</div><div class='rb-planet'>"+data.planet+"</div><div class='rb-traits'>"+data.traits.map(function(t){return"<span class='rb-trait'>"+t+"</span>";}).join("")+"</div><div class='rb-body'>"+data.body+"</div></div>";
+}
+function buildLangSection(lang,name,lp,nm,dn,py){
+  var lpD=NR_TEXT[lang][lp],nmD=nm?NR_TEXT[lang][nm]:null,dnD=NR_TEXT[lang][dn],pyD=NR_TEXT[lang][py];
+  var lpN=NR_NUM[lp];
+  var h="<div class='report-lang-section'><div class='rls-header'><span class='rls-lang'>"+LANG_LABELS[lang]+"</span>";
+  if(name)h+="<span style='font-family:var(--C);font-size:9px;letter-spacing:2px;color:var(--text2);margin-left:auto'>"+name+"</span>";
+  h+="</div><div class='rls-body'>";
+  h+=numBlock("lp",lp,lpD,lang);
+  if(nm&&nmD)h+=numBlock("nm",nm,nmD,lang);
+  if(dn!==lp)h+=numBlock("dn",dn,dnD,lang);
+  // Personal Year
+  h+="<div class='report-block'><div class='rb-title'>"+dglabel("py",lang)+"</div>";
+  h+="<div style='display:flex;gap:14px;align-items:center;margin-bottom:12px'><div class='rb-number' style='font-size:48px'>"+py+"</div><div><div style='font-family:var(--C);font-size:13px;letter-spacing:2px;color:var(--text);margin-bottom:5px'>"+pyD.name+"</div><div style='font-size:13px;color:var(--text3);line-height:1.6'>"+pyD.cycle+"</div></div></div>";
+  h+="<div class='cycle-display'>";for(var i=1;i<=9;i++){h+="<div class='cycle-num"+(i===py?" current":"")+"'>"+i+"<div style='font-size:7px;opacity:.7;margin-top:2px'>"+CYCLE_TEXT[lang][i-1]+"</div></div>";}h+="</div></div>";
+  // Lucky
+  h+="<div class='report-block'><div class='rb-title'>"+dglabel("lucky",lang)+"</div><div class='lucky-strip'>";
+  h+="<div class='ls-item'><div class='ls-item-lbl'>COLOR</div><div class='ls-item-val'>"+lpD.color+"</div></div>";
+  h+="<div class='ls-item'><div class='ls-item-lbl'>DAY</div><div class='ls-item-val'>"+lpD.day+"</div></div>";
+  h+="<div class='ls-item'><div class='ls-item-lbl'>GEM</div><div class='ls-item-val'>"+lpD.gem+"</div></div>";
+  h+="<div class='ls-item'><div class='ls-item-lbl'>METAL</div><div class='ls-item-val'>"+lpD.metal+"</div></div>";
+  h+="<div class='ls-item'><div class='ls-item-lbl'>DIRECTION</div><div class='ls-item-val'>"+lpD.dir+"</div></div>";
+  h+="</div></div>";
+  // Digits
+  h+="<div class='report-block'><div class='rb-title'>"+dglabel("digits",lang)+"</div><div class='digits-section'>";
+  h+="<div class='ds-title'>"+dglabel("good",lang)+"</div><div class='digit-row'>";lpN.best_digits.forEach(function(d){h+="<div class='digit-good'>"+d+"</div>";});h+="</div>";
+  h+="<div class='ds-title'>"+dglabel("bad",lang)+"</div><div class='digit-row'>";lpN.avoid_digits.forEach(function(d){h+="<div class='digit-bad'>"+d+"</div>";});h+="</div>";
+  h+="<div class='ds-title'>"+dglabel("t2",lang)+"</div><div class='totals-row'>";lpN.two_d.forEach(function(t){h+="<div class='total-chip'>"+t+"</div>";});h+="</div>";
+  h+="<div class='ds-title'>"+dglabel("t1",lang)+"</div><div class='totals-row'><div class='total-chip'>"+lpN.one_d+"</div></div>";
+  h+="<div class='ds-title'>"+dglabel("pat",lang)+"</div><div class='pattern-chips'>";lpN.patterns.forEach(function(p){h+="<div class='pattern-chip'>"+p+"</div>";});h+="</div>";
+  h+="</div></div>";
+  // Career
+  h+="<div class='report-block'><div class='rb-title'>"+dglabel("career",lang)+"</div><div style='font-size:14px;color:var(--text2);line-height:1.8'>"+lpD.career+"</div></div>";
+  h+="<div class='report-block'><div class='rb-title'>"+dglabel("relation",lang)+"</div><div style='font-size:14px;color:var(--text2);line-height:1.8'>"+lpD.relation+"</div></div>";
+  h+="<div class='report-block'><div class='rb-title'>"+dglabel("phone",lang)+"</div><div style='font-size:14px;color:var(--text2);line-height:1.8'>"+lpD.phone+"</div></div>";
+  // Compatible
+  h+="<div class='report-block'><div class='rb-title'>"+dglabel("comp",lang)+"</div><div style='display:flex;gap:8px;flex-wrap:wrap'>";
+  lpN.compatible.forEach(function(c){h+="<div class='digit-good' style='width:auto;padding:6px 14px;border-radius:5px;font-size:11px'>"+c+" — "+NR_TEXT[lang][c].name+"</div>";});
+  h+="</div></div>";
+  h+="</div></div>";
+  return h;
+}
+function buildReport(){
+  var name=(document.getElementById("nf-name")||{value:""}).value.trim();
+  var dd=parseInt((document.getElementById("nf-dd2")||{value:""}).value)||1;
+  var mm=parseInt((document.getElementById("nf-mm2")||{value:""}).value)||1;
+  var yy=parseInt((document.getElementById("nf-yy2")||{value:""}).value)||1990;
+  var lp=lifePathNum(dd,mm,yy),nm=name?nameNum(name):0,dn=nm?destinyNum(lp,nm):lp,py=personalYear(dd,mm);
+  var sEl=document.getElementById("reportSections");
+  if(sEl)sEl.innerHTML=selLangs.map(function(lang){return buildLangSection(lang,name,lp,nm,dn,py);}).join("");
+}
+function buildInventorySection(){
+  var lp=parseInt((document.getElementById("nf-lp-hidden")||{value:1}).value)||1;
+  var nm=parseInt((document.getElementById("nf-nm-hidden")||{value:0}).value)||0;
+  var lang=selLangs[0]||"en";
+  var matches=DATA.filter(function(x){return dT(x.n)===lp||(nm&&dT(x.n)===nm);}).sort(function(a,b){return b.p-a.p;});
+  var labels={en:"Your Personalised VIP Numbers",te:"మీ వ్యక్తిగతీకృత VIP నంబర్లు",hi:"आपके वैयक्तिकृत VIP नंबर"};
+  var h="<div class='inv-section'><div class='inv-title'>"+(labels[lang]||labels.en)+"</div>";
+  if(matches.length){
+    var subEn="VIP numbers from our live inventory matching your Life Path "+lp+(nm?" and Name Number "+nm:"")+" :";
+    var subTe="మీ జీవన మార్గ సంఖ్య "+lp+(nm?" మరియు పేరు సంఖ్య "+nm:"")+" తో సరిపోలే VIP నంబర్లు:";
+    var subHi="आपके जीवन पथ "+lp+(nm?" और नाम संख्या "+nm:"")+" से मेल खाते VIP नंबर:";
+    var sub=lang==="te"?subTe:lang==="hi"?subHi:subEn;
+    h+="<div class='inv-sub'>"+sub+"</div><div class='inv-grid'>";
+    matches.slice(0,6).forEach(function(x){
+      var why=dT(x.n)===lp?"Life Path "+lp:"Name No. "+nm;
+      h+="<div class='inv-card'><div class='inv-num'>"+x.d+"</div><div class='inv-price'>Rs."+parseInt(x.p).toLocaleString("en-IN")+"</div><div class='inv-match'>Matches "+why+"</div><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20got%20my%20numerology%20report.%20Lucky%20number%20is%20"+lp+".%20I%20want%20"+encodeURIComponent(x.n)+"' target='_blank' class='inv-btn'>Enquire Now</a></div>";
+    });
+    if(matches.length>6)h+="<div class='inv-card' style='display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-family:var(--C);font-size:24px;color:var(--gold2);margin-bottom:4px'>+"+(matches.length-6)+"</div><div style='font-family:var(--C);font-size:8px;letter-spacing:1.5px;color:var(--text3)'>more matches</div></div>";
+    h+="</div>";
+  } else {
+    var mEn={title:"No Exact Match Right Now",body:"We don't have your exact match in current listings — but no worries at all. Mr. Suresh has been sourcing perfect numbers for 15 years. He will personally find a number matching Life Path "+lp+" from across India. Just drop him a WhatsApp. Let him handle it.",btn:"Let Mr. Suresh Find Your Number"};
+    var mTe={title:"ప్రస్తుత జాబితాలో సరైన సరిపోలిక లేదు",body:"మేము మీ ఖచ్చితమైన సరిపోలిక ప్రస్తుత జాబితాలో కలిగి లేము — కానీ ఆందోళన అక్కరలేదు. శ్రీ సురేష్ 15 సంవత్సరాలుగా సంపూర్ణ నంబర్లు కనుగొంటున్నారు. ఆయన జీవన మార్గ "+lp+"కు సరిపోయే నంబర్ను భారతదేశం అంతటా నుండి వ్యక్తిగతంగా తీసుకొస్తారు. ఆందోళన లేదు — ఆయన నిర్వహించనివ్వండి.",btn:"శ్రీ సురేష్ మీ నంబర్ కనుగొనేలా చేయండి"};
+    var mHi={title:"अभी सूची में सटीक मेल नहीं",body:"हमारी वर्तमान सूची में आपका सटीक मेल नहीं है — लेकिन बिल्कुल चिंता न करें। श्री सुरेश 15 वर्षों से सही नंबर खोज रहे हैं। वे पूरे भारत से जीवन पथ "+lp+" से मेल खाने वाला नंबर व्यक्तिगत रूप से प्राप्त करेंगे। उन्हें संभालने दें।",btn:"श्री सुरेश को आपका नंबर खोजने दें"};
+    var m=lang==="te"?mTe:lang==="hi"?mHi:mEn;
+    h+="<div class='suresh-msg'><div class='sm-icon'>🔮</div><div class='sm-title'>"+m.title+"</div><div class='sm-body'>"+m.body+"</div><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20My%20life%20path%20is%20"+lp+".%20Please%20find%20me%20a%20VIP%20number%20matching%20this.' target='_blank' class='btn-gold' style='display:inline-flex'><i class='fab fa-whatsapp'></i> "+m.btn+"</a></div>";
+  }
+  h+="<div style='text-align:center;margin-top:20px'><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20completed%20my%20numerology%20report.%20My%20Life%20Path%20is%20"+lp+".%20Please%20help%20me%20find%20the%20perfect%20VIP%20number.' target='_blank' class='btn-wa' style='display:inline-flex'><i class='fab fa-whatsapp'></i> WhatsApp Mr. Suresh Directly</a></div></div>";
+  return h;
+}
+function runNumerologyFull(){
+  var name=(document.getElementById("nf-name")||{value:""}).value.trim();
+  var dd=parseInt((document.getElementById("nf-dd2")||{value:""}).value);
+  var mm=parseInt((document.getElementById("nf-mm2")||{value:""}).value);
+  var yy=parseInt((document.getElementById("nf-yy2")||{value:""}).value);
+  if(!dd||!mm||!yy){alert("Please enter Day, Month and Year of birth");return;}
+  var lp=lifePathNum(dd,mm,yy),nm=name?nameNum(name):0;
+  var h1=document.getElementById("nf-lp-hidden"),h2=document.getElementById("nf-nm-hidden");
+  if(h1)h1.value=lp;if(h2)h2.value=nm;
+  selLangs=["en"];
+  document.querySelectorAll(".ls-btn").forEach(function(b){b.classList.toggle("sel",b.dataset.lang==="en");});
+  buildReport();
+  var invEl=document.getElementById("reportInventory");
+  if(invEl)invEl.innerHTML=buildInventorySection();
+  var wrap=document.getElementById("nfReportWrap");
+  if(wrap){wrap.classList.add("show");setTimeout(function(){wrap.scrollIntoView({behavior:"smooth",block:"start"});},100);}
+}
+function downloadNumerologyReport(){window.print();}
+
 </script>
 </body>
 </html>

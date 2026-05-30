@@ -923,6 +923,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:44px 56p
       </div>
       <button class="dl-btn" id="dlBtn" onclick="downloadNumerologyReport()"><i class="fas fa-download"></i> Download Report as PDF</button>
     </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <span style="font-family:var(--C);font-size:8px;letter-spacing:2px;color:var(--text3)">REPORT TEXT SIZE</span>
+      <button onclick="adjFont(-1)" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:monospace">−</button>
+      <span id="fontSizeLabel" style="font-family:var(--C);font-size:10px;color:var(--gold2);min-width:30px;text-align:center">14px</span>
+      <button onclick="adjFont(1)" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:monospace">+</button>
+    </div>
     <div id="reportSections"></div>
     <div id="reportInventory"></div>
   </div>
@@ -1538,25 +1544,41 @@ function buildReport(){
   var sEl=document.getElementById("reportSections");
   if(sEl)sEl.innerHTML=selLangs.map(function(lang){return buildLangSection(lang,name,lp,nm,dn,py);}).join("");
 }
+var invShowAll=false;
+function toggleInvShowAll(){invShowAll=!invShowAll;var invEl=document.getElementById("reportInventory");if(invEl)invEl.innerHTML=buildInventorySection();}
+function makeInvCard(x,lp,nm){
+  var why=dT(x.n)===lp?"Life Path "+lp:"Name No. "+nm;
+  return "<div class='inv-card'><div class='inv-num'>"+x.d+"</div><div class='inv-price'>Rs."+parseInt(x.p).toLocaleString("en-IN")+"</div><div class='inv-match'>Matches "+why+"</div><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20got%20my%20numerology%20report.%20Lucky%20number%20is%20"+lp+".%20I%20want%20"+encodeURIComponent(x.n)+"' target='_blank' class='inv-btn'>Enquire Now</a></div>";
+}
 function buildInventorySection(){
   var lp=parseInt((document.getElementById("nf-lp-hidden")||{value:1}).value)||1;
   var nm=parseInt((document.getElementById("nf-nm-hidden")||{value:0}).value)||0;
   var lang=selLangs[0]||"en";
-  var matches=DATA.filter(function(x){return dT(x.n)===lp||(nm&&dT(x.n)===nm);}).sort(function(a,b){return b.p-a.p;});
+  var avoidDigits=NR_NUM[lp]?NR_NUM[lp].avoid_digits:[];
+  var raw=DATA.filter(function(x){return dT(x.n)===lp||(nm&&dT(x.n)===nm);});
+  var matches=raw.filter(function(x){
+    var digits=x.n.replace(/\D/g,"").split("");
+    return !avoidDigits.some(function(ad){return digits.indexOf(String(ad))>=0;});
+  }).sort(function(a,b){return b.p-a.p;});
+  var skipped=raw.length-matches.length;
   var labels={en:"Your Personalised VIP Numbers",te:"మీ వ్యక్తిగతీకృత VIP నంబర్లు",hi:"आपके वैयक्तिकृत VIP नंबर"};
   var h="<div class='inv-section'><div class='inv-title'>"+(labels[lang]||labels.en)+"</div>";
   if(matches.length){
-    var subEn="VIP numbers from our live inventory matching your Life Path "+lp+(nm?" and Name Number "+nm:"")+" :";
-    var subTe="మీ జీవన మార్గ సంఖ్య "+lp+(nm?" మరియు పేరు సంఖ్య "+nm:"")+" తో సరిపోలే VIP నంబర్లు:";
-    var subHi="आपके जीवन पथ "+lp+(nm?" और नाम संख्या "+nm:"")+" से मेल खाते VIP नंबर:";
+    var subEn="VIP numbers from our live inventory matching Life Path "+lp+(nm?" and Name Number "+nm:"")+(skipped?" ("+skipped+" excluded — contained avoid digits)":"")+" :";
+    var subTe="మీ జీవన మార్గ సంఖ్య "+lp+(nm?" మరియు పేరు సంఖ్య "+nm:"")+" తో సరిపోలే VIP నంబర్లు"+(skipped?" ("+skipped+" మినహాయించబడ్డాయి — నివారించాల్సిన అంకెలు కలిగి ఉన్నాయి)":"")+" :";
+    var subHi="आपके जीवन पथ "+lp+(nm?" और नाम संख्या "+nm:"")+" से मेल खाते VIP नंबर"+(skipped?" ("+skipped+" हटाए गए — वर्जित अंक शामिल थे)":"")+" :";
     var sub=lang==="te"?subTe:lang==="hi"?subHi:subEn;
-    h+="<div class='inv-sub'>"+sub+"</div><div class='inv-grid'>";
-    matches.slice(0,6).forEach(function(x){
-      var why=dT(x.n)===lp?"Life Path "+lp:"Name No. "+nm;
-      h+="<div class='inv-card'><div class='inv-num'>"+x.d+"</div><div class='inv-price'>Rs."+parseInt(x.p).toLocaleString("en-IN")+"</div><div class='inv-match'>Matches "+why+"</div><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20got%20my%20numerology%20report.%20Lucky%20number%20is%20"+lp+".%20I%20want%20"+encodeURIComponent(x.n)+"' target='_blank' class='inv-btn'>Enquire Now</a></div>";
-    });
-    if(matches.length>6)h+="<div class='inv-card' style='display:flex;flex-direction:column;align-items:center;justify-content:center'><div style='font-family:var(--C);font-size:24px;color:var(--gold2);margin-bottom:4px'>+"+(matches.length-6)+"</div><div style='font-family:var(--C);font-size:8px;letter-spacing:1.5px;color:var(--text3)'>more matches</div></div>";
+    var shown=invShowAll?matches:matches.slice(0,6);
+    h+="<div class='inv-sub'>"+sub+"</div><div class='inv-grid' id='invGrid'>";
+    shown.forEach(function(x){h+=makeInvCard(x,lp,nm);});
     h+="</div>";
+    if(matches.length>6){
+      if(invShowAll){
+        h+="<div style='text-align:center;margin-top:14px'><button onclick='toggleInvShowAll()' style='font-family:var(--C);font-size:9px;letter-spacing:2px;padding:10px 24px;border:1px solid var(--border);border-radius:6px;color:var(--text3);background:var(--surface);cursor:pointer'>Show Less ▲</button></div>";
+      } else {
+        h+="<div style='text-align:center;margin-top:14px'><button onclick='toggleInvShowAll()' style='font-family:var(--C);font-size:9px;letter-spacing:2px;padding:10px 24px;border:1px solid var(--gold-bd);border-radius:6px;color:var(--gold2);background:var(--gold-dim);cursor:pointer'>Show All "+(matches.length-6)+" More Matches ▼</button></div>";
+      }
+    }
   } else {
     var mEn={title:"No Exact Match Right Now",body:"We don't have your exact match in current listings — but no worries at all. Mr. Suresh has been sourcing perfect numbers for 15 years. He will personally find a number matching Life Path "+lp+" from across India. Just drop him a WhatsApp. Let him handle it.",btn:"Let Mr. Suresh Find Your Number"};
     var mTe={title:"ప్రస్తుత జాబితాలో సరైన సరిపోలిక లేదు",body:"మేము మీ ఖచ్చితమైన సరిపోలిక ప్రస్తుత జాబితాలో కలిగి లేము — కానీ ఆందోళన అక్కరలేదు. శ్రీ సురేష్ 15 సంవత్సరాలుగా సంపూర్ణ నంబర్లు కనుగొంటున్నారు. ఆయన జీవన మార్గ "+lp+"కు సరిపోయే నంబర్ను భారతదేశం అంతటా నుండి వ్యక్తిగతంగా తీసుకొస్తారు. ఆందోళన లేదు — ఆయన నిర్వహించనివ్వండి.",btn:"శ్రీ సురేష్ మీ నంబర్ కనుగొనేలా చేయండి"};
@@ -1576,6 +1598,7 @@ function runNumerologyFull(){
   var lp=lifePathNum(dd,mm,yy),nm=name?nameNum(name):0;
   var h1=document.getElementById("nf-lp-hidden"),h2=document.getElementById("nf-nm-hidden");
   if(h1)h1.value=lp;if(h2)h2.value=nm;
+  invShowAll=false;
   selLangs=["en"];
   document.querySelectorAll(".ls-btn").forEach(function(b){b.classList.toggle("sel",b.dataset.lang==="en");});
   buildReport();
@@ -1584,6 +1607,8 @@ function runNumerologyFull(){
   var wrap=document.getElementById("nfReportWrap");
   if(wrap){wrap.classList.add("show");setTimeout(function(){wrap.scrollIntoView({behavior:"smooth",block:"start"});},100);}
 }
+var _rptFont=14;
+function adjFont(d){_rptFont=Math.min(22,Math.max(11,_rptFont+d));var el=document.getElementById("reportSections");if(el)el.style.fontSize=_rptFont+"px";var lbl=document.getElementById("fontSizeLabel");if(lbl)lbl.textContent=_rptFont+"px";}
 function downloadNumerologyReport(){window.print();}
 
 </script>

@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numbers Total Calculator — Manne Communications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080f;
+    --surface: #0e1020;
+    --surface2: #141729;
+    --border: #1e2340;
+    --gold: #c9a84c;
+    --gold-dim: #8a6e2f;
+    --gold-glow: rgba(201,168,76,0.15);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.12);
+    --red: #ef4444;
+    --text: #e8eaf0;
+    --text-dim: #6b7280;
+    --text-muted: #374151;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Gold orb top */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 40px 0 32px;
+  }
+
+  .brand-tag { display: none; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  h1 span {
+    color: var(--gold);
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 15px;
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* PASTE BOX */
+  .paste-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .paste-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.6;
+  }
+
+  .paste-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .paste-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 140px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    padding: 16px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  textarea:focus {
+    border-color: var(--gold-dim);
+  }
+
+  textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .paste-meta {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .count-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .count-badge strong {
+    color: var(--gold);
+  }
+
+  .btn-clear {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-clear:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  /* FILTER BAR */
+  .filter-section {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+
+  .filter-section.visible { display: block; }
+
+  .filter-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .filter-row:last-child { margin-bottom: 0; }
+
+  .filter-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    min-width: 90px;
+    padding-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-dim);
+    position: relative;
+  }
+
+  .chip:hover {
+    border-color: var(--gold-dim);
+    color: var(--text);
+  }
+
+  .chip.active-2digit {
+    background: var(--gold-glow);
+    border-color: var(--gold);
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .chip.active-1digit {
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .chip .chip-count {
+    font-size: 10px;
+    opacity: 0.7;
+    margin-left: 4px;
+  }
+
+  .filter-clear-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .filter-clear-btn:hover {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  /* RESULTS */
+  .results-section {
+    display: none;
+  }
+
+  .results-section.visible { display: block; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Actions bar */
+  .actions-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+
+  .filter-info {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-right: auto;
+  }
+
+  .filter-info strong { color: var(--text); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: #000;
+  }
+
+  .btn-gold:hover {
+    background: #e0bc5e;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(201,168,76,0.3);
+  }
+
+  .btn-wa {
+    background: #25D366;
+    color: #fff;
+  }
+
+  .btn-wa:hover {
+    background: #1ebe5a;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+  }
+
+  .btn-outline {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold-dim);
+    color: var(--text);
+  }
+
+  /* Table */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 14px 20px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  th:nth-child(2), th:nth-child(3) {
+    text-align: center;
+    width: 130px;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody tr:hover { background: var(--surface2); }
+
+  td {
+    padding: 13px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  td:nth-child(1) { color: var(--text); }
+
+  td:nth-child(2) {
+    text-align: center;
+  }
+
+  td:nth-child(3) {
+    text-align: center;
+  }
+
+  .badge-2d {
+    display: inline-block;
+    background: var(--gold-glow);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    border-radius: 6px;
+    padding: 3px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .badge-1d {
+    display: inline-block;
+    background: var(--green-dim);
+    border: 1px solid rgba(34,197,94,0.25);
+    color: var(--green);
+    border-radius: 6px;
+    padding: 3px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .serial {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-right: 10px;
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .empty-state svg {
+    opacity: 0.2;
+    margin-bottom: 16px;
+  }
+
+  /* Limit warning */
+  .warn-bar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #f87171;
+    margin-bottom: 16px;
+  }
+
+  .warn-bar.visible { display: flex; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 48px 0 0;
+  }
+
+  .footer-inner {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .footer-dot {
+    width: 32px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6);
+    margin-bottom: 2px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface2);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 999;
+    white-space: nowrap;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 12px 60px; }
+
+    header { padding: 28px 0 24px; }
+
+    h1 { font-size: 1.45rem; }
+
+    .subtitle { font-size: 13px; }
+
+    .paste-section { padding: 18px 14px; }
+
+    textarea { font-size: 12px; min-height: 120px; padding: 12px; }
+
+    .filter-section { padding: 16px 14px; }
+
+    .filter-row {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .filter-group-label {
+      min-width: unset;
+      padding-top: 0;
+      font-size: 9px;
+    }
+
+    .chips { gap: 5px; }
+
+    .chip { font-size: 11px; padding: 4px 10px; }
+
+    .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .stat-val { font-size: 22px; }
+
+    .actions-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .filter-info { text-align: center; font-size: 11px; }
+
+    .btn { justify-content: center; padding: 10px 16px; font-size: 13px; }
+
+    th { padding: 11px 12px; font-size: 9px; }
+    td { padding: 11px 12px; font-size: 12px; }
+
+    th:nth-child(2), th:nth-child(3) { width: 80px; }
+
+    .badge-2d, .badge-1d { font-size: 12px; padding: 2px 8px; min-width: 32px; }
+
+    .serial { display: none; }
+
+    .table-wrap { border-radius: 14px; }
+
+    .paste-section, .filter-section, .table-wrap { border-radius: 14px; }
+  }
+
+  /* Tablet 481–768px */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .wrap { padding: 0 16px 60px; }
+
+    h1 { font-size: 1.8rem; }
+
+    .filter-row { gap: 10px; }
+
+    .filter-group-label { min-width: 80px; font-size: 9px; }
+
+    .actions-bar { flex-wrap: wrap; }
+
+    th:nth-child(2), th:nth-child(3) { width: 100px; }
+
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* iPad / large tablet 769–1024px */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .wrap { max-width: 780px; }
+  }
+
+  /* Ensure actions bar wraps neatly on small widths */
+  @media (max-width: 600px) {
+    .actions-bar { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+    .filter-info { text-align: center; margin-right: 0; }
+  }
+
+
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand-tag">Manne Communications · VIP Numbers</div>
+    <h1>Numbers <span>Total</span><br>Calculator</h1>
+    <p class="subtitle">Paste up to 1000 mobile numbers — any format, any mess — we extract and show 2-digit & 1-digit totals instantly.</p>
+  </header>
+
+  <!-- PASTE BOX -->
+  <div class="paste-section">
+    <div class="paste-label">Paste Number List</div>
+    <textarea id="pasteBox" placeholder="Paste numbers here — emojis, spaces, text, icons — anything. Only 10-digit numbers will be extracted.&#10;&#10;Example:&#10;📱 9876543210&#10;✅ 7403910000&#10;98765 43210"></textarea>
+    <div class="paste-meta">
+      <span class="count-badge" id="countBadge">Waiting for input...</span>
+      <button class="btn-clear" onclick="clearAll()">✕ Clear</button>
+    </div>
+  </div>
+
+  <!-- LIMIT WARNING -->
+  <div class="warn-bar" id="warnBar">
+    ⚠ Only first 1000 numbers processed. Extra numbers ignored.
+  </div>
+
+  <!-- FILTER SECTION -->
+  <div class="filter-section" id="filterSection">
+    <div class="filter-row">
+      <span class="filter-group-label">2-Digit Total</span>
+      <div class="chips" id="chips2d"></div>
+      <button class="filter-clear-btn" onclick="clearFilter('2d')">Clear</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-group-label">1-Digit Total</span>
+      <div class="chips" id="chips1d"></div>
+      <button class="filter-clear-btn" onclick="clearFilter('1d')">Clear</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-section" id="resultsSection">
+    <div class="stats-row" id="statsRow"></div>
+
+    <div class="actions-bar">
+      <span class="filter-info" id="filterInfo"></span>
+      <button class="btn btn-gold" onclick="copyNumbers()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Numbers
+      </button>
+      <button class="btn btn-wa" onclick="shareWhatsApp()">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.851L0 24l6.335-1.56A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.376l-.36-.213-3.727.917.978-3.638-.234-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        WhatsApp
+      </button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#&nbsp;&nbsp;Mobile Number</th>
+            <th>2-Digit Total</th>
+            <th>1-Digit Total</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-dot"></div>
+      <div class="footer-brand">Manne Communications</div>
+      <div class="footer-sub">Developed &amp; Designed · Andhra Pradesh</div>
+    </div>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const MAX = 1000;
+  let allNumbers = [];   // {num, d2, d1}
+  let active2d = null;
+  let active1d = null;
+
+  function digitSum2(n) {
+    return n.toString().split('').reduce((a,c) => a + parseInt(c), 0);
+  }
+
+  function digitSum1(n) {
+    let s = digitSum2(n);
+    while (s >= 10) s = digitSum2(s);
+    return s;
+  }
+
+  // Convert bold/fancy Unicode digits to normal ASCII digits
+  function normalizeUnicode(str) {
+    // Mathematical Bold digits 𝟬-𝟵 (U+1D7EC to U+1D7F5) and variants
+    return str.replace(/[\u{1D7CE}-\u{1D7FF}]/gu, ch => {
+      const cp = ch.codePointAt(0);
+      // Bold: 1D7CE-1D7D7, Double-struck: 1D7D8-1D7E1, Sans: 1D7E2-1D7EB, Sans-bold: 1D7EC-1D7F5, Mono: 1D7F6-1D7FF
+      const bases = [0x1D7CE, 0x1D7D8, 0x1D7E2, 0x1D7EC, 0x1D7F6];
+      for (const base of bases) {
+        if (cp >= base && cp < base + 10) return String(cp - base);
+      }
+      return ch;
+    })
+    // Fullwidth digits ０-９
+    .replace(/[０-９]/g, ch => String(ch.charCodeAt(0) - 0xFF10))
+    // Superscript digits
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, ch => '0123456789'['⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(ch)])
+    // Circled digits ①-⑨
+    .replace(/[①-⑨]/g, ch => String(ch.charCodeAt(0) - 0x2460 + 1));
+  }
+
+  function extract(text) {
+    const lines = normalizeUnicode(text).split(/\n/);
+    const found = [];
+
+    for (let line of lines) {
+      // 1. Strip price patterns: ₹ 19,000/- or ₹15000 or Rs.5000
+      //    Replace ₹/Rs followed by digits/commas/dots/slashes with space
+      line = line.replace(/(?:₹|Rs\.?)\s*[\d,./]+/gi, ' ');
+
+      // 2. Strip known suffix noise: TL, =, PREPAID, RTP, EACH, WITHOUT etc.
+      //    We do this by removing any word that is purely alpha (no digits)
+      //    — but we must keep digit groups intact so just strip non-digit non-space chars
+      //    Actually: just pull ALL digit groups remaining on the line
+      const groups = (line.match(/\d+/g) || []);
+      if (groups.length === 0) continue;
+
+      // 3. Join ALL digit groups on the line into one string
+      const allDigits = groups.join('');
+
+      // 4. The mobile number is always the FIRST 10 digits, IF they start with 6-9
+      //    Anything after 10 digits is noise (TL totals, = values, prices missed above)
+      if (allDigits.length >= 10) {
+        const candidate = allDigits.slice(0, 10);
+        if (/^[6-9]/.test(candidate)) {
+          found.push(candidate);
+        }
+      }
+      // Lines with <10 digits total are noise lines (headers, labels, prices) — skip
+    }
+
+    // Deduplicate while preserving order
+    return [...new Map(found.map(n => [n, n])).values()];
+  }
+
+  function process(nums) {
+    return nums.map(n => ({
+      num: n,
+      d2: digitSum2(n),
+      d1: digitSum1(n)
+    }));
+  }
+
+  function filtered() {
+    return allNumbers.filter(r => {
+      if (active2d !== null && r.d2 !== active2d) return false;
+      if (active1d !== null && r.d1 !== active1d) return false;
+      return true;
+    });
+  }
+
+  function render() {
+    const data = filtered();
+    const tbody = document.getElementById('tableBody');
+
+    if (data.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="3"><div class="empty-state">
+        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <div>No numbers match this filter</div>
+      </div></td></tr>`;
+    } else {
+      tbody.innerHTML = data.map((r, i) => `
+        <tr>
+          <td><span class="serial">${i+1}</span>${r.num}</td>
+          <td><span class="badge-2d">${r.d2}</span></td>
+          <td><span class="badge-1d">${r.d1}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // Filter info
+    const info = document.getElementById('filterInfo');
+    const parts = [];
+    if (active2d !== null) parts.push(`2-digit = <strong>${active2d}</strong>`);
+    if (active1d !== null) parts.push(`1-digit = <strong>${active1d}</strong>`);
+    info.innerHTML = parts.length
+      ? `Showing <strong>${data.length}</strong> of ${allNumbers.length} · Filter: ${parts.join(' + ')}`
+      : `Showing all <strong>${data.length}</strong> numbers`;
+
+    // Stats
+    const statsRow = document.getElementById('statsRow');
+    statsRow.innerHTML = `
+      <div class="stat-card"><div class="stat-val">${allNumbers.length}</div><div class="stat-label">Total Numbers</div></div>
+      <div class="stat-card"><div class="stat-val">${data.length}</div><div class="stat-label">Filtered</div></div>
+    `;
+  }
+
+  function buildChips() {
+    // 2-digit chips
+    const freq2 = {};
+    allNumbers.forEach(r => { freq2[r.d2] = (freq2[r.d2]||0)+1; });
+    const sorted2 = Object.keys(freq2).map(Number).sort((a,b) => a-b);
+    document.getElementById('chips2d').innerHTML = sorted2.map(v =>
+      `<button class="chip ${active2d===v?'active-2digit':''}" onclick="toggleFilter('2d',${v})">
+        ${v}<span class="chip-count">(${freq2[v]})</span>
+      </button>`
+    ).join('');
+
+    // 1-digit chips
+    const freq1 = {};
+    allNumbers.forEach(r => { freq1[r.d1] = (freq1[r.d1]||0)+1; });
+    const sorted1 = Object.keys(freq1).map(Number).sort((a,b) => a-b);
+    document.getElementById('chips1d').innerHTML = sorted1.map(v =>
+      `<button class="chip ${active1d===v?'active-1digit':''}" onclick="toggleFilter('1d',${v})">
+        ${v}<span class="chip-count">(${freq1[v]})</span>
+      </button>`
+    ).join('');
+  }
+
+  function toggleFilter(type, val) {
+    if (type === '2d') active2d = (active2d === val) ? null : val;
+    if (type === '1d') active1d = (active1d === val) ? null : val;
+    buildChips();
+    render();
+  }
+
+  function clearFilter(type) {
+    if (type === '2d') active2d = null;
+    if (type === '1d') active1d = null;
+    buildChips();
+    render();
+  }
+
+  function clearAll() {
+    document.getElementById('pasteBox').value = '';
+    allNumbers = [];
+    active2d = null;
+    active1d = null;
+    document.getElementById('countBadge').textContent = 'Waiting for input...';
+    document.getElementById('filterSection').classList.remove('visible');
+    document.getElementById('resultsSection').classList.remove('visible');
+    document.getElementById('warnBar').classList.remove('visible');
+  }
+
+  function copyNumbers() {
+    const data = filtered();
+    if (!data.length) { showToast('Nothing to copy'); return; }
+    const text = data.map(r => r.num).join('\n');
+    navigator.clipboard.writeText(text).then(() => showToast(`✓ Copied ${data.length} numbers`));
+  }
+
+  function shareWhatsApp() {
+    const data = filtered();
+    if (!data.length) { showToast('Nothing to share'); return; }
+    const text = data.map(r => r.num).join('\n');
+    const url = 'https://wa.me/?text=' + encodeURIComponent(text);
+    window.open(url, '_blank');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  document.getElementById('pasteBox').addEventListener('input', function() {
+    const raw = this.value.trim();
+    if (!raw) { clearAll(); return; }
+
+    let nums = extract(raw);
+    const warn = nums.length > MAX;
+    if (warn) nums = nums.slice(0, MAX);
+
+    document.getElementById('warnBar').classList.toggle('visible', warn);
+
+    if (nums.length === 0) {
+      document.getElementById('countBadge').textContent = 'No valid 10-digit numbers found';
+      document.getElementById('filterSection').classList.remove('visible');
+      document.getElementById('resultsSection').classList.remove('visible');
+      return;
+    }
+
+    allNumbers = process(nums);
+    active2d = null;
+    active1d = null;
+
+    document.getElementById('countBadge').innerHTML = `<strong>${nums.length}</strong> numbers extracted`;
+    document.getElementById('filterSection').classList.add('visible');
+    document.getElementById('resultsSection').classList.add('visible');
+
+    buildChips();
+    render();
+  });
+</script>
+</body>
+</html>

@@ -3,29 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Numbers Total Calculator — Manne Communications</title>
+<title>Number Total Calculator — Manne Communications</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #07080f;
     --surface: #0e1020;
     --surface2: #141729;
+    --surface3: #1a1f35;
     --border: #1e2340;
+    --border2: #252b45;
     --gold: #c9a84c;
     --gold-dim: #8a6e2f;
-    --gold-glow: rgba(201,168,76,0.15);
+    --gold-glow: rgba(201,168,76,0.12);
+    --gold-glow2: rgba(201,168,76,0.06);
     --green: #22c55e;
     --green-dim: rgba(34,197,94,0.12);
     --blue: #3b82f6;
     --blue-dim: rgba(59,130,246,0.12);
     --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.1);
+    --orange: #f97316;
+    --purple: #a855f7;
     --text: #e8eaf0;
     --text-dim: #6b7280;
-    --text-muted: #374151;
+    --text-muted: #2d3348;
+    --text-mid: #9ca3af;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--bg);
@@ -35,29 +44,27 @@
     overflow-x: hidden;
   }
 
-  /* Background grid */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Gold orb top */
   body::after {
     content: '';
     position: fixed;
-    top: -200px;
+    top: -250px;
     left: 50%;
     transform: translateX(-50%);
-    width: 700px;
-    height: 400px;
-    background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
+    width: 800px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 65%);
     pointer-events: none;
     z-index: 0;
   }
@@ -65,7 +72,7 @@
   .wrap {
     position: relative;
     z-index: 1;
-    max-width: 960px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px 80px;
   }
@@ -73,101 +80,121 @@
   /* HEADER */
   header {
     text-align: center;
-    padding: 40px 0 32px;
+    padding: 44px 0 36px;
   }
 
-  .brand-tag { display: none; }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-  }
-
-  h1 {
-    font-family: 'DM Sans', sans-serif;
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    color: var(--text);
-    margin-bottom: 10px;
-  }
-
-  h1 span {
-    color: var(--gold);
-  }
-
-  .subtitle {
-    color: var(--text-dim);
-    font-size: 15px;
-    font-weight: 300;
-    max-width: 480px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* PASTE BOX */
-  .paste-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .paste-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0.6;
-  }
-
-  .paste-label {
+  .brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-glow);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 100px;
+    padding: 5px 14px;
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    margin-bottom: 18px;
   }
 
-  .paste-label::after {
+  .brand-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.3; transform:scale(0.6); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--gold); }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 300;
+    max-width: 460px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* SECTION WRAPPER */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 26px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
     content: '';
     flex: 1;
     height: 1px;
     background: var(--border);
   }
 
+  /* PASTE BOX */
   textarea {
     width: 100%;
-    min-height: 140px;
+    min-height: 130px;
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 12px;
     color: var(--text);
     font-family: 'DM Mono', monospace;
     font-size: 13px;
-    line-height: 1.8;
-    padding: 16px;
+    line-height: 1.85;
+    padding: 14px 16px;
     resize: vertical;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
   textarea:focus {
     border-color: var(--gold-dim);
+    box-shadow: 0 0 0 3px var(--gold-glow2);
   }
 
-  textarea::placeholder {
-    color: var(--text-muted);
-  }
+  textarea::placeholder { color: var(--text-muted); }
 
   .paste-meta {
     margin-top: 10px;
@@ -184,44 +211,113 @@
     color: var(--text-dim);
   }
 
-  .count-badge strong {
-    color: var(--gold);
-  }
+  .count-badge strong { color: var(--gold); }
 
   .btn-clear {
     background: none;
     border: 1px solid var(--border);
     color: var(--text-dim);
     border-radius: 8px;
-    padding: 6px 14px;
+    padding: 5px 13px;
     font-size: 12px;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: 'DM Mono', monospace;
   }
 
-  .btn-clear:hover {
+  .btn-clear:hover { border-color: var(--red); color: var(--red); }
+
+  /* LIMIT WARNING */
+  .warn-bar {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: var(--red-dim);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-size: 12px;
+    color: #f87171;
+    margin-bottom: 16px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .warn-bar.visible { display: flex; }
+
+  /* DIGIT EXCLUSION */
+  .digit-exclude-section { display: none; }
+  .digit-exclude-section.visible { display: block; }
+
+  .digit-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 10px;
+  }
+
+  .dchip {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-dim);
+    user-select: none;
+    position: relative;
+  }
+
+  .dchip:hover { border-color: var(--gold-dim); color: var(--text); }
+
+  .dchip.excluded {
+    background: var(--red-dim);
     border-color: var(--red);
     color: var(--red);
   }
 
-  /* FILTER BAR */
-  .filter-section {
-    display: none;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px 28px;
-    margin-bottom: 24px;
+  .dchip.excluded::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%) rotate(45deg);
+    width: 70%; height: 1px;
+    background: var(--red);
+    opacity: 0.6;
   }
 
+  .exclude-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .exclude-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .exclude-status strong { color: var(--red); }
+
+  /* TOTAL FILTER */
+  .filter-section { display: none; }
   .filter-section.visible { display: block; }
 
   .filter-row {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .filter-row:last-child { margin-bottom: 0; }
@@ -237,12 +333,7 @@
     flex-shrink: 0;
   }
 
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    flex: 1;
-  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
 
   .chip {
     background: var(--surface2);
@@ -254,13 +345,9 @@
     cursor: pointer;
     transition: all 0.15s;
     color: var(--text-dim);
-    position: relative;
   }
 
-  .chip:hover {
-    border-color: var(--gold-dim);
-    color: var(--text);
-  }
+  .chip:hover { border-color: var(--gold-dim); color: var(--text); }
 
   .chip.active-2digit {
     background: var(--gold-glow);
@@ -276,11 +363,7 @@
     font-weight: 500;
   }
 
-  .chip .chip-count {
-    font-size: 10px;
-    opacity: 0.7;
-    margin-left: 4px;
-  }
+  .chip .chip-count { font-size: 10px; opacity: 0.65; margin-left: 4px; }
 
   .filter-clear-btn {
     background: none;
@@ -288,43 +371,89 @@
     color: var(--text-dim);
     border-radius: 8px;
     padding: 5px 12px;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
     transition: all 0.2s;
     font-family: 'DM Mono', monospace;
+    white-space: nowrap;
   }
 
-  .filter-clear-btn:hover {
-    border-color: var(--gold-dim);
-    color: var(--gold);
+  .filter-clear-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+  /* DISTRIBUTION BAR */
+  .dist-section { display: none; }
+  .dist-section.visible { display: block; }
+
+  .dist-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 6px;
+  }
+
+  .dist-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .dist-bar-wrap {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .dist-bar {
+    width: 60%;
+    background: var(--gold-glow);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px 4px 0 0;
+    transition: height 0.4s cubic-bezier(0.34,1.3,0.64,1);
+    min-height: 3px;
+    cursor: pointer;
+  }
+
+  .dist-bar:hover { background: rgba(201,168,76,0.25); }
+  .dist-bar.active-bar { background: rgba(201,168,76,0.35); border-color: var(--gold); }
+
+  .dist-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  .dist-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--text-muted);
   }
 
   /* RESULTS */
-  .results-section {
-    display: none;
-  }
-
+  .results-section { display: none; }
   .results-section.visible { display: block; }
 
-  /* Stats row */
+  /* Stats */
   .stats-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
   }
 
   .stat-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 16px 20px;
+    padding: 14px 18px;
     text-align: center;
   }
 
   .stat-val {
     font-family: 'Syne', sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
     color: var(--gold);
     line-height: 1;
@@ -332,26 +461,28 @@
   }
 
   .stat-label {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-dim);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
   }
 
   /* Actions bar */
   .actions-bar {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     align-items: center;
   }
 
   .filter-info {
     font-family: 'DM Mono', monospace;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-dim);
     margin-right: auto;
+    line-height: 1.5;
   }
 
   .filter-info strong { color: var(--text); }
@@ -359,63 +490,75 @@
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
     border-radius: 10px;
-    padding: 9px 18px;
+    padding: 8px 16px;
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     border: none;
     transition: all 0.2s;
     white-space: nowrap;
-    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
   }
 
-  .btn-gold {
-    background: var(--gold);
-    color: #000;
-  }
+  .btn-gold { background: var(--gold); color: #000; }
+  .btn-gold:hover { background: #ddb95e; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.28); }
 
-  .btn-gold:hover {
-    background: #e0bc5e;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(201,168,76,0.3);
-  }
-
-  .btn-wa {
-    background: #25D366;
-    color: #fff;
-  }
-
-  .btn-wa:hover {
-    background: #1ebe5a;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(37,211,102,0.3);
-  }
+  .btn-wa { background: #25D366; color: #fff; }
+  .btn-wa:hover { background: #1ebe5a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.25); }
 
   .btn-outline {
     background: none;
     border: 1px solid var(--border);
     color: var(--text-dim);
   }
+  .btn-outline:hover { border-color: var(--gold-dim); color: var(--text); }
 
-  .btn-outline:hover {
-    border-color: var(--gold-dim);
-    color: var(--text);
+  /* Sort controls */
+  .sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
   }
+
+  .sort-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .sort-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 7px;
+    padding: 4px 12px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Mono', monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .sort-btn:hover { border-color: var(--gold-dim); color: var(--text); }
+  .sort-btn.active { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
 
   /* Table */
   .table-wrap {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  table { width: 100%; border-collapse: collapse; }
 
   thead tr {
     background: var(--surface2);
@@ -428,102 +571,153 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--text-dim);
-    padding: 14px 20px;
+    padding: 13px 20px;
     text-align: left;
     font-weight: 500;
+    user-select: none;
   }
 
-  th:nth-child(2), th:nth-child(3) {
-    text-align: center;
-    width: 130px;
-  }
+  th.sortable { cursor: pointer; transition: color 0.15s; }
+  th.sortable:hover { color: var(--gold); }
+  th.sorted { color: var(--gold); }
+
+  th:nth-child(2), th:nth-child(3) { text-align: center; width: 130px; }
+  th:nth-child(4) { text-align: center; width: 80px; }
 
   tbody tr {
     border-bottom: 1px solid var(--border);
     transition: background 0.1s;
+    cursor: pointer;
   }
 
   tbody tr:last-child { border-bottom: none; }
-
   tbody tr:hover { background: var(--surface2); }
+  tbody tr:active { background: var(--surface3); }
 
   td {
-    padding: 13px 20px;
+    padding: 12px 20px;
     font-family: 'DM Mono', monospace;
     font-size: 13px;
     color: var(--text);
   }
 
-  td:nth-child(1) { color: var(--text); }
-
-  td:nth-child(2) {
-    text-align: center;
-  }
-
-  td:nth-child(3) {
-    text-align: center;
-  }
+  td:nth-child(2), td:nth-child(3) { text-align: center; }
+  td:nth-child(4) { text-align: center; }
 
   .badge-2d {
     display: inline-block;
     background: var(--gold-glow);
-    border: 1px solid rgba(201,168,76,0.3);
+    border: 1px solid rgba(201,168,76,0.25);
     color: var(--gold);
     border-radius: 6px;
     padding: 3px 12px;
     font-size: 13px;
     font-weight: 500;
-    min-width: 40px;
+    min-width: 42px;
     text-align: center;
   }
 
   .badge-1d {
     display: inline-block;
     background: var(--green-dim);
-    border: 1px solid rgba(34,197,94,0.25);
+    border: 1px solid rgba(34,197,94,0.22);
     color: var(--green);
     border-radius: 6px;
     padding: 3px 12px;
     font-size: 13px;
     font-weight: 500;
-    min-width: 40px;
+    min-width: 42px;
     text-align: center;
   }
 
   .serial {
     color: var(--text-muted);
-    font-size: 11px;
+    font-size: 10px;
     margin-right: 10px;
   }
+
+  /* Pattern tags */
+  .pattern-tag {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .pt-mirror { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: #c084fc; }
+  .pt-repeat { background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.25); color: #fb923c; }
+  .pt-seq    { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #60a5fa; }
+  .pt-plain  { color: var(--text-muted); font-size: 10px; }
+
+  /* Copy flash */
+  .copy-flash {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface2);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 6px 18px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    z-index: 998;
+    white-space: nowrap;
+  }
+
+  .copy-flash.show { opacity: 1; }
 
   /* Empty state */
   .empty-state {
     text-align: center;
-    padding: 60px 20px;
+    padding: 56px 20px;
     color: var(--text-dim);
     font-size: 14px;
   }
 
-  .empty-state svg {
-    opacity: 0.2;
-    margin-bottom: 16px;
+  .empty-state svg { opacity: 0.15; margin-bottom: 14px; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface2);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 999;
+    white-space: nowrap;
   }
 
-  /* Limit warning */
-  .warn-bar {
-    display: none;
-    align-items: center;
-    gap: 10px;
-    background: rgba(239,68,68,0.08);
-    border: 1px solid rgba(239,68,68,0.2);
-    border-radius: 10px;
-    padding: 10px 16px;
-    font-size: 13px;
-    color: #f87171;
-    margin-bottom: 16px;
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Reset all filters btn */
+  .reset-all-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 8px;
+    padding: 5px 13px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Mono', monospace;
   }
 
-  .warn-bar.visible { display: flex; }
+  .reset-all-btn:hover { border-color: var(--red); color: var(--red); }
 
   /* Footer */
   footer {
@@ -538,184 +732,136 @@
     gap: 6px;
   }
 
+  .footer-dot {
+    width: 28px; height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #c9a84c, #f59e0b);
+    margin-bottom: 2px;
+  }
+
   .footer-brand {
     font-family: 'Syne', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
-    background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.02em;
+    color: var(--gold);
+    letter-spacing: 0.03em;
   }
 
   .footer-sub {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--text-muted);
   }
 
-  .footer-dot {
-    width: 32px;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6);
-    margin-bottom: 2px;
-  }
-
-  /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--surface2);
-    border: 1px solid var(--gold-dim);
-    color: var(--gold);
-    padding: 10px 24px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-family: 'DM Mono', monospace;
-    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    z-index: 999;
-    white-space: nowrap;
-  }
-
-  .toast.show {
-    transform: translateX(-50%) translateY(0);
-  }
-
   /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* MOBILE */
   @media (max-width: 480px) {
     .wrap { padding: 0 12px 60px; }
-
-    header { padding: 28px 0 24px; }
-
-    h1 { font-size: 1.45rem; }
-
+    header { padding: 28px 0 22px; }
+    h1 { font-size: 1.6rem; }
     .subtitle { font-size: 13px; }
+    .card { padding: 18px 14px; border-radius: 14px; }
 
-    .paste-section { padding: 18px 14px; }
+    textarea { font-size: 12px; min-height: 110px; padding: 12px; }
 
-    textarea { font-size: 12px; min-height: 120px; padding: 12px; }
-
-    .filter-section { padding: 16px 14px; }
-
-    .filter-row {
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .filter-group-label {
-      min-width: unset;
-      padding-top: 0;
-      font-size: 9px;
-    }
-
-    .chips { gap: 5px; }
-
-    .chip { font-size: 11px; padding: 4px 10px; }
+    .filter-row { flex-direction: column; gap: 8px; }
+    .filter-group-label { min-width: unset; padding-top: 0; }
 
     .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-
     .stat-val { font-size: 22px; }
 
-    .actions-bar {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 8px;
-    }
+    .actions-bar { flex-direction: column; align-items: stretch; gap: 8px; }
+    .filter-info { text-align: center; margin-right: 0; }
+    .btn { justify-content: center; padding: 10px 14px; }
 
-    .filter-info { text-align: center; font-size: 11px; }
-
-    .btn { justify-content: center; padding: 10px 16px; font-size: 13px; }
-
-    th { padding: 11px 12px; font-size: 9px; }
-    td { padding: 11px 12px; font-size: 12px; }
-
+    th { padding: 10px 12px; font-size: 9px; }
+    td { padding: 10px 12px; font-size: 12px; }
     th:nth-child(2), th:nth-child(3) { width: 80px; }
-
-    .badge-2d, .badge-1d { font-size: 12px; padding: 2px 8px; min-width: 32px; }
-
+    th:nth-child(4) { width: 60px; }
+    .badge-2d, .badge-1d { font-size: 11px; padding: 2px 8px; min-width: 30px; }
     .serial { display: none; }
-
     .table-wrap { border-radius: 14px; }
 
-    .paste-section, .filter-section, .table-wrap { border-radius: 14px; }
+    .dist-grid { grid-template-columns: repeat(9, 1fr); gap: 3px; }
+    .dist-label { font-size: 10px; }
+
+    .sort-bar { gap: 6px; }
+    .sort-btn { font-size: 10px; padding: 4px 9px; }
+
+    .dchip { width: 36px; height: 36px; font-size: 13px; }
   }
 
-  /* Tablet 481–768px */
   @media (min-width: 481px) and (max-width: 768px) {
     .wrap { padding: 0 16px 60px; }
-
-    h1 { font-size: 1.8rem; }
-
     .filter-row { gap: 10px; }
-
-    .filter-group-label { min-width: 80px; font-size: 9px; }
-
     .actions-bar { flex-wrap: wrap; }
-
     th:nth-child(2), th:nth-child(3) { width: 100px; }
-
-    .stats-row { grid-template-columns: 1fr 1fr; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
   }
 
-  /* iPad / large tablet 769–1024px */
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .wrap { max-width: 780px; }
-  }
-
-  /* Ensure actions bar wraps neatly on small widths */
   @media (max-width: 600px) {
     .actions-bar { flex-direction: column; align-items: stretch; }
     .btn { justify-content: center; }
     .filter-info { text-align: center; margin-right: 0; }
   }
-
-
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <header>
-    <div class="brand-tag">Manne Communications · VIP Numbers</div>
-    <h1>Numbers <span>Total</span><br>Calculator</h1>
-    <p class="subtitle">Paste up to 1000 mobile numbers — any format, any mess — we extract and show 2-digit & 1-digit totals instantly.</p>
+    <div class="brand-pill">Manne Communications · Internal Tool</div>
+    <h1>Number Total<br><span>Calculator</span></h1>
+    <p class="subtitle">Paste any number list — any format, any mess. Extract, filter, sort, and share instantly.</p>
   </header>
 
-  <!-- PASTE BOX -->
-  <div class="paste-section">
-    <div class="paste-label">Paste Number List</div>
-    <textarea id="pasteBox" placeholder="Paste numbers here — emojis, spaces, text, icons — anything. Only 10-digit numbers will be extracted.&#10;&#10;Example:&#10;📱 9876543210&#10;✅ 7403910000&#10;98765 43210"></textarea>
+  <!-- PASTE -->
+  <div class="card">
+    <div class="section-label">Paste Number List</div>
+    <textarea id="pasteBox" placeholder="Paste numbers here — with text, emojis, prices, spaces — anything.&#10;&#10;Examples:&#10;📱 9876543210&#10;✅ 7403910000 ₹15,000&#10;+91 98765 43210 — Fancy number"></textarea>
     <div class="paste-meta">
-      <span class="count-badge" id="countBadge">Waiting for input...</span>
-      <button class="btn-clear" onclick="clearAll()">✕ Clear</button>
+      <span class="count-badge" id="countBadge">Waiting for input…</span>
+      <button class="btn-clear" onclick="clearAll()">✕ Clear All</button>
     </div>
   </div>
 
-  <!-- LIMIT WARNING -->
+  <!-- WARN -->
   <div class="warn-bar" id="warnBar">
-    ⚠ Only first 1000 numbers processed. Extra numbers ignored.
+    ⚠ Only first 1000 numbers processed — extra numbers ignored.
   </div>
 
-  <!-- FILTER SECTION -->
-  <div class="filter-section" id="filterSection">
+  <!-- DIGIT EXCLUSION -->
+  <div class="card digit-exclude-section" id="digitExcludeSection">
+    <div class="section-label">Exclude Numbers Containing Digit</div>
+    <div class="digit-grid" id="digitGrid"></div>
+    <div class="exclude-meta">
+      <span class="exclude-status" id="excludeStatus">No digits excluded</span>
+      <button class="reset-all-btn" onclick="clearExcluded()">Clear Exclusions</button>
+    </div>
+  </div>
+
+  <!-- DISTRIBUTION -->
+  <div class="card dist-section" id="distSection">
+    <div class="section-label">1-Digit Total Distribution <span style="color:var(--text-muted);font-size:9px;margin-left:4px;">(click bar to filter)</span></div>
+    <div class="dist-grid" id="distGrid"></div>
+  </div>
+
+  <!-- TOTAL FILTERS -->
+  <div class="card filter-section" id="filterSection">
+    <div class="section-label">Filter by Total</div>
     <div class="filter-row">
-      <span class="filter-group-label">2-Digit Total</span>
+      <span class="filter-group-label">2-Digit</span>
       <div class="chips" id="chips2d"></div>
       <button class="filter-clear-btn" onclick="clearFilter('2d')">Clear</button>
     </div>
     <div class="filter-row">
-      <span class="filter-group-label">1-Digit Total</span>
+      <span class="filter-group-label">1-Digit</span>
       <div class="chips" id="chips1d"></div>
       <button class="filter-clear-btn" onclick="clearFilter('1d')">Clear</button>
     </div>
@@ -728,13 +874,26 @@
     <div class="actions-bar">
       <span class="filter-info" id="filterInfo"></span>
       <button class="btn btn-gold" onclick="copyNumbers()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         Copy Numbers
       </button>
+      <button class="btn btn-outline" onclick="copyWithTotals()">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Copy with Totals
+      </button>
       <button class="btn btn-wa" onclick="shareWhatsApp()">
-        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.851L0 24l6.335-1.56A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.376l-.36-.213-3.727.917.978-3.638-.234-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.851L0 24l6.335-1.56A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.376l-.36-.213-3.727.917.978-3.638-.234-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
         WhatsApp
       </button>
+    </div>
+
+    <div class="sort-bar">
+      <span class="sort-label">Sort:</span>
+      <button class="sort-btn active" id="sortNone" onclick="setSort('none')">Original</button>
+      <button class="sort-btn" id="sort2asc" onclick="setSort('2asc')">2-Digit ↑</button>
+      <button class="sort-btn" id="sort2desc" onclick="setSort('2desc')">2-Digit ↓</button>
+      <button class="sort-btn" id="sort1asc" onclick="setSort('1asc')">1-Digit ↑</button>
+      <button class="sort-btn" id="sort1desc" onclick="setSort('1desc')">1-Digit ↓</button>
     </div>
 
     <div class="table-wrap">
@@ -744,6 +903,7 @@
             <th>#&nbsp;&nbsp;Mobile Number</th>
             <th>2-Digit Total</th>
             <th>1-Digit Total</th>
+            <th>Pattern</th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -755,21 +915,25 @@
     <div class="footer-inner">
       <div class="footer-dot"></div>
       <div class="footer-brand">Manne Communications</div>
-      <div class="footer-sub">Developed &amp; Designed · Andhra Pradesh</div>
+      <div class="footer-sub">Internal Staff Tool · Visakhapatnam</div>
     </div>
   </footer>
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="copy-flash" id="copyFlash"></div>
 
 <script>
   const MAX = 1000;
-  let allNumbers = [];   // {num, d2, d1}
+  let allNumbers = [];
   let active2d = null;
   let active1d = null;
+  let excludedDigits = new Set();
+  let currentSort = 'none';
 
+  /* ── DIGIT SUM ── */
   function digitSum2(n) {
-    return n.toString().split('').reduce((a,c) => a + parseInt(c), 0);
+    return n.toString().split('').reduce((a, c) => a + parseInt(c), 0);
   }
 
   function digitSum1(n) {
@@ -778,93 +942,134 @@
     return s;
   }
 
-  // Convert bold/fancy Unicode digits to normal ASCII digits
+  /* ── PATTERN DETECTION ── */
+  function detectPattern(num) {
+    const s = num.toString();
+    const digits = s.split('');
+
+    // Mirror: first half reversed equals second half
+    const half = Math.floor(s.length / 2);
+    const first = s.slice(0, half);
+    const last = s.slice(s.length - half);
+    if (first === last.split('').reverse().join('')) {
+      return { label: 'Mirror', cls: 'pt-mirror' };
+    }
+
+    // Repeating: 4+ consecutive identical digits
+    if (/(.)\1{3,}/.test(s)) {
+      return { label: 'Repeat', cls: 'pt-repeat' };
+    }
+
+    // Sequential: 4+ consecutive ascending or descending digits
+    let asc = 1, desc = 1;
+    for (let i = 1; i < digits.length; i++) {
+      const diff = parseInt(digits[i]) - parseInt(digits[i-1]);
+      if (diff === 1) asc++; else asc = 1;
+      if (diff === -1) desc++; else desc = 1;
+      if (asc >= 4 || desc >= 4) return { label: 'Sequence', cls: 'pt-seq' };
+    }
+
+    return null;
+  }
+
+  /* ── UNICODE NORMALISE ── */
   function normalizeUnicode(str) {
-    // Mathematical Bold digits 𝟬-𝟵 (U+1D7EC to U+1D7F5) and variants
     return str.replace(/[\u{1D7CE}-\u{1D7FF}]/gu, ch => {
       const cp = ch.codePointAt(0);
-      // Bold: 1D7CE-1D7D7, Double-struck: 1D7D8-1D7E1, Sans: 1D7E2-1D7EB, Sans-bold: 1D7EC-1D7F5, Mono: 1D7F6-1D7FF
       const bases = [0x1D7CE, 0x1D7D8, 0x1D7E2, 0x1D7EC, 0x1D7F6];
       for (const base of bases) {
         if (cp >= base && cp < base + 10) return String(cp - base);
       }
       return ch;
     })
-    // Fullwidth digits ０-９
     .replace(/[０-９]/g, ch => String(ch.charCodeAt(0) - 0xFF10))
-    // Superscript digits
     .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, ch => '0123456789'['⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(ch)])
-    // Circled digits ①-⑨
     .replace(/[①-⑨]/g, ch => String(ch.charCodeAt(0) - 0x2460 + 1));
   }
 
+  /* ── EXTRACT ── */
   function extract(text) {
     const lines = normalizeUnicode(text).split(/\n/);
     const found = [];
 
     for (let line of lines) {
-      // 1. Strip price patterns: ₹ 19,000/- or ₹15000 or Rs.5000
-      //    Replace ₹/Rs followed by digits/commas/dots/slashes with space
-      line = line.replace(/(?:₹|Rs\.?)\s*[\d,./]+/gi, ' ');
+      // Strip +91 country code prefix
+      line = line.replace(/\+91[-\s]?/g, '');
 
-      // 2. Strip known suffix noise: TL, =, PREPAID, RTP, EACH, WITHOUT etc.
-      //    We do this by removing any word that is purely alpha (no digits)
-      //    — but we must keep digit groups intact so just strip non-digit non-space chars
-      //    Actually: just pull ALL digit groups remaining on the line
+      // Strip price patterns: ₹19,000/- or Rs.5000 or bare 19000/-
+      line = line.replace(/(?:₹|Rs\.?)\s*[\d,./]+/gi, ' ');
+      line = line.replace(/\b\d{4,6}[/\-]\-?\s*/g, ' ');
+
       const groups = (line.match(/\d+/g) || []);
       if (groups.length === 0) continue;
 
-      // 3. Join ALL digit groups on the line into one string
       const allDigits = groups.join('');
 
-      // 4. The mobile number is always the FIRST 10 digits, IF they start with 6-9
-      //    Anything after 10 digits is noise (TL totals, = values, prices missed above)
       if (allDigits.length >= 10) {
         const candidate = allDigits.slice(0, 10);
-        if (/^[6-9]/.test(candidate)) {
+        // Must start with 6-9 and not be all same digit (e.g. 0000000000)
+        if (/^[6-9]/.test(candidate) && !/^(\d)\1{9}$/.test(candidate)) {
           found.push(candidate);
         }
       }
-      // Lines with <10 digits total are noise lines (headers, labels, prices) — skip
     }
 
-    // Deduplicate while preserving order
     return [...new Map(found.map(n => [n, n])).values()];
   }
 
+  /* ── PROCESS ── */
   function process(nums) {
     return nums.map(n => ({
       num: n,
       d2: digitSum2(n),
-      d1: digitSum1(n)
+      d1: digitSum1(n),
+      pattern: detectPattern(n)
     }));
   }
 
+  /* ── FILTERED & SORTED ── */
   function filtered() {
-    return allNumbers.filter(r => {
+    let data = allNumbers.filter(r => {
       if (active2d !== null && r.d2 !== active2d) return false;
       if (active1d !== null && r.d1 !== active1d) return false;
+      if (excludedDigits.size > 0) {
+        for (const d of excludedDigits) {
+          if (r.num.includes(String(d))) return false;
+        }
+      }
       return true;
     });
+
+    if (currentSort === '2asc') data = [...data].sort((a,b) => a.d2 - b.d2);
+    else if (currentSort === '2desc') data = [...data].sort((a,b) => b.d2 - a.d2);
+    else if (currentSort === '1asc') data = [...data].sort((a,b) => a.d1 - b.d1);
+    else if (currentSort === '1desc') data = [...data].sort((a,b) => b.d1 - a.d1);
+
+    return data;
   }
 
+  /* ── RENDER TABLE ── */
   function render() {
     const data = filtered();
     const tbody = document.getElementById('tableBody');
 
     if (data.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="3"><div class="empty-state">
-        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <div>No numbers match this filter</div>
+      tbody.innerHTML = `<tr><td colspan="4"><div class="empty-state">
+        <svg width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <div>No numbers match current filters</div>
       </div></td></tr>`;
     } else {
-      tbody.innerHTML = data.map((r, i) => `
-        <tr>
+      tbody.innerHTML = data.map((r, i) => {
+        const ptag = r.pattern
+          ? `<span class="pattern-tag ${r.pattern.cls}">${r.pattern.label}</span>`
+          : `<span class="pt-plain">—</span>`;
+        return `<tr onclick="copyRow('${r.num}', this)">
           <td><span class="serial">${i+1}</span>${r.num}</td>
           <td><span class="badge-2d">${r.d2}</span></td>
           <td><span class="badge-1d">${r.d1}</span></td>
-        </tr>
-      `).join('');
+          <td>${ptag}</td>
+        </tr>`;
+      }).join('');
     }
 
     // Filter info
@@ -872,40 +1077,91 @@
     const parts = [];
     if (active2d !== null) parts.push(`2-digit = <strong>${active2d}</strong>`);
     if (active1d !== null) parts.push(`1-digit = <strong>${active1d}</strong>`);
+    if (excludedDigits.size > 0) parts.push(`excl. <strong>${[...excludedDigits].sort().join(',')}</strong>`);
     info.innerHTML = parts.length
-      ? `Showing <strong>${data.length}</strong> of ${allNumbers.length} · Filter: ${parts.join(' + ')}`
-      : `Showing all <strong>${data.length}</strong> numbers`;
+      ? `<strong>${data.length}</strong> of ${allNumbers.length} · ${parts.join(' · ')}`
+      : `All <strong>${data.length}</strong> numbers`;
 
     // Stats
-    const statsRow = document.getElementById('statsRow');
-    statsRow.innerHTML = `
-      <div class="stat-card"><div class="stat-val">${allNumbers.length}</div><div class="stat-label">Total Numbers</div></div>
-      <div class="stat-card"><div class="stat-val">${data.length}</div><div class="stat-label">Filtered</div></div>
+    document.getElementById('statsRow').innerHTML = `
+      <div class="stat-card"><div class="stat-val">${allNumbers.length}</div><div class="stat-label">Total</div></div>
+      <div class="stat-card"><div class="stat-val">${data.length}</div><div class="stat-label">Showing</div></div>
+      <div class="stat-card"><div class="stat-val">${allNumbers.length - data.length}</div><div class="stat-label">Hidden</div></div>
     `;
+
+    updateDist();
   }
 
+  /* ── DISTRIBUTION ── */
+  function updateDist() {
+    const freq = {};
+    for (let i = 1; i <= 9; i++) freq[i] = 0;
+    allNumbers.forEach(r => { if (r.d1 >= 1 && r.d1 <= 9) freq[r.d1]++; });
+    const maxVal = Math.max(...Object.values(freq), 1);
+
+    document.getElementById('distGrid').innerHTML = Object.keys(freq).map(v => {
+      const count = freq[v];
+      const pct = Math.round((count / maxVal) * 100);
+      const isActive = active1d === parseInt(v);
+      return `<div class="dist-col">
+        <div class="dist-bar-wrap">
+          <div class="dist-bar ${isActive ? 'active-bar' : ''}" style="height:${Math.max(pct, 4)}%" onclick="toggleFilter('1d',${v})" title="${count} numbers"></div>
+        </div>
+        <div class="dist-label">${v}</div>
+        <div class="dist-count">${count}</div>
+      </div>`;
+    }).join('');
+  }
+
+  /* ── CHIPS ── */
   function buildChips() {
-    // 2-digit chips
-    const freq2 = {};
-    allNumbers.forEach(r => { freq2[r.d2] = (freq2[r.d2]||0)+1; });
-    const sorted2 = Object.keys(freq2).map(Number).sort((a,b) => a-b);
-    document.getElementById('chips2d').innerHTML = sorted2.map(v =>
+    const freq2 = {}, freq1 = {};
+    allNumbers.forEach(r => {
+      freq2[r.d2] = (freq2[r.d2]||0)+1;
+      freq1[r.d1] = (freq1[r.d1]||0)+1;
+    });
+
+    document.getElementById('chips2d').innerHTML = Object.keys(freq2).map(Number).sort((a,b)=>a-b).map(v =>
       `<button class="chip ${active2d===v?'active-2digit':''}" onclick="toggleFilter('2d',${v})">
         ${v}<span class="chip-count">(${freq2[v]})</span>
       </button>`
     ).join('');
 
-    // 1-digit chips
-    const freq1 = {};
-    allNumbers.forEach(r => { freq1[r.d1] = (freq1[r.d1]||0)+1; });
-    const sorted1 = Object.keys(freq1).map(Number).sort((a,b) => a-b);
-    document.getElementById('chips1d').innerHTML = sorted1.map(v =>
+    document.getElementById('chips1d').innerHTML = Object.keys(freq1).map(Number).sort((a,b)=>a-b).map(v =>
       `<button class="chip ${active1d===v?'active-1digit':''}" onclick="toggleFilter('1d',${v})">
         ${v}<span class="chip-count">(${freq1[v]})</span>
       </button>`
     ).join('');
   }
 
+  /* ── DIGIT EXCLUSION CHIPS ── */
+  function buildDigitGrid() {
+    document.getElementById('digitGrid').innerHTML = Array.from({length:10}, (_,i) =>
+      `<div class="dchip ${excludedDigits.has(i)?'excluded':''}" onclick="toggleExclude(${i})">${i}</div>`
+    ).join('');
+
+    const status = document.getElementById('excludeStatus');
+    if (excludedDigits.size === 0) {
+      status.innerHTML = 'No digits excluded';
+    } else {
+      status.innerHTML = `Excluding numbers with: ${[...excludedDigits].sort().map(d => `<strong>${d}</strong>`).join(', ')}`;
+    }
+  }
+
+  function toggleExclude(d) {
+    if (excludedDigits.has(d)) excludedDigits.delete(d);
+    else excludedDigits.add(d);
+    buildDigitGrid();
+    render();
+  }
+
+  function clearExcluded() {
+    excludedDigits.clear();
+    buildDigitGrid();
+    render();
+  }
+
+  /* ── FILTERS ── */
   function toggleFilter(type, val) {
     if (type === '2d') active2d = (active2d === val) ? null : val;
     if (type === '1d') active1d = (active1d === val) ? null : val;
@@ -920,32 +1176,69 @@
     render();
   }
 
+  /* ── SORT ── */
+  function setSort(s) {
+    currentSort = s;
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sort' + (s === 'none' ? 'None' : s)).classList.add('active');
+    render();
+  }
+
+  /* ── COPY ROW (click any row) ── */
+  function copyRow(num, row) {
+    navigator.clipboard.writeText(num).then(() => {
+      const flash = document.getElementById('copyFlash');
+      flash.textContent = `✓ Copied ${num}`;
+      flash.classList.add('show');
+      row.style.background = 'rgba(34,197,94,0.06)';
+      setTimeout(() => {
+        flash.classList.remove('show');
+        row.style.background = '';
+      }, 1200);
+    });
+  }
+
+  /* ── COPY NUMBERS ── */
+  function copyNumbers() {
+    const data = filtered();
+    if (!data.length) { showToast('Nothing to copy'); return; }
+    navigator.clipboard.writeText(data.map(r => r.num).join('\n'))
+      .then(() => showToast(`✓ Copied ${data.length} numbers`));
+  }
+
+  /* ── COPY WITH TOTALS ── */
+  function copyWithTotals() {
+    const data = filtered();
+    if (!data.length) { showToast('Nothing to copy'); return; }
+    const text = data.map(r => `${r.num} | Total: ${r.d2}/${r.d1}`).join('\n');
+    navigator.clipboard.writeText(text)
+      .then(() => showToast(`✓ Copied ${data.length} numbers with totals`));
+  }
+
+  /* ── WHATSAPP SHARE (with totals) ── */
+  function shareWhatsApp() {
+    const data = filtered();
+    if (!data.length) { showToast('Nothing to share'); return; }
+    const text = data.map(r => `${r.num} | Total: ${r.d2}/${r.d1}`).join('\n');
+    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  }
+
+  /* ── CLEAR ALL ── */
   function clearAll() {
     document.getElementById('pasteBox').value = '';
     allNumbers = [];
     active2d = null;
     active1d = null;
-    document.getElementById('countBadge').textContent = 'Waiting for input...';
-    document.getElementById('filterSection').classList.remove('visible');
-    document.getElementById('resultsSection').classList.remove('visible');
-    document.getElementById('warnBar').classList.remove('visible');
+    excludedDigits.clear();
+    currentSort = 'none';
+    document.getElementById('countBadge').textContent = 'Waiting for input…';
+    ['filterSection','resultsSection','warnBar','digitExcludeSection','distSection']
+      .forEach(id => document.getElementById(id).classList.remove('visible'));
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sortNone').classList.add('active');
   }
 
-  function copyNumbers() {
-    const data = filtered();
-    if (!data.length) { showToast('Nothing to copy'); return; }
-    const text = data.map(r => r.num).join('\n');
-    navigator.clipboard.writeText(text).then(() => showToast(`✓ Copied ${data.length} numbers`));
-  }
-
-  function shareWhatsApp() {
-    const data = filtered();
-    if (!data.length) { showToast('Nothing to share'); return; }
-    const text = data.map(r => r.num).join('\n');
-    const url = 'https://wa.me/?text=' + encodeURIComponent(text);
-    window.open(url, '_blank');
-  }
-
+  /* ── TOAST ── */
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -953,6 +1246,7 @@
     setTimeout(() => t.classList.remove('show'), 2500);
   }
 
+  /* ── INPUT HANDLER ── */
   document.getElementById('pasteBox').addEventListener('input', function() {
     const raw = this.value.trim();
     if (!raw) { clearAll(); return; }
@@ -965,8 +1259,8 @@
 
     if (nums.length === 0) {
       document.getElementById('countBadge').textContent = 'No valid 10-digit numbers found';
-      document.getElementById('filterSection').classList.remove('visible');
-      document.getElementById('resultsSection').classList.remove('visible');
+      ['filterSection','resultsSection','digitExcludeSection','distSection']
+        .forEach(id => document.getElementById(id).classList.remove('visible'));
       return;
     }
 
@@ -975,10 +1269,11 @@
     active1d = null;
 
     document.getElementById('countBadge').innerHTML = `<strong>${nums.length}</strong> numbers extracted`;
-    document.getElementById('filterSection').classList.add('visible');
-    document.getElementById('resultsSection').classList.add('visible');
+    ['filterSection','resultsSection','digitExcludeSection','distSection']
+      .forEach(id => document.getElementById(id).classList.add('visible'));
 
     buildChips();
+    buildDigitGrid();
     render();
   });
 </script>

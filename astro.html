@@ -11,7 +11,7 @@
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:20px}
 .screen{display:none;min-height:100vh;flex-direction:column}.screen.show{display:flex}
 .cflex{align-items:center;justify-content:center}
-.wrap{width:100%;max-width:720px;margin:0 auto;padding:2rem 1.25rem}
+.wrap{width:100%;max-width:720px;margin:0 auto;padding:2rem 1.25rem}.wrap.wide{max-width:1100px}
 .narrow{max-width:440px}
 .brand{font-size:24px;font-weight:700;color:var(--gold);letter-spacing:.06em;text-align:center}
 .sub{font-size:16px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-top:4px}
@@ -76,11 +76,11 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
 .sstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
 .sc{background:var(--card2);border-radius:8px;padding:.85rem;text-align:center}
 .sc .sn{font-size:29px;font-weight:700;color:var(--gold)}.sc .sl{font-size:16px;color:var(--muted);margin-top:2px}
-.ctbl{width:100%;border-collapse:collapse;font-size:18px}
-.ctbl th{text-align:left;font-size:16px;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:0.5px solid var(--border);text-transform:uppercase;letter-spacing:.04em}
-.ctbl td{padding:8px;border-bottom:0.5px solid var(--border);vertical-align:middle}
+.ctbl{width:100%;min-width:700px;border-collapse:collapse;font-size:16px}
+.ctbl th{text-align:left;font-size:14px;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:0.5px solid var(--border);text-transform:uppercase;letter-spacing:.04em}
+.ctbl td{padding:10px 8px;border-bottom:0.5px solid var(--border);vertical-align:middle;white-space:nowrap}
 .ctbl tr:last-child td{border-bottom:none}
-.cm{font-family:monospace;font-size:18px;letter-spacing:.04em;color:var(--gold)}
+.cm{font-family:monospace;font-size:16px;letter-spacing:.04em;color:var(--gold);white-space:nowrap}
 .sb{font-size:15px;padding:2px 8px;border-radius:20px;font-weight:700}
 .su-b{background:#14532d;color:#bbf7d0}.sac{background:#1e3a5f;color:#bfdbfe}
 .sus{background:#1f1f1f;color:var(--muted)}.sex{background:#1c1008;color:#f59e0b}
@@ -145,6 +145,8 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
 .rv-edit{font-size:12px;color:var(--gold);background:transparent;border:1px solid var(--gold);border-radius:6px;padding:3px 10px;cursor:pointer;flex-shrink:0;white-space:nowrap}
 .rv-edit:active{background:var(--gold);color:#000}
 
+
+input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c9a84c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 </style>
 </head>
 <body>
@@ -187,7 +189,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
 
 <!-- ADMIN PANEL -->
 <div class="screen" id="screen-admin" style="flex-direction:column">
-  <div class="wrap">
+  <div class="wrap wide">
     <div class="topbar">
       <div><div class="pg">Admin Panel</div><div class="ps">Manne Communications</div></div>
       <button class="btn bo bsm" onclick="showScreen('role')">← Exit</button>
@@ -210,7 +212,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
       </div>
       <span style="font-size:12px;color:var(--muted);margin-left:.75rem" id="key-status"></span>
     </div>
-    <div class="sstrip" id="adm-stats"></div>
+    <div class="sstrip" id="adm-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem"></div>
     <!-- ACCESS CODES -->
     <div class="card-s" style="margin-bottom:1.5rem">
       <div class="stitle" style="margin-top:0">Generate access codes</div>
@@ -274,13 +276,13 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
     </div>
     <div class="stitle">Birth details</div>
     <div class="g3">
-      <div class="fld"><label>Date of birth <span class="req">*</span></label><input type="date" id="fdob"><div class="er" id="fdob-er"></div></div>
-      <div class="fld"><label>Time of birth <span class="req">*</span></label><input type="time" id="ftob"><div class="er" id="ftob-er"></div></div>
+      <div class="fld"><label>Date of birth <span class="req">*</span></label><input type="date" id="fdob" style="cursor:pointer"><div class="er" id="fdob-er"></div></div>
+      <div class="fld"><label>Time of birth <span class="req">*</span></label><input type="time" id="ftob" style="cursor:pointer"><div class="er" id="ftob-er"></div></div>
       <div class="fld"><label>AM / PM</label><select id="fampm"><option>AM</option><option>PM</option></select></div>
     </div>
     <div class="g2">
-      <div class="fld"><label>City of birth <span class="req">*</span></label><input type="text" id="fct" placeholder="e.g. Visakhapatnam"><div class="er" id="fct-er"></div></div>
-      <div class="fld"><label>State / Country <span class="req">*</span></label><input type="text" id="fst" placeholder="e.g. Andhra Pradesh, India"><div class="er" id="fst-er"></div></div>
+      <div class="fld"><label>City of birth <span class="req">*</span></label><input type="text" id="fct" placeholder="Type or select city..." list="cities-list" autocomplete="off"><div class="er" id="fct-er"></div></div><datalist id="cities-list"><option value="Agartala"><option value="Agra"><option value="Ahmadnagar"><option value="Ahmedabad"><option value="Ajmer"><option value="Akola"><option value="Aligarh"><option value="Allahabad"><option value="Ambattur"><option value="Amravati"><option value="Amritsar"><option value="Aurangabad"><option value="Avadi"><option value="Bangalore"><option value="Bareilly"><option value="Belgaum"><option value="Bellary"><option value="Berhampur"><option value="Bhagalpur"><option value="Bhatpara"><option value="Bhilai"><option value="Bhilwara"><option value="Bhiwandi"><option value="Bhopal"><option value="Bhubaneswar"><option value="Bijapur"><option value="Bikaner"><option value="Bilaspur"><option value="Bokaro"><option value="Chandigarh"><option value="Chandrapur"><option value="Chennai"><option value="Coimbatore"><option value="Cuttack"><option value="Davanagere"><option value="Dehradun"><option value="Delhi"><option value="Dhanbad"><option value="Dhule"><option value="Faridabad"><option value="Firozabad"><option value="Gaya"><option value="Gopalpur"><option value="Gorakhpur"><option value="Gulbarga"><option value="Guntur"><option value="Gurgaon"><option value="Guwahati"><option value="Gwalior"><option value="Howrah"><option value="Hubli"><option value="Hyderabad"><option value="Indore"><option value="Jabalpur"><option value="Jaipur"><option value="Jalandhar"><option value="Jalgaon"><option value="Jammu"><option value="Jamnagar"><option value="Jamshedpur"><option value="Jhansi"><option value="Jodhpur"><option value="Junagadh"><option value="Kadapa"><option value="Kakinada"><option value="Kalyan"><option value="Kamarhati"><option value="Kanpur"><option value="Kochi"><option value="Kolhapur"><option value="Kolkata"><option value="Kollam"><option value="Korba"><option value="Kozhikode"><option value="Kurnool"><option value="Latur"><option value="Loni"><option value="Lucknow"><option value="Ludhiana"><option value="Madurai"><option value="Maheshtala"><option value="Malegaon"><option value="Mangalore"><option value="Mathura"><option value="Meerut"><option value="Mira-Bhayandar"><option value="Moradabad"><option value="Mumbai"><option value="Muzaffarnagar"><option value="Muzaffarpur"><option value="Mysore"><option value="Nagpur"><option value="Nanded"><option value="Nashik"><option value="Nellore"><option value="Noida"><option value="Ongole"><option value="Panihati"><option value="Patiala"><option value="Patna"><option value="Pondicherry"><option value="Pune"><option value="Raipur"><option value="Rajahmundry"><option value="Rajkot"><option value="Rajpur Sonarpur"><option value="Rampur"><option value="Ranchi"><option value="Rohtak"><option value="Saharanpur"><option value="Salem"><option value="Sambalpur"><option value="Satara"><option value="Secunderabad"><option value="Shahjahanpur"><option value="Shivamogga"><option value="Siliguri"><option value="Solapur"><option value="South Dumdum"><option value="Srinagar"><option value="Surat"><option value="Tenali"><option value="Thiruvananthapuram"><option value="Tiruchirappalli"><option value="Tirunelveli"><option value="Tirupati"><option value="Tiruppur"><option value="Udaipur"><option value="Ujjain"><option value="Ulhasnagar"><option value="Varanasi"><option value="Vasai"><option value="Vijayawada"><option value="Visakhapatnam"><option value="Warangal"></datalist>
+      <div class="fld"><label>State / Country <span class="req">*</span></label><input type="text" id="fst" placeholder="Type or select state..." list="states-list" autocomplete="off"><div class="er" id="fst-er"></div></div><datalist id="states-list"><option value="Andhra Pradesh"><option value="Arunachal Pradesh"><option value="Assam"><option value="Bihar"><option value="Chhattisgarh"><option value="Goa"><option value="Gujarat"><option value="Haryana"><option value="Himachal Pradesh"><option value="Jharkhand"><option value="Karnataka"><option value="Kerala"><option value="Madhya Pradesh"><option value="Maharashtra"><option value="Manipur"><option value="Meghalaya"><option value="Mizoram"><option value="Nagaland"><option value="Odisha"><option value="Punjab"><option value="Rajasthan"><option value="Sikkim"><option value="Tamil Nadu"><option value="Telangana"><option value="Tripura"><option value="Uttar Pradesh"><option value="Uttarakhand"><option value="West Bengal"><option value="Andaman and Nicobar Islands"><option value="Chandigarh"><option value="Dadra and Nagar Haveli and Daman and Diu"><option value="Delhi"><option value="Jammu and Kashmir"><option value="Ladakh"><option value="Lakshadweep"><option value="Puducherry"><option value="Outside India"></datalist>
     </div>
     <div class="stitle">Contact & purpose</div>
     <div class="g2">
@@ -838,16 +840,7 @@ function doGenReport(){
   if(!validateForm())return;
   const d={name:document.getElementById('fn').value.trim(),gender:document.getElementById('fg').value,dob:document.getElementById('fdob').value,tob:document.getElementById('ftob').value+' '+document.getElementById('fampm').value,city:document.getElementById('fct').value.trim(),state:document.getElementById('fst').value.trim(),mobile:document.getElementById('fmob').value.trim(),budget:document.getElementById('fbud').value,purpose:document.getElementById('fpur').value.trim()};
   S.fd=d;S.matched=null;S.aiNarrative=null;
-  const lp=calcLP(d.dob),expr=calcExpr(d.name),su=calcSU(d.name),pn=calcPN(d.name),mat=calcMat(lp,expr),bal=calcBal(d.name),py=calcPY(d.dob,2025);
-  const grid=getNameGrid(d.name),rashi=getRashi(d.dob),nak=getNakshatra(d.dob),lucky=getLuckyFromLP(lp);
-  S.nums={lp,expr,su,pn,mat,bal,py,lucky};
-  // Mark trial as used in Sheets after report generated
-  if(S.dealer.type==='trial'){
-    callSheets({action:'updateCode',code:S.dealer.code,field:'status',value:'used',sheet:'codes'}).catch(()=>{});
-  }
-  renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky);
-  showScreen('report');
-  if(S.dealer.type==='trial')document.getElementById('tbar').style.display='flex';
+  showReview(d);
 }
 
 function renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky){

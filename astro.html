@@ -235,7 +235,19 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
         <button class="btn bo" onclick="doCopyUnusedAI()">Copy Unused AI Credits</button>
       </div>
     </div>
-    <div style="display:flex;align-items:center;justify-content:space-between"><div class="stitle" style="margin:0">Access codes</div><button class="btn bo bsm" onclick="renderAdmin()">&#8635; Refresh</button></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem">
+  <div class="stitle" style="margin:0">Access codes</div>
+  <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+    <select id="code-filter" onchange="applyFilter()" style="background:var(--card2);border:0.5px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:6px 10px;outline:none">
+      <option value="all">All codes</option>
+      <option value="unused">Unused only</option>
+      <option value="active">Active only</option>
+      <option value="used">Used only</option>
+      <option value="revoked">Revoked only</option>
+    </select>
+    <button class="btn bo bsm" onclick="renderAdmin()">&#8635; Refresh</button>
+  </div>
+</div>
     <div class="tbl-wrap">
       <table class="ctbl"><thead><tr><th>Code</th><th>Type</th><th>Status</th><th>Dealer</th><th>Used</th><th>Actions</th></tr></thead>
       <tbody id="ctbody"></tbody></table>
@@ -644,24 +656,44 @@ async function renderAdmin(){
   try{
     const data=await callSheets({action:'getCodes'});
     const codes=data.codes||[]; const ai=data.aiCodes||[];
-    const total=codes.length,unused=codes.filter(c=>c.status==='unused').length,used=codes.filter(c=>c.status==='used').length,paid=codes.filter(c=>c.type==='paid').length;
+    const total=codes.length,unused=codes.filter(c=>c.status==='unused').length,used=codes.filter(c=>c.status==='used').length;
     document.getElementById('adm-stats').innerHTML=`<div class="sc"><div class="sn">${total}</div><div class="sl">Total</div></div><div class="sc"><div class="sn">${unused}</div><div class="sl">Unused</div></div><div class="sc"><div class="sn">${used}</div><div class="sl">Used</div></div><div class="sc"><div class="sn">${ai.filter(c=>c.status==='unused').length}</div><div class="sl">AI Credits</div></div>`;
+    const statusOrder={unused:0,active:1,used:2,expired:3,revoked:4};
+    const sorted=[...codes].sort((a,b)=>(statusOrder[a.status]||9)-(statusOrder[b.status]||9));
+    window._allCodes=sorted;
+    renderCodesTable(sorted);
     const sb=s=>s==='unused'?'su-b':s==='active'?'sac':s==='used'?'sus':s==='expired'?'sex':s==='revoked'?'srv':'sus';
-    document.getElementById('ctbody').innerHTML=codes.slice().reverse().map(c=>{
-      const tp=c.type==='paid'?'<span class="sb spd">Paid</span>':'<span class="sb sus">Trial</span>';
-      const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
-      const acts=[c.type==='trial'&&c.status!=='revoked'?`<button class="btn bw bsm" onclick="upgradeCode('${c.code}')">Upgrade</button>`:'',c.status!=='revoked'?`<button class="btn bv bsm" onclick="revokeCode('${c.code}')">Revoke</button>`:'',`<button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button>`].filter(Boolean);
-      return`<tr><td><span class="cm">${c.code}</span></td><td>${tp}</td><td><span class="sb ${sb(c.status)}">${c.status}</span></td><td style="font-size:12px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:12px;color:var(--muted)">${ud}</td><td><div style="display:flex;gap:4px;flex-wrap:wrap">${acts.join('')}</div></td></tr>`;
-    }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">No codes. Generate above.</td></tr>';
     document.getElementById('aitbody').innerHTML=ai.slice().reverse().map(c=>{
       const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
-      return`<tr><td><span class="cm">${c.code}</span></td><td><span class="sb ${c.status==='unused'?'sai':c.status==='used'?'sus':'srv'}">${c.status}</span></td><td style="font-size:12px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:12px;color:var(--muted)">${ud}</td><td><button class="btn bv bsm" onclick="revokeAI('${c.code}')">Revoke</button> <button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button></td></tr>`;
+      return`<tr><td><span class="cm">${c.code}</span></td><td><span class="sb ${c.status==='unused'?'sai':c.status==='used'?'sus':'srv'}">${c.status}</span></td><td style="font-size:14px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:14px;color:var(--muted)">${ud}</td><td><button class="btn bv bsm" onclick="revokeAI('${c.code}')">Revoke</button> <button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button></td></tr>`;
     }).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No AI codes. Generate above.</td></tr>';
   }catch(e){
     toast('Failed to load: '+e.message,4000);
     document.getElementById('ctbody').innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--red);padding:2rem">Error: ${e.message}</td></tr>`;
   }
 }
+
+function applyFilter(){
+  const f=document.getElementById('code-filter').value;
+  const codes=window._allCodes||[];
+  const filtered=f==='all'?codes:codes.filter(c=>c.status===f);
+  renderCodesTable(filtered);
+}
+
+function renderCodesTable(codes){
+  const sb=s=>s==='unused'?'su-b':s==='active'?'sac':s==='used'?'sus':s==='expired'?'sex':s==='revoked'?'srv':'sus';
+  document.getElementById('ctbody').innerHTML=codes.map(c=>{
+    const tp=c.type==='paid'?'<span class="sb spd">Paid</span>':'<span class="sb sus">Trial</span>';
+    const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
+    const acts=[
+      c.type==='trial'&&c.status!=='revoked'?`<button class="btn bw bsm" onclick="upgradeCode('${c.code}')">Upgrade</button>`:'',
+      c.status!=='revoked'?`<button class="btn bv bsm" onclick="revokeCode('${c.code}')">Revoke</button>`:'',
+      `<button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button>`
+    ].filter(Boolean);
+    return`<tr><td><span class="cm">${c.code}</span></td><td>${tp}</td><td><span class="sb ${sb(c.status)}">${c.status}</span></td><td style="font-size:14px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:14px;color:var(--muted)">${ud}</td><td><div style="display:flex;gap:4px;flex-wrap:nowrap;align-items:center">${acts.join('')}</div></td></tr>`;
+  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">No codes match this filter.</td></tr>';
+}
+
 
 async function doGenCodes(){
   const cnt=parseInt(document.getElementById('gc').value);const tp=document.getElementById('gt').value;

@@ -192,7 +192,15 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
         <label>Anthropic API key (stored in this browser)</label>
         <input type="password" id="adm-apikey" placeholder="sk-ant-api03-..." style="font-family:monospace;font-size:13px">
       </div>
-      <button class="btn bg bsm" onclick="saveAdminKey()">Save API Key</button>
+      <div class="fld" style="margin-bottom:.75rem;margin-top:.5rem">
+        <label>Cloudflare Proxy URL <span style="color:var(--grn);font-size:11px">(Required for mobile)</span></label>
+        <input type="text" id="adm-proxyurl" placeholder="https://manne-proxy.yourname.workers.dev" style="font-size:13px">
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">Paste your Cloudflare Worker URL here. Fixes mobile / in-app browser issues.</div>
+      </div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="btn bg bsm" onclick="saveAdminKey()">Save API Key</button>
+        <button class="btn bg bsm" onclick="saveProxyUrl()">Save Proxy URL</button>
+      </div>
       <span style="font-size:12px;color:var(--muted);margin-left:.75rem" id="key-status"></span>
     </div>
     <div class="sstrip" id="adm-stats"></div>
@@ -511,13 +519,15 @@ const sak=v=>localStorage.setItem('mc_ak',v);
 // ═══════════════════════════════════════════
 // SHEETS API
 // ═══════════════════════════════════════════
+function getEndpoint(){ return localStorage.getItem('mc_proxy_url')||SHEETS_URL; }
+
 function callSheets(params) {
+  const endpoint=getEndpoint();
   const qs=Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(String(v))).join('&');
-  const url=SHEETS_URL+'?'+qs;
-  // Try fetch first (works on most browsers from HTTPS)
-  return fetch(url,{redirect:'follow',credentials:'omit',cache:'no-cache'})
+  const url=endpoint+'?'+qs;
+  return fetch(url,{redirect:'follow',credentials:'omit',cache:'no-cache',mode:'cors'})
     .then(res=>{ if(!res.ok) throw new Error('HTTP '+res.status); return res.json(); })
-    .catch(()=>jsonpCall(params)); // iOS Safari fallback
+    .catch(()=>jsonpCall(params));
 }
 
 function jsonpCall(params) {
@@ -561,10 +571,12 @@ function doAdminLogin(){
     document.getElementById('apass').value='';document.getElementById('apass-er').textContent='';
     sessionStorage.setItem('mc_admin','1');
     const k=gak();if(k)document.getElementById('adm-apikey').value=k;
+    const pu=localStorage.getItem('mc_proxy_url');if(pu)document.getElementById('adm-proxyurl').value=pu;
     renderAdmin();showScreen('admin');
   } else document.getElementById('apass-er').textContent='Incorrect password';
 }
 function saveAdminKey(){const k=document.getElementById('adm-apikey').value.trim();if(!k){toast('Enter API key');return;}sak(k);document.getElementById('key-status').textContent='Saved ✓';setTimeout(()=>document.getElementById('key-status').textContent='',2000);}
+function saveProxyUrl(){const u=document.getElementById('adm-proxyurl').value.trim();if(!u){localStorage.removeItem('mc_proxy_url');toast('Proxy URL cleared');return;}localStorage.setItem('mc_proxy_url',u);document.getElementById('key-status').textContent='Proxy URL saved ✓';setTimeout(()=>document.getElementById('key-status').textContent='',2000);}
 
 async function renderAdmin(){
   document.getElementById('ctbody').innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">Loading from Google Sheets...</td></tr>';
@@ -952,6 +964,7 @@ function doNewConsult(){
 window.onload=()=>setTimeout(()=>{
   if(sessionStorage.getItem('mc_admin')==='1'){
     const k=gak();if(k)document.getElementById('adm-apikey').value=k;
+    const pu=localStorage.getItem('mc_proxy_url');if(pu)document.getElementById('adm-proxyurl').value=pu;
     renderAdmin();showScreen('admin');
   } else {
     showScreen('role');

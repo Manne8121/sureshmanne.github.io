@@ -218,7 +218,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
         <button class="btn bo" onclick="doCopyUnusedAI()">Copy Unused AI Credits</button>
       </div>
     </div>
-    <div class="stitle">Access codes</div>
+    <div style="display:flex;align-items:center;justify-content:space-between"><div class="stitle" style="margin:0">Access codes</div><button class="btn bo bsm" onclick="renderAdmin()">&#8635; Refresh</button></div>
     <div class="tbl-wrap">
       <table class="ctbl"><thead><tr><th>Code</th><th>Type</th><th>Status</th><th>Dealer</th><th>Used</th><th>Actions</th></tr></thead>
       <tbody id="ctbody"></tbody></table>
@@ -551,6 +551,7 @@ function goAdmin(){showScreen('admin-login');setTimeout(()=>document.getElementB
 function doAdminLogin(){
   if(document.getElementById('apass').value===ADMIN_PASS){
     document.getElementById('apass').value='';document.getElementById('apass-er').textContent='';
+    sessionStorage.setItem('mc_admin','1');
     const k=gak();if(k)document.getElementById('adm-apikey').value=k;
     renderAdmin();showScreen('admin');
   } else document.getElementById('apass-er').textContent='Incorrect password';
@@ -593,7 +594,7 @@ async function doGenCodes(){
     while(newCodes.length<cnt){const code=mkCode();if(!existing.has(code)){newCodes.push({code,type:tp,status:'unused',dealer:'',usedAt:'',expiresAt:'',created:new Date().toISOString()});existing.add(code);}}
     await addCodesBatch(newCodes,'codes');
     toast(cnt+' codes saved to Sheets ✓');
-    renderAdmin();
+    setTimeout(()=>renderAdmin(),1500);
   }catch(e){toast('Error: '+e.message,4000);}
 }
 
@@ -606,7 +607,7 @@ async function doGenAI(cnt){
     while(newCodes.length<cnt){const code=mkCode('AI');if(!existing.has(code)){newCodes.push({code,status:'unused',dealer:'',usedAt:'',created:new Date().toISOString()});existing.add(code);}}
     await addCodesBatch(newCodes,'ai_codes');
     toast(cnt+' AI credits saved ✓');
-    renderAdmin();
+    setTimeout(()=>renderAdmin(),1500);
   }catch(e){toast('Error: '+e.message,4000);}
 }
 
@@ -933,13 +934,21 @@ function doWA(){
 // NAVIGATION
 // ═══════════════════════════════════════════
 function doLogout(){if(S.timer){clearInterval(S.timer);S.timer=null;}document.getElementById('tbar').style.display='none';S.dealer={name:'',code:'',type:''};S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('role');}
+function adminLogout(){sessionStorage.removeItem('mc_admin');showScreen('role');}
 function doNewConsult(){
   if(S.dealer.type==='trial'){toast('Trial code used. Contact Manne Communications for paid access.',5000);setTimeout(doLogout,2500);return;}
   ['fn','fdob','ftob','fct','fst','fmob','fpur'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('fg').value='';document.getElementById('fbud').value='';
   S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('form');
 }
-window.onload=()=>setTimeout(()=>showScreen('role'),2200);
+window.onload=()=>setTimeout(()=>{
+  if(sessionStorage.getItem('mc_admin')==='1'){
+    const k=gak();if(k)document.getElementById('adm-apikey').value=k;
+    renderAdmin();showScreen('admin');
+  } else {
+    showScreen('role');
+  }
+},2200);
 
 </script>
 </body>

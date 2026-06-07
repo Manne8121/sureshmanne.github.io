@@ -218,7 +218,7 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
       <div class="stitle" style="margin-top:0">Generate access codes</div>
       <div class="g2" style="align-items:flex-end">
         <div class="fld" style="margin:0"><label>Count</label><select id="gc"><option>10</option><option>25</option><option selected>50</option><option>100</option></select></div>
-        <div class="fld" style="margin:0"><label>Type</label><select id="gt"><option value="trial">Trial (10 min · 1 report)</option><option value="paid">Paid (unlimited)</option></select></div>
+        <div class="fld" style="margin:0"><label>Type</label><select id="gt"><option value="trial">Trial (20 min · 5 reports)</option><option value="paid">Paid (unlimited)</option></select></div>
       </div>
       <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap">
         <button class="btn bg" onclick="doGenCodes()">Generate Codes</button>
@@ -1072,14 +1072,22 @@ function doCopy(){
   txt+='LUCKY NUMBERS: '+n.lucky.single.join(', ')+'\nCompound: '+n.lucky.compound.join(', ')+'\nAvoid: '+n.lucky.avoid.join(', ')+'\nGemstone: '+n.lucky.gem+'\n\n';
   if(S.matched&&S.matched.length){txt+='VIP NUMBER MATCHES\n'+'-'.repeat(35)+'\n';S.matched.forEach(item=>{txt+=item.num+' — '+item.pri.toUpperCase()+' ('+item.reason+')\n';});txt+='\n';}
   if(S.aiNarrative)txt+='AI NARRATIVE\n'+'-'.repeat(35)+'\n'+S.aiNarrative+'\n\n';
-  txt+='sureshmanne.com | +91 90909 00005 | Manne Communications';
+  txt+='For further details, contact the consultant who shared this report.';
   navigator.clipboard.writeText(txt).then(()=>toast('Copied!'));
 }
 
 function doWA(){
   const d=S.fd,n=S.nums,rashi=getRashi(d.dob);
-  let top=S.matched?S.matched.filter(x=>x.pri==='best').slice(0,3).map(x=>x.num).join(', '):'';
-  const msg='*MANNE COMMUNICATIONS*\nAstrology Report for *'+d.name+'*\n\n DOB: '+fmtDate(d.dob)+' | '+d.tob+'\n Place: '+d.city+', '+d.state+'\n\n*Sun Sign:* '+rashi.name+'\n*Life Path:* '+(LP_DATA[n.lp]||LP_DATA[1]).title+'\n*Lucky Numbers:* '+n.lucky.single.join(', ')+(top?'\n\n*Best VIP Numbers:*\n'+top:'')+'\n\nFor complete VIP number consultation:\nsureshmanne.com | wa.me/'+WA+'\n\n_Manne Communications_';
+  let top=S.matched?S.matched.filter(x=>x.pri==='best').slice(0,3).map(x=>x.num).join('\n'):'';
+  const msg='*Astrology Report*'
+    +'\nPrepared for: *'+d.name+'*'
+    +'\n\n*Date of Birth:* '+fmtDate(d.dob)+' | '+d.tob
+    +'\n*Place:* '+d.city+', '+d.state
+    +'\n\n*Sun Sign:* '+rashi.name
+    +'\n*Life Path:* '+(LP_DATA[n.lp]||LP_DATA[1]).title
+    +'\n*Lucky Numbers:* '+n.lucky.single.join(', ')
+    +(top?'\n\n*Recommended VIP Numbers:*\n'+top:'')
+    +'\n\n_Contact the consultant who shared this report for further guidance._';
   window.open('https://wa.me/'+d.mobile.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg),'_blank');
 }
 

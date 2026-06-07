@@ -348,15 +348,16 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
 </div></div>
 
 <script>
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // CONFIG
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 const ADMIN_PASS = 'Manne8121';
 const WA = '919090900005';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwnmp-KT9KLgZnRsT8mLu45b8l6KKHTm3iAmOWbqT3bwL4bCHuzkWqkmpRQjFXlNK7Y3w/exec';
 
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // CHALDEAN ENGINE
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 const CV = {A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
 const VOWELS = new Set(['A','E','I','O','U']);
 const chv = c => CV[c.toUpperCase()] || 0;
@@ -368,40 +369,25 @@ const calcPN   = name => red(name.toUpperCase().replace(/[^A-Z]/g,'').split('').
 const calcMat  = (lp,ex) => red(lp+ex);
 const calcBal  = name => red(name.trim().split(/\s+/).map(w=>w[0]||'').join('').toUpperCase().split('').reduce((a,b)=>a+chv(b),0));
 const calcPY   = (dob,yr) => { const p=dob.split('-'); return red(parseInt(p[2])+parseInt(p[1])+String(yr).split('').reduce((a,b)=>a+parseInt(b),0)); };
-const numSum   = n => red(n.replace(/\D/g,'').split('').reduce((a,b)=>a+parseInt(b),0));
+const numSum   = n => red(n.replace(/[^0-9]/g,'').split('').reduce((a,b)=>a+parseInt(b),0));
+function getNameGrid(name){return name.toUpperCase().split('').map(c=>({c,v:CV[c]||null,vowel:VOWELS.has(c),space:c===' '}));}
 
-function getNameGrid(name) {
-  return name.toUpperCase().split('').map(c => ({c, v: CV[c]||null, vowel: VOWELS.has(c), space: c===' '}));
-}
-
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // INTERPRETATION TABLES
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 const LP_DATA = {
-  1:{title:'The Pioneer',planet:'Sun',element:'Fire',color:'Gold / Orange',day:'Sunday',gem:'Ruby',mantra:'Om Suryaya Namah',
-    interp:'Born with the energy of the Sun, you are a natural leader and pioneer. Your life path demands independence, originality, and the courage to forge new paths. You thrive when in charge of your own destiny — working under others long-term drains your spirit. Challenges come when stubbornness or ego block collaboration. Best careers: entrepreneur, CEO, politics, military, innovation, and independent ventures. In relationships, you need a partner who respects your independence and matches your ambition — dominating personalities drain you. Health focus: head, eyes, heart, and spine. Guard against stress and burnout by learning when to delegate.'},
-  2:{title:'The Diplomat',planet:'Moon',element:'Water',color:'Silver / White',day:'Monday',gem:'Pearl or Moonstone',mantra:'Om Chandraya Namah',
-    interp:'The Moon guides your path, making you the most sensitive, intuitive, and deeply relational of all numbers. You feel everything intensely and read people effortlessly — this is your greatest gift and your greatest vulnerability. Harmony is your natural language, and conflict physically exhausts you. Best careers: counselling, music, psychology, diplomacy, nursing, healing arts, and teaching. The challenge is maintaining boundaries and not losing yourself in others\' emotional worlds. In relationships, you are devoted and deeply loving, but you need consistent reassurance — uncertainty shakes you at the soul level. Health focus: digestive system, hormones, and the reproductive system. Anxiety and worry affect you physically — meditation and regular routine are essential.'},
-  3:{title:'The Creator',planet:'Jupiter',element:'Fire',color:'Yellow / Bright',day:'Thursday',gem:'Yellow Topaz',mantra:'Om Guruve Namah',
-    interp:'Jupiter\' blessing makes you the creative communicator — words, art, music, and self-expression flow through you naturally. You radiate joy, optimism, and a magnetic social energy that draws others to you effortlessly. Your greatest challenge is scattered energy — too many interests, too many ideas begun and abandoned before completion. Best careers: arts, entertainment, writing, teaching, marketing, design, and public speaking. In relationships, you are romantic and deeply fun, but you need mental stimulation and variety to stay committed. Health focus: throat, respiratory system, and skin — speak your truth or it manifests physically.'},
-  4:{title:'The Builder',planet:'Rahu',element:'Earth',color:'Green / Brown',day:'Saturday',gem:'Hessonite Garnet',mantra:'Om Rahave Namah',
-    interp:'Rahu gives you the builder\' hands — patient, systematic, disciplined, and endlessly reliable. You construct what others only dream about, one careful brick at a time. Your word is your bond and people trust you instinctively. The life path 4 demands hard work, but everything you build lasts generations. Best careers: engineering, law, real estate, finance, construction, medicine, and military. The challenge is rigidity — resistance to change and difficulty trusting the unknown. In relationships, you are loyal and deeply steady, but emotional expression comes slowly — partners must understand your love is shown through actions not words. Health focus: joints, bones, and teeth — stress through the body. Physical activity is your best medicine.'},
-  5:{title:'The Freedom Seeker',planet:'Mercury',element:'Air',color:'Light / Mixed',day:'Wednesday',gem:'Emerald',mantra:'Om Budhaya Namah',
-    interp:'Mercury makes you the ultimate freedom seeker — versatile, quick-witted, adventurous, and magnetically charming. Change is not something you merely accept; you require it to feel alive. Routine is your slow poison. Your life is meant to be a grand adventure of experiences, travel, people, and constant discovery. Best careers: sales, media, travel, politics, consulting, entrepreneurship, and any field requiring communication and quick thinking. The challenge is commitment and follow-through — you start brilliantly and often leave before the finish. In relationships, you need a partner who gives you space and keeps you genuinely excited — possessiveness drives you away. Health focus: nervous system, adrenal glands, and anxiety. Meditation and grounding practices are your anchors.'},
-  6:{title:'The Nurturer',planet:'Venus',element:'Earth',color:'Blue / Green',day:'Friday',gem:'Turquoise or Diamond',mantra:'Om Shukraya Namah',
-    interp:'Venus blesses you with a deep sense of responsibility, beauty, and love. Family, community, and service are at the center of your world. You create beauty wherever you go — in your home, your relationships, and your work. Best careers: healing, teaching, hospitality, interior design, counselling, social work, and all beauty-related fields. The challenge is learning that carrying everyone\' burdens is not love — it is martyrdom. You must receive as generously as you give. In relationships, you give of yourself deeply, sometimes too deeply — ensure your love is genuinely reciprocated. Health focus: heart, kidneys, lower back, and throat. Emotional suppression affects these areas directly.'},
-  7:{title:'The Seeker',planet:'Ketu',element:'Water',color:'Purple / Grey',day:'Saturday',gem:'Cat\' Eye or Amethyst',mantra:'Om Ketave Namah',
-    interp:'Ketu guides the seeker within you — analytical, spiritual, deeply introspective, and relentlessly truth-seeking. You are wired differently from most people, and that difference is your greatest gift. Solitude is not loneliness for you — it is where your wisdom grows. You sense things others miss and understand at levels most people cannot access. Best careers: research, technology, philosophy, spirituality, medicine, psychology, and science. The challenge is isolation and over-analysis — getting lost in your own mind. In relationships, you need a deep spiritual or intellectual connection — surface-level bonds drain your energy and patience. Health focus: nervous system, sleep quality, and the immune system. Over-thinking is your primary health challenge.'},
-  8:{title:'The Achiever',planet:'Saturn',element:'Earth',color:'Black / Dark Blue',day:'Saturday',gem:'Blue Sapphire',mantra:'Om Shanicharaya Namah',
-    interp:'Saturn\' power runs through you — ambitious, authoritative, financially minded, and architectured for large-scale success. You are drawn to power and material achievement with an intensity that can intimidate others. Your capacity for discipline and long-term thinking is unmatched. Best careers: business, finance, law, politics, corporate leadership, and real estate. The challenge is the balance between material and spiritual — and between relentless drive and compassion. Karma plays heavily in your life; what you give returns multiplied. In relationships, you need a partner who respects your ambition and matches your strength — weakness frustrates you. Health focus: blood pressure, circulation, and stress-related conditions. Rest is not optional; it is strategic.'},
-  9:{title:'The Humanitarian',planet:'Mars',element:'Fire',color:'Red / Crimson',day:'Tuesday',gem:'Red Coral',mantra:'Om Mangalaya Namah',
-    interp:'Mars gives you the fire of the humanitarian — compassionate, globally minded, intensely creative, and driven by service to something larger than yourself. Your life is meant to complete cycles, release the old, and contribute meaningfully to the world. You feel the pain of others as if it were your own. Best careers: social work, arts, healing, spiritual guidance, medicine, international work, and creative fields. The challenge is attachment — you must learn to give without expecting return, because this life path is fundamentally about universal love. In relationships, you are deeply loving but prone to idealism — real human beings will sometimes disappoint your high vision. Health focus: immune system, blood, liver, and reproductive system.'},
-  11:{title:'The Visionary',planet:'Moon/Neptune',element:'Air',color:'Silver / Violet',day:'Monday',gem:'Moonstone',mantra:'Om Chandraya Namah',
-    interp:'You carry the Master Number of the Visionary — heightened intuition, extraordinary spiritual sensitivity, and the rare ability to inspire others beyond what most can comprehend. Your frequency is high and your awareness is vast. The challenge is learning to live at this intensity without breaking down — anxiety, self-doubt, and the pressure of your own unrealized potential are constant companions. Best careers: spiritual teaching, counselling, arts, psychology, and any work that inspires transformation in others. In relationships, you need a partner with genuine depth and spiritual awareness — shallow connections leave you feeling profoundly alone. Health focus: nervous system and anxiety — grounding practices, nature, and meditation are essential daily habits.'},
-  22:{title:'The Master Builder',planet:'Saturn/Uranus',element:'Earth',color:'Earth Tones',day:'Saturday',gem:'Jade',mantra:'Om Shanicharaya Namah',
-    interp:'The Master Builder — you carry the most powerful practical potential of all numbers. Your vision is grand, your execution is precise, and your impact can be genuinely transformational across generations. The challenge is the crushing weight of this potential — perfectionism, self-doubt, and a tendency to collapse under the enormity of your own ambitions. Best careers: architecture, large organizations, international business, government, and any field where you can build systems that outlast you. In relationships, you set high standards and must remember that not everyone operates at your frequency — patience with human imperfection is your lesson. Health focus: heart and stress-related conditions — schedule rest as seriously as you schedule work.'},
-  33:{title:'The Master Teacher',planet:'Venus',element:'Fire',color:'Rose / Gold',day:'Friday',gem:'Rose Quartz',mantra:'Om Shukraya Namah',
-    interp:'The Master Teacher carries the highest vibration in Chaldean numerology — unconditional love, selfless service, and a healing presence that operates at a global level. Your very presence can shift energy in a room. The challenge is martyrdom — giving so completely that nothing remains for yourself. Best careers: healing, spiritual service, teaching, creative arts, and humanitarian work. In relationships, your love is pure and boundless — ensure it is genuinely reciprocated, because your capacity to give can be exploited by those who take without returning. Health focus: adrenal glands and overall vitality — you give so much energy to others that deliberate self-restoration is essential.'},
+  1:{title:'The Pioneer',planet:'Sun',element:'Fire',color:'Gold / Orange',day:'Sunday',gem:'Ruby',mantra:'Om Suryaya Namah',interp:'Born with the energy of the Sun, you are a natural leader and pioneer. Your life path demands independence, originality, and the courage to forge new paths. You thrive when in charge of your own destiny — working under others long-term drains your spirit. Challenges come when stubbornness or ego block collaboration. Best careers: entrepreneur, CEO, politics, military, innovation. In relationships, you need a partner who respects your independence and matches your ambition. Health focus: head, eyes, heart, and spine. Guard against stress and burnout by learning when to delegate.'},
+  2:{title:'The Diplomat',planet:'Moon',element:'Water',color:'Silver / White',day:'Monday',gem:'Pearl or Moonstone',mantra:'Om Chandraya Namah',interp:'The Moon guides your path, making you the most sensitive, intuitive, and deeply relational of all numbers. You feel everything intensely and read people effortlessly. Harmony is your natural language, and conflict physically exhausts you. Best careers: counselling, music, psychology, diplomacy, nursing, and healing arts. The challenge is maintaining boundaries and not losing yourself in others emotions. In relationships, you are devoted and deeply loving, but you need consistent reassurance. Health focus: digestive system, hormones. Anxiety and worry affect you physically — meditation and routine are essential.'},
+  3:{title:'The Creator',planet:'Jupiter',element:'Fire',color:'Yellow / Bright',day:'Thursday',gem:'Yellow Topaz',mantra:'Om Guruve Namah',interp:'Jupiter blesses you as the creative communicator — words, art, music, and self-expression flow through you naturally. You radiate joy, optimism, and a magnetic social energy that draws others to you effortlessly. Your greatest challenge is scattered energy — too many interests, too many ideas begun and abandoned. Best careers: arts, entertainment, writing, teaching, marketing, and public speaking. In relationships, you are romantic and deeply fun, but you need mental stimulation and variety to stay committed. Health focus: throat, respiratory system, and skin.'},
+  4:{title:'The Builder',planet:'Rahu',element:'Earth',color:'Green / Brown',day:'Saturday',gem:'Hessonite Garnet',mantra:'Om Rahave Namah',interp:'Rahu gives you the builder hands — patient, systematic, disciplined, and endlessly reliable. You construct what others only dream about, one careful brick at a time. Your word is your bond and people trust you instinctively. Best careers: engineering, law, real estate, finance, construction, medicine. The challenge is rigidity — resistance to change and difficulty trusting the unknown. In relationships, you are loyal and deeply steady, but emotional expression comes slowly. Health focus: joints, bones, and teeth. Physical activity is your best medicine.'},
+  5:{title:'The Freedom Seeker',planet:'Mercury',element:'Air',color:'Light / Mixed',day:'Wednesday',gem:'Emerald',mantra:'Om Budhaya Namah',interp:'Mercury makes you the ultimate freedom seeker — versatile, quick-witted, adventurous, and magnetically charming. Change is not something you merely accept; you require it to feel alive. Your life is meant to be a grand adventure of experiences, travel, and constant discovery. Best careers: sales, media, travel, politics, consulting, and communication. The challenge is commitment and follow-through. In relationships, you need a partner who gives you space and keeps you genuinely excited. Health focus: nervous system, adrenal glands, and anxiety.'},
+  6:{title:'The Nurturer',planet:'Venus',element:'Earth',color:'Blue / Green',day:'Friday',gem:'Turquoise or Diamond',mantra:'Om Shukraya Namah',interp:'Venus blesses you with a deep sense of responsibility, beauty, and love. Family, community, and service are at the center of your world. You create beauty wherever you go. Best careers: healing, teaching, hospitality, interior design, counselling, and social work. The challenge is learning that carrying everyone burdens is not love — it is martyrdom. You must receive as generously as you give. In relationships, you give deeply — ensure your love is genuinely reciprocated. Health focus: heart, kidneys, lower back, and throat.'},
+  7:{title:'The Seeker',planet:'Ketu',element:'Water',color:'Purple / Grey',day:'Saturday',gem:'Cat Eye or Amethyst',mantra:'Om Ketave Namah',interp:'Ketu guides the seeker within you — analytical, spiritual, deeply introspective, and relentlessly truth-seeking. You are wired differently from most people, and that difference is your greatest gift. Solitude is not loneliness for you — it is where your wisdom grows. Best careers: research, technology, philosophy, spirituality, medicine, and science. The challenge is isolation and over-analysis. In relationships, you need a deep spiritual or intellectual connection. Health focus: nervous system, sleep quality, and the immune system.'},
+  8:{title:'The Achiever',planet:'Saturn',element:'Earth',color:'Black / Dark Blue',day:'Saturday',gem:'Blue Sapphire',mantra:'Om Shanicharaya Namah',interp:'Saturn power runs through you — ambitious, authoritative, financially minded, and built for large-scale success. You are drawn to power and material achievement with an intensity that can intimidate others. Your capacity for discipline and long-term thinking is unmatched. Best careers: business, finance, law, politics, and corporate leadership. The challenge is balance between material and spiritual worlds. In relationships, you need a partner who respects your ambition and matches your strength. Health focus: blood pressure, circulation, and stress-related conditions.'},
+  9:{title:'The Humanitarian',planet:'Mars',element:'Fire',color:'Red / Crimson',day:'Tuesday',gem:'Red Coral',mantra:'Om Mangalaya Namah',interp:'Mars gives you the fire of the humanitarian — compassionate, globally minded, intensely creative, and driven by service to something larger than yourself. Your life is meant to complete cycles and contribute meaningfully to the world. Best careers: social work, arts, healing, spiritual guidance, medicine, and international work. The challenge is attachment — you must learn to give without expecting return. In relationships, you are deeply loving but prone to idealism. Health focus: immune system, blood, liver.'},
+  11:{title:'The Visionary',planet:'Moon/Neptune',element:'Air',color:'Silver / Violet',day:'Monday',gem:'Moonstone',mantra:'Om Chandraya Namah',interp:'You carry the Master Number of the Visionary — heightened intuition, extraordinary spiritual sensitivity, and the rare ability to inspire others beyond what most can comprehend. The challenge is learning to live at this intensity without breaking down — anxiety and self-doubt are constant companions. Best careers: spiritual teaching, counselling, arts, and psychology. In relationships, you need a partner with genuine depth and spiritual awareness. Health focus: nervous system and anxiety — grounding practices and meditation are essential daily habits.'},
+  22:{title:'The Master Builder',planet:'Saturn/Uranus',element:'Earth',color:'Earth Tones',day:'Saturday',gem:'Jade',mantra:'Om Shanicharaya Namah',interp:'The Master Builder — you carry the most powerful practical potential of all numbers. Your vision is grand, your execution is precise, and your impact can be genuinely transformational across generations. The challenge is the crushing weight of this potential — perfectionism and self-doubt. Best careers: architecture, large organizations, international business, and government. In relationships, you set high standards and must remember that not everyone operates at your frequency. Health focus: heart and stress-related conditions.'},
+  33:{title:'The Master Teacher',planet:'Venus',element:'Fire',color:'Rose / Gold',day:'Friday',gem:'Rose Quartz',mantra:'Om Shukraya Namah',interp:'The Master Teacher carries the highest vibration in Chaldean numerology — unconditional love, selfless service, and a healing presence that operates at a global level. The challenge is martyrdom — giving so completely that nothing remains for yourself. Best careers: healing, spiritual service, teaching, creative arts, and humanitarian work. In relationships, your love is pure and boundless — ensure it is genuinely reciprocated. Health focus: adrenal glands and overall vitality.'},
 };
 
 const SU_DATA = {
@@ -410,9 +396,9 @@ const SU_DATA = {
   3:'Your soul yearns to create, express, and be seen. Suppressing your creativity is suppressing your very essence — you must have a meaningful outlet or your spirit dims.',
   4:'Your soul seeks security, order, and the deep satisfaction of building something real and lasting. Chaos and instability drain you at the deepest level.',
   5:'Your soul craves freedom, rich experience, and perpetual forward motion. Any long-term restriction feels like a form of spiritual suffocation to you.',
-  6:'Your soul\'s deepest desire is to love and be loved — to create a beautiful, harmonious home and family. Serving others genuinely feeds and replenishes your soul.',
+  6:'Your soul deepest desire is to love and be loved — to create a beautiful, harmonious home and family. Serving others genuinely feeds and replenishes your soul.',
   7:'Your soul is a pure truth-seeker. Superficiality repels you at every level. You crave understanding, wisdom, and the quiet peace of solitude and deep inner knowing.',
-  8:'Your soul craves achievement, material mastery, and the genuine respect that comes with earned power. You want to build something significant — whether financial or spiritual in nature.',
+  8:'Your soul craves achievement, material mastery, and the genuine respect that comes with earned power. You want to build something significant — whether financial or spiritual.',
   9:'Your soul seeks universal love and meaningful completion. You want to be of service to humanity in some form and leave the world genuinely better than you found it.',
   11:'Your soul vibrates at a frequency of spiritual inspiration. You are meant to light the way for others — this is both your greatest gift and your heaviest burden.',
   22:'Your soul wants to build systems that change the world — not just for yourself, but for generations yet unborn. Your ambitions are ultimately rooted in love and service.',
@@ -420,136 +406,130 @@ const SU_DATA = {
 };
 
 const PN_DATA = {
-  1:'You appear confident, decisive, and in control — even when you are not. Others see a natural leader and instinctively expect you to take charge of any situation.',
-  2:'You appear gentle, approachable, and easy to confide in. People feel safe sharing their deepest concerns with you — you radiate genuine trustworthiness and warmth.',
+  1:'You appear confident, decisive, and in control. Others see a natural leader and instinctively expect you to take charge of any situation.',
+  2:'You appear gentle, approachable, and easy to confide in. People feel safe sharing their deepest concerns with you — you radiate genuine trustworthiness.',
   3:'You appear cheerful, creative, and full of energy. Your social magnetism is real — people are drawn to your enthusiasm and warmth before you even speak.',
-  4:'You appear steady, serious, and completely dependable. Others trust you instinctively with important matters and see you as the reliable anchor in any difficult situation.',
-  5:'You appear dynamic, exciting, and delightfully unpredictable. Others find you fascinating and often slightly unattainable — there is always something more to discover.',
+  4:'You appear steady, serious, and completely dependable. Others trust you instinctively with important matters and see you as the reliable anchor.',
+  5:'You appear dynamic, exciting, and delightfully unpredictable. Others find you fascinating — there is always something more to discover about you.',
   6:'You appear warm, responsible, and deeply caring. Others naturally bring their problems to you — your presence communicates safety and unconditional support.',
-  7:'You appear mysterious, highly intelligent, and quietly powerful. Others sense depth in you even before you speak — you carry an unmistakable aura of inner wisdom.',
-  8:'You appear powerful, authoritative, and naturally commanding. Others instinctively respect you — and sometimes feel slightly intimidated by your confident presence.',
-  9:'You appear compassionate, wise, and spiritually deep. Others sense that you have lived deeply and understand much. You carry an old soul energy that people feel immediately.',
-  11:'You appear unusually perceptive and quietly inspiring. Others sense your sensitivity and depth and feel both drawn to your presence and slightly in awe of it.',
-  22:'You appear highly capable, visionary, and quietly extraordinary. Others sense that you operate at a different scale from most people — your ambition is visible and magnetic.',
-  33:'You appear unconditionally loving and spiritually elevated. Others feel healed simply by being in your presence — your compassion and care radiate without effort.',
+  7:'You appear mysterious, highly intelligent, and quietly powerful. Others sense depth in you even before you speak — you carry an unmistakable aura of wisdom.',
+  8:'You appear powerful, authoritative, and naturally commanding. Others instinctively respect you and sometimes feel slightly intimidated by your confident presence.',
+  9:'You appear compassionate, wise, and spiritually deep. Others sense that you have lived deeply and understand much. You carry an old soul energy people feel immediately.',
+  11:'You appear unusually perceptive and quietly inspiring. Others sense your sensitivity and depth and feel both drawn to you and slightly in awe.',
+  22:'You appear highly capable, visionary, and quietly extraordinary. Others sense that you operate at a different scale — your ambition is visible and magnetic.',
+  33:'You appear unconditionally loving and spiritually elevated. Others feel healed simply by being in your presence — your compassion radiates without effort.',
 };
 
 const PY_DATA = {
   1:'A year of bold new beginnings. This is the start of a new 9-year cycle — what you plant now will shape the next decade. Courage is required. Start that business, take that leap, make that decision you have been postponing. The universe strongly rewards first steps this year.',
   2:'A year of patience, partnerships, and allowing things to develop naturally. Do not force or rush — relationships deepen, collaborations form, and quiet progress builds the foundation for future success. Sensitivity is heightened; protect your emotional energy carefully.',
-  3:'A year of creativity, expansion, and genuine joy. Express yourself fully and without apology. Social life flourishes, opportunities come through people, and your creative gifts attract good things into your life. This is your year to shine and celebrate what you have built.',
+  3:'A year of creativity, expansion, and genuine joy. Express yourself fully and without apology. Social life flourishes, opportunities come through people, and your creative gifts attract good things into your life. This is your year to shine and celebrate.',
   4:'A year of disciplined hard work and solid foundation-building. Nothing arrives easily this year, but everything built with patience will last. Focus on systems, health habits, career structure, and long-term investments. Effort is always rewarded in a 4 Personal Year.',
   5:'A year of significant change, freedom, and movement. Expect the unexpected — travel, new opportunities, and major shifts in direction are highlighted. Embrace change rather than resist it. New chapters open rapidly. What falls away was holding you back.',
   6:'A year of home, family, responsibility, and healing. Relationships and domestic matters take center stage. Service to loved ones is highlighted. This is also a powerful year for health improvements and for bringing beauty and harmony into your immediate environment.',
   7:'A year of deep inner reflection, spiritual development, and serious study. This is not a year for aggressive external achievement — it is a year for wisdom, analysis, and inner work. What you discover about yourself this year will guide the next cycle profoundly.',
   8:'A year of achievement, financial opportunity, and well-deserved recognition. The hard work of previous years begins to pay off materially. Claim what you have earned. Power and money are genuinely accessible this year to those who step forward boldly.',
-  9:'A year of completion, release, and meaningful endings. Let go of what no longer serves your growth — relationships, habits, jobs, or mindsets. This year closes a major 9-year chapter. Clearing space is essential preparation for the powerful new beginning that follows.',
+  9:'A year of completion, release, and meaningful endings. Let go of what no longer serves your growth. This year closes a major 9-year chapter. Clearing space is essential preparation for the powerful new beginning that follows.',
 };
 
 const RASHI_DATA = [
-  {name:'Aries (Mesha)',from:[3,21],to:[4,19],planet:'Mars',element:'Fire',quality:'Cardinal',
-    traits:'Bold, energetic, pioneering, and fiercely independent. You lead with courage and act on instinct. A natural initiator who excels at starting new things — though follow-through sometimes requires conscious effort. Guard against impatience and impulsive decisions.'},
-  {name:'Taurus (Vrishabha)',from:[4,20],to:[5,20],planet:'Venus',element:'Earth',quality:'Fixed',
-    traits:'Steadfast, sensual, practical, and deeply devoted. You build slowly and solidly — your staying power is remarkable. A love of beauty, luxury, and the finer things in life drives much of your motivation. Guard against stubbornness and resistance to necessary change.'},
-  {name:'Gemini (Mithuna)',from:[5,21],to:[6,20],planet:'Mercury',element:'Air',quality:'Mutable',
-    traits:'Quick-minded, versatile, communicative, and endlessly curious. You need variety and intellectual stimulation to thrive. A natural connector of people and ideas — though commitment can sometimes feel like a constraint on your freedom.'},
-  {name:'Cancer (Karka)',from:[6,21],to:[7,22],planet:'Moon',element:'Water',quality:'Cardinal',
-    traits:'Deeply intuitive, emotionally rich, protective, and home-loving. Your feelings are your internal compass. Nurturing and protecting those you love is your natural superpower — though maintaining firm boundaries is your most important lifelong lesson.'},
-  {name:'Leo (Simha)',from:[7,23],to:[8,22],planet:'Sun',element:'Fire',quality:'Fixed',
-    traits:'Radiant, generous, creative, and naturally commanding. You were born to lead and to be genuinely seen. At your best, you inspire and uplift everyone around you. Guard against the need for constant validation and the tendency to demand rather than earn admiration.'},
-  {name:'Virgo (Kanya)',from:[8,23],to:[9,22],planet:'Mercury',element:'Earth',quality:'Mutable',
-    traits:'Analytical, precise, service-oriented, and quietly compassionate. You notice what others miss and skillfully correct what others ignore. Your perfectionism is both your greatest professional gift and your most demanding personal challenge.'},
-  {name:'Libra (Tula)',from:[9,23],to:[10,22],planet:'Venus',element:'Air',quality:'Cardinal',
-    traits:'Diplomatic, aesthetically refined, fair-minded, and deeply relational. Balance and beauty are your natural languages. Decisions come hard because you genuinely see every side — learning to trust your instincts after weighing options is your key growth edge.'},
-  {name:'Scorpio (Vrischika)',from:[10,23],to:[11,21],planet:'Mars',element:'Water',quality:'Fixed',
-    traits:'Intense, transformative, magnetically powerful, and deeply private. You feel everything at a profound level of intensity. Power and absolute truth are your core obsessions — you have a rare ability to see through illusion and penetrate directly to what is real.'},
-  {name:'Sagittarius (Dhanu)',from:[11,22],to:[12,21],planet:'Jupiter',element:'Fire',quality:'Mutable',
-    traits:'Philosophical, adventurous, truth-seeking, and free-spirited. You live for the big picture and the open horizon. Wisdom, freedom, and expansion are your highest values — routine and constraint are your natural enemies.'},
-  {name:'Capricorn (Makara)',from:[12,22],to:[1,19],planet:'Saturn',element:'Earth',quality:'Cardinal',
-    traits:'Ambitious, disciplined, responsible, and architectured for the long game. You rise steadily and fall rarely. Success is virtually inevitable for those who carry your level of patient determination and strategic thinking.'},
-  {name:'Aquarius (Kumbha)',from:[1,20],to:[2,18],planet:'Saturn',element:'Air',quality:'Fixed',
-    traits:'Visionary, humanitarian, unconventional, and intellectually electric. You think in systems and see futures others cannot yet imagine. Your greatest challenge is learning to connect emotionally as naturally as you connect intellectually.'},
-  {name:'Pisces (Meena)',from:[2,19],to:[3,20],planet:'Jupiter',element:'Water',quality:'Mutable',
-    traits:'Spiritually attuned, deeply imaginative, compassionate, and profoundly feeling. You absorb the emotional energy of your environment like a sponge. Your extraordinary empathy is your greatest gift — clear boundaries are your greatest protection.'},
+  {name:'Aries (Mesha)',from:[3,21],to:[4,19],planet:'Mars',element:'Fire',quality:'Cardinal',traits:'Bold, energetic, pioneering, and fiercely independent. You lead with courage and act on instinct. A natural initiator who excels at starting new things. Guard against impatience and impulsive decisions.'},
+  {name:'Taurus (Vrishabha)',from:[4,20],to:[5,20],planet:'Venus',element:'Earth',quality:'Fixed',traits:'Steadfast, sensual, practical, and deeply devoted. You build slowly and solidly — your staying power is remarkable. A love of beauty, luxury, and the finer things in life drives much of your motivation. Guard against stubbornness and resistance to necessary change.'},
+  {name:'Gemini (Mithuna)',from:[5,21],to:[6,20],planet:'Mercury',element:'Air',quality:'Mutable',traits:'Quick-minded, versatile, communicative, and endlessly curious. You need variety and intellectual stimulation to thrive. A natural connector of people and ideas — though commitment can sometimes feel like a constraint on your freedom.'},
+  {name:'Cancer (Karka)',from:[6,21],to:[7,22],planet:'Moon',element:'Water',quality:'Cardinal',traits:'Deeply intuitive, emotionally rich, protective, and home-loving. Your feelings are your internal compass. Nurturing and protecting those you love is your natural superpower — though maintaining firm boundaries is your most important lifelong lesson.'},
+  {name:'Leo (Simha)',from:[7,23],to:[8,22],planet:'Sun',element:'Fire',quality:'Fixed',traits:'Radiant, generous, creative, and naturally commanding. You were born to lead and to be genuinely seen. At your best, you inspire and uplift everyone around you. Guard against the need for constant validation.'},
+  {name:'Virgo (Kanya)',from:[8,23],to:[9,22],planet:'Mercury',element:'Earth',quality:'Mutable',traits:'Analytical, precise, service-oriented, and quietly compassionate. You notice what others miss and skillfully correct what others ignore. Your perfectionism is both your greatest professional gift and your most demanding personal challenge.'},
+  {name:'Libra (Tula)',from:[9,23],to:[10,22],planet:'Venus',element:'Air',quality:'Cardinal',traits:'Diplomatic, aesthetically refined, fair-minded, and deeply relational. Balance and beauty are your natural languages. Decisions come hard because you genuinely see every side — learning to trust your instincts is your key growth edge.'},
+  {name:'Scorpio (Vrischika)',from:[10,23],to:[11,21],planet:'Mars',element:'Water',quality:'Fixed',traits:'Intense, transformative, magnetically powerful, and deeply private. You feel everything at a profound level of intensity. Power and absolute truth are your core obsessions — you have a rare ability to see through illusion and penetrate to what is real.'},
+  {name:'Sagittarius (Dhanu)',from:[11,22],to:[12,21],planet:'Jupiter',element:'Fire',quality:'Mutable',traits:'Philosophical, adventurous, truth-seeking, and free-spirited. You live for the big picture and the open horizon. Wisdom, freedom, and expansion are your highest values — routine and constraint are your natural enemies.'},
+  {name:'Capricorn (Makara)',from:[12,22],to:[1,19],planet:'Saturn',element:'Earth',quality:'Cardinal',traits:'Ambitious, disciplined, responsible, and built for the long game. You rise steadily and fall rarely. Success is virtually inevitable for those who carry your level of patient determination and strategic thinking.'},
+  {name:'Aquarius (Kumbha)',from:[1,20],to:[2,18],planet:'Saturn',element:'Air',quality:'Fixed',traits:'Visionary, humanitarian, unconventional, and intellectually electric. You think in systems and see futures others cannot yet imagine. Your greatest challenge is learning to connect emotionally as naturally as you connect intellectually.'},
+  {name:'Pisces (Meena)',from:[2,19],to:[3,20],planet:'Jupiter',element:'Water',quality:'Mutable',traits:'Spiritually attuned, deeply imaginative, compassionate, and profoundly feeling. You absorb the emotional energy of your environment like a sponge. Your extraordinary empathy is your greatest gift — clear boundaries are your greatest protection.'},
 ];
 
 const NAK_DATA = [
-  {name:'Ashwini',lord:'Ketu',deity:'Ashwini Kumaras',trait:'Swift, healing energy, pioneering spirit, natural healer'},
-  {name:'Bharani',lord:'Venus',deity:'Yama',trait:'Creative power, deep transformation, strong life force'},
-  {name:'Krittika',lord:'Sun',deity:'Agni',trait:'Fiery determination, cutting clarity, strong leadership'},
-  {name:'Rohini',lord:'Moon',deity:'Brahma',trait:'Creative abundance, sensual nature, material prosperity'},
-  {name:'Mrigashira',lord:'Mars',deity:'Soma',trait:'Searching mind, gentle nature, artistic sensibility'},
-  {name:'Ardra',lord:'Rahu',deity:'Rudra',trait:'Storm energy, intense transformation, powerful intellect'},
-  {name:'Punarvasu',lord:'Jupiter',deity:'Aditi',trait:'Renewal and return, optimistic nature, spiritual wisdom'},
-  {name:'Pushya',lord:'Saturn',deity:'Brihaspati',trait:'Nourishing energy, disciplined care, strong moral foundation'},
-  {name:'Ashlesha',lord:'Mercury',deity:'Nagas',trait:'Penetrating wisdom, serpent energy, intense magnetism'},
-  {name:'Magha',lord:'Ketu',deity:'Pitris',trait:'Royal bearing, ancestral power, natural authority'},
-  {name:'Purva Phalguni',lord:'Venus',deity:'Bhaga',trait:'Pleasure, creativity, generous heart, artistic nature'},
-  {name:'Uttara Phalguni',lord:'Sun',deity:'Aryaman',trait:'Partnership focus, service to others, solar strength'},
-  {name:'Hasta',lord:'Moon',deity:'Savitar',trait:'Skilled hands, healing ability, craftsmanship excellence'},
-  {name:'Chitra',lord:'Mars',deity:'Tvashta',trait:'Artistic brilliance, architect energy, striking presence'},
-  {name:'Swati',lord:'Rahu',deity:'Vayu',trait:'Independence, flexible nature, entrepreneurial spirit'},
-  {name:'Vishakha',lord:'Jupiter',deity:'Indra-Agni',trait:'Goal-oriented drive, purposeful ambition, triumph'},
-  {name:'Anuradha',lord:'Saturn',deity:'Mitra',trait:'Deep devotion, friendship, disciplined spiritual practice'},
-  {name:'Jyeshtha',lord:'Mercury',deity:'Indra',trait:'Elder wisdom, protective strength, hidden power'},
-  {name:'Mula',lord:'Ketu',deity:'Nirriti',trait:'Root-level transformation, investigation, dissolution of illusion'},
-  {name:'Purva Ashadha',lord:'Venus',deity:'Apas',trait:'Invincible nature, purifying energy, strong convictions'},
-  {name:'Uttara Ashadha',lord:'Sun',deity:'Vishvedevas',trait:'Universal principles, lasting victory, broad-minded wisdom'},
-  {name:'Shravana',lord:'Moon',deity:'Vishnu',trait:'Listening wisdom, learning ability, preserving knowledge'},
-  {name:'Dhanishtha',lord:'Mars',deity:'Eight Vasus',trait:'Wealth and prosperity energy, musical ability, abundance'},
-  {name:'Shatabhisha',lord:'Rahu',deity:'Varuna',trait:'Healing hundred stars, independent research, mystical knowledge'},
-  {name:'Purva Bhadrapada',lord:'Jupiter',deity:'Aja Ekapada',trait:'Spiritual fire, purifying intensity, visionary nature'},
-  {name:'Uttara Bhadrapada',lord:'Saturn',deity:'Ahir Budhyana',trait:'Deep wisdom, serpent of depth, ultimate spiritual achievement'},
-  {name:'Revati',lord:'Mercury',deity:'Pushan',trait:'Nourishing guide, completion energy, safe journeys, abundant grace'},
+  {name:'Ashwini',lord:'Ketu',deity:'Ashwini Kumaras',trait:'Swift healing energy, pioneering spirit, natural healer with quick decisive nature'},
+  {name:'Bharani',lord:'Venus',deity:'Yama',trait:'Creative power, deep transformation, strong life force and intense personal magnetism'},
+  {name:'Krittika',lord:'Sun',deity:'Agni',trait:'Fiery determination, cutting clarity, strong leadership and purifying nature'},
+  {name:'Rohini',lord:'Moon',deity:'Brahma',trait:'Creative abundance, sensual nature, material prosperity and artistic gifts'},
+  {name:'Mrigashira',lord:'Mars',deity:'Soma',trait:'Searching mind, gentle nature, artistic sensibility and eternal curiosity'},
+  {name:'Ardra',lord:'Rahu',deity:'Rudra',trait:'Storm energy, intense transformation, powerful intellect that seeks deep truths'},
+  {name:'Punarvasu',lord:'Jupiter',deity:'Aditi',trait:'Renewal and return, optimistic nature, spiritual wisdom and broad generosity'},
+  {name:'Pushya',lord:'Saturn',deity:'Brihaspati',trait:'Nourishing energy, disciplined care, strong moral foundation and desire to provide'},
+  {name:'Ashlesha',lord:'Mercury',deity:'Nagas',trait:'Penetrating wisdom, serpent energy, intense magnetism and psychological insight'},
+  {name:'Magha',lord:'Ketu',deity:'Pitris',trait:'Royal bearing, ancestral power, natural authority and connection to lineage'},
+  {name:'Purva Phalguni',lord:'Venus',deity:'Bhaga',trait:'Pleasure, creativity, generous heart and strong artistic and aesthetic nature'},
+  {name:'Uttara Phalguni',lord:'Sun',deity:'Aryaman',trait:'Partnership focus, service to others, solar strength and reliable character'},
+  {name:'Hasta',lord:'Moon',deity:'Savitar',trait:'Skilled hands, healing ability, craftsmanship excellence and clever dexterity'},
+  {name:'Chitra',lord:'Mars',deity:'Tvashta',trait:'Artistic brilliance, architect energy, striking presence and creative vision'},
+  {name:'Swati',lord:'Rahu',deity:'Vayu',trait:'Independence, flexible nature, entrepreneurial spirit and adaptable intelligence'},
+  {name:'Vishakha',lord:'Jupiter',deity:'Indra-Agni',trait:'Goal-oriented drive, purposeful ambition, triumph through persistent effort'},
+  {name:'Anuradha',lord:'Saturn',deity:'Mitra',trait:'Deep devotion, friendship, disciplined spiritual practice and loyalty'},
+  {name:'Jyeshtha',lord:'Mercury',deity:'Indra',trait:'Elder wisdom, protective strength, hidden power and leadership ability'},
+  {name:'Mula',lord:'Ketu',deity:'Nirriti',trait:'Root-level transformation, investigation, dissolution of illusion to find truth'},
+  {name:'Purva Ashadha',lord:'Venus',deity:'Apas',trait:'Invincible nature, purifying energy, strong convictions and philosophical mind'},
+  {name:'Uttara Ashadha',lord:'Sun',deity:'Vishvedevas',trait:'Universal principles, lasting victory, broad-minded wisdom and noble character'},
+  {name:'Shravana',lord:'Moon',deity:'Vishnu',trait:'Listening wisdom, learning ability, preserving and spreading knowledge widely'},
+  {name:'Dhanishtha',lord:'Mars',deity:'Eight Vasus',trait:'Wealth and prosperity energy, musical ability, abundance and generosity'},
+  {name:'Shatabhisha',lord:'Rahu',deity:'Varuna',trait:'Healing hundred stars, independent research, mystical knowledge and solitary nature'},
+  {name:'Purva Bhadrapada',lord:'Jupiter',deity:'Aja Ekapada',trait:'Spiritual fire, purifying intensity, visionary nature and unconventional thinking'},
+  {name:'Uttara Bhadrapada',lord:'Saturn',deity:'Ahir Budhyana',trait:'Deep wisdom, serpent of depth, ultimate spiritual achievement and endurance'},
+  {name:'Revati',lord:'Mercury',deity:'Pushan',trait:'Nourishing guide, completion energy, safe journeys and abundant nurturing grace'},
 ];
 
 function getRashi(dob) {
   const [y,m,d] = dob.split('-').map(Number);
   for (let r of RASHI_DATA) {
-    const [fm,fd] = r.from; const [tm,td] = r.to;
-    if (fm <= tm) { if ((m===fm&&d>=fd)||(m===tm&&d<=td)||(m>fm&&m<tm)) return r; }
-    else { if ((m===fm&&d>=fd)||(m===tm&&d<=td)||m>fm||m<tm) return r; }
+    const [fm,fd]=r.from; const [tm,td]=r.to;
+    if(fm<=tm){if((m===fm&&d>=fd)||(m===tm&&d<=td)||(m>fm&&m<tm))return r;}
+    else{if((m===fm&&d>=fd)||(m===tm&&d<=td)||m>fm||m<tm)return r;}
   }
   return RASHI_DATA[0];
 }
 
 function getNakshatra(dob) {
   const [y,m,d] = dob.split('-').map(Number);
-  const start = new Date(y,0,1); const curr = new Date(y,m-1,d);
-  const dayOfYear = Math.floor((curr-start)/(1000*60*60*24));
-  return NAK_DATA[Math.floor(dayOfYear*27/365)%27];
+  const start=new Date(y,0,1); const curr=new Date(y,m-1,d);
+  const doy=Math.floor((curr-start)/(1000*60*60*24));
+  return NAK_DATA[Math.floor(doy*27/365)%27];
 }
 
 function getLuckyFromLP(lp) {
-  const d = LP_DATA[lp] || LP_DATA[1];
-  const luckySingle = [lp, lp===9?1:lp+1].filter(n=>n<=9);
-  const luckyCompound = [lp*10+(lp>4?lp-4:lp+5), (lp+2)*3%99+10].map(n=>n>9&&n<100?n:lp*3+7);
-  const avoid = lp===8?[4]:lp===4?[8]:[8];
-  return { single:luckySingle, compound:luckyCompound.slice(0,3), avoid, color:d.color, day:d.day, gem:d.gem, mantra:d.mantra, planet:d.planet };
+  const d=LP_DATA[lp]||LP_DATA[1];
+  const ls=[lp,lp===9?1:lp+1].filter(n=>n<=9);
+  const lc=[lp*10+(lp>4?lp-4:lp+5),(lp+2)*3%99+10].map(n=>(n>9&&n<100)?n:lp*3+7);
+  return{single:ls,compound:lc.slice(0,3),avoid:lp===8?[4]:lp===4?[8]:[8],color:d.color,day:d.day,gem:d.gem,mantra:d.mantra,planet:d.planet};
 }
 
-// ═══════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════
-const S = {dealer:{name:'',code:'',type:''},timer:null,timerEnd:null,fd:null,nums:null,matched:null,aiNarrative:null};
-const gc  = () => { try { return JSON.parse(localStorage.getItem('mc_codes')||'[]'); } catch(e) { return []; } };
-const sc  = v => localStorage.setItem('mc_codes', JSON.stringify(v));
-const gai = () => { try { return JSON.parse(localStorage.getItem('mc_ai_codes')||'[]'); } catch(e) { return []; } };
-const sai = v => localStorage.setItem('mc_ai_codes', JSON.stringify(v));
-const gak = () => localStorage.getItem('mc_ak')||'';
-const sak = v => localStorage.setItem('mc_ak', v);
+// ═══════════════════════════════════════════
+// STATE & STORAGE
+// ═══════════════════════════════════════════
+const S={dealer:{name:'',code:'',type:''},timer:null,timerEnd:null,fd:null,nums:null,matched:null,aiNarrative:null};
+const gak=()=>localStorage.getItem('mc_ak')||'';
+const sak=v=>localStorage.setItem('mc_ak',v);
 
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// SHEETS API
+// ═══════════════════════════════════════════
+async function callSheets(params) {
+  const qs=Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(String(v))).join('&');
+  const res=await fetch(SHEETS_URL+'?'+qs,{redirect:'follow'});
+  if(!res.ok) throw new Error('Server error '+res.status);
+  return await res.json();
+}
+
+// ═══════════════════════════════════════════
 // UTILS
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),d);}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('show');s.style.display='none';});const s=document.getElementById('screen-'+id);if(s){s.style.display='flex';s.classList.add('show');}window.scrollTo(0,0);}
-function fmtDate(d){if(!d)return '';const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
-function mkCode(pre='MC'){const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const r=n=>Array(n).fill(0).map(()=>ch[Math.floor(Math.random()*ch.length)]).join('');return `${pre}-${r(4)}-${r(4)}`;}
+function fmtDate(d){if(!d)return'';const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+function mkCode(pre='MC'){const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const r=n=>Array(n).fill(0).map(()=>ch[Math.floor(Math.random()*ch.length)]).join('');return`${pre}-${r(4)}-${r(4)}`;}
+function setBtnLoading(id,loading,text=''){const b=document.getElementById(id);if(!b)return;b.disabled=loading;if(loading)b.innerHTML='<div class="spnsm"></div>';else if(text)b.textContent=text;}
 
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // ADMIN
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function goAdmin(){showScreen('admin-login');setTimeout(()=>document.getElementById('apass').focus(),100);}
 function doAdminLogin(){
   if(document.getElementById('apass').value===ADMIN_PASS){
@@ -558,95 +538,217 @@ function doAdminLogin(){
     renderAdmin();showScreen('admin');
   } else document.getElementById('apass-er').textContent='Incorrect password';
 }
-function saveAdminKey(){const k=document.getElementById('adm-apikey').value.trim();if(!k){toast('Enter API key');return;}sak(k);document.getElementById('key-status').textContent='✓ Saved';setTimeout(()=>document.getElementById('key-status').textContent='',2000);}
-function doGenCodes(){
-  const cnt=parseInt(document.getElementById('gc').value);const tp=document.getElementById('gt').value;
-  const codes=gc();const ex=new Set(codes.map(c=>c.code));let added=0;
-  while(added<cnt){const code=mkCode();if(!ex.has(code)){codes.push({code,type:tp,status:'unused',dealer:'',usedAt:null,expiresAt:null,created:Date.now()});ex.add(code);added++;}}
-  sc(codes);renderAdmin();toast(cnt+' '+tp+' codes generated ✓');
-}
-function doGenAI(cnt){
-  const codes=gai();const ex=new Set(codes.map(c=>c.code));let added=0;
-  while(added<cnt){const code=mkCode('AI');if(!ex.has(code)){codes.push({code,status:'unused',dealer:'',usedAt:null,created:Date.now()});ex.add(code);added++;}}
-  sai(codes);renderAdmin();toast(cnt+' AI credit codes generated ✓');
-}
-function upgradeCode(code){const codes=gc();const c=codes.find(x=>x.code===code);if(c){c.type='paid';if(c.status!=='revoked')c.status='unused';c.expiresAt=null;sc(codes);renderAdmin();toast('Upgraded to paid ✓');}}
-function revokeCode(code){if(!confirm('Revoke '+code+'?'))return;const codes=gc();const c=codes.find(x=>x.code===code);if(c){c.status='revoked';sc(codes);renderAdmin();toast('Revoked');}}
-function revokeAI(code){if(!confirm('Revoke '+code+'?'))return;const codes=gai();const c=codes.find(x=>x.code===code);if(c){c.status='revoked';sai(codes);renderAdmin();toast('AI code revoked');}}
-function doCopyUnused(){const txt=gc().filter(c=>c.status==='unused').map(c=>c.code).join('\n');if(!txt){toast('No unused codes');return;}navigator.clipboard.writeText(txt).then(()=>toast('Copied!'));}
-function doCopyUnusedAI(){const txt=gai().filter(c=>c.status==='unused').map(c=>c.code).join('\n');if(!txt){toast('No unused AI codes');return;}navigator.clipboard.writeText(txt).then(()=>toast('AI codes copied!'));}
-function doExport(){
-  const codes=gc();const rows=['Code,Type,Status,Dealer,Used At'].concat(codes.map(c=>`${c.code},${c.type},${c.status},${c.dealer||''},${c.usedAt?new Date(c.usedAt).toLocaleString('en-IN'):''}`));
-  const blob=new Blob([rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mc_codes.csv';a.click();
-}
-function renderAdmin(){
-  const codes=gc();const ai=gai();
-  const total=codes.length,unused=codes.filter(c=>c.status==='unused').length,used=codes.filter(c=>c.status==='used').length,paid=codes.filter(c=>c.type==='paid').length;
-  document.getElementById('adm-stats').innerHTML=`<div class="sc"><div class="sn">${total}</div><div class="sl">Total</div></div><div class="sc"><div class="sn">${unused}</div><div class="sl">Unused</div></div><div class="sc"><div class="sn">${used}</div><div class="sl">Used</div></div><div class="sc"><div class="sn">${ai.filter(c=>c.status==='unused').length}</div><div class="sl">AI Credits</div></div>`;
-  const sb=(s,t)=>s==='unused'?'su-b':s==='active'?'sac':s==='used'?'sus':s==='expired'?'sex':s==='revoked'?'srv':t==='paid'?'spd':'sus';
-  document.getElementById('ctbody').innerHTML=codes.slice().reverse().map(c=>{
-    const tp=c.type==='paid'?'<span class="sb spd">Paid</span>':'<span class="sb sus">Trial</span>';
-    const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
-    const acts=[c.type==='trial'&&c.status!=='revoked'?`<button class="btn bw bsm" onclick="upgradeCode('${c.code}')">↑ Paid</button>`:'',c.status!=='revoked'?`<button class="btn bv bsm" onclick="revokeCode('${c.code}')">Revoke</button>`:'',`<button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button>`].filter(Boolean);
-    return `<tr><td><span class="cm">${c.code}</span></td><td>${tp}</td><td><span class="sb ${sb(c.status,c.type)}">${c.status}</span></td><td style="font-size:12px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:12px;color:var(--muted)">${ud}</td><td><div style="display:flex;gap:4px;flex-wrap:wrap">${acts.join('')}</div></td></tr>`;
-  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">No codes. Generate above.</td></tr>';
-  document.getElementById('aitbody').innerHTML=ai.slice().reverse().map(c=>{
-    const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
-    return `<tr><td><span class="cm">${c.code}</span></td><td><span class="sb ${c.status==='unused'?'sai':c.status==='used'?'sus':'srv'}">${c.status}</span></td><td style="font-size:12px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:12px;color:var(--muted)">${ud}</td><td><button class="btn bv bsm" onclick="revokeAI('${c.code}')">Revoke</button> <button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button></td></tr>`;
-  }).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No AI codes. Generate above.</td></tr>';
+function saveAdminKey(){const k=document.getElementById('adm-apikey').value.trim();if(!k){toast('Enter API key');return;}sak(k);document.getElementById('key-status').textContent='Saved ✓';setTimeout(()=>document.getElementById('key-status').textContent='',2000);}
+
+async function renderAdmin(){
+  document.getElementById('ctbody').innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">Loading from Google Sheets...</td></tr>';
+  document.getElementById('aitbody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">Loading...</td></tr>';
+  document.getElementById('adm-stats').innerHTML='<div class="sc"><div class="sn">...</div><div class="sl">Loading</div></div>'.repeat(4);
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const codes=data.codes||[]; const ai=data.aiCodes||[];
+    const total=codes.length,unused=codes.filter(c=>c.status==='unused').length,used=codes.filter(c=>c.status==='used').length,paid=codes.filter(c=>c.type==='paid').length;
+    document.getElementById('adm-stats').innerHTML=`<div class="sc"><div class="sn">${total}</div><div class="sl">Total</div></div><div class="sc"><div class="sn">${unused}</div><div class="sl">Unused</div></div><div class="sc"><div class="sn">${used}</div><div class="sl">Used</div></div><div class="sc"><div class="sn">${ai.filter(c=>c.status==='unused').length}</div><div class="sl">AI Credits</div></div>`;
+    const sb=s=>s==='unused'?'su-b':s==='active'?'sac':s==='used'?'sus':s==='expired'?'sex':s==='revoked'?'srv':'sus';
+    document.getElementById('ctbody').innerHTML=codes.slice().reverse().map(c=>{
+      const tp=c.type==='paid'?'<span class="sb spd">Paid</span>':'<span class="sb sus">Trial</span>';
+      const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
+      const acts=[c.type==='trial'&&c.status!=='revoked'?`<button class="btn bw bsm" onclick="upgradeCode('${c.code}')">Upgrade</button>`:'',c.status!=='revoked'?`<button class="btn bv bsm" onclick="revokeCode('${c.code}')">Revoke</button>`:'',`<button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button>`].filter(Boolean);
+      return`<tr><td><span class="cm">${c.code}</span></td><td>${tp}</td><td><span class="sb ${sb(c.status)}">${c.status}</span></td><td style="font-size:12px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:12px;color:var(--muted)">${ud}</td><td><div style="display:flex;gap:4px;flex-wrap:wrap">${acts.join('')}</div></td></tr>`;
+    }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">No codes. Generate above.</td></tr>';
+    document.getElementById('aitbody').innerHTML=ai.slice().reverse().map(c=>{
+      const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
+      return`<tr><td><span class="cm">${c.code}</span></td><td><span class="sb ${c.status==='unused'?'sai':c.status==='used'?'sus':'srv'}">${c.status}</span></td><td style="font-size:12px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:12px;color:var(--muted)">${ud}</td><td><button class="btn bv bsm" onclick="revokeAI('${c.code}')">Revoke</button> <button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button></td></tr>`;
+    }).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No AI codes. Generate above.</td></tr>';
+  }catch(e){
+    toast('Failed to load: '+e.message,4000);
+    document.getElementById('ctbody').innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--red);padding:2rem">Error: ${e.message}</td></tr>`;
+  }
 }
 
-// ═══════════════════════════════════════════════════════
+async function doGenCodes(){
+  const cnt=parseInt(document.getElementById('gc').value);const tp=document.getElementById('gt').value;
+  toast('Generating '+cnt+' codes...');
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const existing=new Set((data.codes||[]).map(c=>c.code));
+    const newCodes=[];
+    while(newCodes.length<cnt){const code=mkCode();if(!existing.has(code)){newCodes.push({code,type:tp,status:'unused',dealer:'',usedAt:'',expiresAt:'',created:new Date().toISOString()});existing.add(code);}}
+    await callSheets({action:'addCodes',codes:JSON.stringify(newCodes),sheet:'codes'});
+    toast(cnt+' codes saved to Sheets ✓');
+    renderAdmin();
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doGenAI(cnt){
+  toast('Generating '+cnt+' AI credits...');
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const existing=new Set((data.aiCodes||[]).map(c=>c.code));
+    const newCodes=[];
+    while(newCodes.length<cnt){const code=mkCode('AI');if(!existing.has(code)){newCodes.push({code,status:'unused',dealer:'',usedAt:'',created:new Date().toISOString()});existing.add(code);}}
+    await callSheets({action:'addCodes',codes:JSON.stringify(newCodes),sheet:'ai_codes'});
+    toast(cnt+' AI credits saved ✓');
+    renderAdmin();
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function upgradeCode(code){
+  if(!confirm('Upgrade '+code+' to paid?'))return;
+  try{
+    await Promise.all([
+      callSheets({action:'updateCode',code,field:'type',value:'paid',sheet:'codes'}),
+      callSheets({action:'updateCode',code,field:'status',value:'unused',sheet:'codes'}),
+    ]);
+    toast('Upgraded to paid ✓');renderAdmin();
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function revokeCode(code){
+  if(!confirm('Revoke '+code+'?'))return;
+  try{
+    await callSheets({action:'updateCode',code,field:'status',value:'revoked',sheet:'codes'});
+    toast('Revoked');renderAdmin();
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function revokeAI(code){
+  if(!confirm('Revoke AI code '+code+'?'))return;
+  try{
+    await callSheets({action:'updateCode',code,field:'status',value:'revoked',sheet:'ai_codes'});
+    toast('AI code revoked');renderAdmin();
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doCopyUnused(){
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const txt=(data.codes||[]).filter(c=>c.status==='unused').map(c=>c.code).join('\n');
+    if(!txt){toast('No unused codes');return;}
+    navigator.clipboard.writeText(txt).then(()=>toast('Unused codes copied!'));
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doCopyUnusedAI(){
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const txt=(data.aiCodes||[]).filter(c=>c.status==='unused').map(c=>c.code).join('\n');
+    if(!txt){toast('No unused AI codes');return;}
+    navigator.clipboard.writeText(txt).then(()=>toast('AI credits copied!'));
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doExport(){
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const codes=data.codes||[];
+    const rows=['Code,Type,Status,Dealer,Used At'].concat(codes.map(c=>`${c.code},${c.type},${c.status},${c.dealer||''},${c.usedAt||''}`));
+    const blob=new Blob([rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mc_codes.csv';a.click();
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+// ═══════════════════════════════════════════
 // DEALER LOGIN
-// ═══════════════════════════════════════════════════════
-function doDealerLogin(){
-  const name=document.getElementById('dn').value.trim();const code=document.getElementById('dc').value.trim().toUpperCase();
+// ═══════════════════════════════════════════
+async function doDealerLogin(){
+  const name=document.getElementById('dn').value.trim();
+  const code=document.getElementById('dc').value.trim().toUpperCase();
   let ok=true;
   if(!name){document.getElementById('dn-er').textContent='Name required';ok=false;}else document.getElementById('dn-er').textContent='';
   if(!code){document.getElementById('dc-er').textContent='Access code required';ok=false;}else document.getElementById('dc-er').textContent='';
   if(!ok)return;
-  const codes=gc();const c=codes.find(x=>x.code===code);
-  if(!c){document.getElementById('dc-er').textContent='Invalid code';return;}
-  if(c.status==='revoked'){document.getElementById('dc-er').textContent='Code revoked. Contact Manne Communications';return;}
-  if(c.status==='used'){document.getElementById('dc-er').textContent='Code already used';return;}
-  if(c.status==='expired'){document.getElementById('dc-er').textContent='Code expired';return;}
-  if(c.type==='trial'&&c.status==='active'&&Date.now()>c.expiresAt){c.status='expired';sc(codes);document.getElementById('dc-er').textContent='Code expired';return;}
-  S.dealer={name,code,type:c.type};
-  if(c.type==='trial'){c.status='active';c.expiresAt=Date.now()+600000;c.dealer=name;c.usedAt=Date.now();sc(codes);startTimer(600);}
-  else{if(c.status==='unused'){c.status='active';c.dealer=name;c.usedAt=Date.now();sc(codes);}document.getElementById('tbar').style.display='none';}
-  document.getElementById('dealer-disp').textContent='Consultant: '+name+' · '+(c.type==='paid'?'Paid Access ∞':'Trial (10 min)');
-  showScreen('form');
+
+  const btn=document.querySelector('#screen-dealer-login .btn.bg');
+  btn.disabled=true;btn.innerHTML='<div class="spnsm" style="display:inline-block"></div> Verifying...';
+  document.getElementById('dc-er').textContent='';
+
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const codes=data.codes||[];
+    const c=codes.find(x=>String(x.code).toUpperCase()===code);
+
+    if(!c){document.getElementById('dc-er').textContent='Invalid code';return;}
+    if(c.status==='revoked'){document.getElementById('dc-er').textContent='Code revoked. Contact Manne Communications';return;}
+    if(c.status==='used'&&c.type==='trial'){document.getElementById('dc-er').textContent='Trial code already used';return;}
+    if(c.status==='expired'){document.getElementById('dc-er').textContent='Code expired';return;}
+
+    // Paid code already active from previous session — just let in
+    if(c.type==='paid'&&c.status==='active'){
+      S.dealer={name,code,type:'paid'};
+      document.getElementById('dealer-disp').textContent='Consultant: '+name+' · Paid Access';
+      document.getElementById('tbar').style.display='none';
+      showScreen('form');return;
+    }
+
+    // Trial code already active — check timer
+    if(c.type==='trial'&&c.status==='active'){
+      if(c.expiresAt&&new Date(c.expiresAt)<new Date()){
+        await callSheets({action:'updateCode',code,field:'status',value:'expired',sheet:'codes'});
+        document.getElementById('dc-er').textContent='Code expired';return;
+      }
+      const remaining=Math.max(0,Math.floor((new Date(c.expiresAt)-Date.now())/1000));
+      S.dealer={name,code,type:'trial'};
+      document.getElementById('dealer-disp').textContent='Consultant: '+name+' · Trial (resuming)';
+      startTimer(remaining);showScreen('form');return;
+    }
+
+    // Fresh activation
+    const now=new Date().toISOString();
+    const expiresAt=c.type==='trial'?new Date(Date.now()+600000).toISOString():'';
+    const updates=[
+      callSheets({action:'updateCode',code,field:'status',value:'active',sheet:'codes'}),
+      callSheets({action:'updateCode',code,field:'dealer',value:name,sheet:'codes'}),
+      callSheets({action:'updateCode',code,field:'usedAt',value:now,sheet:'codes'}),
+    ];
+    if(expiresAt) updates.push(callSheets({action:'updateCode',code,field:'expiresAt',value:expiresAt,sheet:'codes'}));
+    await Promise.all(updates);
+
+    S.dealer={name,code,type:c.type};
+    document.getElementById('dealer-disp').textContent='Consultant: '+name+' · '+(c.type==='paid'?'Paid Access':'Trial (10 min)');
+    if(c.type==='trial'){startTimer(600);}else{document.getElementById('tbar').style.display='none';}
+    showScreen('form');
+  }catch(e){
+    document.getElementById('dc-er').textContent='Connection error: '+e.message+'. Check internet and try again.';
+  }finally{
+    btn.disabled=false;btn.innerHTML='Access Consultation';
+  }
 }
+
 function startTimer(secs){
   const bar=document.getElementById('tbar');bar.style.display='flex';S.timerEnd=Date.now()+secs*1000;
-  function tick(){const rem=Math.max(0,Math.floor((S.timerEnd-Date.now())/1000));const m=Math.floor(rem/60).toString().padStart(2,'0');const s=(rem%60).toString().padStart(2,'0');document.getElementById('ttxt').textContent='⏱ Trial: '+m+':'+s;if(rem<=60)bar.classList.add('warn');else bar.classList.remove('warn');if(rem<=0){clearInterval(S.timer);S.timer=null;document.getElementById('ttxt').textContent='⏱ Trial expired';const codes=gc();const c=codes.find(x=>x.code===S.dealer.code);if(c&&c.status==='active'){c.status='expired';sc(codes);}if(document.getElementById('screen-form').classList.contains('show'))toast('Trial expired.',4000);}}
+  function tick(){const rem=Math.max(0,Math.floor((S.timerEnd-Date.now())/1000));const m=Math.floor(rem/60).toString().padStart(2,'0');const s=(rem%60).toString().padStart(2,'0');document.getElementById('ttxt').textContent='Trial: '+m+':'+s+' remaining';if(rem<=60)bar.classList.add('warn');else bar.classList.remove('warn');if(rem<=0){clearInterval(S.timer);S.timer=null;document.getElementById('ttxt').textContent='Trial expired';callSheets({action:'updateCode',code:S.dealer.code,field:'status',value:'expired',sheet:'codes'}).catch(()=>{});if(document.getElementById('screen-form').classList.contains('show'))toast('Trial expired. Contact Manne Communications.',4000);}}
   tick();S.timer=setInterval(tick,1000);
 }
 
-// ═══════════════════════════════════════════════════════
-// FORM VALIDATE
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// FORM
+// ═══════════════════════════════════════════
 function validateForm(){
   const fs=[{id:'fn',er:'fn-er',l:'Full name'},{id:'fg',er:'fg-er',l:'Gender'},{id:'fdob',er:'fdob-er',l:'Date of birth'},{id:'ftob',er:'ftob-er',l:'Time of birth'},{id:'fct',er:'fct-er',l:'City'},{id:'fst',er:'fst-er',l:'State/Country'},{id:'fmob',er:'fmob-er',l:'Mobile'},{id:'fbud',er:'fbud-er',l:'Budget'}];
   let ok=true;
   fs.forEach(f=>{const v=document.getElementById(f.id).value.trim();const er=document.getElementById(f.er);if(!v){er.textContent=f.l+' is required';ok=false;}else er.textContent='';});
-  const mob=document.getElementById('fmob').value.replace(/\s/g,'');
+  const mob=document.getElementById('fmob').value.replace(/[ \t\r\n]/g,'');
   if(mob&&!/^\+?\d{10,13}$/.test(mob)){document.getElementById('fmob-er').textContent='Enter valid mobile';ok=false;}
   return ok;
 }
 
-// ═══════════════════════════════════════════════════════
-// GENERATE OFFLINE REPORT
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// GENERATE REPORT (offline - instant)
+// ═══════════════════════════════════════════
 function doGenReport(){
-  if(S.dealer.type==='trial'){const codes=gc();const c=codes.find(x=>x.code===S.dealer.code);if(!c||c.status==='expired'||(c.expiresAt&&Date.now()>c.expiresAt)){toast('Trial expired.',4000);return;}}
+  if(S.dealer.type==='trial'){
+    if(S.timerEnd&&Date.now()>S.timerEnd){toast('Trial expired.',4000);return;}
+  }
   if(!validateForm())return;
   const d={name:document.getElementById('fn').value.trim(),gender:document.getElementById('fg').value,dob:document.getElementById('fdob').value,tob:document.getElementById('ftob').value+' '+document.getElementById('fampm').value,city:document.getElementById('fct').value.trim(),state:document.getElementById('fst').value.trim(),mobile:document.getElementById('fmob').value.trim(),budget:document.getElementById('fbud').value,purpose:document.getElementById('fpur').value.trim()};
   S.fd=d;S.matched=null;S.aiNarrative=null;
-  const lp=calcLP(d.dob);const expr=calcExpr(d.name);const su=calcSU(d.name);const pn=calcPN(d.name);const mat=calcMat(lp,expr);const bal=calcBal(d.name);const py=calcPY(d.dob,2025);const grid=getNameGrid(d.name);const rashi=getRashi(d.dob);const nak=getNakshatra(d.dob);const lucky=getLuckyFromLP(lp);
+  const lp=calcLP(d.dob),expr=calcExpr(d.name),su=calcSU(d.name),pn=calcPN(d.name),mat=calcMat(lp,expr),bal=calcBal(d.name),py=calcPY(d.dob,2025);
+  const grid=getNameGrid(d.name),rashi=getRashi(d.dob),nak=getNakshatra(d.dob),lucky=getLuckyFromLP(lp);
   S.nums={lp,expr,su,pn,mat,bal,py,lucky};
-  // Mark trial as used
-  if(S.dealer.type==='trial'){const codes=gc();const c=codes.find(x=>x.code===S.dealer.code);if(c&&c.status==='active'){c.status='used';sc(codes);}}
+  // Mark trial as used in Sheets after report generated
+  if(S.dealer.type==='trial'){
+    callSheets({action:'updateCode',code:S.dealer.code,field:'status',value:'used',sheet:'codes'}).catch(()=>{});
+  }
   renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky);
   showScreen('report');
   if(S.dealer.type==='trial')document.getElementById('tbar').style.display='flex';
@@ -654,61 +756,37 @@ function doGenReport(){
 
 function renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky){
   document.getElementById('rn').textContent=d.name;
-  document.getElementById('rm').innerHTML=d.gender+' &nbsp;·&nbsp; '+fmtDate(d.dob)+' at '+d.tob+' &nbsp;·&nbsp; '+d.city+', '+d.state+'<br>Mobile: '+d.mobile+' &nbsp;·&nbsp; Budget: '+d.budget+' &nbsp;·&nbsp; Consultant: '+S.dealer.name;
-  // CORE NUMBERS
+  document.getElementById('rm').innerHTML=d.gender+' &nbsp;·&nbsp; '+fmtDate(d.dob)+' at '+d.tob+' &nbsp;·&nbsp; '+d.city+', '+d.state+'<br>Mobile: '+d.mobile+' &nbsp;·&nbsp; Consultant: '+S.dealer.name;
   const lpd=LP_DATA[lp]||LP_DATA[1];
-  document.getElementById('r-core').innerHTML=`<div class="rsec"><h3>✦ Core Numbers — Chaldean System</h3><div class="nums-grid">
-    <div class="nc"><div class="nn">${lp}</div><div class="nt">Life Path</div><div class="ns">${lpd.title}</div></div>
-    <div class="nc"><div class="nn">${expr}</div><div class="nt">Expression</div><div class="ns">Destiny</div></div>
-    <div class="nc"><div class="nn">${su}</div><div class="nt">Soul Urge</div><div class="ns">Inner desire</div></div>
-    <div class="nc"><div class="nn">${pn}</div><div class="nt">Personality</div><div class="ns">How others see you</div></div>
-    <div class="nc"><div class="nn">${mat}</div><div class="nt">Maturity</div><div class="ns">Future self</div></div>
-    <div class="nc"><div class="nn">${bal}</div><div class="nt">Balance</div><div class="ns">In crisis</div></div>
-    <div class="nc"><div class="nn">${py}</div><div class="nt">Personal Year</div><div class="ns">2025 theme</div></div>
-  </div></div>`;
-  // NAME GRID
-  let ng=`<div class="rsec"><h3>✦ Chaldean Name Analysis</h3>`;
-  ng+=`<div class="ngrid">${grid.map(g=>g.space?'<div class="nletter space"></div>':`<div class="nletter${g.vowel?' vowel':''}"><div class="lc">${g.c}</div><div class="lv">${g.v||'—'}</div></div>`).join('')}</div>`;
-  ng+=`<div style="font-size:12px;color:var(--muted);margin-top:.5rem"><span style="color:var(--gold-d)">■</span> Gold border = vowel (soul energy) &nbsp;|&nbsp; Number below each letter = Chaldean value</div>`;
-  // word breakdown
-  const words=d.name.split(' ');const wordSums=words.map(w=>({w,s:w.toUpperCase().split('').reduce((a,b)=>a+chv(b),0)}));
+  document.getElementById('r-core').innerHTML=`<div class="rsec"><h3>✦ Core Numbers — Chaldean System</h3><div class="nums-grid"><div class="nc"><div class="nn">${lp}</div><div class="nt">Life Path</div><div class="ns">${lpd.title}</div></div><div class="nc"><div class="nn">${expr}</div><div class="nt">Expression</div><div class="ns">Destiny</div></div><div class="nc"><div class="nn">${su}</div><div class="nt">Soul Urge</div><div class="ns">Inner desire</div></div><div class="nc"><div class="nn">${pn}</div><div class="nt">Personality</div><div class="ns">How seen</div></div><div class="nc"><div class="nn">${mat}</div><div class="nt">Maturity</div><div class="ns">Future self</div></div><div class="nc"><div class="nn">${bal}</div><div class="nt">Balance</div><div class="ns">In crisis</div></div><div class="nc"><div class="nn">${py}</div><div class="nt">Personal Year</div><div class="ns">2025 theme</div></div></div></div>`;
+  let ng=`<div class="rsec"><h3>✦ Chaldean Name Analysis</h3><div class="ngrid">${grid.map(g=>g.space?'<div class="nletter space"></div>':`<div class="nletter${g.vowel?' vowel':''}"><div class="lc">${g.c}</div><div class="lv">${g.v||'—'}</div></div>`).join('')}</div><div style="font-size:12px;color:var(--muted);margin-top:.5rem">Gold border = vowel (soul energy)</div>`;
+  const words=d.name.split(' ');const ws=words.map(w=>({w,s:w.toUpperCase().split('').reduce((a,b)=>a+chv(b),0)}));
   ng+=`<div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.75rem">`;
-  wordSums.forEach(({w,s})=>ng+=`<div style="font-size:13px;color:var(--muted)">${w}: <strong style="color:var(--text)">${s} → ${red(s)}</strong></div>`);
-  ng+=`<div style="font-size:13px;color:var(--muted)">Grand total: <strong style="color:var(--gold)">${expr} (Expression number)</strong></div></div></div>`;
+  ws.forEach(({w,s})=>ng+=`<div style="font-size:13px;color:var(--muted)">${w}: <strong style="color:var(--text)">${s} → ${red(s)}</strong></div>`);
+  ng+=`<div style="font-size:13px;color:var(--muted)">Grand total: <strong style="color:var(--gold)">${expr}</strong></div></div></div>`;
   document.getElementById('r-namegrid').innerHTML=ng;
-  // LIFE PATH
-  const ld=LP_DATA[lp]||LP_DATA[1];
-  document.getElementById('r-lp').innerHTML=`<div class="rsec"><h3>✦ Life Path ${lp} — ${ld.title}</h3><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${ld.planet}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${ld.element}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${ld.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${ld.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${ld.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${ld.mantra}</div></div></div><div class="interp">${ld.interp}</div></div>`;
-  // SOUL URGE
-  const sd=SU_DATA[su]||SU_DATA[1];
-  document.getElementById('r-su').innerHTML=`<div class="rsec"><h3>✦ Soul Urge ${su} — Inner Motivation</h3><div class="rcontent">${sd}</div></div>`;
-  // DESTINY
-  const dd=LP_DATA[expr]||LP_DATA[1];
-  document.getElementById('r-destiny').innerHTML=`<div class="rsec"><h3>✦ Expression ${expr} — Life Destiny</h3><div class="rcontent"><p style="margin-bottom:.5rem;color:var(--muted);font-size:13px">How the world sees you: <em>${(PN_DATA[pn]||PN_DATA[1])}</em></p><p>Your expression number ${expr} (${dd.title}) defines your life purpose and the gifts you are here to develop and share. You are meant to embody the qualities of ${dd.planet} in your life's work — ${dd.element} energy expressed as your unique contribution to the world.</p></div></div>`;
-  // RASHI
-  document.getElementById('r-rashi').innerHTML=`<div class="rsec"><h3>✦ Sun Sign (Rashi) — ${rashi.name}</h3><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${rashi.planet}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${rashi.element}</div></div><div class="pitem"><div class="pk">Quality</div><div class="pv">${rashi.quality}</div></div></div><div class="interp">${rashi.traits}</div><div style="font-size:11px;color:var(--muted);margin-top:.5rem">Based on solar date. For precise Moon sign (Janma Rashi), a full Vedic chart with birth time is required.</div></div>`;
-  // NAKSHATRA
-  document.getElementById('r-nak').innerHTML=`<div class="rsec"><h3>✦ Approximate Birth Star — ${nak.name}</h3><div class="profile-row"><div class="pitem"><div class="pk">Star lord</div><div class="pv">${nak.lord}</div></div><div class="pitem"><div class="pk">Deity</div><div class="pv">${nak.deity}</div></div></div><div class="interp">${nak.trait}</div><div style="font-size:11px;color:var(--muted);margin-top:.5rem">Approximate solar nakshatra. For exact Moon nakshatra, a full ephemeris chart is required.</div></div>`;
-  // PERSONAL YEAR
-  const pyd=PY_DATA[py]||PY_DATA[1];
-  document.getElementById('r-py').innerHTML=`<div class="rsec"><h3>✦ Personal Year ${py} — 2025 Theme</h3><div class="rcontent">${pyd}</div></div>`;
-  // LUCKY NUMBERS
-  document.getElementById('r-lucky').innerHTML=`<div class="rsec"><h3>✦ Lucky Numbers & Remedies</h3><div style="display:flex;flex-wrap:wrap;gap:8px;margin:.5rem 0">${lucky.single.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Lucky</div></div>`).join('')}${lucky.compound.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Compound</div></div>`).join('')}</div><div class="profile-row" style="margin-top:.75rem"><div class="pitem"><div class="pk">Avoid digits</div><div class="pv" style="color:var(--red)">${lucky.avoid.join(', ')}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lucky.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lucky.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lucky.gem}</div></div><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${lucky.planet}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lucky.mantra}</div></div></div></div>`;
-  // Reset sections
+  document.getElementById('r-lp').innerHTML=`<div class="rsec"><h3>✦ Life Path ${lp} — ${lpd.title}</h3><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${lpd.planet}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${lpd.element}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lpd.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lpd.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lpd.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lpd.mantra}</div></div></div><div class="interp">${lpd.interp}</div></div>`;
+  document.getElementById('r-su').innerHTML=`<div class="rsec"><h3>✦ Soul Urge ${su} — Inner Motivation</h3><div class="rcontent">${SU_DATA[su]||SU_DATA[1]}</div></div>`;
+  const ddlp=LP_DATA[expr]||LP_DATA[1];
+  document.getElementById('r-destiny').innerHTML=`<div class="rsec"><h3>✦ Expression ${expr} — Life Destiny</h3><div class="rcontent"><p style="margin-bottom:.5rem;color:var(--muted);font-size:13px">How others see you: <em>${PN_DATA[pn]||PN_DATA[1]}</em></p><p>Your expression number ${expr} (${ddlp.title}) defines your life purpose. You are meant to embody the qualities of ${ddlp.planet} — ${ddlp.element} energy expressed as your unique contribution to the world.</p></div></div>`;
+  document.getElementById('r-rashi').innerHTML=`<div class="rsec"><h3>✦ Sun Sign (Rashi) — ${rashi.name}</h3><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${rashi.planet}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${rashi.element}</div></div><div class="pitem"><div class="pk">Quality</div><div class="pv">${rashi.quality}</div></div></div><div class="interp">${rashi.traits}</div></div>`;
+  document.getElementById('r-nak').innerHTML=`<div class="rsec"><h3>✦ Birth Star (Approximate) — ${nak.name}</h3><div class="profile-row"><div class="pitem"><div class="pk">Star lord</div><div class="pv">${nak.lord}</div></div><div class="pitem"><div class="pk">Deity</div><div class="pv">${nak.deity}</div></div></div><div class="interp">${nak.trait}</div></div>`;
+  document.getElementById('r-py').innerHTML=`<div class="rsec"><h3>✦ Personal Year ${py} — 2025 Theme</h3><div class="rcontent">${PY_DATA[py]||PY_DATA[1]}</div></div>`;
+  document.getElementById('r-lucky').innerHTML=`<div class="rsec"><h3>✦ Lucky Numbers & Remedies</h3><div style="display:flex;flex-wrap:wrap;gap:8px;margin:.5rem 0">${lucky.single.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Lucky</div></div>`).join('')}${lucky.compound.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Compound</div></div>`).join('')}</div><div class="profile-row" style="margin-top:.75rem"><div class="pitem"><div class="pk">Avoid digits</div><div class="pv" style="color:var(--red)">${lucky.avoid.join(', ')}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lucky.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lucky.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lucky.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lucky.mantra}</div></div></div></div>`;
   document.getElementById('mcard').style.display='block';document.getElementById('mresults').style.display='none';document.getElementById('minput').value='';
   document.getElementById('ai-narrative-output').style.display='none';document.getElementById('ai-code-input').value='';document.getElementById('ai-code-er').textContent='';document.getElementById('ai-loading').style.display='none';document.getElementById('ai-state-request').style.display='flex';
 }
 
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // NUMBER MATCHING
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function doMatch(){
   const raw=document.getElementById('minput').value;
-  const nums=raw.split(/[\n,]+/).map(n=>n.replace(/\D/g,'').trim()).filter(n=>n.length>=8);
+  const nums=raw.split(/\n|,/).map(n=>n.replace(/[^0-9]/g,'').trim()).filter(n=>n.length>=8);
   if(!nums.length){toast('Enter at least one number');return;}
-  const lucky=S.nums.lucky;const lp=S.nums.lp;const expr=S.nums.expr;
+  const lucky=S.nums.lucky,lp=S.nums.lp,expr=S.nums.expr;
   const scored=nums.map(num=>{
-    const digits=num.split('').map(Number);const last=digits[digits.length-1];const last2=parseInt(num.slice(-2));const ns=numSum(num);
+    const digits=num.split('').map(Number),last=digits[digits.length-1],last2=parseInt(num.slice(-2)),ns=numSum(num);
     let score=0;const reasons=[];
     if(ns===lp){score+=5;reasons.push('total = life path');}else if(ns===expr){score+=4;reasons.push('total = destiny');}
     if(lucky.single.includes(ns)){score+=3;reasons.push('total is lucky');}
@@ -720,119 +798,132 @@ function doMatch(){
     return{num,score,pri,reason:reasons.join(' · ')||'neutral match',ns};
   }).sort((a,b)=>b.score-a.score);
   S.matched=scored;
-  const html=`<div class="rsec"><div style="font-size:14px;font-weight:600;color:var(--gold);margin-bottom:1rem">🎯 Number Match Results</div>${scored.map(item=>{const tc=item.pri==='best'?'tbest':item.pri==='avoid'?'tavoid':item.pri==='good'?'tgood':'tneut';const tl=item.pri==='best'?'Best match':item.pri==='avoid'?'Avoid':item.pri==='good'?'Good':'Neutral';return `<div class="mi"><span class="mnum">${item.num}</span><span class="mreason">Sum: ${item.ns} · ${item.reason}</span><span class="tag ${tc}">${tl}</span></div>`;}).join('')}</div>`;
+  const html=`<div class="rsec"><div style="font-size:14px;font-weight:600;color:var(--gold);margin-bottom:1rem">Number Match Results</div>${scored.map(item=>{const tc=item.pri==='best'?'tbest':item.pri==='avoid'?'tavoid':item.pri==='good'?'tgood':'tneut';const tl=item.pri==='best'?'Best match':item.pri==='avoid'?'Avoid':item.pri==='good'?'Good':'Neutral';return`<div class="mi"><span class="mnum">${item.num}</span><span class="mreason">Sum: ${item.ns} · ${item.reason}</span><span class="tag ${tc}">${tl}</span></div>`;}).join('')}</div>`;
   document.getElementById('mresults').innerHTML=html;document.getElementById('mresults').style.display='block';document.getElementById('mcard').style.display='none';document.getElementById('mresults').scrollIntoView({behavior:'smooth'});
 }
 
-// ═══════════════════════════════════════════════════════
-// AI NARRATIVE
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+// AI NARRATIVE (validates code against Sheets)
+// ═══════════════════════════════════════════
 async function doAINarrative(){
   const aiCode=document.getElementById('ai-code-input').value.trim().toUpperCase();
   if(!aiCode){document.getElementById('ai-code-er').textContent='Enter AI credit code';return;}
-  const codes=gai();const c=codes.find(x=>x.code===aiCode);
-  if(!c){document.getElementById('ai-code-er').textContent='Invalid AI credit code';return;}
-  if(c.status==='used'){document.getElementById('ai-code-er').textContent='This AI credit has already been used';return;}
-  if(c.status==='revoked'){document.getElementById('ai-code-er').textContent='This AI credit has been revoked';return;}
   const apiKey=gak();
-  if(!apiKey){document.getElementById('ai-code-er').textContent='API key not configured. Ask Manne Communications admin.';return;}
-  document.getElementById('ai-state-request').style.display='none';document.getElementById('ai-loading').style.display='flex';document.getElementById('ai-code-er').textContent='';
-  const d=S.fd;const n=S.nums;const lp=n.lp;const lpd=LP_DATA[lp]||LP_DATA[1];const rashi=getRashi(d.dob);
-  const prompt=`You are a warm, insightful Vedic astrologer and Chaldean numerologist. Write a beautiful, flowing, personalized 600-word narrative consultation for this specific person. Do NOT list numbers or use headers — write it as flowing prose, as if speaking directly to them in a consultation.
+  if(!apiKey){document.getElementById('ai-code-er').textContent='API key not configured. Ask admin.';return;}
+
+  document.getElementById('ai-state-request').style.display='none';
+  document.getElementById('ai-loading').style.display='flex';
+  document.getElementById('ai-code-er').textContent='';
+
+  try{
+    // Validate AI code against Sheets
+    const data=await callSheets({action:'getCodes'});
+    const aiCodes=data.aiCodes||[];
+    const c=aiCodes.find(x=>String(x.code).toUpperCase()===aiCode);
+    if(!c){throw new Error('Invalid AI credit code');}
+    if(c.status==='used'){throw new Error('This AI credit has already been used');}
+    if(c.status==='revoked'){throw new Error('This AI credit has been revoked');}
+
+    const d=S.fd,n=S.nums,lpd=LP_DATA[n.lp]||LP_DATA[1],rashi=getRashi(d.dob);
+    const prompt=`You are a warm, insightful Vedic astrologer and Chaldean numerologist. Write a beautiful, flowing, personalized 600-word narrative consultation for this specific person. Do NOT use headers or lists — write as flowing prose, speaking directly to them.
 
 CLIENT: ${d.name} | ${d.gender} | Born ${fmtDate(d.dob)} at ${d.tob} | ${d.city}, ${d.state}
-Life Path: ${lp} (${lpd.title}) | Expression: ${n.expr} | Soul Urge: ${n.su} | Personal Year 2025: ${n.py}
+Life Path: ${n.lp} (${lpd.title}) | Expression: ${n.expr} | Soul Urge: ${n.su} | Personal Year 2025: ${n.py}
 Sun Sign: ${rashi.name} | Ruling Planet: ${lpd.planet}
-Purpose: ${d.purpose||'General life consultation'}
+Purpose: ${d.purpose||'General consultation'}
 
-Write the narrative in second person (you/your), weaving together their Life Path ${lp} energy, their ${rashi.name} Sun sign nature, their current Personal Year ${n.py} themes, and their Soul Urge ${n.su} inner motivation. Make it deeply personal, insightful, and encouraging. End with a specific message about their 2025-2026 outlook. About 600 words.`;
-  try{
+Write in second person (you/your). Weave together their Life Path ${n.lp} energy, ${rashi.name} Sun sign nature, Personal Year ${n.py} themes, and Soul Urge ${n.su} inner motivation. Make it deeply personal and encouraging. End with their 2025-2026 outlook. About 600 words.`;
+
     const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-ipc':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
-    const data=await res.json();
-    if(data.error)throw new Error(data.error.message);
-    const narrative=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-    // Mark AI code as used
-    c.status='used';c.dealer=S.dealer.name;c.usedAt=Date.now();sai(codes);
+    const resp=await res.json();
+    if(resp.error)throw new Error(resp.error.message);
+    const narrative=resp.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+
+    // Mark AI code as used in Sheets
+    await callSheets({action:'updateCode',code:aiCode,field:'status',value:'used',sheet:'ai_codes'});
+    await callSheets({action:'updateCode',code:aiCode,field:'dealer',value:S.dealer.name,sheet:'ai_codes'});
+    await callSheets({action:'updateCode',code:aiCode,field:'usedAt',value:new Date().toISOString(),sheet:'ai_codes'});
+
     S.aiNarrative=narrative;
     document.getElementById('ai-loading').style.display='none';
     document.getElementById('ai-narrative-text').textContent=narrative;
     document.getElementById('ai-narrative-output').style.display='block';
     toast('AI narrative generated ✓');
   }catch(e){
-    document.getElementById('ai-loading').style.display='none';document.getElementById('ai-state-request').style.display='flex';
+    document.getElementById('ai-loading').style.display='none';
+    document.getElementById('ai-state-request').style.display='flex';
     document.getElementById('ai-code-er').textContent='Error: '+e.message;
   }
 }
 
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // PDF
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
+async function loadHtml2pdf(){if(window.html2pdf)return;return new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+
 function buildPDF(){
-  const d=S.fd;const n=S.nums;const lp=n.lp;const lpd=LP_DATA[lp]||LP_DATA[1];const rashi=getRashi(d.dob);const nak=getNakshatra(d.dob);
-  document.getElementById('pdfdate').textContent='Report generated: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+  const d=S.fd,n=S.nums,lp=n.lp,lpd=LP_DATA[lp]||LP_DATA[1],rashi=getRashi(d.dob),nak=getNakshatra(d.dob);
+  document.getElementById('pdfdate').textContent='Report: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
   let h=`<div class="pcb"><div class="pcn">${d.name}</div><div class="pcs">${d.gender} | DOB: ${fmtDate(d.dob)} | Time: ${d.tob}<br>Place: ${d.city}, ${d.state} | Mobile: ${d.mobile}<br>Consultant: ${S.dealer.name} | ${new Date().toLocaleDateString('en-IN')}</div></div>`;
   h+=`<div class="psec"><h3>Core Numbers</h3><div style="display:flex;flex-wrap:wrap;gap:5px;font-family:sans-serif">`;
   [{l:'Life Path',v:lp},{l:'Expression',v:n.expr},{l:'Soul Urge',v:n.su},{l:'Personality',v:n.pn},{l:'Maturity',v:n.mat},{l:'Personal Year 2025',v:n.py}].forEach(({l,v})=>h+=`<div class="pn"><div class="pnn">${v}</div><div class="pnl">${l}</div></div>`);
   h+=`</div></div>`;
-  h+=`<div class="psec"><h3>Chaldean Name Grid</h3><div class="pngrid">${getNameGrid(d.name).map(g=>g.space?'':g.v?`<div class="pnl2"><div class="lc">${g.c}</div><div class="lv">${g.v}</div></div>`:'').join('')}</div></div>`;
-  h+=`<div class="psec"><h3>Life Path ${lp} — ${lpd.title}</h3><p><strong>Planet:</strong> ${lpd.planet} | <strong>Element:</strong> ${lpd.element} | <strong>Gem:</strong> ${lpd.gem} | <strong>Day:</strong> ${lpd.day}</p><p>${lpd.interp}</p></div>`;
+  h+=`<div class="psec"><h3>Chaldean Name Grid</h3><div class="pngrid">${getNameGrid(d.name).filter(g=>!g.space&&g.v).map(g=>`<div class="pnl2"><div class="lc">${g.c}</div><div class="lv">${g.v}</div></div>`).join('')}</div></div>`;
+  h+=`<div class="psec"><h3>Life Path ${lp} — ${lpd.title}</h3><p><strong>Planet:</strong> ${lpd.planet} | <strong>Element:</strong> ${lpd.element} | <strong>Gem:</strong> ${lpd.gem} | <strong>Day:</strong> ${lpd.day} | <strong>Mantra:</strong> ${lpd.mantra}</p><p>${lpd.interp}</p></div>`;
   h+=`<div class="psec"><h3>Soul Urge ${n.su}</h3><p>${SU_DATA[n.su]||SU_DATA[1]}</p></div>`;
   h+=`<div class="psec"><h3>Sun Sign — ${rashi.name}</h3><p><strong>Planet:</strong> ${rashi.planet} | <strong>Element:</strong> ${rashi.element}</p><p>${rashi.traits}</p></div>`;
   h+=`<div class="psec"><h3>Birth Star — ${nak.name}</h3><p><strong>Lord:</strong> ${nak.lord} | <strong>Deity:</strong> ${nak.deity}</p><p>${nak.trait}</p></div>`;
   h+=`<div class="psec"><h3>Personal Year ${n.py} — 2025</h3><p>${PY_DATA[n.py]||PY_DATA[1]}</p></div>`;
-  h+=`<div class="psec"><h3>Lucky Numbers & Remedies</h3><div class="pnums">${n.lucky.single.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Lucky</div></div>`).join('')}${n.lucky.compound.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Compound</div></div>`).join('')}</div><p style="font-family:sans-serif;font-size:9pt">Avoid digits: ${n.lucky.avoid.join(', ')} | Color: ${n.lucky.color} | Day: ${n.lucky.day} | Gem: ${n.lucky.gem}</p><p style="font-family:sans-serif;font-size:9pt">Mantra: ${n.lucky.mantra}</p></div>`;
-  if(S.matched&&S.matched.length){h+=`<div class="psec"><h3>VIP Number Match Results</h3>`;S.matched.forEach(item=>{const cl=item.pri==='best'?'ptbest':item.pri==='avoid'?'ptavoid':item.pri==='good'?'ptgood':'';const lb=item.pri==='best'?'Best':item.pri==='avoid'?'Avoid':item.pri==='good'?'Good':'Neutral';h+=`<div class="pmr"><span style="font-family:monospace;min-width:115px">${item.num}</span><span class="ptag ${cl}">${lb}</span><span style="color:#666;font-family:sans-serif"> ${item.reason}</span></div>`;});h+=`</div>`;}
+  h+=`<div class="psec"><h3>Lucky Numbers & Remedies</h3><div class="pnums">${n.lucky.single.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Lucky</div></div>`).join('')}${n.lucky.compound.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Compound</div></div>`).join('')}</div><p style="font-family:sans-serif;font-size:9pt">Avoid: ${n.lucky.avoid.join(', ')} | Color: ${n.lucky.color} | Day: ${n.lucky.day} | Gem: ${n.lucky.gem}</p></div>`;
+  if(S.matched&&S.matched.length){h+=`<div class="psec"><h3>VIP Number Match</h3>`;S.matched.forEach(item=>{const cl=item.pri==='best'?'ptbest':item.pri==='avoid'?'ptavoid':item.pri==='good'?'ptgood':'';const lb=item.pri==='best'?'Best':item.pri==='avoid'?'Avoid':item.pri==='good'?'Good':'Neutral';h+=`<div class="pmr"><span style="font-family:monospace;min-width:115px">${item.num}</span><span class="ptag ${cl}">${lb}</span><span style="color:#666;font-family:sans-serif"> ${item.reason}</span></div>`;});h+=`</div>`;}
   if(S.aiNarrative){h+=`<div class="psec"><h3>AI Personalized Narrative</h3><p style="font-style:italic;line-height:1.7">${S.aiNarrative.replace(/\n/g,'</p><p style=\"font-style:italic;line-height:1.7\">')}</p></div>`;}
   document.getElementById('pdfbody').innerHTML=h;
 }
-async function loadHtml2pdf(){
-  if(window.html2pdf) return;
-  return new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});
-}
+
 async function doPDF(){
-  try{ await loadHtml2pdf(); }catch(e){ toast('PDF library failed to load. Try on desktop browser.',4000); return; }
+  try{await loadHtml2pdf();}catch(e){toast('PDF library failed to load. Try on desktop browser.',4000);return;}
   buildPDF();const el=document.getElementById('pdfc');el.parentElement.style.display='block';el.style.display='block';
-  const opt={margin:[10,10,10,10],filename:'ManneComm_'+S.fd.name.replace(/\s+/g,'_')+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};
+  const opt={margin:[10,10,10,10],filename:'ManneComm_'+S.fd.name.replace(/[ \t\r\n]+/g,'_')+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};
   try{await html2pdf().set(opt).from(el).save();toast('PDF downloaded ✓');}catch(e){toast('PDF error: '+e.message,4000);}
   el.parentElement.style.display='none';
 }
 
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // COPY & WHATSAPP
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function doCopy(){
-  const d=S.fd;const n=S.nums;if(!d){toast('No report');return;}
-  const lpd=LP_DATA[n.lp]||LP_DATA[1];const rashi=getRashi(d.dob);const nak=getNakshatra(d.dob);
-  let txt='MANNE COMMUNICATIONS — CHALDEAN ASTROLOGY REPORT\n'+'═'.repeat(45)+'\n';
+  const d=S.fd,n=S.nums;if(!d){toast('No report');return;}
+  const lpd=LP_DATA[n.lp]||LP_DATA[1],rashi=getRashi(d.dob),nak=getNakshatra(d.dob);
+  let txt='MANNE COMMUNICATIONS — CHALDEAN ASTROLOGY REPORT\n'+'='.repeat(45)+'\n';
   txt+='Name: '+d.name+' | '+d.gender+'\nDOB: '+fmtDate(d.dob)+' | Time: '+d.tob+'\nPlace: '+d.city+', '+d.state+'\nConsultant: '+S.dealer.name+' | '+new Date().toLocaleDateString('en-IN')+'\n\n';
-  txt+='CORE NUMBERS (Chaldean)\n'+'─'.repeat(35)+'\n';
-  txt+='Life Path: '+n.lp+' ('+lpd.title+') | Expression: '+n.expr+'\nSoul Urge: '+n.su+' | Personality: '+n.pn+' | Maturity: '+n.mat+'\nPersonal Year 2025: '+n.py+'\n\n';
-  txt+='SUN SIGN & BIRTH STAR\n'+'─'.repeat(35)+'\n';
-  txt+=rashi.name+' | '+nak.name+' (Star lord: '+nak.lord+')\n\n';
-  txt+='LUCKY NUMBERS: '+n.lucky.single.join(', ')+'\nCompound: '+n.lucky.compound.join(', ')+'\nAvoid: '+n.lucky.avoid.join(', ')+'\nGemstone: '+n.lucky.gem+' | Color: '+n.lucky.color+'\n\n';
-  if(S.matched&&S.matched.length){txt+='VIP NUMBER MATCHES\n'+'─'.repeat(35)+'\n';S.matched.forEach(item=>{txt+=item.num+' — '+item.pri.toUpperCase()+' ('+item.reason+')\n';});txt+='\n';}
-  if(S.aiNarrative)txt+='AI NARRATIVE\n'+'─'.repeat(35)+'\n'+S.aiNarrative+'\n\n';
+  txt+='CORE NUMBERS\n'+'-'.repeat(35)+'\nLife Path: '+n.lp+' ('+lpd.title+') | Expression: '+n.expr+'\nSoul Urge: '+n.su+' | Maturity: '+n.mat+' | Personal Year: '+n.py+'\n\n';
+  txt+='SUN SIGN: '+rashi.name+' | BIRTH STAR: '+nak.name+'\n\n';
+  txt+='LUCKY NUMBERS: '+n.lucky.single.join(', ')+'\nCompound: '+n.lucky.compound.join(', ')+'\nAvoid: '+n.lucky.avoid.join(', ')+'\nGemstone: '+n.lucky.gem+'\n\n';
+  if(S.matched&&S.matched.length){txt+='VIP NUMBER MATCHES\n'+'-'.repeat(35)+'\n';S.matched.forEach(item=>{txt+=item.num+' — '+item.pri.toUpperCase()+' ('+item.reason+')\n';});txt+='\n';}
+  if(S.aiNarrative)txt+='AI NARRATIVE\n'+'-'.repeat(35)+'\n'+S.aiNarrative+'\n\n';
   txt+='sureshmanne.com | +91 90909 00005 | Manne Communications';
   navigator.clipboard.writeText(txt).then(()=>toast('Copied!'));
 }
+
 function doWA(){
-  const d=S.fd;const n=S.nums;const rashi=getRashi(d.dob);
+  const d=S.fd,n=S.nums,rashi=getRashi(d.dob);
   let top=S.matched?S.matched.filter(x=>x.pri==='best').slice(0,3).map(x=>x.num).join(', '):'';
-  const msg='🌟 *MANNE COMMUNICATIONS*\nAstrology Report for *'+d.name+'*\n\n📅 '+fmtDate(d.dob)+' at '+d.tob+'\n📍 '+d.city+', '+d.state+'\n\n🔭 *Sun Sign:* '+rashi.name+'\n🔢 *Life Path:* '+(LP_DATA[n.lp]||LP_DATA[1]).title+'\n\n*Lucky Numbers:* '+n.lucky.single.join(', ')+(top?'\n\n📱 *Best VIP Numbers:*\n'+top:'')+'\n\n📲 For complete VIP number consultation:\nsureshmanne.com | wa.me/'+WA+'\n\n_Manne Communications · Chaldean Numerology_';
-  window.open('https://wa.me/'+d.mobile.replace(/\D/g,'')+'?text='+encodeURIComponent(msg),'_blank');
+  const msg='*MANNE COMMUNICATIONS*\nAstrology Report for *'+d.name+'*\n\n DOB: '+fmtDate(d.dob)+' | '+d.tob+'\n Place: '+d.city+', '+d.state+'\n\n*Sun Sign:* '+rashi.name+'\n*Life Path:* '+(LP_DATA[n.lp]||LP_DATA[1]).title+'\n*Lucky Numbers:* '+n.lucky.single.join(', ')+(top?'\n\n*Best VIP Numbers:*\n'+top:'')+'\n\nFor complete VIP number consultation:\nsureshmanne.com | wa.me/'+WA+'\n\n_Manne Communications_';
+  window.open('https://wa.me/'+d.mobile.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg),'_blank');
 }
 
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // NAVIGATION
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════
 function doLogout(){if(S.timer){clearInterval(S.timer);S.timer=null;}document.getElementById('tbar').style.display='none';S.dealer={name:'',code:'',type:''};S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('role');}
 function doNewConsult(){
-  if(S.dealer.type==='trial'){toast('Trial used. Contact Manne Communications for paid access.',5000);setTimeout(doLogout,2000);return;}
+  if(S.dealer.type==='trial'){toast('Trial code used. Contact Manne Communications for paid access.',5000);setTimeout(doLogout,2500);return;}
   ['fn','fdob','ftob','fct','fst','fmob','fpur'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('fg').value='';document.getElementById('fbud').value='';
   S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('form');
 }
 window.onload=()=>setTimeout(()=>showScreen('role'),2200);
+
 </script>
 </body>
 </html>

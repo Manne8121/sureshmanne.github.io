@@ -245,7 +245,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
     <div style="margin-bottom:2rem;text-align:center"><div class="brand">MANNE COMMUNICATIONS</div><div class="sub">Dealer / Consultant Login</div></div>
     <div class="card">
       <div class="fld"><label>Your name <span class="req">*</span></label><input type="text" id="dn" placeholder="Enter your full name"><div class="er" id="dn-er"></div></div>
-      <div class="fld"><label>Access code <span class="req">*</span></label><input type="text" id="dc" placeholder="MC-XXXX-XXXX" style="text-transform:uppercase;letter-spacing:.1em;font-family:monospace;font-size:16px" onkeydown="if(event.key==='Enter')doDealerLogin()" oninput="this.value=this.value.toUpperCase()"><div class="er" id="dc-er"></div></div>
+      <div class="fld"><label>Access code <span class="req">*</span></label><input type="text" id="dc" placeholder="MC-XXXX-XXXX" style="text-transform:uppercase;letter-spacing:.15em;font-family:monospace;font-size:18px" onkeydown="if(event.key==='Enter')doDealerLogin()" oninput="formatAccessCode(this)" maxlength="12" autocomplete="off" autocorrect="off" spellcheck="false"><div class="er" id="dc-er"></div></div>
       <button class="btn bg bfull" style="padding:13px" onclick="doDealerLogin()">Access Consultation</button>
       <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--muted)">No code? <a href="https://wa.me/919090900005?text=Hello%20Manne%20Communications%2C%20I%20need%20a%20consultation%20access%20code" target="_blank" style="color:var(--gold);text-decoration:none">WhatsApp us →</a></div>
     </div>
@@ -561,6 +561,14 @@ function showScreen(id){document.querySelectorAll('.screen').forEach(s=>{s.class
 function fmtDate(d){if(!d)return'';const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 function mkCode(pre='MC'){const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const r=n=>Array(n).fill(0).map(()=>ch[Math.floor(Math.random()*ch.length)]).join('');return`${pre}-${r(4)}-${r(4)}`;}
 function setBtnLoading(id,loading,text=''){const b=document.getElementById(id);if(!b)return;b.disabled=loading;if(loading)b.innerHTML='<div class="spnsm"></div>';else if(text)b.textContent=text;}
+
+function formatAccessCode(el){
+  let v=el.value.replace(/[^A-Z0-9]/gi,'').toUpperCase().slice(0,10);
+  let r=v;
+  if(v.length>2) r=v.slice(0,2)+'-'+v.slice(2);
+  if(v.length>6) r=v.slice(0,2)+'-'+v.slice(2,6)+'-'+v.slice(6);
+  el.value=r;
+}
 
 // ═══════════════════════════════════════════
 // ADMIN

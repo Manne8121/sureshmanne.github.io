@@ -149,10 +149,13 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
 input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c9a84c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 
 @media print {
-  body > *:not(#pdf-wrap) { display: none !important; }
-  #pdf-wrap { display: block !important; position: static !important; left: 0 !important; width: 100% !important; }
-  #pdfc { display: block !important; }
-  .tbar, .topbar, button { display: none !important; }
+  @page { margin: 10mm; size: A4; }
+  body { background: #fff !important; }
+  body > * { display: none !important; }
+  #pdfout { display: block !important; position: static !important; left: 0 !important; width: 100% !important; opacity: 1 !important; }
+  #pdfc { display: block !important; background: #fff !important; }
+  #pdfbody { display: block !important; }
+  .ph { display: block !important; }
 }
 </style>
 </head>
@@ -406,8 +409,7 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
       </div>
     </div>
     <div class="abar">
-      <button class="btn bg" onclick="doPDF()">⬇ Download PDF</button>
-      <button class="btn bo" onclick="window.print()">🖨 Print</button>
+      <button class="btn bg" onclick="doPDF()">🖨 Save as PDF / Print</button>
       <button class="btn bo" onclick="toggleHistory()" id="hist-btn">📋 Session (1)</button>
       <button class="btn bo" onclick="doCopy()">📋 Copy Report</button>
       <button class="btn bo" onclick="doWA()" style="color:var(--grn);border-color:#166534">💬 WhatsApp Client</button>
@@ -419,7 +421,7 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
 </div>
 
 <!-- PDF TEMPLATE -->
-<div id="pdfout"><div id="pdfc">
+<div id="pdfout" style="display:none"><div id="pdfc" style="display:none">
   <div class="ph">
     <div class="pc">MANNE COMMUNICATIONS</div>
     <div class="pp">Powered by Anthropic AI</div>
@@ -1286,27 +1288,19 @@ function buildPDF(){
 }
 
 async function doPDF(){
-  try{await loadHtml2pdf();}catch(e){toast('PDF library failed to load. Try on desktop browser.',4000);return;}
   buildPDF();
+  const wrap=document.getElementById('pdfout');
   const el=document.getElementById('pdfc');
-  const wrap=el.parentElement;
-  // Render off-screen but VISIBLE — prevents blank pages
-  wrap.style.cssText='position:fixed;top:0;left:-9999px;width:794px;display:block;background:#fff;z-index:-1';
-  el.style.cssText='display:block;background:#fff;width:794px;padding:0';
-  // Wait for full render including fonts
-  await new Promise(r=>setTimeout(r,600));
-  const opt={
-    margin:10,
-    filename:'AstrologyReport_'+S.fd.name.replace(/[ \t\r\n]+/g,'_')+'.pdf',
-    image:{type:'jpeg',quality:0.95},
-    html2canvas:{scale:1.5,useCORS:true,logging:false,width:794,windowWidth:794,backgroundColor:'#ffffff'},
-    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
-    pagebreak:{mode:['css','legacy'],avoid:'.psec'}
-  };
-  try{await html2pdf().set(opt).from(el).save();toast('PDF downloaded ✓');}
-  catch(e){toast('PDF error: '+e.message,4000);}
-  wrap.style.cssText='display:none';
-  el.style.cssText='display:none';
+  // Make visible for print
+  wrap.style.cssText='display:block;position:static;opacity:1;width:100%';
+  el.style.cssText='display:block;background:#fff';
+  await new Promise(r=>setTimeout(r,300));
+  window.print();
+  // Hide again after print dialog closes
+  setTimeout(()=>{
+    wrap.style.cssText='display:none';
+    el.style.cssText='display:none';
+  },1000);
 }
 
 // ═══════════════════════════════════════════

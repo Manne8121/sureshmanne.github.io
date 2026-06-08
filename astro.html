@@ -120,7 +120,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
 #pdfc .pcb{background:#fdf8ec;border:1px solid #e8c97a;border-radius:6px;padding:12px;margin-bottom:14px}
 #pdfc .pcn{font-size:14pt;font-weight:bold;color:#8a6620;margin-bottom:5px;font-family:sans-serif}
 #pdfc .pcs{font-size:9pt;color:#555;line-height:1.65;font-family:sans-serif}
-#pdfc .psec{margin-bottom:12px;page-break-inside:avoid}
+#pdfc .psec{margin-bottom:14px;page-break-inside:avoid;break-inside:avoid}
 #pdfc .psec h3{font-size:9pt;font-weight:bold;color:#8a6620;text-transform:uppercase;letter-spacing:.05em;border-bottom:0.5px solid #e8c97a;padding-bottom:3px;margin-bottom:6px;font-family:sans-serif}
 #pdfc .psec p{font-size:9.5pt;line-height:1.65;margin-bottom:4px}
 #pdfc .pnums{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0}
@@ -147,6 +147,13 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-ap
 
 
 input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c9a84c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+
+@media print {
+  body > *:not(#pdf-wrap) { display: none !important; }
+  #pdf-wrap { display: block !important; position: static !important; left: 0 !important; width: 100% !important; }
+  #pdfc { display: block !important; }
+  .tbar, .topbar, button { display: none !important; }
+}
 </style>
 </head>
 <body>
@@ -345,6 +352,7 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
       <button class="btn bo bfull" style="padding:14px;font-size:17px;flex:1;min-width:120px" onclick="goBackEdit()">✏️ Edit Details</button>
       <button class="btn bg bfull" id="proceed-btn" style="padding:14px;font-size:17px;flex:2;min-width:180px;opacity:.45;cursor:not-allowed" onclick="doProceed()" disabled>✅ Proceed & Generate Report</button>
     </div>
+    <button class="btn bo bfull" style="padding:12px;font-size:15px;margin-top:.5rem;width:100%;background:#0d2010;border-color:#25a244;color:#4ade80" onclick="doQuickWA()">📲 Quick WhatsApp Share (without report)</button>
     <div style="font-size:13px;color:var(--muted);text-align:center;margin-top:.75rem">Please verify all details carefully — especially date and time of birth</div>
   </div>
 </div>
@@ -357,6 +365,7 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
       <button class="btn bo bsm" id="newbtn" onclick="doNewConsult()">+ New</button>
     </div>
     <div class="rh"><div class="rname" id="rn"></div><div class="rmeta" id="rm"></div></div>
+    <div id="r-lucky-top" style="margin-bottom:.75rem"></div>
     <div id="r-core"></div>
     <div id="r-namegrid"></div>
     <div id="r-lp"></div>
@@ -364,6 +373,7 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
     <div id="r-destiny"></div>
     <div id="r-rashi"></div>
     <div id="r-nak"></div>
+    <div id="r-dasha"></div>
     <div id="r-py"></div>
     <div id="r-lucky"></div>
     <!-- NUMBER MATCH -->
@@ -397,6 +407,8 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
     </div>
     <div class="abar">
       <button class="btn bg" onclick="doPDF()">⬇ Download PDF</button>
+      <button class="btn bo" onclick="window.print()">🖨 Print</button>
+      <button class="btn bo" onclick="toggleHistory()" id="hist-btn">📋 Session (1)</button>
       <button class="btn bo" onclick="doCopy()">📋 Copy Report</button>
       <button class="btn bo" onclick="doWA()" style="color:var(--grn);border-color:#166534">💬 WhatsApp Client</button>
     </div>
@@ -653,7 +665,7 @@ function getLuckyFromLP(lp) {
 // ═══════════════════════════════════════════
 // STATE & STORAGE
 // ═══════════════════════════════════════════
-const S={dealer:{name:'',code:'',type:''},timer:null,timerEnd:null,fd:null,nums:null,matched:null,aiNarrative:null,reportCount:0};
+const S={dealer:{name:'',code:'',type:''},timer:null,timerEnd:null,fd:null,nums:null,matched:null,aiNarrative:null,reportCount:0,sessionClients:[],reportId:''};
 const gak=()=>localStorage.getItem('mc_ak')||'';
 const sak=v=>localStorage.setItem('mc_ak',v);
 
@@ -882,7 +894,7 @@ async function doDealerLogin(){
     // Paid code already active from previous session — just let in
     if(c.type==='paid'&&c.status==='active'){
       S.dealer={name,code,type:'paid'};
-      document.getElementById('dealer-disp').textContent='Consultant: '+name+' · Paid Access';
+      document.getElementById('dealer-disp').textContent='👤 '+name+' — Paid';
       document.getElementById('tbar').style.display='none';
       showScreen('form');return;
     }
@@ -895,7 +907,7 @@ async function doDealerLogin(){
       }
       const remaining=Math.max(0,Math.floor((new Date(c.expiresAt)-Date.now())/1000));
       S.dealer={name,code,type:'trial'};
-      document.getElementById('dealer-disp').textContent='Consultant: '+name+' · Trial (resuming)';
+      document.getElementById('dealer-disp').textContent='👤 '+name+' — Trial (resuming)';
       startTimer(remaining);showScreen('form');return;
     }
 
@@ -911,7 +923,7 @@ async function doDealerLogin(){
     await Promise.all(updates);
 
     S.dealer={name,code,type:c.type};
-    document.getElementById('dealer-disp').textContent='Consultant: '+name+' · '+(c.type==='paid'?'Paid Access':'Trial (10 min)');
+    document.getElementById('dealer-disp').textContent='👤 '+name+' — '+(c.type==='paid'?'Paid':'Trial');
     if(c.type==='trial'){startTimer(1200);}else{document.getElementById('tbar').style.display='none';}
     showScreen('form');
   }catch(e){
@@ -955,7 +967,20 @@ function doGenReport(){
 
 function renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky){
   document.getElementById('rn').textContent=d.name;
-  document.getElementById('rm').innerHTML=d.gender+' &nbsp;·&nbsp; '+fmtDate(d.dob)+' at '+d.tob+' &nbsp;·&nbsp; '+d.city+', '+d.state+'<br>Mobile: '+d.mobile+' &nbsp;·&nbsp; Consultant: '+S.dealer.name;
+  // Lucky summary card at top
+  const ltop=document.getElementById('r-lucky-top');
+  if(ltop){
+    const lpCard='<div style="text-align:center;min-width:48px"><div style="font-size:26px;font-weight:900;color:var(--gold)">'+lp+'</div><div style="font-size:11px;color:var(--muted)">Life Path</div></div>';
+    const lCards=lucky.single.map(n=>'<div style="text-align:center;min-width:48px"><div style="font-size:22px;font-weight:700;color:#a0d4ff">'+n+'</div><div style="font-size:11px;color:var(--muted)">Lucky</div></div>').join('');
+    ltop.innerHTML='<div style="background:linear-gradient(135deg,#1a1500,#0d0a00);border:1px solid var(--gold);border-radius:14px;padding:1rem 1.25rem;display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">'
+      +'<div style="display:flex;gap:.75rem;flex-wrap:wrap">'+lpCard+lCards+'</div>'
+      +'<div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:14px">'
+      +'<div><span style="color:var(--muted)">Color: </span><strong style="color:var(--text)">'+lucky.color+'</strong></div>'
+      +'<div><span style="color:var(--muted)">Day: </span><strong style="color:var(--text)">'+lucky.day+'</strong></div>'
+      +'<div><span style="color:var(--muted)">Gem: </span><strong style="color:var(--text)">'+lucky.gem+'</strong></div>'
+      +'</div></div>';
+  }
+  document.getElementById('rm').innerHTML=d.gender+' &nbsp;·&nbsp; '+fmtDate(d.dob)+' at '+d.tob+' &nbsp;·&nbsp; '+d.city+', '+d.state+'<br>Mobile: '+d.mobile+' &nbsp;·&nbsp; Consultant: <strong>'+S.dealer.name+'</strong> &nbsp;·&nbsp; <span style="color:var(--gold);font-size:13px">Ref: '+S.reportId+'</span>';
   const lpd=LP_DATA[lp]||LP_DATA[1];
   document.getElementById('r-core').innerHTML=`<div class="rsec"><h3>✦ Core Numbers — Chaldean System</h3><div class="nums-grid"><div class="nc"><div class="nn">${lp}</div><div class="nt">Life Path</div><div class="ns">${lpd.title}</div></div><div class="nc"><div class="nn">${expr}</div><div class="nt">Expression</div><div class="ns">Destiny</div></div><div class="nc"><div class="nn">${su}</div><div class="nt">Soul Urge</div><div class="ns">Inner desire</div></div><div class="nc"><div class="nn">${pn}</div><div class="nt">Personality</div><div class="ns">How seen</div></div><div class="nc"><div class="nn">${mat}</div><div class="nt">Maturity</div><div class="ns">Future self</div></div><div class="nc"><div class="nn">${bal}</div><div class="nt">Balance</div><div class="ns">In crisis</div></div><div class="nc"><div class="nn">${py}</div><div class="nt">Personal Year</div><div class="ns">2025 theme</div></div></div></div>`;
   let ng=`<div class="rsec"><h3>✦ Chaldean Name Analysis</h3><div class="ngrid">${grid.map(g=>g.space?'<div class="nletter space"></div>':`<div class="nletter${g.vowel?' vowel':''}"><div class="lc">${g.c}</div><div class="lv">${g.v||'—'}</div></div>`).join('')}</div><div style="font-size:12px;color:var(--muted);margin-top:.5rem">Gold border = vowel (soul energy)</div>`;
@@ -971,6 +996,22 @@ function renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky){
   document.getElementById('r-rashi').innerHTML=`<div class="rsec"><h3>✦ జన్మ రాశి (Janma Rashi) — ${rashi.name}</h3><div style="font-size:22px;color:var(--gold);font-weight:700;margin-bottom:.5rem">${rashi.te}</div><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${rashi.lord}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${rashi.element}</div></div><div class="pitem"><div class="pk">Symbol</div><div class="pv">${rashi.symbol}</div></div><div class="pitem"><div class="pk">Quality</div><div class="pv">${rashi.quality}</div></div></div><div class="interp">${rashi.traits}</div></div>`;
   const nakTe={'Ashwini':'అశ్వని','Bharani':'భరణి','Krittika':'కృత్తిక','Rohini':'రోహిణి','Mrigashira':'మృగశిర','Ardra':'ఆర్ద్ర','Punarvasu':'పునర్వసు','Pushya':'పుష్యమి','Ashlesha':'ఆశ్లేష','Magha':'మఖ','Purva Phalguni':'పూర్వ ఫల్గుణి','Uttara Phalguni':'ఉత్తర ఫల్గుణి','Hasta':'హస్త','Chitra':'చిత్త','Swati':'స్వాతి','Vishakha':'విశాఖ','Anuradha':'అనూరాధ','Jyeshtha':'జ్యేష్ఠ','Mula':'మూల','Purva Ashadha':'పూర్వాషాఢ','Uttara Ashadha':'ఉత్తరాషాఢ','Shravana':'శ్రవణం','Dhanishtha':'ధనిష్ఠ','Shatabhisha':'శతభిషం','Purva Bhadrapada':'పూర్వభాద్ర','Uttara Bhadrapada':'ఉత్తరభాద్ర','Revati':'రేవతి'};
 document.getElementById('r-nak').innerHTML=`<div class="rsec"><h3>✦ జన్మ నక్షత్రం (Janma Nakshatra) — ${nak.name}</h3><div style="font-size:22px;color:var(--gold);font-weight:700;margin-bottom:.5rem">${nakTe[nak.name]||nak.name} — పాదం ${nak.pada||1}</div><div class="profile-row"><div class="pitem"><div class="pk">Star lord</div><div class="pv">${nak.lord}</div></div><div class="pitem"><div class="pk">Deity</div><div class="pv">${nak.deity}</div></div><div class="pitem"><div class="pk">Pada</div><div class="pv">${nak.pada||1} / 4</div></div></div><div class="interp">${nak.trait}</div></div>`;
+  const dasha=calcDasha(d.dob,d.tob);
+  const dashaSeq=dasha.sequence.map(s=>'<span style="padding:3px 8px;margin:2px;border-radius:20px;display:inline-block;font-size:13px;'+(s.active?'background:var(--gold);color:#000;font-weight:700':'background:var(--card2);color:var(--muted)')+'">'+s.lord+' <span style="font-size:11px;opacity:.7">'+s.end+'</span></span>').join('');
+  document.getElementById('r-dasha').innerHTML='<div class="rsec"><h3>✦ వింశోత్తరి దశ (Vimshottari Dasha)</h3>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.75rem 0">'
+    +'<div style="background:#1a1a0a;border:1px solid var(--gold);border-radius:10px;padding:.85rem;text-align:center">'
+    +'<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Mahadasha</div>'
+    +'<div style="font-size:26px;font-weight:800;color:var(--gold);margin:.25rem 0">'+dasha.current+'</div>'
+    +'<div style="font-size:13px;color:var(--muted)">Until '+dasha.currentEnd+'</div>'
+    +'</div>'
+    +'<div style="background:#0a1a0a;border:1px solid #4a8a4a;border-radius:10px;padding:.85rem;text-align:center">'
+    +'<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Antardasha</div>'
+    +'<div style="font-size:26px;font-weight:800;color:#7dea7d;margin:.25rem 0">'+dasha.antardasha+'</div>'
+    +'<div style="font-size:13px;color:var(--muted)">Until '+dasha.antarEnd+'</div>'
+    +'</div></div>'
+    +'<div style="margin-top:.75rem;line-height:2">'+dashaSeq+'</div>'
+    +'</div>';
   document.getElementById('r-py').innerHTML=`<div class="rsec"><h3>✦ Personal Year ${py} — 2025 Theme</h3><div class="rcontent">${PY_DATA[py]||PY_DATA[1]}</div></div>`;
   document.getElementById('r-lucky').innerHTML=`<div class="rsec"><h3>✦ Lucky Numbers & Remedies</h3><div style="display:flex;flex-wrap:wrap;gap:8px;margin:.5rem 0">${lucky.single.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Lucky</div></div>`).join('')}${lucky.compound.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Compound</div></div>`).join('')}</div><div class="profile-row" style="margin-top:.75rem"><div class="pitem"><div class="pk">Avoid digits</div><div class="pv" style="color:var(--red)">${lucky.avoid.join(', ')}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lucky.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lucky.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lucky.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lucky.mantra}</div></div></div></div>`;
   document.getElementById('mcard').style.display='block';document.getElementById('mresults').style.display='none';document.getElementById('minput').value='';
@@ -1067,10 +1108,16 @@ function goBackEditField(fieldId){
 function doProceed(){
   if(!document.getElementById('rv-confirm').checked)return;
   const d=S.fd;
+  // Generate unique report ID
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  S.reportId='MC-'+now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'-'+String(Math.floor(Math.random()*9000)+1000);
   const lp=calcLP(d.dob),expr=calcExpr(d.name),su=calcSU(d.name),pn=calcPN(d.name),mat=calcMat(lp,expr),bal=calcBal(d.name),py=calcPY(d.dob,2025);
   const grid=getNameGrid(d.name),rashi=getVedicRashi(d.dob,d.tob),nak=getVedicNak(d.dob,d.tob),lucky=getLuckyFromLP(lp);
   S.nums={lp,expr,su,pn,mat,bal,py,lucky};
   S.reportCount=(S.reportCount||0)+1;
+  S.sessionClients=S.sessionClients||[];
+  S.sessionClients.push({name:d.name,mobile:d.mobile,rashi:'',id:S.reportId,time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})});
   if(S.dealer.type==='trial'){
     if(S.reportCount>=5){
       callSheets({action:'updateCode',code:S.dealer.code,field:'status',value:'used',sheet:'codes'}).catch(()=>{});
@@ -1078,10 +1125,86 @@ function doProceed(){
   }
   renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky);
   showScreen('report');
+  // update history button
+  const hb=document.getElementById('hist-btn');
+  if(hb)hb.textContent='📋 Session ('+(S.sessionClients||[]).length+')';
+  document.getElementById('session-hist').style.display='none';
   // update timer bar on report screen
   if(S.dealer.type==='trial')document.getElementById('tbar').style.display='flex';
   // update report counter in timer bar
   document.getElementById('ttxt').textContent=document.getElementById('ttxt').textContent;
+}
+
+
+// ═══════════════════════════════════════════
+// DASHA CALCULATOR (Vimshottari)
+// ═══════════════════════════════════════════
+const DASHA_LORDS = ['Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury'];
+const DASHA_YEARS = [7,20,6,10,7,18,16,19,17];
+const DASHA_NAK_LORD = [
+  'Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury', // Ashwini-Ashlesha
+  'Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury', // Magha-Jyeshtha
+  'Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury'  // Mula-Revati
+];
+
+function calcDasha(dob, tob){
+  const [y,m,d]=dob.split('-').map(Number);
+  const h=parseTob(tob);
+  const sid=moonSiderealLon(y,m,d,h);
+  const ni=Math.floor(sid/(360/27));
+  const posInNak=(sid%(360/27))/(360/27); // 0-1 within nakshatra
+
+  // Find starting dasha lord
+  const lordIdx=ni%9;
+  const lord=DASHA_LORDS[lordIdx];
+  const lordYears=DASHA_YEARS[lordIdx];
+
+  // Balance of dasha at birth
+  const balance=lordYears*(1-posInNak);
+
+  // Build dasha sequence from birth
+  const birthDate=new Date(y,m-1,d);
+  const today=new Date();
+  const dashas=[];
+  let cursor=new Date(birthDate);
+  let startIdx=lordIdx;
+
+  for(let i=0;i<9;i++){
+    const idx=(startIdx+i)%9;
+    const yrs=i===0?balance:DASHA_YEARS[(startIdx+i)%9];
+    const end=new Date(cursor);
+    end.setDate(end.getDate()+Math.round(yrs*365.25));
+    dashas.push({lord:DASHA_LORDS[(startIdx+i)%9],years:yrs,start:new Date(cursor),end});
+    cursor=new Date(end);
+    if(cursor>new Date(today.getFullYear()+20,0,1))break;
+  }
+
+  // Find current dasha
+  const cur=dashas.find(d=>today>=d.start&&today<d.end)||dashas[dashas.length-1];
+
+  // Find antardasha within current
+  const elapsed=(today-cur.start)/(1000*60*60*24*365.25);
+  let antCursor=new Date(cur.start);
+  const anthas=[];
+  const curIdx=DASHA_LORDS.indexOf(cur.lord);
+  for(let i=0;i<9;i++){
+    const ai=(curIdx+i)%9;
+    const ayrs=(cur.years*DASHA_YEARS[ai])/120;
+    const aend=new Date(antCursor);
+    aend.setDate(aend.getDate()+Math.round(ayrs*365.25));
+    anthas.push({lord:DASHA_LORDS[ai],years:ayrs,start:new Date(antCursor),end:aend});
+    antCursor=new Date(aend);
+  }
+  const curAntha=anthas.find(a=>today>=a.start&&today<a.end)||anthas[0];
+
+  const fmtDt=d=>d.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+  return{
+    current:cur.lord,
+    currentEnd:fmtDt(cur.end),
+    antardasha:curAntha?curAntha.lord:'',
+    antarEnd:curAntha?fmtDt(curAntha.end):'',
+    sequence:dashas.map(d=>({lord:d.lord,start:fmtDt(d.start),end:fmtDt(d.end),active:d===cur}))
+  };
 }
 
 // ═══════════════════════════════════════════
@@ -1144,7 +1267,7 @@ Write in second person (you/your). Weave together their Life Path ${n.lp} energy
 async function loadHtml2pdf(){if(window.html2pdf)return;return new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
 
 function buildPDF(){
-  const d=S.fd,n=S.nums,lp=n.lp,lpd=LP_DATA[lp]||LP_DATA[1],rashi=getRashi(d.dob),nak=getNakshatra(d.dob);
+  const d=S.fd,n=S.nums,lp=n.lp,lpd=LP_DATA[lp]||LP_DATA[1],rashi=getVedicRashi(d.dob,d.tob),nak=getVedicNak(d.dob,d.tob);
   document.getElementById('pdfdate').textContent='Report: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
   let h=`<div class="pcb"><div class="pcn">${d.name}</div><div class="pcs">${d.gender} | DOB: ${fmtDate(d.dob)} | Time: ${d.tob}<br>Place: ${d.city}, ${d.state} | Mobile: ${d.mobile}<br>Consultant: ${S.dealer.name} | ${new Date().toLocaleDateString('en-IN')}</div></div>`;
   h+=`<div class="psec"><h3>Core Numbers</h3><div style="display:flex;flex-wrap:wrap;gap:5px;font-family:sans-serif">`;
@@ -1153,8 +1276,8 @@ function buildPDF(){
   h+=`<div class="psec"><h3>Chaldean Name Grid</h3><div class="pngrid">${getNameGrid(d.name).filter(g=>!g.space&&g.v).map(g=>`<div class="pnl2"><div class="lc">${g.c}</div><div class="lv">${g.v}</div></div>`).join('')}</div></div>`;
   h+=`<div class="psec"><h3>Life Path ${lp} — ${lpd.title}</h3><p><strong>Planet:</strong> ${lpd.planet} | <strong>Element:</strong> ${lpd.element} | <strong>Gem:</strong> ${lpd.gem} | <strong>Day:</strong> ${lpd.day} | <strong>Mantra:</strong> ${lpd.mantra}</p><p>${lpd.interp}</p></div>`;
   h+=`<div class="psec"><h3>Soul Urge ${n.su}</h3><p>${SU_DATA[n.su]||SU_DATA[1]}</p></div>`;
-  h+=`<div class="psec"><h3>Sun Sign — ${rashi.name}</h3><p><strong>Planet:</strong> ${rashi.planet} | <strong>Element:</strong> ${rashi.element}</p><p>${rashi.traits}</p></div>`;
-  h+=`<div class="psec"><h3>Birth Star — ${nak.name}</h3><p><strong>Lord:</strong> ${nak.lord} | <strong>Deity:</strong> ${nak.deity}</p><p>${nak.trait}</p></div>`;
+  h+=`<div class="psec"><h3>జన్మ రాశి — ${rashi.name} (${rashi.te})</h3><p><strong>Lord:</strong> ${rashi.lord} | <strong>Element:</strong> ${rashi.element} | <strong>Symbol:</strong> ${rashi.symbol}</p><p>${rashi.traits}</p></div>`;
+  h+=`<div class="psec"><h3>జన్మ నక్షత్రం — ${nak.name} (Pada ${nak.pada||1})</h3><p><strong>Lord:</strong> ${nak.lord} | <strong>Deity:</strong> ${nak.deity}</p><p>${nak.trait}</p></div>`;
   h+=`<div class="psec"><h3>Personal Year ${n.py} — 2025</h3><p>${PY_DATA[n.py]||PY_DATA[1]}</p></div>`;
   h+=`<div class="psec"><h3>Lucky Numbers & Remedies</h3><div class="pnums">${n.lucky.single.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Lucky</div></div>`).join('')}${n.lucky.compound.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Compound</div></div>`).join('')}</div><p style="font-family:sans-serif;font-size:9pt">Avoid: ${n.lucky.avoid.join(', ')} | Color: ${n.lucky.color} | Day: ${n.lucky.day} | Gem: ${n.lucky.gem}</p></div>`;
   if(S.matched&&S.matched.length){h+=`<div class="psec"><h3>VIP Number Match</h3>`;S.matched.forEach(item=>{const cl=item.pri==='best'?'ptbest':item.pri==='avoid'?'ptavoid':item.pri==='good'?'ptgood':'';const lb=item.pri==='best'?'Best':item.pri==='avoid'?'Avoid':item.pri==='good'?'Good':'Neutral';h+=`<div class="pmr"><span style="font-family:monospace;min-width:115px">${item.num}</span><span class="ptag ${cl}">${lb}</span><span style="color:#666;font-family:sans-serif"> ${item.reason}</span></div>`;});h+=`</div>`;}
@@ -1164,10 +1287,26 @@ function buildPDF(){
 
 async function doPDF(){
   try{await loadHtml2pdf();}catch(e){toast('PDF library failed to load. Try on desktop browser.',4000);return;}
-  buildPDF();const el=document.getElementById('pdfc');el.parentElement.style.display='block';el.style.display='block';
-  const opt={margin:[10,10,10,10],filename:'ManneComm_'+S.fd.name.replace(/[ \t\r\n]+/g,'_')+'.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}};
-  try{await html2pdf().set(opt).from(el).save();toast('PDF downloaded ✓');}catch(e){toast('PDF error: '+e.message,4000);}
-  el.parentElement.style.display='none';
+  buildPDF();
+  const el=document.getElementById('pdfc');
+  const wrap=el.parentElement;
+  // Render off-screen but VISIBLE — prevents blank pages
+  wrap.style.cssText='position:fixed;top:0;left:-9999px;width:794px;display:block;background:#fff;z-index:-1';
+  el.style.cssText='display:block;background:#fff;width:794px;padding:0';
+  // Wait for full render including fonts
+  await new Promise(r=>setTimeout(r,600));
+  const opt={
+    margin:10,
+    filename:'AstrologyReport_'+S.fd.name.replace(/[ \t\r\n]+/g,'_')+'.pdf',
+    image:{type:'jpeg',quality:0.95},
+    html2canvas:{scale:1.5,useCORS:true,logging:false,width:794,windowWidth:794,backgroundColor:'#ffffff'},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
+    pagebreak:{mode:['css','legacy'],avoid:'.psec'}
+  };
+  try{await html2pdf().set(opt).from(el).save();toast('PDF downloaded ✓');}
+  catch(e){toast('PDF error: '+e.message,4000);}
+  wrap.style.cssText='display:none';
+  el.style.cssText='display:none';
 }
 
 // ═══════════════════════════════════════════
@@ -1206,6 +1345,32 @@ function doWA(){
 // NAVIGATION
 // ═══════════════════════════════════════════
 function doLogout(){if(S.timer){clearInterval(S.timer);S.timer=null;}document.getElementById('tbar').style.display='none';S.dealer={name:'',code:'',type:''};S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('role');}
+
+function doQuickWA(){
+  const d=S.fd;
+  if(!d||!d.mobile){toast('Fill all details first');return;}
+  const msg='*Astrology Consultation*'
+    +'\nName: *'+d.name+'*'
+    +'\nDOB: '+fmtDate(d.dob)+' | '+d.tob
+    +'\nPlace: '+d.city+', '+d.state
+    +'\n\nYour detailed Chaldean numerology and Vedic astrology report is being prepared.'
+    +'\n\n_Contact your consultant for full report details._';
+  window.open('https://wa.me/'+d.mobile.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+function toggleHistory(){
+  const p=document.getElementById('session-hist');
+  const showing=p.style.display==='block';
+  p.style.display=showing?'none':'block';
+  if(!showing){
+    const clients=S.sessionClients||[];
+    document.getElementById('hist-list').innerHTML=clients.length
+      ?clients.map((c,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:0.5px solid var(--border);font-size:14px"><div><span style="color:var(--text);font-weight:600">${c.name}</span><span style="color:var(--muted);margin-left:.5rem">${c.mobile}</span></div><div style="text-align:right"><span style="color:var(--gold);font-size:12px">${c.id}</span><br><span style="color:var(--muted);font-size:11px">${c.time}</span></div></div>`).join('')
+      :'<div style="color:var(--muted);font-size:13px">No clients yet this session.</div>';
+    document.getElementById('hist-btn').textContent='📋 Session ('+clients.length+')';
+  }
+}
+
 function adminLogout(){sessionStorage.removeItem('mc_admin');showScreen('role');}
 function doNewConsult(){
   if(S.dealer.type==='trial'&&S.reportCount>=5){toast('5 reports completed. Contact Manne Communications for paid access.',5000);setTimeout(doLogout,2500);return;}

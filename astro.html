@@ -518,6 +518,34 @@ const RASHI_DATA = [
   {name:'Pisces (Meena)',from:[2,19],to:[3,20],planet:'Jupiter',element:'Water',quality:'Mutable',traits:'Spiritually attuned, deeply imaginative, compassionate, and profoundly feeling. You absorb the emotional energy of your environment like a sponge. Your extraordinary empathy is your greatest gift — clear boundaries are your greatest protection.'},
 ];
 
+
+const VEDIC_RASHI = [
+  {name:'Mesha (Aries)',te:'మేషం',lord:'Mars',element:'Fire',quality:'Cardinal',symbol:'Ram',
+   traits:'Bold, energetic, pioneering, and fiercely independent. You lead with courage and act on instinct. A natural initiator who excels at starting new things. Guard against impatience and impulsive decisions.'},
+  {name:'Vrishabha (Taurus)',te:'వృషభం',lord:'Venus',element:'Earth',quality:'Fixed',symbol:'Bull',
+   traits:'Steadfast, sensual, practical, and deeply devoted. You build slowly and solidly. A love of beauty, luxury, and the finer things drives your motivation. Guard against stubbornness and resistance to necessary change.'},
+  {name:'Mithuna (Gemini)',te:'మిథునం',lord:'Mercury',element:'Air',quality:'Mutable',symbol:'Twins',
+   traits:'Quick-minded, versatile, communicative, and endlessly curious. You need variety and intellectual stimulation to thrive. A natural connector of people and ideas.'},
+  {name:'Karka (Cancer)',te:'కర్కాటకం',lord:'Moon',element:'Water',quality:'Cardinal',symbol:'Crab',
+   traits:'Deeply intuitive, emotionally rich, protective, and home-loving. Your feelings are your internal compass. Nurturing and protecting those you love is your natural superpower.'},
+  {name:'Simha (Leo)',te:'సింహం',lord:'Sun',element:'Fire',quality:'Fixed',symbol:'Lion',
+   traits:'Radiant, generous, creative, and naturally commanding. You were born to lead and to be genuinely seen. At your best, you inspire and uplift everyone around you.'},
+  {name:'Kanya (Virgo)',te:'కన్య',lord:'Mercury',element:'Earth',quality:'Mutable',symbol:'Virgin',
+   traits:'Analytical, precise, service-oriented, and quietly compassionate. You notice what others miss and skillfully correct what others ignore. Your perfectionism is both your greatest professional gift and your most demanding personal challenge.'},
+  {name:'Tula (Libra)',te:'తుల',lord:'Venus',element:'Air',quality:'Cardinal',symbol:'Scales',
+   traits:'Diplomatic, aesthetically refined, fair-minded, and deeply relational. Balance and beauty are your natural languages. Learning to trust your instincts is your key growth edge.'},
+  {name:'Vrischika (Scorpio)',te:'వృశ్చికం',lord:'Mars',element:'Water',quality:'Fixed',symbol:'Scorpion',
+   traits:'Intense, transformative, magnetically powerful, and deeply private. You feel everything at a profound level of intensity. Power and absolute truth are your core obsessions.'},
+  {name:'Dhanu (Sagittarius)',te:'ధనుస్సు',lord:'Jupiter',element:'Fire',quality:'Mutable',symbol:'Archer',
+   traits:'Philosophical, adventurous, truth-seeking, and free-spirited. You live for the big picture and the open horizon. Wisdom, freedom, and expansion are your highest values.'},
+  {name:'Makara (Capricorn)',te:'మకరం',lord:'Saturn',element:'Earth',quality:'Cardinal',symbol:'Goat',
+   traits:'Ambitious, disciplined, responsible, and built for the long game. You rise steadily and fall rarely. Success is virtually inevitable for those who carry your level of patient determination.'},
+  {name:'Kumbha (Aquarius)',te:'కుంభం',lord:'Saturn',element:'Air',quality:'Fixed',symbol:'Pot Bearer',
+   traits:'Visionary, humanitarian, unconventional, and intellectually electric. You think in systems and see futures others cannot yet imagine. Your greatest challenge is learning to connect emotionally.'},
+  {name:'Meena (Pisces)',te:'మీనం',lord:'Jupiter',element:'Water',quality:'Mutable',symbol:'Fish',
+   traits:'Spiritually attuned, deeply imaginative, compassionate, and profoundly feeling. You absorb the emotional energy of your environment like a sponge. Clear boundaries are your greatest protection.'},
+];
+
 const NAK_DATA = [
   {name:'Ashwini',lord:'Ketu',deity:'Ashwini Kumaras',trait:'Swift healing energy, pioneering spirit, natural healer with quick decisive nature'},
   {name:'Bharani',lord:'Venus',deity:'Yama',trait:'Creative power, deep transformation, strong life force and intense personal magnetism'},
@@ -548,22 +576,72 @@ const NAK_DATA = [
   {name:'Revati',lord:'Mercury',deity:'Pushan',trait:'Nourishing guide, completion energy, safe journeys and abundant nurturing grace'},
 ];
 
-function getRashi(dob) {
-  const [y,m,d] = dob.split('-').map(Number);
-  for (let r of RASHI_DATA) {
-    const [fm,fd]=r.from; const [tm,td]=r.to;
-    if(fm<=tm){if((m===fm&&d>=fd)||(m===tm&&d<=td)||(m>fm&&m<tm))return r;}
-    else{if((m===fm&&d>=fd)||(m===tm&&d<=td)||m>fm||m<tm)return r;}
-  }
-  return RASHI_DATA[0];
+// ═══════════════════════════════════════════
+// VEDIC ASTROLOGY — MOON SIGN ENGINE
+// (Replaces Western sun-sign approach)
+// ═══════════════════════════════════════════
+function julianDay(y,m,d,h){
+  if(m<=2){y--;m+=12;}
+  const A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+h/24+B-1524.5;
 }
 
-function getNakshatra(dob) {
-  const [y,m,d] = dob.split('-').map(Number);
-  const start=new Date(y,0,1); const curr=new Date(y,m-1,d);
-  const doy=Math.floor((curr-start)/(1000*60*60*24));
-  return NAK_DATA[Math.floor(doy*27/365)%27];
+function parseTob(tob){
+  // tob format: "HH:MM AM" or "HH:MM PM"
+  if(!tob)return 12;
+  const parts=tob.trim().split(' ');
+  const hm=parts[0].split(':');
+  let h=parseInt(hm[0])||12, mn=parseInt(hm[1])||0;
+  const ampm=(parts[1]||'').toUpperCase();
+  if(ampm==='PM'&&h!==12)h+=12;
+  if(ampm==='AM'&&h===12)h=0;
+  return h+mn/60;
 }
+
+function moonSiderealLon(y,m,d,h){
+  const jd=julianDay(y,m,d,h);
+  const T=(jd-2451545.0)/36525;
+  const r=x=>x*Math.PI/180;
+  const L0=(218.3164477+481267.88123421*T-0.0015786*T*T)%360;
+  const M=(134.9633964+477198.8676313*T)%360;
+  const MS=(357.5291092+35999.0502909*T)%360;
+  const F=(93.2720950+483202.0175233*T)%360;
+  const D=(297.8501921+445267.1114034*T)%360;
+  let lon=L0
+    +6.288774*Math.sin(r(M))
+    +1.274027*Math.sin(r(2*D-M))
+    +0.658314*Math.sin(r(2*D))
+    +0.213618*Math.sin(r(2*M))
+    -0.185116*Math.sin(r(MS))
+    -0.114332*Math.sin(r(2*F))
+    +0.058793*Math.sin(r(2*D-2*M))
+    +0.057066*Math.sin(r(2*D-MS-M))
+    +0.053322*Math.sin(r(2*D+M))
+    +0.045758*Math.sin(r(2*D-MS));
+  const ayanamsa=23.8536+T*1.3968;
+  return((lon-ayanamsa)%360+360)%360;
+}
+
+function getVedicRashi(dob,tob){
+  const [y,m,d]=dob.split('-').map(Number);
+  const h=parseTob(tob);
+  const sid=moonSiderealLon(y,m,d,h);
+  const idx=Math.floor(sid/30);
+  return VEDIC_RASHI[idx]||VEDIC_RASHI[0];
+}
+
+function getVedicNak(dob,tob){
+  const [y,m,d]=dob.split('-').map(Number);
+  const h=parseTob(tob);
+  const sid=moonSiderealLon(y,m,d,h);
+  const ni=Math.floor(sid/(360/27));
+  const pada=Math.floor((sid%(360/27))/((360/27)/4))+1;
+  return {...NAK_DATA[ni],pada};
+}
+
+// Keep getRashi/getNakshatra as aliases for backward compat
+function getRashi(dob,tob){return getVedicRashi(dob,tob||'12:00 PM');}
+function getNakshatra(dob,tob){return getVedicNak(dob,tob||'12:00 PM');}
 
 function getLuckyFromLP(lp) {
   const d=LP_DATA[lp]||LP_DATA[1];
@@ -890,8 +968,9 @@ function renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky){
   document.getElementById('r-su').innerHTML=`<div class="rsec"><h3>✦ Soul Urge ${su} — Inner Motivation</h3><div class="rcontent">${SU_DATA[su]||SU_DATA[1]}</div></div>`;
   const ddlp=LP_DATA[expr]||LP_DATA[1];
   document.getElementById('r-destiny').innerHTML=`<div class="rsec"><h3>✦ Expression ${expr} — Life Destiny</h3><div class="rcontent"><p style="margin-bottom:.5rem;color:var(--muted);font-size:13px">How others see you: <em>${PN_DATA[pn]||PN_DATA[1]}</em></p><p>Your expression number ${expr} (${ddlp.title}) defines your life purpose. You are meant to embody the qualities of ${ddlp.planet} — ${ddlp.element} energy expressed as your unique contribution to the world.</p></div></div>`;
-  document.getElementById('r-rashi').innerHTML=`<div class="rsec"><h3>✦ Sun Sign (Rashi) — ${rashi.name}</h3><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${rashi.planet}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${rashi.element}</div></div><div class="pitem"><div class="pk">Quality</div><div class="pv">${rashi.quality}</div></div></div><div class="interp">${rashi.traits}</div></div>`;
-  document.getElementById('r-nak').innerHTML=`<div class="rsec"><h3>✦ Birth Star (Approximate) — ${nak.name}</h3><div class="profile-row"><div class="pitem"><div class="pk">Star lord</div><div class="pv">${nak.lord}</div></div><div class="pitem"><div class="pk">Deity</div><div class="pv">${nak.deity}</div></div></div><div class="interp">${nak.trait}</div></div>`;
+  document.getElementById('r-rashi').innerHTML=`<div class="rsec"><h3>✦ జన్మ రాశి (Janma Rashi) — ${rashi.name}</h3><div style="font-size:22px;color:var(--gold);font-weight:700;margin-bottom:.5rem">${rashi.te}</div><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${rashi.lord}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${rashi.element}</div></div><div class="pitem"><div class="pk">Symbol</div><div class="pv">${rashi.symbol}</div></div><div class="pitem"><div class="pk">Quality</div><div class="pv">${rashi.quality}</div></div></div><div class="interp">${rashi.traits}</div></div>`;
+  const nakTe={'Ashwini':'అశ్వని','Bharani':'భరణి','Krittika':'కృత్తిక','Rohini':'రోహిణి','Mrigashira':'మృగశిర','Ardra':'ఆర్ద్ర','Punarvasu':'పునర్వసు','Pushya':'పుష్యమి','Ashlesha':'ఆశ్లేష','Magha':'మఖ','Purva Phalguni':'పూర్వ ఫల్గుణి','Uttara Phalguni':'ఉత్తర ఫల్గుణి','Hasta':'హస్త','Chitra':'చిత్త','Swati':'స్వాతి','Vishakha':'విశాఖ','Anuradha':'అనూరాధ','Jyeshtha':'జ్యేష్ఠ','Mula':'మూల','Purva Ashadha':'పూర్వాషాఢ','Uttara Ashadha':'ఉత్తరాషాఢ','Shravana':'శ్రవణం','Dhanishtha':'ధనిష్ఠ','Shatabhisha':'శతభిషం','Purva Bhadrapada':'పూర్వభాద్ర','Uttara Bhadrapada':'ఉత్తరభాద్ర','Revati':'రేవతి'};
+document.getElementById('r-nak').innerHTML=`<div class="rsec"><h3>✦ జన్మ నక్షత్రం (Janma Nakshatra) — ${nak.name}</h3><div style="font-size:22px;color:var(--gold);font-weight:700;margin-bottom:.5rem">${nakTe[nak.name]||nak.name} — పాదం ${nak.pada||1}</div><div class="profile-row"><div class="pitem"><div class="pk">Star lord</div><div class="pv">${nak.lord}</div></div><div class="pitem"><div class="pk">Deity</div><div class="pv">${nak.deity}</div></div><div class="pitem"><div class="pk">Pada</div><div class="pv">${nak.pada||1} / 4</div></div></div><div class="interp">${nak.trait}</div></div>`;
   document.getElementById('r-py').innerHTML=`<div class="rsec"><h3>✦ Personal Year ${py} — 2025 Theme</h3><div class="rcontent">${PY_DATA[py]||PY_DATA[1]}</div></div>`;
   document.getElementById('r-lucky').innerHTML=`<div class="rsec"><h3>✦ Lucky Numbers & Remedies</h3><div style="display:flex;flex-wrap:wrap;gap:8px;margin:.5rem 0">${lucky.single.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Lucky</div></div>`).join('')}${lucky.compound.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Compound</div></div>`).join('')}</div><div class="profile-row" style="margin-top:.75rem"><div class="pitem"><div class="pk">Avoid digits</div><div class="pv" style="color:var(--red)">${lucky.avoid.join(', ')}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lucky.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lucky.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lucky.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lucky.mantra}</div></div></div></div>`;
   document.getElementById('mcard').style.display='block';document.getElementById('mresults').style.display='none';document.getElementById('minput').value='';
@@ -989,7 +1068,7 @@ function doProceed(){
   if(!document.getElementById('rv-confirm').checked)return;
   const d=S.fd;
   const lp=calcLP(d.dob),expr=calcExpr(d.name),su=calcSU(d.name),pn=calcPN(d.name),mat=calcMat(lp,expr),bal=calcBal(d.name),py=calcPY(d.dob,2025);
-  const grid=getNameGrid(d.name),rashi=getRashi(d.dob),nak=getNakshatra(d.dob),lucky=getLuckyFromLP(lp);
+  const grid=getNameGrid(d.name),rashi=getVedicRashi(d.dob,d.tob),nak=getVedicNak(d.dob,d.tob),lucky=getLuckyFromLP(lp);
   S.nums={lp,expr,su,pn,mat,bal,py,lucky};
   S.reportCount=(S.reportCount||0)+1;
   if(S.dealer.type==='trial'){

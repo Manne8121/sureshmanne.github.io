@@ -816,20 +816,22 @@ async function doGenAI(cnt){
 
 async function upgradeCode(code){
   if(!confirm('Upgrade '+code+' to paid?'))return;
+  toast('Upgrading...');
   try{
     await Promise.all([
       callSheets({action:'updateCode',code,field:'type',value:'paid',sheet:'codes'}),
       callSheets({action:'updateCode',code,field:'status',value:'unused',sheet:'codes'}),
     ]);
-    toast('Upgraded to paid ✓');renderAdmin();
+    toast('✓ Upgraded to Paid — refreshing...');setTimeout(()=>renderAdmin(),1200);
   }catch(e){toast('Error: '+e.message,4000);}
 }
 
 async function revokeCode(code){
   if(!confirm('Revoke '+code+'?'))return;
+  toast('Revoking...');
   try{
     await callSheets({action:'updateCode',code,field:'status',value:'revoked',sheet:'codes'});
-    toast('Revoked');renderAdmin();
+    toast('✓ Revoked — refreshing...');setTimeout(()=>renderAdmin(),1200);
   }catch(e){toast('Error: '+e.message,4000);}
 }
 
@@ -837,7 +839,7 @@ async function revokeAI(code){
   if(!confirm('Revoke AI code '+code+'?'))return;
   try{
     await callSheets({action:'updateCode',code,field:'status',value:'revoked',sheet:'ai_codes'});
-    toast('AI code revoked');renderAdmin();
+    toast('AI code revoked');setTimeout(()=>renderAdmin(),1000);
   }catch(e){toast('Error: '+e.message,4000);}
 }
 

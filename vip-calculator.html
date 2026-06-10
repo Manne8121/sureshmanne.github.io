@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Number Total Calculator — Manne Communications</title>
+<title>Number Total Calculator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -32,10 +32,8 @@
     --purple-dim: rgba(192,132,252,0.13);
     --orange: #fb923c;
     --orange-dim: rgba(251,146,60,0.13);
-    /* Number column — bright white-blue for maximum readability */
     --num-color: #cdd9f5;
     --num-bright: #eef2ff;
-    /* Text */
     --text: #dde3f5;
     --text-bright: #f0f4ff;
     --text-dim: #8899bb;
@@ -54,7 +52,6 @@
     overflow-x: hidden;
   }
 
-  /* Grid bg */
   body::before {
     content: '';
     position: fixed;
@@ -67,7 +64,6 @@
     z-index: 0;
   }
 
-  /* Top gold orb */
   body::after {
     content: '';
     position: fixed;
@@ -89,7 +85,6 @@
     padding: 0 20px 80px;
   }
 
-  /* ── HEADER ── */
   header {
     text-align: center;
     padding: 48px 0 40px;
@@ -126,7 +121,6 @@
     50% { opacity:0.4; transform:scale(0.5); box-shadow: none; }
   }
 
-  /* Title glow */
   h1 {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: clamp(2.6rem, 6.5vw, 4rem);
@@ -136,17 +130,12 @@
     text-transform: uppercase;
     color: var(--text-bright);
     margin-bottom: 16px;
-    text-shadow:
-      0 0 40px rgba(232,184,75,0.25),
-      0 0 80px rgba(232,184,75,0.1);
+    text-shadow: 0 0 40px rgba(232,184,75,0.25), 0 0 80px rgba(232,184,75,0.1);
   }
 
   h1 span {
     color: var(--gold-bright);
-    text-shadow:
-      0 0 20px rgba(232,184,75,0.7),
-      0 0 50px rgba(232,184,75,0.35),
-      0 0 100px rgba(232,184,75,0.15);
+    text-shadow: 0 0 20px rgba(232,184,75,0.7), 0 0 50px rgba(232,184,75,0.35), 0 0 100px rgba(232,184,75,0.15);
   }
 
   .subtitle {
@@ -158,7 +147,6 @@
     line-height: 1.7;
   }
 
-  /* ── CARDS ── */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -197,7 +185,6 @@
     background: var(--border);
   }
 
-  /* ── TEXTAREA ── */
   textarea {
     width: 100%;
     min-height: 140px;
@@ -252,7 +239,6 @@
 
   .btn-clear:hover { border-color: var(--red); color: var(--red); }
 
-  /* ── WARN BAR ── */
   .warn-bar {
     display: none;
     align-items: center;
@@ -269,7 +255,6 @@
 
   .warn-bar.visible { display: flex; }
 
-  /* ── DIGIT EXCLUSION ── */
   .digit-exclude-section { display: none; }
   .digit-exclude-section.visible { display: block; }
 
@@ -299,11 +284,7 @@
     position: relative;
   }
 
-  .dchip:hover {
-    border-color: var(--gold-dim);
-    color: var(--gold-bright);
-    background: var(--gold-glow2);
-  }
+  .dchip:hover { border-color: var(--gold-dim); color: var(--gold-bright); background: var(--gold-glow2); }
 
   .dchip.excluded {
     background: var(--red-dim);
@@ -338,7 +319,6 @@
 
   .exclude-status strong { color: var(--red); }
 
-  /* ── FILTER SECTION ── */
   .filter-section { display: none; }
   .filter-section.visible { display: block; }
 
@@ -412,7 +392,6 @@
 
   .filter-clear-btn:hover { border-color: var(--gold-dim); color: var(--gold-bright); }
 
-  /* ── DISTRIBUTION ── */
   .dist-section { display: none; }
   .dist-section.visible { display: block; }
 
@@ -448,26 +427,11 @@
   }
 
   .dist-bar:hover { background: rgba(232,184,75,0.28); box-shadow: 0 0 10px rgba(232,184,75,0.2); }
-  .dist-bar.active-bar {
-    background: rgba(232,184,75,0.3);
-    border-color: var(--gold-bright);
-    box-shadow: 0 0 16px rgba(232,184,75,0.3);
-  }
+  .dist-bar.active-bar { background: rgba(232,184,75,0.3); border-color: var(--gold-bright); box-shadow: 0 0 16px rgba(232,184,75,0.3); }
 
-  .dist-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-mid);
-  }
+  .dist-label { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-mid); }
+  .dist-count { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-muted); }
 
-  .dist-count {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--text-muted);
-  }
-
-  /* ── RESULTS ── */
   .results-section { display: none; }
   .results-section.visible { display: block; }
 
@@ -507,15 +471,8 @@
     text-shadow: 0 0 20px rgba(232,184,75,0.4);
   }
 
-  .stat-label {
-    font-size: 11px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-family: 'IBM Plex Mono', monospace;
-  }
+  .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; font-family: 'IBM Plex Mono', monospace; }
 
-  /* ── ACTIONS ── */
   .actions-bar {
     display: flex;
     gap: 8px;
@@ -549,47 +506,18 @@
     font-family: 'Barlow', sans-serif;
   }
 
-  .btn-gold {
-    background: var(--gold);
-    color: #0a0b14;
-    box-shadow: 0 0 0 rgba(232,184,75,0);
-  }
-  .btn-gold:hover {
-    background: var(--gold-bright);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(232,184,75,0.35), 0 0 40px rgba(232,184,75,0.15);
-  }
+  .btn-gold { background: var(--gold); color: #0a0b14; }
+  .btn-gold:hover { background: var(--gold-bright); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(232,184,75,0.35), 0 0 40px rgba(232,184,75,0.15); }
 
   .btn-wa { background: #25D366; color: #fff; }
-  .btn-wa:hover {
-    background: #1ebe5a;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(37,211,102,0.3), 0 0 30px rgba(37,211,102,0.12);
-  }
+  .btn-wa:hover { background: #1ebe5a; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(37,211,102,0.3); }
 
-  .btn-outline {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-mid);
-  }
+  .btn-outline { background: none; border: 1px solid var(--border); color: var(--text-mid); }
   .btn-outline:hover { border-color: var(--gold-dim); color: var(--text-bright); }
 
-  /* ── SORT ── */
-  .sort-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
+  .sort-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 
-  .sort-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-mid);
-  }
+  .sort-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); }
 
   .sort-btn {
     background: var(--surface2);
@@ -607,27 +535,13 @@
   }
 
   .sort-btn:hover { border-color: var(--gold-dim); color: var(--text-bright); }
-  .sort-btn.active {
-    background: rgba(232,184,75,0.12);
-    border-color: var(--gold);
-    color: var(--gold-bright);
-    box-shadow: 0 0 10px rgba(232,184,75,0.12);
-  }
+  .sort-btn.active { background: rgba(232,184,75,0.12); border-color: var(--gold); color: var(--gold-bright); box-shadow: 0 0 10px rgba(232,184,75,0.12); }
 
-  /* ── TABLE ── */
-  .table-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden;
-  }
+  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
 
   table { width: 100%; border-collapse: collapse; }
 
-  thead tr {
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border2);
-  }
+  thead tr { background: var(--surface2); border-bottom: 1px solid var(--border2); }
 
   th {
     font-family: 'IBM Plex Mono', monospace;
@@ -641,46 +555,23 @@
     user-select: none;
   }
 
-  /* Column header colors matching column data */
   th:nth-child(1) { color: var(--num-color); }
   th:nth-child(2) { text-align: center; width: 140px; color: var(--gold); }
   th:nth-child(3) { text-align: center; width: 140px; color: var(--green-bright); }
   th:nth-child(4) { text-align: center; width: 100px; color: var(--purple); }
 
-  tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background 0.1s;
-    cursor: pointer;
-  }
-
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; cursor: pointer; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: rgba(232,184,75,0.04); }
   tbody tr:active { background: rgba(232,184,75,0.07); }
 
-  td {
-    padding: 14px 22px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-  }
-
-  /* Mobile number — bright white-blue */
-  td:nth-child(1) {
-    color: var(--num-bright);
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-
+  td { padding: 14px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; }
+  td:nth-child(1) { color: var(--num-bright); font-weight: 500; letter-spacing: 0.04em; }
   td:nth-child(2), td:nth-child(3) { text-align: center; }
   td:nth-child(4) { text-align: center; }
 
-  .serial {
-    color: var(--text-muted);
-    font-size: 11px;
-    margin-right: 12px;
-    font-weight: 400;
-  }
+  .serial { color: var(--text-muted); font-size: 11px; margin-right: 12px; font-weight: 400; }
 
-  /* 2-digit badge — gold */
   .badge-2d {
     display: inline-block;
     background: rgba(232,184,75,0.12);
@@ -696,7 +587,6 @@
     letter-spacing: 0.03em;
   }
 
-  /* 1-digit badge — green */
   .badge-1d {
     display: inline-block;
     background: rgba(46,219,111,0.1);
@@ -712,39 +602,13 @@
     letter-spacing: 0.03em;
   }
 
-  /* Pattern tags */
-  .pattern-tag {
-    display: inline-block;
-    border-radius: 6px;
-    padding: 3px 9px;
-    font-size: 11px;
-    font-family: 'IBM Plex Mono', monospace;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-    font-weight: 500;
-  }
+  .pattern-tag { display: inline-block; border-radius: 6px; padding: 3px 9px; font-size: 11px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; white-space: nowrap; font-weight: 500; }
 
-  .pt-mirror {
-    background: var(--purple-dim);
-    border: 1px solid rgba(192,132,252,0.3);
-    color: var(--purple);
-    box-shadow: 0 0 8px rgba(192,132,252,0.1);
-  }
-  .pt-repeat {
-    background: var(--orange-dim);
-    border: 1px solid rgba(251,146,60,0.3);
-    color: var(--orange);
-    box-shadow: 0 0 8px rgba(251,146,60,0.1);
-  }
-  .pt-seq {
-    background: var(--blue-dim);
-    border: 1px solid rgba(77,159,255,0.3);
-    color: var(--blue);
-    box-shadow: 0 0 8px rgba(77,159,255,0.1);
-  }
+  .pt-mirror { background: var(--purple-dim); border: 1px solid rgba(192,132,252,0.3); color: var(--purple); }
+  .pt-repeat { background: var(--orange-dim); border: 1px solid rgba(251,146,60,0.3); color: var(--orange); }
+  .pt-seq { background: var(--blue-dim); border: 1px solid rgba(77,159,255,0.3); color: var(--blue); }
   .pt-plain { color: var(--text-muted); font-size: 11px; }
 
-  /* ── COPY FLASH ── */
   .copy-flash {
     position: fixed;
     bottom: 70px;
@@ -767,17 +631,9 @@
 
   .copy-flash.show { opacity: 1; }
 
-  /* ── EMPTY STATE ── */
-  .empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-dim);
-    font-size: 15px;
-  }
-
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 15px; }
   .empty-state svg { opacity: 0.15; margin-bottom: 16px; }
 
-  /* ── TOAST ── */
   .toast {
     position: fixed;
     bottom: 28px;
@@ -798,76 +654,23 @@
 
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  /* ── RESET BTN ── */
-  .reset-all-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
+  .reset-all-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); border-radius: 8px; padding: 6px 14px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'IBM Plex Mono', monospace; }
   .reset-all-btn:hover { border-color: var(--red); color: var(--red); }
 
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 56px 0 0;
-  }
+  footer { text-align: center; padding: 56px 0 0; }
 
-  .footer-inner {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
+  .footer-inner { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; }
 
-  .footer-dot {
-    width: 36px; height: 2px;
-    border-radius: 2px;
-    background: var(--gold);
-    box-shadow: 0 0 12px var(--gold), 0 0 30px rgba(232,184,75,0.4);
-    margin-bottom: 4px;
-  }
+  .footer-dot { width: 36px; height: 2px; border-radius: 2px; background: var(--gold); box-shadow: 0 0 12px var(--gold), 0 0 30px rgba(232,184,75,0.4); margin-bottom: 4px; }
 
-  /* Footer brand — gold neon glow */
-  .footer-brand {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--gold-bright);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-shadow:
-      0 0 10px rgba(232,184,75,0.9),
-      0 0 30px rgba(232,184,75,0.55),
-      0 0 60px rgba(232,184,75,0.25),
-      0 0 100px rgba(232,184,75,0.12);
-  }
+  .footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--gold-bright); letter-spacing: 0.12em; text-transform: uppercase; text-shadow: 0 0 10px rgba(232,184,75,0.9), 0 0 30px rgba(232,184,75,0.55), 0 0 60px rgba(232,184,75,0.25); }
 
-  /* Footer tagline — same glow, smaller */
-  .footer-sub {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-shadow:
-      0 0 8px rgba(232,184,75,0.6),
-      0 0 20px rgba(232,184,75,0.25);
-    opacity: 0.85;
-  }
+  .footer-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); text-shadow: 0 0 8px rgba(232,184,75,0.6); opacity: 0.85; }
 
-  /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-  /* ── MOBILE ── */
   @media (max-width: 480px) {
     .wrap { padding: 0 12px 60px; }
     header { padding: 30px 0 24px; }
@@ -920,7 +723,6 @@
     <p class="subtitle">Paste any number list — any format, any mess. Extract, filter, sort, and share instantly.</p>
   </header>
 
-  <!-- PASTE -->
   <div class="card">
     <div class="section-label">Paste Number List</div>
     <textarea id="pasteBox" placeholder="Paste numbers here — with text, emojis, prices, spaces — anything.&#10;&#10;Examples:&#10;📱 9876543210&#10;✅ 7403910000 ₹15,000&#10;+91 98765 43210 — Fancy number"></textarea>
@@ -930,12 +732,10 @@
     </div>
   </div>
 
-  <!-- WARN -->
   <div class="warn-bar" id="warnBar">
     ⚠ Only first 1000 numbers processed — extra numbers ignored.
   </div>
 
-  <!-- DIGIT EXCLUSION -->
   <div class="card digit-exclude-section" id="digitExcludeSection">
     <div class="section-label">Exclude Numbers Containing Digit</div>
     <div class="digit-grid" id="digitGrid"></div>
@@ -945,7 +745,6 @@
     </div>
   </div>
 
-  <!-- DISTRIBUTION -->
   <div class="card dist-section" id="distSection">
     <div class="section-label">1-Digit Total Distribution
       <span style="color:var(--text-muted);font-size:10px;margin-left:2px;letter-spacing:0.05em;">(tap bar to filter)</span>
@@ -953,7 +752,6 @@
     <div class="dist-grid" id="distGrid"></div>
   </div>
 
-  <!-- TOTAL FILTERS -->
   <div class="card filter-section" id="filterSection">
     <div class="section-label">Filter by Total</div>
     <div class="filter-row">
@@ -968,7 +766,6 @@
     </div>
   </div>
 
-  <!-- RESULTS -->
   <div class="results-section" id="resultsSection">
     <div class="stats-row" id="statsRow"></div>
 
@@ -1110,6 +907,11 @@
     return data;
   }
 
+  // Format for copy/share: NUMBER - 2digit - 1digit
+  function formatLine(r) {
+    return `${r.num} - ${r.d2} - ${r.d1}`;
+  }
+
   function render() {
     const data = filtered();
     const tbody = document.getElementById('tableBody');
@@ -1234,35 +1036,30 @@
   function copyWithTotals() {
     const data = filtered();
     if (!data.length) { showToast('Nothing to copy'); return; }
-    navigator.clipboard.writeText(data.map(r => `${r.num} | Total: ${r.d2}/${r.d1}`).join('\n'))
+    navigator.clipboard.writeText(data.map(r => formatLine(r)).join('\n'))
       .then(() => showToast(`✓ Copied ${data.length} numbers with totals`));
   }
 
   function shareWhatsApp() {
     const data = filtered();
     if (!data.length) { showToast('Nothing to share'); return; }
-    window.open('https://wa.me/?text=' + encodeURIComponent(data.map(r => `${r.num} | Total: ${r.d2}/${r.d1}`).join('\n')), '_blank');
+    window.open('https://wa.me/?text=' + encodeURIComponent(data.map(r => formatLine(r)).join('\n')), '_blank');
   }
 
   function clearAll() {
-    document.getElementById('pasteBox').value = '';
+    const box = document.getElementById('pasteBox');
+    box.value = '';
     allNumbers = []; active2d = null; active1d = null; excludedDigits.clear(); currentSort = 'none';
     document.getElementById('countBadge').textContent = 'Waiting for input…';
     ['filterSection','resultsSection','warnBar','digitExcludeSection','distSection']
       .forEach(id => document.getElementById(id).classList.remove('visible'));
     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('sortNone').classList.add('active');
+    setTimeout(() => box.focus(), 50);
   }
 
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
-
-  document.getElementById('pasteBox').addEventListener('input', function() {
-    const raw = this.value.trim();
+  function processInput(val) {
+    const raw = val.trim();
     if (!raw) { clearAll(); return; }
     let nums = extract(raw);
     const warn = nums.length > MAX;
@@ -1278,6 +1075,25 @@
     document.getElementById('countBadge').innerHTML = `<strong>${nums.length}</strong> numbers extracted`;
     ['filterSection','resultsSection','digitExcludeSection','distSection'].forEach(id => document.getElementById(id).classList.add('visible'));
     buildChips(); buildDigitGrid(); render();
+  }
+
+  const pasteBox = document.getElementById('pasteBox');
+
+  pasteBox.addEventListener('input', function() {
+    processInput(this.value);
+  });
+
+  // Fix for mobile: paste event fires before value updates, so intercept clipboardData directly
+  pasteBox.addEventListener('paste', function(e) {
+    const pasted = (e.clipboardData || window.clipboardData).getData('text');
+    if (pasted) {
+      e.preventDefault();
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.slice(0, start) + pasted + this.value.slice(end);
+      this.selectionStart = this.selectionEnd = start + pasted.length;
+      processInput(this.value);
+    }
   });
 </script>
 </body>

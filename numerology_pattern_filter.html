@@ -88,9 +88,13 @@
 <div class="sub">Expand a wildcard pattern, exclude digits, filter by digit-sum total (single or two-digit).</div>
 
 <div class="panel">
-  <label>Pattern (use * or ? for wildcard positions)</label>
-  <input type="text" id="pattern" value="9133****66" placeholder="e.g. 9133****66">
-  <div class="hint">Only the * positions are filled in; fixed digits stay as typed.</div>
+  <label>Known 4-digit series prefixes (used only when first 4 chars of pattern are ****)</label>
+  <textarea id="seriesList" style="height:80px;">9160,8142,9966,7799,9581,9885,9985,9848,9948,9010,9951,9666,9603,9912,9505,9542,9642,8886,8297,9703,7729,7730,7731,7732,8096,9553,9640,8463,8464,8465,8466,8497,8498,8499,8501,7660,7661,9133,7997,8367,8184,8185,8186,8187,8498,8499,7287,7288,7286,7285</textarea>
+  <div class="hint">Comma-separated. Edit this list any time as your known series grow. Only used when the pattern starts with exactly four * — e.g. ****56789. If you type the prefix yourself (e.g. 9133******), this list is ignored.</div>
+
+  <label>Pattern — exactly 10 characters (digits + * wildcards)</label>
+  <input type="text" id="pattern" value="9133****66" placeholder="e.g. 9133****66 or ****256789" maxlength="10">
+  <div class="hint">Only the * positions are filled in; fixed digits stay as typed. Wildcards can be anywhere — start, middle, or end (e.g. ****256789 for a known last-6 with unknown first 4).</div>
 
   <div class="row">
     <div>
@@ -161,12 +165,17 @@ function runFilter(){
     return;
   }
 
+  if(pattern.length !== 10){
+    errBox.textContent = `Pattern must be exactly 10 characters (digits + wildcards combined). You entered ${pattern.length}.`;
+    return;
+  }
+
   const wildcardCount = (pattern.match(/\*/g) || []).length;
   if(wildcardCount === 0){
     errBox.textContent = 'Pattern has no wildcards (*) to expand.';
     return;
   }
-  if(wildcardCount > 6){
+  if(wildcardCount > 7){
     errBox.textContent = `Pattern has ${wildcardCount} wildcards — that is ${Math.pow(10,wildcardCount).toLocaleString()} raw combinations before filtering. Reduce wildcard count or tighten exclude/only-allow list.`;
     return;
   }
@@ -192,16 +201,31 @@ function runFilter(){
   const targetTwoRaw = document.getElementById('targetTwoDigit').value.trim();
   const targetTwoSet = targetTwoRaw ? new Set(targetTwoRaw.split(',').map(s=>parseInt(s.trim(),10))) : null;
 
-  // Estimate combination count before generating
-  const estimate = Math.pow(allowedDigits.length, wildcardCount);
+  const fixedChars = pattern.split('');
+  const usesSeriesPrefix = (pattern.slice(0,4) === '****');
+
+  let wildcardIdx = [];
+  fixedChars.forEach((c,i)=>{ if(c==='*') wildcardIdx.push(i); });
+
+  let seriesPrefixes = [];
+  if(usesSeriesPrefix){
+    const raw = document.getElementById('seriesList').value.trim();
+    seriesPrefixes = raw ? raw.split(',').map(s=>s.trim()).filter(s=>/^\d{4}$/.test(s)) : [];
+    if(seriesPrefixes.length === 0){
+      errBox.textContent = 'Pattern starts with **** but the known series prefix list is empty or has no valid 4-digit entries.';
+      return;
+    }
+    // remove positions 0-3 from the free-wildcard list since they're driven by the series list
+    wildcardIdx = wildcardIdx.filter(i => i >= 4);
+  }
+
+  // Estimate combination count before generating (series branch: prefixes × remaining wildcard combos)
+  const freeCombos = Math.pow(allowedDigits.length, wildcardIdx.length);
+  const estimate = usesSeriesPrefix ? seriesPrefixes.length * freeCombos : freeCombos;
   if(estimate > 200000){
     errBox.textContent = `Estimated ${estimate.toLocaleString()} combinations — too many to generate in-browser safely. Narrow your filters.`;
     return;
   }
-
-  const fixedChars = pattern.split('');
-  const wildcardIdx = [];
-  fixedChars.forEach((c,i)=>{ if(c==='*') wildcardIdx.push(i); });
 
   const results = [];
 
@@ -223,7 +247,15 @@ function runFilter(){
     }
   }
 
-  recurse(0, fixedChars.slice());
+  if(usesSeriesPrefix){
+    for(const prefix of seriesPrefixes){
+      const base = fixedChars.slice();
+      prefix.split('').forEach((d,i)=>{ base[i] = d; });
+      recurse(0, base);
+    }
+  } else {
+    recurse(0, fixedChars.slice());
+  }
 
   results.sort((a,b)=> a.num.localeCompare(b.num));
 

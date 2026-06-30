@@ -65,6 +65,8 @@
     border-radius:5px; font-size:0.95rem; cursor:pointer; margin:0;
   }
   .copy-btn.copied{background:var(--green);}
+  .batch.is-copied{border-color:var(--green); opacity:0.65;}
+  .batch.is-copied .batch-title::after{content:" — already copied"; color:var(--green); font-weight:400; font-size:0.85rem;}
 
   @media (max-width: 900px){
     html{font-size:16px;}
@@ -111,8 +113,8 @@
 
   <div class="row">
     <div>
-      <label>Target single-digit total (Chaldean reduced)</label>
-      <input type="text" id="targetSingle" value="1" placeholder="e.g. 1 (leave blank for any)">
+      <label>Target single-digit total(s) (Chaldean reduced)</label>
+      <input type="text" id="targetSingle" value="1" placeholder="e.g. 1 or 3,6,9 (leave blank for any)">
     </div>
     <div>
       <label>Target raw two-digit total (optional)</label>
@@ -139,7 +141,10 @@
   <label>Plain number list (full, for reference)</label>
   <textarea id="plainList" readonly></textarea>
 
-  <label style="margin-top:20px;">Vi-ready batches (10 numbers each — copy button grabs numbers only)</label>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+    <label style="margin:0;">Vi-ready batches (10 numbers each — copy button grabs numbers only)</label>
+    <button class="secondary" style="margin-top:0; padding:6px 14px; font-size:0.85rem;" onclick="resetCopiedMarks()">Reset copied marks</button>
+  </div>
   <div id="batchContainer"></div>
 </div>
 
@@ -196,7 +201,7 @@ function runFilter(){
   }
 
   const targetSingleRaw = document.getElementById('targetSingle').value.trim();
-  const targetSingle = targetSingleRaw === '' ? null : parseInt(targetSingleRaw, 10);
+  const targetSingleSet = targetSingleRaw ? new Set(targetSingleRaw.split(',').map(s=>parseInt(s.trim(),10)).filter(n=>!isNaN(n))) : null;
 
   const targetTwoRaw = document.getElementById('targetTwoDigit').value.trim();
   const targetTwoSet = targetTwoRaw ? new Set(targetTwoRaw.split(',').map(s=>parseInt(s.trim(),10))) : null;
@@ -235,7 +240,7 @@ function runFilter(){
       const rawSum = numStr.split('').reduce((a,d)=>a+parseInt(d,10),0);
       const single = chaldeanReduce(rawSum);
 
-      if(targetSingle !== null && !isNaN(targetSingle) && single !== targetSingle) return;
+      if(targetSingleSet && !targetSingleSet.has(single)) return;
       if(targetTwoSet && !targetTwoSet.has(rawSum)) return;
 
       results.push({num:numStr, raw:rawSum, single:single});
@@ -278,22 +283,34 @@ function runFilter(){
   }
 }
 
+function getCopiedSet(){
+  try{
+    return new Set(JSON.parse(localStorage.getItem('vi_copied_lists') || '[]'));
+  } catch(e){ return new Set(); }
+}
+function saveCopiedSet(set){
+  try{ localStorage.setItem('vi_copied_lists', JSON.stringify([...set])); } catch(e){}
+}
+
 function renderBatches(numbers){
   const container = document.getElementById('batchContainer');
   container.innerHTML = '';
   if(numbers.length === 0) return;
 
+  const copiedSet = getCopiedSet();
   const chunkSize = 10;
   for(let i=0; i<numbers.length; i+=chunkSize){
     const chunk = numbers.slice(i, i+chunkSize);
     const listNum = Math.floor(i/chunkSize) + 1;
+    const key = chunk.join(',');
+    const alreadyCopied = copiedSet.has(key);
 
     const div = document.createElement('div');
-    div.className = 'batch';
+    div.className = 'batch' + (alreadyCopied ? ' is-copied' : '');
     div.innerHTML = `
       <div class="batch-head">
         <span class="batch-title">List ${listNum} (${chunk.length} numbers)</span>
-        <button class="copy-btn" data-nums="${chunk.join(',')}">Copy</button>
+        <button class="copy-btn ${alreadyCopied ? 'copied' : ''}" data-nums="${key}">${alreadyCopied ? '✓ Copied' : 'Copy'}</button>
       </div>
       <div class="batch-nums">${chunk.join(' &nbsp; ')}</div>
     `;
@@ -302,7 +319,8 @@ function renderBatches(numbers){
 
   container.querySelectorAll('.copy-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const nums = btn.getAttribute('data-nums').split(',');
+      const key = btn.getAttribute('data-nums');
+      const nums = key.split(',');
       const text = nums.join('\n');
       const temp = document.createElement('textarea');
       temp.value = text;
@@ -313,12 +331,21 @@ function renderBatches(numbers){
       document.execCommand('copy');
       document.body.removeChild(temp);
 
-      const original = btn.textContent;
-      btn.textContent = 'Copied!';
+      const set = getCopiedSet();
+      set.add(key);
+      saveCopiedSet(set);
+
+      btn.textContent = '✓ Copied';
       btn.classList.add('copied');
-      setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 1200);
+      btn.closest('.batch').classList.add('is-copied');
     });
   });
+}
+
+function resetCopiedMarks(){
+  try{ localStorage.removeItem('vi_copied_lists'); } catch(e){}
+  document.querySelectorAll('.batch').forEach(b=>b.classList.remove('is-copied'));
+  document.querySelectorAll('.copy-btn').forEach(b=>{ b.textContent='Copy'; b.classList.remove('copied'); });
 }
 
 function copyNumbers(){

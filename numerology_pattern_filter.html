@@ -207,7 +207,8 @@ function runFilter(){
   const targetTwoSet = targetTwoRaw ? new Set(targetTwoRaw.split(',').map(s=>parseInt(s.trim(),10))) : null;
 
   const fixedChars = pattern.split('');
-  const usesSeriesPrefix = (pattern.slice(0,4) === '****');
+  const first4 = pattern.slice(0,4);
+  const usesSeriesPrefix = /\*/.test(first4);   // any wildcard among first 4 positions triggers series-list matching
 
   let wildcardIdx = [];
   fixedChars.forEach((c,i)=>{ if(c==='*') wildcardIdx.push(i); });
@@ -215,9 +216,22 @@ function runFilter(){
   let seriesPrefixes = [];
   if(usesSeriesPrefix){
     const raw = document.getElementById('seriesList').value.trim();
-    seriesPrefixes = raw ? raw.split(',').map(s=>s.trim()).filter(s=>/^\d{4}$/.test(s)) : [];
+    const allPrefixes = raw ? raw.split(',').map(s=>s.trim()).filter(s=>/^\d{4}$/.test(s)) : [];
+    if(allPrefixes.length === 0){
+      errBox.textContent = 'Pattern has a wildcard in the first 4 positions but the known series prefix list is empty or has no valid 4-digit entries.';
+      return;
+    }
+    // keep only prefixes matching the fixed digits the user typed in positions 0-3
+    seriesPrefixes = allPrefixes.filter(p => {
+      for(let i=0;i<4;i++){
+        if(first4[i] !== '*' && first4[i] !== p[i]) return false;
+      }
+      return true;
+    });
+    // de-duplicate
+    seriesPrefixes = [...new Set(seriesPrefixes)];
     if(seriesPrefixes.length === 0){
-      errBox.textContent = 'Pattern starts with **** but the known series prefix list is empty or has no valid 4-digit entries.';
+      errBox.textContent = `No known series prefixes match "${first4}" — check your series list or the fixed digits you typed.`;
       return;
     }
     // remove positions 0-3 from the free-wildcard list since they're driven by the series list

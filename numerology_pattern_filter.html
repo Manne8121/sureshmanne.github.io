@@ -48,6 +48,18 @@
   }
   .err{color:#ef4444; font-size:13px; margin-top:8px;}
   .pill{display:inline-block; background:#1e293b; color:#93c5fd; border-radius:4px; padding:2px 8px; font-size:12px; margin-left:6px;}
+  .batch{
+    background:#0e0e11; border:1px solid var(--border); border-radius:8px;
+    padding:12px 14px; margin-top:10px;
+  }
+  .batch-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
+  .batch-title{color:var(--gold); font-size:13px; font-weight:600;}
+  .batch-nums{font-family:monospace; font-size:14px; line-height:1.7; word-spacing:6px;}
+  .copy-btn{
+    background:var(--blue); color:#fff; border:none; padding:5px 12px;
+    border-radius:5px; font-size:12px; cursor:pointer; margin:0;
+  }
+  .copy-btn.copied{background:var(--green);}
 </style>
 </head>
 <body>
@@ -100,8 +112,11 @@
     </thead>
     <tbody id="resultsBody"></tbody>
   </table>
-  <label>Plain number list (for pasting into Vi search / WhatsApp)</label>
+  <label>Plain number list (full, for reference)</label>
   <textarea id="plainList" readonly></textarea>
+
+  <label style="margin-top:20px;">Vi-ready batches (10 numbers each — copy button grabs numbers only)</label>
+  <div id="batchContainer"></div>
 </div>
 
 <script>
@@ -157,7 +172,6 @@ function runFilter(){
   const targetTwoRaw = document.getElementById('targetTwoDigit').value.trim();
   const targetTwoSet = targetTwoRaw ? new Set(targetTwoRaw.split(',').map(s=>parseInt(s.trim(),10))) : null;
 
-  // Estimate combination count before generating
   const estimate = Math.pow(allowedDigits.length, wildcardCount);
   if(estimate > 200000){
     errBox.textContent = `Estimated ${estimate.toLocaleString()} combinations — too many to generate in-browser safely. Narrow your filters.`;
@@ -204,9 +218,54 @@ function runFilter(){
   document.getElementById('plainList').value = results.map(r=>r.num).join('\n');
   document.getElementById('resultsPanel').style.display = 'block';
 
+  renderBatches(results.map(r=>r.num));
+
   if(results.length === 0){
     errBox.textContent = 'No matches — try widening filters.';
   }
+}
+
+function renderBatches(numbers){
+  const container = document.getElementById('batchContainer');
+  container.innerHTML = '';
+  if(numbers.length === 0) return;
+
+  const chunkSize = 10;
+  for(let i=0; i<numbers.length; i+=chunkSize){
+    const chunk = numbers.slice(i, i+chunkSize);
+    const listNum = Math.floor(i/chunkSize) + 1;
+
+    const div = document.createElement('div');
+    div.className = 'batch';
+    div.innerHTML = `
+      <div class="batch-head">
+        <span class="batch-title">List ${listNum} (${chunk.length} numbers)</span>
+        <button class="copy-btn" data-nums="${chunk.join(',')}">Copy</button>
+      </div>
+      <div class="batch-nums">${chunk.join(' &nbsp; ')}</div>
+    `;
+    container.appendChild(div);
+  }
+
+  container.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const nums = btn.getAttribute('data-nums').split(',');
+      const text = nums.join('\n');
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.opacity = '0';
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 1200);
+    });
+  });
 }
 
 function copyNumbers(){

@@ -37,24 +37,24 @@ a{text-decoration:none;color:inherit}
 ::selection{background:var(--gold);color:#000}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--blue));border-radius:2px}
 @keyframes pgIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes preBar{from{width:0}to{width:%}}
-@keyframes preDot{0%,%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-@keyframes tickerScroll{0%{transform:translateX(0)}%{transform:translateX(-50%)}}
-@keyframes goldGlow{0%,%{opacity:.9}50%{text-shadow:0 0 16px rgba(228,201,106,.7),0 0 36px rgba(201,168,76,.4);opacity:1;color:var(--gold2)}}
-@keyframes floatCard{0%,%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes pulseBorder{0%,%{box-shadow:0 0 0 0 rgba(201,168,76,.35)}60%{box-shadow:0 0 0 9px rgba(201,168,76,0)}}
+@keyframes preBar{from{width:0}to{width:100%}}
+@keyframes preDot{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes goldGlow{0%,100%{opacity:.9}50%{text-shadow:0 0 16px rgba(228,201,106,.7),0 0 36px rgba(201,168,76,.4);opacity:1;color:var(--gold2)}}
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pulseBorder{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.35)}60%{box-shadow:0 0 0 9px rgba(201,168,76,0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-@keyframes shimmer{0%{background-position:200% 0}%{background-position:-200% 0}}
-@keyframes livePulse{0%,%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(34,197,94,.5)}60%{opacity:.6;transform:scale(.8);box-shadow:0 0 0 6px rgba(34,197,94,0)}}
-@keyframes waFloat{0%,%{transform:translateY(0)}30%{transform:translateY(-10px)}60%{transform:translateY(-5px)}}
-@keyframes trustScroll{0%{transform:translateX(0)}%{transform:translateX(-50%)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(34,197,94,.5)}60%{opacity:.6;transform:scale(.8);box-shadow:0 0 0 6px rgba(34,197,94,0)}}
+@keyframes waFloat{0%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}60%{transform:translateY(-5px)}}
+@keyframes trustScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes bttIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes hotPulse{0%,%{opacity:1}50%{opacity:.7}}
+@keyframes hotPulse{0%,100%{opacity:1}50%{opacity:.7}}
 /* PRELOADER */
 #preloader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s,visibility .6s}
 #preloader.done{opacity:0;visibility:hidden;pointer-events:none}
 .pre-bar{width:130px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;margin-top:6px}
-.pre-fill{height:%;background:linear-gradient(90deg,var(--gold),var(--blue));animation:preBar 1.8s ease forwards}
+.pre-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--blue));animation:preBar 1.8s ease forwards}
 .pre-dots{display:flex;gap:6px}
 .pre-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:preDot 1.2s ease-in-out infinite}
 .pre-dot:nth-child(2){animation-delay:.2s}.pre-dot:nth-child(3){animation-delay:.4s}
@@ -71,7 +71,7 @@ a{text-decoration:none;color:inherit}
 .trust-item{display:flex;align-items:center;gap:8px;padding:0 28px;font-family:var(--C);font-size:8.5px;letter-spacing:1.5px;color:var(--text2);white-space:nowrap;border-right:1px solid var(--border)}
 .trust-item i{color:var(--gold2);font-size:12px}
 /* NAV */
-nav#mainNav{position:fixed;top:0;left:0;right:0;z-index:0;padding:14px 56px;display:flex;align-items:center;gap:20px;background:transparent;transition:all .35s}
+nav#mainNav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:14px 56px;display:flex;align-items:center;gap:20px;background:transparent;transition:all .35s}
 nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding:10px 56px;border-bottom:1px solid var(--border)}
 .nav-brand{cursor:pointer;display:flex;align-items:center;gap:10px}
 .nav-brand-name{font-family:var(--C);font-size:12px;letter-spacing:3px;color:var(--text);line-height:1.1;white-space:nowrap}
@@ -124,10 +124,10 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
 .ticker-inner:hover{animation-play-state:paused}
 .ticker-item{font-family:var(--C);font-size:9px;letter-spacing:2.5px;color:#fff;padding:0 34px;opacity:.95}
 /* HERO */
-.hero{min-height:vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:90px 56px 70px}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:90px 56px 70px}
 [data-theme="dark"] .hero{background:radial-gradient(ellipse 70% 60% at 65% 30%,rgba(37,99,235,.08),transparent 60%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(201,168,76,.06),transparent 55%),#080808}
 [data-theme="light"] .hero{background:radial-gradient(ellipse 70% 60% at 65% 30%,rgba(37,99,235,.06),transparent 60%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(201,168,76,.06),transparent 55%),#f8f8f5}
-.hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:%;display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:center}
+.hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:center}
 .hero-eyebrow{font-family:var(--C);font-size:9px;letter-spacing:4px;color:var(--gold3);margin-bottom:18px;display:flex;align-items:center;gap:12px}
 .hero-eyebrow::before{content:"";display:block;width:28px;height:1px;background:var(--gold)}
 .hero-name{font-family:var(--C);font-size:clamp(38px,5.8vw,84px);letter-spacing:clamp(1px,.4vw,4px);line-height:1.04;margin-bottom:20px;animation:goldGlow 4s ease-in-out infinite}
@@ -1530,10 +1530,10 @@ te:{
 9:{name:"మానవతావాది",planet:"అంగారకుడు",traits:["కరుణ","ధైర్యం","విశ్వజనీనత","శక్తి"],body:"అంగారక శక్తి మిమ్మల్ని కరుణాహృదయంతో కూడిన యోధుడిగా చేస్తుంది. మీరు న్యాయం కోసం పోరాడుతారు.",career:"వైద్యం, సామాజిక సేవ, సైన్యం, న్యాయం, నాయకత్వం",relation:"ప్రేమ మరియు న్యాయం కోసం తీవ్రంగా పోరాడే మనోవేగమైన భాగస్వామి",phone:"9 మొత్తం ఉన్న ఫోన్ నంబర్ విశ్వ గుర్తింపు, శాశ్వతమైన గౌరవం మరియు లక్ష్యాల పూర్తిని తెస్తుంది.",cycle:"పూర్తి మరియు విముక్తి — ప్రారంభించినది పూర్తి చేయండి, తిరిగి ఇవ్వండి",color:"ఎర్రని మరియు నారంగి",day:"మంగళవారం",gem:"పగడం",metal:"రాగి",dir:"దక్షిణం"}
 },
 hi:{
-1:{name:"नेता",planet:"सूर्य",traits:["आत्मविश्वासी","महत्वाकांक्षी","अग्रणी","अधिकारपूर्ण"],body:"सूर्य ऊर्जा प्राकृतिक नेतृत्व लाती है। आप उपलब्धि और पहचान से प्रेरित हैं। आपकी उपस्थिति अधिकार का आदेश देती है।",career:"नेतृत्व, उद्यमिता, प्रबंधन, राजनीति, सेना",relation:"प्यार और वफादारी के साथ नेतृत्व करने वाले मजबूत, सुरक्षात्मक साथी",phone:"1 कुल वाली फोन संख्या नई शुरुआत, करियर की पहचान और नेतृत्व सफलता को आकर्षित करती है।",cycle:"नई शुरुआत — शुरू करें, पहल करें और नेतृत्व करें",color:"लाल और सोना",day:"रविवार",gem:"माणिक",metal:"सोना",dir:"पूर्व"},
+1:{name:"नेता",planet:"सूर्य",traits:["आत्मविश्वासी","महत्वाकांक्षी","अग्रणी","अधिकारपूर्ण"],body:"सूर्य ऊर्जा प्राकृतिक नेतृत्व लाती है। आप उपलब्धि और पहचान से प्रेरित हैं। आपकी उपस्थिति अधिकार का आदेश देती है。",career:"नेतृत्व, उद्यमिता, प्रबंधन, राजनीति, सेना",relation:"प्यार और वफादारी के साथ नेतृत्व करने वाले मजबूत, सुरक्षात्मक साथी",phone:"1 कुल वाली फोन संख्या नई शुरुआत, करियर की पहचान और नेतृत्व सफलता को आकर्षित करती है।",cycle:"नई शुरुआत — शुरू करें, पहल करें और नेतृत्व करें",color:"लाल और सोना",day:"रविवार",gem:"माणिक",metal:"सोना",dir:"पूर्व"},
 2:{name:"राजनयिक",planet:"चंद्रमा",traits:["संवेदनशील","सहयोगी","सामंजस्यपूर्ण","सहज"],body:"चंद्र ऊर्जा आपको गहराई से सहज और सहानुभूतिपूर्ण बनाती है। आप साझेदारी में फलते-फूलते हैं।",career:"परामर्श, कला, संगीत, साझेदारी, स्वास्थ्य सेवा",relation:"रिश्तों को पोषित करने वाले सहानुभूतिपूर्ण, समर्पित साथी",phone:"2 कुल वाली फोन संख्या रिश्तों को बेहतर बनाती है और भावनात्मक संतुष्टि लाती है।",cycle:"धैर्य और साझेदारी — प्रक्रिया पर भरोसा करें",color:"सफेद और चांदी",day:"सोमवार",gem:"मोती",metal:"चांदी",dir:"उत्तर-पश्चिम"},
 3:{name:"सृजनकर्ता",planet:"बृहस्पति",traits:["अभिव्यक्तिशील","आनंदमय","कलात्मक","संचारी"],body:"बृहस्पति ऊर्जा आपको रचनात्मकता और आशावाद से भरती है। आप दूसरों को प्रेरित करने वाले स्वाभाविक संचारक हैं।",career:"कला, लेखन, शिक्षण, मनोरंजन, सार्वजनिक भाषण, मीडिया",relation:"रिश्ते को जीवंत रखने वाले आनंदमय, अभिव्यक्तिशील साथी",phone:"3 कुल वाली फोन संख्या रचनात्मकता, संचार और खुशी व समृद्धि को आकर्षित करती है।",cycle:"विकास और अभिव्यक्ति — अपने उपहार साझा करें",color:"पीला और सोना",day:"गुरुवार",gem:"पुखराज",metal:"सोना",dir:"उत्तर"},
-4:{name:"निर्माता",planet:"राहु",traits:["व्यावहारिक","अनुशासित","स्थिर","परिश्रमी"],body:"राहु ऊर्जा आपको नींव बनाने वाला बनाती है। आप व्यवस्थित रूप से काम करते हैं और स्थायी संरचनाएं बनाते हैं।",career:"इंजीनियरिंग, निर्माण, वित्त, कानून, वास्तुकला",relation:"एक सुरक्षित और स्थायी रिश्ता बनाने वाले विश्वसनीय साथी",phone:"4 कुल वाली फोन संख्या संरचना, स्थिरता और स्थिर भौतिक विकास को आकर्षित करती है।",cycle:"नींव बनाना — कठिन परिश्रम करें, भविष्य के लिए निर्माण करें",color:"नीला और ग्रे",day:"शनिवार",gem:"गोमेद",metal:"लोहा",dir:"पश्चिम"},
+4:{name:"निर्माता",planet:"राहु",traits:["व्यावहारिक","अनुशासित","स्थिर","परिश्रमी"],body:"राहु ऊर्जा आपको नींव बनाने वाला बनाती है। आप व्यवस्थित रूप से काम करते हैं और स्थायी संरचनाएं बनाते हैं。",career:"इंजीनियरिंग, निर्माण, वित्त, कानून, वास्तुकला",relation:"एक सुरक्षित और स्थायी रिश्ता बनाने वाले विश्वसनीय साथी",phone:"4 कुल वाली फोन संख्या संरचना, स्थिरता और स्थिर भौतिक विकास को आकर्षित करती है।",cycle:"नींव बनाना — कठिन परिश्रम करें, भविष्य के लिए निर्माण करें",color:"नीला और ग्रे",day:"शनिवार",gem:"गोमेद",metal:"लोहा",dir:"पश्चिम"},
 5:{name:"अन्वेषक",planet:"बुध",traits:["साहसी","बहुमुखी","स्वतंत्र","गतिशील"],body:"बुध ऊर्जा आपको अनुकूलनीय और तेज़ सोचने वाला बनाती है। आप परिवर्तन को अपनाते हैं।",career:"व्यापार, यात्रा, प्रौद्योगिकी, बिक्री, मीडिया",relation:"जीवन को रोचक और साहसपूर्ण रखने वाले गतिशील साथी",phone:"5 कुल वाली फोन संख्या नए अवसर, सफल यात्रा और व्यावसायिक उद्यमों को आकर्षित करती है।",cycle:"परिवर्तन और स्वतंत्रता — नए को अपनाएं, क्षितिज विस्तारित करें",color:"हरा और चांदी",day:"बुधवार",gem:"पन्ना",metal:"पारा",dir:"उत्तर"},
 6:{name:"पोषणकर्ता",planet:"शुक्र",traits:["देखभाल करने वाले","जिम्मेदार","सामंजस्यपूर्ण","प्रेमी"],body:"शुक्र ऊर्जा आपको सौंदर्य, प्रेम और जिम्मेदारी से भरती है। आप जहां भी होते हैं सद्भाव बनाते हैं।",career:"स्वास्थ्य सेवा, शिक्षा, आतिथ्य, डिज़ाइन, सामाजिक कार्य",relation:"एक सुंदर और सामंजस्यपूर्ण घर बनाने वाले समर्पित साथी",phone:"6 कुल वाली फोन संख्या सद्भाव, प्रेम और भौतिक समृद्धि को आकर्षित करती है।",cycle:"जिम्मेदारी और प्रेम — परिवार, घर और रिश्तों को पोषित करें",color:"सफेद और गुलाबी",day:"शुक्रवार",gem:"हीरा",metal:"चांदी",dir:"दक्षिण-पूर्व"},
 7:{name:"साधक",planet:"केतु",traits:["आध्यात्मिक","विश्लेषणात्मक","सहज","बुद्धिमान"],body:"केतु ऊर्जा आपको गहरे विचारक और आध्यात्मिक साधक बनाती है। आप सत्य की खोज करते हैं।",career:"अनुसंधान, विज्ञान, आध्यात्मिकता, दर्शन, चिकित्सा",relation:"गहराई, अर्थ और आध्यात्मिक संबंध प्रदान करने वाले बुद्धिमान साथी",phone:"7 कुल वाली फोन संख्या ज्ञान, अंतर्ज्ञान और आध्यात्मिक विकास के चैनल खोलती है।",cycle:"चिंतन और ज्ञान — अंदर जाएं, अध्ययन करें, ध्यान करें",color:"बैंगनी और जामुनी",day:"सोमवार",gem:"लहसुनिया",metal:"लोहा",dir:"दक्षिण-पश्चिम"},
@@ -1645,7 +1645,7 @@ function buildInventorySection(){
   } else {
     var mEn={title:"No Exact Match Right Now",body:"We don't have your exact match in current listings — but no worries at all. Mr. Suresh has been sourcing perfect numbers for 15 years. He will personally find a number matching Life Path "+lp+" from across India. Just drop him a WhatsApp. Let him handle it.",btn:"Let Mr. Suresh Find Your Number"};
     var mTe={title:"ప్రస్తుత జాబితాలో సరైన సరిపోలిక లేదు",body:"మేము మీ ఖచ్చితమైన సరిపోలిక ప్రస్తుత జాబితాలో కలిగి లేము — కానీ ఆందోళన అక్కరలేదు. శ్రీ సురేష్ 15 సంవత్సరాలుగా సంపూర్ణ నంబర్లు కనుగొంటున్నారు. ఆయన జీవన మార్గ "+lp+"కు సరిపోయే నంబర్ను భారతదేశం అంతటా నుండి వ్యక్తిగతంగా తీసుకొస్తారు. ఆందోళన లేదు — ఆయన నిర్వహించనివ్వండి.",btn:"శ్రీ సురేష్ మీ నంబర్ కనుగొనేలా చేయండి"};
-    var mHi={title:"अभी सूची में सटीक मेल नहीं",body:"हमारी वर्तमान सूची में आपका सटीक मेल नहीं है — लेकिन बिल्कुल चिंता न करें। श्री सुरेश 15 वर्षों से सही नंबर खोज रहे हैं। वे पूरे भारत से जीवन पथ "+lp+" से मेल खाने वाला नंबर व्यक्तिगत रूप से प्राप्त करेंगे। उन्हें संभालने दें।",btn:"श्री सुरेश को आपका नंबर खोजने दें"};
+    var mHi={title:"अभी सूची में सटीक मेल नहीं",body:"हमारी वर्तमान सूची में आपका सटीक मेल नहीं है — लेकिन बिल्कुल चिंता न करें। श्री सुरेश 15 वर्षों से सही नंबर खोज रहे हैं। वे पूरे भारत से जीवन पथ "+lp+" से मेल खाने वाला नंबर व्यक्तिगत रूप से प्राप्त करेंगे। उन्हें संभालने दें。",btn:"श्री सुरेश को आपका नंबर खोजने दें"};
     var m=lang==="te"?mTe:lang==="hi"?mHi:mEn;
     h+="<div class='suresh-msg'><div class='sm-icon'>🔮</div><div class='sm-title'>"+m.title+"</div><div class='sm-body'>"+m.body+"</div><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20My%20life%20path%20is%20"+lp+".%20Please%20find%20me%20a%20VIP%20number%20matching%20this.' target='_blank' class='btn-gold' style='display:inline-flex'><i class='fab fa-whatsapp'></i> "+m.btn+"</a></div>";
   }

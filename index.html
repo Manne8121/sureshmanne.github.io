@@ -37,24 +37,24 @@ a{text-decoration:none;color:inherit}
 ::selection{background:var(--gold);color:#000}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gold),var(--blue));border-radius:2px}
 @keyframes pgIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes preBar{from{width:0}to{width:100%}}
-@keyframes preDot{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-@keyframes goldGlow{0%,100%{opacity:.9}50%{text-shadow:0 0 16px rgba(228,201,106,.7),0 0 36px rgba(201,168,76,.4);opacity:1;color:var(--gold2)}}
-@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes pulseBorder{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.35)}60%{box-shadow:0 0 0 9px rgba(201,168,76,0)}}
+@keyframes preBar{from{width:0}to{width:%}}
+@keyframes preDot{0%,%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes tickerScroll{0%{transform:translateX(0)}%{transform:translateX(-50%)}}
+@keyframes goldGlow{0%,%{opacity:.9}50%{text-shadow:0 0 16px rgba(228,201,106,.7),0 0 36px rgba(201,168,76,.4);opacity:1;color:var(--gold2)}}
+@keyframes floatCard{0%,%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pulseBorder{0%,%{box-shadow:0 0 0 0 rgba(201,168,76,.35)}60%{box-shadow:0 0 0 9px rgba(201,168,76,0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-@keyframes livePulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(34,197,94,.5)}60%{opacity:.6;transform:scale(.8);box-shadow:0 0 0 6px rgba(34,197,94,0)}}
-@keyframes waFloat{0%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}60%{transform:translateY(-5px)}}
-@keyframes trustScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes shimmer{0%{background-position:200% 0}%{background-position:-200% 0}}
+@keyframes livePulse{0%,%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(34,197,94,.5)}60%{opacity:.6;transform:scale(.8);box-shadow:0 0 0 6px rgba(34,197,94,0)}}
+@keyframes waFloat{0%,%{transform:translateY(0)}30%{transform:translateY(-10px)}60%{transform:translateY(-5px)}}
+@keyframes trustScroll{0%{transform:translateX(0)}%{transform:translateX(-50%)}}
 @keyframes bttIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes hotPulse{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes hotPulse{0%,%{opacity:1}50%{opacity:.7}}
 /* PRELOADER */
 #preloader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s,visibility .6s}
 #preloader.done{opacity:0;visibility:hidden;pointer-events:none}
 .pre-bar{width:130px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;margin-top:6px}
-.pre-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--blue));animation:preBar 1.8s ease forwards}
+.pre-fill{height:%;background:linear-gradient(90deg,var(--gold),var(--blue));animation:preBar 1.8s ease forwards}
 .pre-dots{display:flex;gap:6px}
 .pre-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:preDot 1.2s ease-in-out infinite}
 .pre-dot:nth-child(2){animation-delay:.2s}.pre-dot:nth-child(3){animation-delay:.4s}
@@ -71,7 +71,7 @@ a{text-decoration:none;color:inherit}
 .trust-item{display:flex;align-items:center;gap:8px;padding:0 28px;font-family:var(--C);font-size:8.5px;letter-spacing:1.5px;color:var(--text2);white-space:nowrap;border-right:1px solid var(--border)}
 .trust-item i{color:var(--gold2);font-size:12px}
 /* NAV */
-nav#mainNav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:14px 56px;display:flex;align-items:center;gap:20px;background:transparent;transition:all .35s}
+nav#mainNav{position:fixed;top:0;left:0;right:0;z-index:0;padding:14px 56px;display:flex;align-items:center;gap:20px;background:transparent;transition:all .35s}
 nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding:10px 56px;border-bottom:1px solid var(--border)}
 .nav-brand{cursor:pointer;display:flex;align-items:center;gap:10px}
 .nav-brand-name{font-family:var(--C);font-size:12px;letter-spacing:3px;color:var(--text);line-height:1.1;white-space:nowrap}
@@ -124,10 +124,10 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
 .ticker-inner:hover{animation-play-state:paused}
 .ticker-item{font-family:var(--C);font-size:9px;letter-spacing:2.5px;color:#fff;padding:0 34px;opacity:.95}
 /* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:90px 56px 70px}
+.hero{min-height:vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding:90px 56px 70px}
 [data-theme="dark"] .hero{background:radial-gradient(ellipse 70% 60% at 65% 30%,rgba(37,99,235,.08),transparent 60%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(201,168,76,.06),transparent 55%),#080808}
 [data-theme="light"] .hero{background:radial-gradient(ellipse 70% 60% at 65% 30%,rgba(37,99,235,.06),transparent 60%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(201,168,76,.06),transparent 55%),#f8f8f5}
-.hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:center}
+.hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:%;display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:center}
 .hero-eyebrow{font-family:var(--C);font-size:9px;letter-spacing:4px;color:var(--gold3);margin-bottom:18px;display:flex;align-items:center;gap:12px}
 .hero-eyebrow::before{content:"";display:block;width:28px;height:1px;background:var(--gold)}
 .hero-name{font-family:var(--C);font-size:clamp(38px,5.8vw,84px);letter-spacing:clamp(1px,.4vw,4px);line-height:1.04;margin-bottom:20px;animation:goldGlow 4s ease-in-out infinite}
@@ -1151,7 +1151,7 @@ const NUMS=[
 {n:"7777898989",d:"7777 898989",p:200000},{n:"8399997777",d:"83 9999 7777",p:160000},
 {n:"8888636666",d:"8888 63 6666",p:150000},{n:"7777816666",d:"7777 81 6666",p:100000},
 {n:"9188919191",d:"91 88 919191",p:200000},{n:"9767896789",d:"97 6789 6789",p:150000},
-{n:"8105100100",d:"8 105 100100",p:105000},{n:"7039970399",d:"70399 70399",p:90000},
+{n:"8105100100",d:"8 105 100 100",p:105000},{n:"7039970399",d:"70399 70399",p:90000},
 {n:"8691986919",d:"86919 86919",p:85000},{n:"9820050505",d:"9820 050505",p:85000},
 {n:"9090409094",d:"90904 09094",p:85000},{n:"7013050505",d:"7013 050505",p:30000},
 {n:"7013123123",d:"7013 123 123",p:40000},{n:"7569395555",d:"756 939 5555",p:25000},

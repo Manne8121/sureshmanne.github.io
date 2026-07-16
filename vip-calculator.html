@@ -185,6 +185,19 @@
     background: var(--border);
   }
 
+  .paste-flex {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .paste-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
   textarea {
     width: 100%;
     min-height: 140px;
@@ -207,6 +220,119 @@
   }
 
   textarea::placeholder { color: var(--text-muted); }
+
+  .quick-panel {
+    display: none;
+    flex: 0 0 250px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    flex-direction: column;
+    max-height: 300px;
+  }
+
+  .quick-panel.visible { display: flex; }
+
+  .quick-panel-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+
+  .quick-panel-body {
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  /* Single-number hero display inside quick panel */
+  .quick-single {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .quick-single .qnum {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--num-bright);
+    word-break: break-all;
+    margin-bottom: 4px;
+  }
+
+  .quick-total-block {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+
+  .quick-total-block .qlabel {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .quick-total-block .qval {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .quick-total-block.qd2 .qval { color: var(--gold-bright); text-shadow: 0 0 14px rgba(232,184,75,0.35); }
+  .quick-total-block.qd1 .qval { color: var(--green-bright); text-shadow: 0 0 14px rgba(46,219,111,0.35); }
+
+  .quick-pattern-row { display: flex; justify-content: center; }
+
+  /* Multi-number compact list inside quick panel */
+  .quick-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 4px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+
+  .quick-row:last-child { border-bottom: none; }
+
+  .quick-row .qrnum { color: var(--num-bright); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .quick-row .qrtotals { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .quick-row .qrtag {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .quick-row .qrtag.d2 { background: rgba(232,184,75,0.12); color: var(--gold-bright); border: 1px solid rgba(232,184,75,0.3); }
+  .quick-row .qrtag.d1 { background: var(--green-dim); color: var(--green-bright); border: 1px solid rgba(46,219,111,0.3); }
+
+  .quick-panel-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: 8px;
+    flex-shrink: 0;
+  }
 
   .paste-meta {
     margin-top: 12px;
@@ -671,6 +797,10 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
+  @media (max-width: 700px) {
+    .quick-panel { display: none !important; }
+  }
+
   @media (max-width: 480px) {
     .wrap { padding: 0 12px 60px; }
     header { padding: 30px 0 24px; }
@@ -697,6 +827,8 @@
     .sort-btn { font-size: 11px; padding: 5px 10px; }
     .dchip { width: 40px; height: 40px; font-size: 16px; }
     .footer-brand { font-size: 18px; }
+    .quick-panel { max-height: 180px; padding: 12px; }
+    .quick-total-block .qval { font-size: 20px; }
   }
 
   @media (min-width: 481px) and (max-width: 768px) {
@@ -725,10 +857,18 @@
 
   <div class="card">
     <div class="section-label">Paste Number List</div>
-    <textarea id="pasteBox" placeholder="Paste numbers here — with text, emojis, prices, spaces, dashes — anything.&#10;&#10;Examples:&#10;📱 9876543210&#10;✅ 7403910000 ₹15,000&#10;+91 98765 43210 — Fancy number&#10;9111-333-639"></textarea>
-    <div class="paste-meta">
-      <span class="count-badge" id="countBadge">Waiting for input…</span>
-      <button class="btn-clear" onclick="clearAll()">✕ Clear All</button>
+    <div class="paste-flex">
+      <div class="paste-main">
+        <textarea id="pasteBox" placeholder="Paste numbers here — with text, emojis, prices, spaces, dashes — anything.&#10;&#10;Examples:&#10;📱 9876543210&#10;✅ 7403910000 ₹15,000&#10;+91 98765 43210 — Fancy number&#10;9111-333-639"></textarea>
+        <div class="paste-meta">
+          <span class="count-badge" id="countBadge">Waiting for input…</span>
+          <button class="btn-clear" onclick="clearAll()">✕ Clear All</button>
+        </div>
+      </div>
+      <div class="quick-panel" id="quickPanel">
+        <div class="quick-panel-title">Instant Totals</div>
+        <div class="quick-panel-body" id="quickPanelBody"></div>
+      </div>
     </div>
   </div>
 
@@ -869,12 +1009,6 @@
     .replace(/[①-⑨]/g, ch => String(ch.charCodeAt(0) - 0x2460 + 1));
   }
 
-  // Separator-tolerant extractor:
-  // - strips prices (₹/Rs/INR + amount)
-  // - strips +91 / 0091 / 91 / leading 0 ONLY when a full 10-digit number follows (country/trunk code)
-  // - then scans for a 6-9 start followed by 9 more digits, ignoring spaces/dashes/dots/slashes/brackets in between
-  //   so 9111-333-639, 9-1-2-3-4-5-6-7-8-9, +91 98765 43210 all resolve correctly
-  // - captures multiple numbers on the same line
   function extract(text) {
     const lines = normalizeUnicode(text).split(/\n/);
     const found = [];
@@ -916,9 +1050,47 @@
     return data;
   }
 
-  // Format for copy/share: NUMBER - 2digit - 1digit
   function formatLine(r) {
     return `${r.num} - ${r.d2} - ${r.d1}`;
+  }
+
+  function renderQuickPanel() {
+    const panel = document.getElementById('quickPanel');
+    const body = document.getElementById('quickPanelBody');
+    if (allNumbers.length === 0) {
+      panel.classList.remove('visible');
+      body.innerHTML = '';
+      return;
+    }
+    panel.classList.add('visible');
+
+    if (allNumbers.length === 1) {
+      const r = allNumbers[0];
+      const ptag = r.pattern ? `<span class="pattern-tag ${r.pattern.cls}">${r.pattern.label}</span>` : '';
+      body.innerHTML = `
+        <div class="quick-single">
+          <div class="qnum">${r.num}</div>
+          <div class="quick-total-block qd2">
+            <span class="qlabel">2-Digit</span>
+            <span class="qval">${r.d2}</span>
+          </div>
+          <div class="quick-total-block qd1">
+            <span class="qlabel">1-Digit</span>
+            <span class="qval">${r.d1}</span>
+          </div>
+          <div class="quick-pattern-row">${ptag}</div>
+        </div>`;
+    } else {
+      const rows = allNumbers.map(r => `
+        <div class="quick-row">
+          <span class="qrnum">${r.num}</span>
+          <span class="qrtotals">
+            <span class="qrtag d2">${r.d2}</span>
+            <span class="qrtag d1">${r.d1}</span>
+          </span>
+        </div>`).join('');
+      body.innerHTML = rows + `<div class="quick-panel-count">${allNumbers.length} numbers</div>`;
+    }
   }
 
   function render() {
@@ -956,6 +1128,7 @@
       <div class="stat-card"><div class="stat-val">${allNumbers.length - data.length}</div><div class="stat-label">Hidden</div></div>
     `;
     updateDist();
+    renderQuickPanel();
   }
 
   function updateDist() {
@@ -1069,6 +1242,8 @@
     document.getElementById('countBadge').textContent = 'Waiting for input…';
     ['filterSection','resultsSection','warnBar','digitExcludeSection','distSection']
       .forEach(id => document.getElementById(id).classList.remove('visible'));
+    document.getElementById('quickPanel').classList.remove('visible');
+    document.getElementById('quickPanelBody').innerHTML = '';
     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('sortNone').classList.add('active');
     setTimeout(() => box.focus(), 50);
@@ -1084,6 +1259,8 @@
     if (nums.length === 0) {
       document.getElementById('countBadge').textContent = 'No valid 10-digit numbers found';
       ['filterSection','resultsSection','digitExcludeSection','distSection'].forEach(id => document.getElementById(id).classList.remove('visible'));
+      allNumbers = [];
+      renderQuickPanel();
       return;
     }
     allNumbers = process(nums);
@@ -1099,7 +1276,6 @@
     processInput(this.value);
   });
 
-  // Fix for mobile: paste event fires before value updates, so intercept clipboardData directly
   pasteBox.addEventListener('paste', function(e) {
     const pasted = (e.clipboardData || window.clipboardData).getData('text');
     if (pasted) {

@@ -2453,25 +2453,46 @@ function mcAdminTab(name,btn){
   if(name==="enquiries")mcAdminLoadEnquiries();
   if(name==="analytics")mcAdminLoadAnalytics();
 }
+var mcAdminInventoryCache=[];
 async function mcAdminLoadInventory(){
   var body=document.getElementById("mcAdminInventoryRows");
   body.innerHTML="<tr><td colspan='4'>Loading…</td></tr>";
   var r=await mcSupabase.from("inventory").select("number,display_number,price,status").order("number");
   if(r.error){body.innerHTML="<tr><td colspan='4'>"+mcAdminEsc(r.error.message)+"</td></tr>";return;}
-  var items=r.data||[];
-  document.getElementById("mcStatTotal").textContent=items.length;
+  mcAdminInventoryCache=r.data||[];
+  document.getElementById("mcStatTotal").textContent=mcAdminInventoryCache.length;
   ["available","reserved","sold"].forEach(function(s){
-    document.getElementById("mcStat"+s.charAt(0).toUpperCase()+s.slice(1)).textContent=items.filter(function(x){return x.status===s;}).length;
+    document.getElementById("mcStat"+s.charAt(0).toUpperCase()+s.slice(1)).textContent=mcAdminInventoryCache.filter(function(x){return x.status===s;}).length;
   });
-  mcRemoteInventory=items.map(function(x){return {n:x.number,d:x.display_number||x.number,p:Number(x.price),status:x.status};});
+  mcRemoteInventory=mcAdminInventoryCache.map(function(x){return {n:x.number,d:x.display_number||x.number,p:Number(x.price),status:x.status};});
   renderNums(getList());
-  body.innerHTML=items.length?items.map(function(x){
-    return "<tr><td><input aria-label='Display number' id='mcEditDisplay_"+x.number+"' value='"+mcAdminEsc(x.display_number||x.number)+"'></td>"+
-    "<td><input aria-label='Price' id='mcEditPrice_"+x.number+"' type='number' min='1' value='"+Number(x.price)+"'></td>"+
-    "<td><select id='mcEditStatus_"+x.number+"'><option value='available' "+(x.status==="available"?"selected":"")+">Available</option><option value='reserved' "+(x.status==="reserved"?"selected":"")+">Reserved</option><option value='sold' "+(x.status==="sold"?"selected":"")+">Sold</option></select></td>"+
-    "<td><button class='mc-admin-btn' onclick='mcAdminSaveNumber(\""+x.number+"\")'>SAVE</button> <button class='mc-admin-btn secondary' onclick='mcAdminDeleteNumber(\""+x.number+"\")'>DELETE</button></td></tr>";
-  }).join(""):"<tr><td colspan='4'>No inventory found.</td></tr>";
+  mcAdminApplyInventoryFilter();
 }
+function mcAdminApplyInventoryFilter(){
+  var filter=(document.getElementById("mcInventoryFilter")||{value:"all"}).value;
+  var items=mcAdminInventoryCache.filter(function(x){return filter==="all"||x.status===filter;});
+  var body=document.getElementById("mcAdminInventoryRows");
+  var count=document.getElementById("mcInventoryCount");
+  if(count)count.textContent="Showing "+items.length+" of "+mcAdminInventoryCache.length+" numbers";
+  body.innerHTML=items.length?items.map(function(x){
+    var n=mcAdminEsc(x.number);
+    return "<tr id='mcAdminRow_"+n+"'><td><input disabled aria-label='Display number' id='mcEditDisplay_"+n+"' value='"+mcAdminEsc(x.display_number||x.number)+"'></td>"+
+    "<td><input disabled aria-label='Price' id='mcEditPrice_"+n+"' type='number' min='1' value='"+Number(x.price)+"'></td>"+
+    "<td><select disabled id='mcEditStatus_"+n+"'><option value='available' "+(x.status==="available"?"selected":"")+">Available</option><option value='reserved' "+(x.status==="reserved"?"selected":"")+">Reserved</option><option value='sold' "+(x.status==="sold"?"selected":"")+">Sold</option></select></td>"+
+    "<td><button class='mc-admin-btn' id='mcEditBtn_"+n+"' onclick='mcAdminToggleEdit(\""+n+"\")'>EDIT</button> "+
+    "<button class='mc-admin-btn' id='mcSaveBtn_"+n+"' style='display:none' onclick='mcAdminSaveNumber(\""+n+"\")'>SAVE</button> "+
+    "<button class='mc-admin-btn secondary' id='mcCancelBtn_"+n+"' style='display:none' onclick='mcAdminCancelEdit(\""+n+"\")'>CANCEL</button> "+
+    "<button class='mc-admin-btn secondary' onclick='mcAdminDeleteNumber(\""+n+"\")'>DELETE</button></td></tr>";
+  }).join(""):"<tr><td colspan='4'>No numbers in this category.</td></tr>";
+}
+function mcAdminToggleEdit(n){
+  ["mcEditDisplay_","mcEditPrice_","mcEditStatus_"].forEach(function(prefix){
+    var el=document.getElementById(prefix+n);if(el)el.disabled=false;
+  });
+  var edit=document.getElementById("mcEditBtn_"+n),save=document.getElementById("mcSaveBtn_"+n),cancel=document.getElementById("mcCancelBtn_"+n);
+  if(edit)edit.style.display="none";if(save)save.style.display="";if(cancel)cancel.style.display="";
+}
+function mcAdminCancelEdit(n){mcAdminApplyInventoryFilter();}
 function mcAdminEsc(v){return String(v==null?"":v).replace(/[&<>\"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
 async function mcAdminAddNumber(){
   var n=(document.getElementById("mcNewNumber").value||"").replace(/\D/g,"");
@@ -2546,6 +2567,16 @@ async function mcAdminLoadAnalytics(){
    </div>
    <section id="mcAdminSectionStock" class="mc-admin-section active">
     <h3>Manage Number Inventory</h3>
+    <div class="mc-admin-tabs" style="align-items:center">
+     <label for="mcInventoryFilter" style="margin:0">FILTER INVENTORY</label>
+     <select id="mcInventoryFilter" class="mc-admin-input" style="max-width:220px" onchange="mcAdminApplyInventoryFilter()">
+      <option value="all">All Numbers</option>
+      <option value="available">Available Only</option>
+      <option value="reserved">Reserved Only</option>
+      <option value="sold">Sold Only</option>
+     </select>
+     <span class="mc-admin-note" id="mcInventoryCount"></span>
+    </div>
     <div class="mc-admin-form">
      <div><label>10-DIGIT NUMBER</label><input id="mcNewNumber" class="mc-admin-input" inputmode="numeric" maxlength="10" placeholder="9XXXXXXXXX"></div>
      <div><label>DISPLAY NUMBER</label><input id="mcNewDisplay" class="mc-admin-input" maxlength="20" placeholder="9876 543210"></div>

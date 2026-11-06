@@ -747,6 +747,46 @@ div[style*="background:var(--bg2"] {
 }
 
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+window.MC_SUPABASE_URL = "https://sehhxaoolzgqwjxtiqeg.supabase.co";
+window.MC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BK4p5lQh2DXVuBVmla_jpQ_4-PgnnxD";
+</script>
+
+
+<style>
+.mc-admin-open{background:transparent;border:1px solid rgba(212,175,55,.55);color:var(--gold2,#d6b45b);padding:9px 13px;border-radius:5px;font:600 10px var(--C,Arial);letter-spacing:1.4px;cursor:pointer}
+.mc-admin-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;padding:18px}
+.mc-admin-overlay.open{display:flex}
+.mc-admin-modal{width:min(1050px,100%);max-height:92vh;overflow:auto;background:var(--surface,#151515);color:var(--text,#f5f5f5);border:1px solid var(--gold-bd,rgba(212,175,55,.4));border-radius:12px;padding:22px;box-shadow:0 25px 90px #000}
+.mc-admin-head{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border, #333);padding-bottom:14px;margin-bottom:16px}
+.mc-admin-head h2{font:600 18px var(--C,Arial);letter-spacing:1.5px;margin:0}
+.mc-admin-close{background:transparent;color:inherit;border:1px solid #555;border-radius:6px;padding:7px 11px;cursor:pointer}
+.mc-admin-login{max-width:430px;margin:25px auto}
+.mc-admin-login label,.mc-admin-form label{display:block;font-size:11px;letter-spacing:.7px;color:var(--muted,#aaa);margin:10px 0 5px}
+.mc-admin-input{width:100%;box-sizing:border-box;background:#101010;color:#fff;border:1px solid #444;border-radius:6px;padding:12px;font:13px Arial}
+.mc-admin-btn{background:#c9a64a;color:#111;border:0;border-radius:6px;padding:11px 15px;font-weight:700;cursor:pointer;margin:8px 6px 8px 0}
+.mc-admin-btn.secondary{background:transparent;color:var(--gold2,#d6b45b);border:1px solid #8c7132}
+.mc-admin-msg{font-size:12px;color:#d6b45b;min-height:18px;margin:8px 0}
+.mc-admin-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:15px 0}
+.mc-admin-stat{border:1px solid var(--border,#333);border-radius:8px;padding:13px;background:rgba(255,255,255,.025)}
+.mc-admin-stat b{display:block;font-size:22px;color:var(--gold2,#d6b45b);margin-top:5px}
+.mc-admin-stat span{font-size:10px;letter-spacing:1px;color:var(--muted,#aaa)}
+.mc-admin-form{display:grid;grid-template-columns:1.2fr 1.2fr .8fr .9fr auto;gap:8px;align-items:end;margin:14px 0;padding:13px;border:1px solid var(--border,#333);border-radius:8px}
+.mc-admin-table-wrap{overflow:auto;border:1px solid var(--border,#333);border-radius:8px;margin:12px 0}
+.mc-admin-table{width:100%;border-collapse:collapse;min-width:680px;font-size:12px}
+.mc-admin-table th,.mc-admin-table td{padding:10px;text-align:left;border-bottom:1px solid var(--border,#333)}
+.mc-admin-table th{color:var(--gold2,#d6b45b);font-size:10px;letter-spacing:1px}
+.mc-admin-table input,.mc-admin-table select{max-width:145px;background:#101010;color:#fff;border:1px solid #444;border-radius:5px;padding:7px}
+.mc-admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.mc-admin-tab{background:transparent;color:inherit;border:1px solid #555;border-radius:6px;padding:8px 12px;cursor:pointer}
+.mc-admin-tab.active{border-color:#c9a64a;color:#d6b45b}
+.mc-admin-section{display:none}.mc-admin-section.active{display:block}
+.mc-admin-note{font-size:11px;color:var(--muted,#aaa);line-height:1.5}
+@media(max-width:700px){.mc-admin-form{grid-template-columns:1fr 1fr}.mc-admin-stats{grid-template-columns:1fr 1fr}.mc-admin-modal{padding:14px}.mc-admin-open{padding:7px 9px}}
+</style>
+
 </head>
 <body>
 <div id="preloader"><div class="pre-brand">MANNE COMMUNICATIONS</div><div class="pre-bar"><div class="pre-fill"></div></div><div class="pre-dots"><div class="pre-dot"></div><div class="pre-dot"></div><div class="pre-dot"></div></div></div>
@@ -763,7 +803,7 @@ div[style*="background:var(--bg2"] {
     <li><a class="nl" data-p="howtobuy" onclick="goPage('howtobuy');return false">HOW TO BUY</a></li>
     <li><a class="nl" data-p="contact" onclick="goPage('contact');return false">CONNECT</a></li>
   </ul>
-  <div class="nav-right">
+  <div class="nav-right"><button type="button" class="mc-admin-open" onclick="mcOpenAdmin()">ADMIN</button>
     <a href="https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20enquire%20about%20VIP%20numbers" target="_blank" class="nav-cta"><i class="fab fa-whatsapp"></i> WHATSAPP NOW</a>
     <button class="theme-btn" onclick="cycleTheme()"><i class="fas fa-circle-half-stroke" id="themeIcon"></i><span id="themeLabel">DARK</span></button>
     <button class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></button>
@@ -1638,24 +1678,63 @@ function mcToast(message){
   var el=document.createElement("div"); el.id="mcToast"; el.className="mc-toast"; el.textContent=message;
   document.body.appendChild(el); setTimeout(function(){if(el)el.remove();},2600);
 }
+
+// SUPABASE CONNECTION: publishable key only. Never place a secret key in this file.
+var mcSupabase = (window.supabase && window.supabase.createClient)
+  ? window.supabase.createClient(window.MC_SUPABASE_URL, window.MC_SUPABASE_PUBLISHABLE_KEY)
+  : null;
+var mcRemoteInventory = null;
+var mcBackendReady = false;
+
+async function mcLoadRemoteInventory(){
+  if(!mcSupabase) return;
+  try{
+    var result = await mcSupabase.from("inventory")
+      .select("number,display_number,price,status,featured")
+      .order("number", {ascending:true});
+    if(result.error) throw result.error;
+    mcRemoteInventory = (result.data || []).map(function(x){
+      return {n:String(x.number), d:String(x.display_number || x.number),
+        p:Number(x.price)||0, status:x.status || "available", featured:!!x.featured};
+    });
+    mcBackendReady = true;
+    renderNums(getList());
+    if(typeof renderHome === "function") renderHome();
+    if(typeof mcInitSpotlight === "function") mcInitSpotlight();
+  }catch(err){
+    console.warn("Supabase inventory unavailable; using built-in catalogue.", err);
+  }
+}
+function mcLogRemoteEvent(number, eventType){
+  if(!mcSupabase || !/^\d{10}$/.test(String(number))) return;
+  mcSupabase.from("number_events").insert({
+    mobile_number:String(number), event_type:eventType
+  }).then(function(r){ if(r.error) console.warn("Event logging unavailable",r.error); });
+}
+function mcSubmitRemoteEnquiry(payload){
+  if(!mcSupabase) return Promise.resolve({error:new Error("Backend is not connected")});
+  return mcSupabase.from("enquiries").insert(payload);
+}
+
 var mcStatus=mcReadStore("mc-number-status",{});
 var mcCustomInventory=mcReadStore("mc-custom-inventory",[]);
 var mcInterest=mcReadStore("mc-local-interest",{});
 var mcRecent=mcReadStore("mc-recent-viewed",[]);
 var mcCompare= [];
 function mcEffectiveData(){
-  var base=DATA.map(function(x){return Object.assign({},x);});
+  var base=(Array.isArray(mcRemoteInventory)?mcRemoteInventory:DATA).map(function(x){return Object.assign({},x);});
   (Array.isArray(mcCustomInventory)?mcCustomInventory:[]).forEach(function(x){
     if(x&&/^\\d{10}$/.test(String(x.n))&&!base.some(function(b){return b.n===String(x.n);}))
       base.push({n:String(x.n),d:String(x.d||x.n),p:Number(x.p)||0});
   });
   return base.map(function(x){
     var st=mcStatus[x.n];
-    return Object.assign({},x,{status:st&&st.status?st.status:"available",p:st&&Number(st.price)>0?Number(st.price):Number(x.p)});
+    return Object.assign({},x,{status:st&&st.status?st.status:(x.status||"available"),p:st&&Number(st.price)>0?Number(st.price):Number(x.p)});
   });
 }
 function mcStatusFor(n){return (mcStatus[n]&&mcStatus[n].status)||"available";}
 function mcTrack(n,kind){
+  mcLogRemoteEvent(n, kind==="views"?"view":(kind==="interests"?"interest":"buy_click"));
   mcInterest[n]=mcInterest[n]||{views:0,interests:0,buys:0};
   mcInterest[n][kind]=(mcInterest[n][kind]||0)+1;
   mcWriteStore("mc-local-interest",mcInterest);
@@ -1733,6 +1812,7 @@ function mcSendCustomRequest(event){
   var msg="Hello Mr. Suresh! I would like to request a VIP mobile number.\\n";
   if(start)msg+="Starting digits: "+start+"\\n";if(end)msg+="Ending digits: "+end+"\\n";
   if(pattern)msg+="Pattern: "+pattern+"\\n";if(lucky)msg+="Lucky total: "+lucky+"\\n";if(notes)msg+="Budget / notes: "+notes+"\\n";
+  mcSubmitRemoteEnquiry({enquiry_type:"dream_number",message:msg,budget:notes||null}).then(function(r){if(r&&r.error)console.warn("Enquiry save failed",r.error);});
   window.open("https://wa.me/919090900005?text="+encodeURIComponent(msg),"_blank","noopener");
 }
 function mcShowFeatured(){
@@ -2320,6 +2400,174 @@ document.addEventListener("DOMContentLoaded",function(){
   mcRenderAdmin();
 });
 
+
+// Fetch shared inventory after page initialization.
+mcLoadRemoteInventory();
+
+
+// Secure Supabase administrator dashboard. Access is enforced by Supabase Auth + RLS.
+function mcOpenAdmin(){
+  var el=document.getElementById("mcAdminOverlay"); if(el)el.classList.add("open");
+  if(mcSupabase){mcSupabase.auth.getSession().then(function(r){
+    if(r.data && r.data.session) mcAdminVerify();
+  });}
+}
+function mcCloseAdmin(){var el=document.getElementById("mcAdminOverlay");if(el)el.classList.remove("open");}
+function mcAdminMessage(id,msg){var el=document.getElementById(id);if(el)el.textContent=msg||"";}
+async function mcAdminLogin(){
+  mcAdminMessage("mcAdminLoginMsg","Signing in…");
+  var email=(document.getElementById("mcAdminEmail").value||"").trim();
+  var password=document.getElementById("mcAdminPassword").value||"";
+  if(!email||!password){mcAdminMessage("mcAdminLoginMsg","Enter your email and password.");return;}
+  var r=await mcSupabase.auth.signInWithPassword({email:email,password:password});
+  if(r.error){mcAdminMessage("mcAdminLoginMsg",r.error.message);return;}
+  await mcAdminVerify();
+}
+async function mcAdminVerify(){
+  var u=await mcSupabase.auth.getUser();
+  if(u.error||!u.data.user){mcAdminMessage("mcAdminLoginMsg","Please sign in again.");return;}
+  var check=await mcSupabase.from("admin_users").select("user_id").eq("user_id",u.data.user.id).maybeSingle();
+  if(check.error||!check.data){
+    await mcSupabase.auth.signOut();
+    mcAdminMessage("mcAdminLoginMsg","This account is not registered as an administrator. Ask the project owner to authorize it.");
+    return;
+  }
+  document.getElementById("mcAdminLogin").style.display="none";
+  document.getElementById("mcAdminDashboard").style.display="block";
+  document.getElementById("mcAdminIdentity").textContent=u.data.user.email||"Administrator";
+  await mcAdminLoadInventory();
+}
+async function mcAdminLogout(){
+  await mcSupabase.auth.signOut();
+  document.getElementById("mcAdminDashboard").style.display="none";
+  document.getElementById("mcAdminLogin").style.display="block";
+  document.getElementById("mcAdminPassword").value="";
+  mcAdminMessage("mcAdminLoginMsg","You have signed out.");
+}
+function mcAdminTab(name,btn){
+  document.querySelectorAll(".mc-admin-tab").forEach(function(x){x.classList.remove("active");});
+  document.querySelectorAll(".mc-admin-section").forEach(function(x){x.classList.remove("active");});
+  if(btn)btn.classList.add("active");
+  var section=document.getElementById("mcAdminSection"+name.charAt(0).toUpperCase()+name.slice(1));
+  if(section)section.classList.add("active");
+  if(name==="enquiries")mcAdminLoadEnquiries();
+  if(name==="analytics")mcAdminLoadAnalytics();
+}
+async function mcAdminLoadInventory(){
+  var body=document.getElementById("mcAdminInventoryRows");
+  body.innerHTML="<tr><td colspan='4'>Loading…</td></tr>";
+  var r=await mcSupabase.from("inventory").select("number,display_number,price,status").order("number");
+  if(r.error){body.innerHTML="<tr><td colspan='4'>"+mcAdminEsc(r.error.message)+"</td></tr>";return;}
+  var items=r.data||[];
+  document.getElementById("mcStatTotal").textContent=items.length;
+  ["available","reserved","sold"].forEach(function(s){
+    document.getElementById("mcStat"+s.charAt(0).toUpperCase()+s.slice(1)).textContent=items.filter(function(x){return x.status===s;}).length;
+  });
+  mcRemoteInventory=items.map(function(x){return {n:x.number,d:x.display_number||x.number,p:Number(x.price),status:x.status};});
+  renderNums(getList());
+  body.innerHTML=items.length?items.map(function(x){
+    return "<tr><td><input aria-label='Display number' id='mcEditDisplay_"+x.number+"' value='"+mcAdminEsc(x.display_number||x.number)+"'></td>"+
+    "<td><input aria-label='Price' id='mcEditPrice_"+x.number+"' type='number' min='1' value='"+Number(x.price)+"'></td>"+
+    "<td><select id='mcEditStatus_"+x.number+"'><option value='available' "+(x.status==="available"?"selected":"")+">Available</option><option value='reserved' "+(x.status==="reserved"?"selected":"")+">Reserved</option><option value='sold' "+(x.status==="sold"?"selected":"")+">Sold</option></select></td>"+
+    "<td><button class='mc-admin-btn' onclick='mcAdminSaveNumber(\""+x.number+"\")'>SAVE</button> <button class='mc-admin-btn secondary' onclick='mcAdminDeleteNumber(\""+x.number+"\")'>DELETE</button></td></tr>";
+  }).join(""):"<tr><td colspan='4'>No inventory found.</td></tr>";
+}
+function mcAdminEsc(v){return String(v==null?"":v).replace(/[&<>\"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+async function mcAdminAddNumber(){
+  var n=(document.getElementById("mcNewNumber").value||"").replace(/\D/g,"");
+  var d=(document.getElementById("mcNewDisplay").value||"").trim()||n;
+  var p=Number(document.getElementById("mcNewPrice").value);
+  var s=document.getElementById("mcNewStatus").value;
+  if(!/^\d{10}$/.test(n)||!(p>0)){mcAdminMessage("mcInventoryMsg","Enter a valid 10-digit number and price.");return;}
+  var r=await mcSupabase.from("inventory").insert({number:n,display_number:d,price:p,status:s});
+  if(r.error){mcAdminMessage("mcInventoryMsg",r.error.message);return;}
+  document.getElementById("mcNewNumber").value="";
+  document.getElementById("mcNewDisplay").value="";
+  document.getElementById("mcNewPrice").value="";
+  mcAdminMessage("mcInventoryMsg","Number added successfully.");
+  await mcAdminLoadInventory();
+}
+async function mcAdminSaveNumber(n){
+  var d=document.getElementById("mcEditDisplay_"+n).value.trim();
+  var p=Number(document.getElementById("mcEditPrice_"+n).value);
+  var s=document.getElementById("mcEditStatus_"+n).value;
+  if(!(p>0)){alert("Enter a valid price.");return;}
+  var r=await mcSupabase.from("inventory").update({display_number:d||n,price:p,status:s,updated_at:new Date().toISOString()}).eq("number",n);
+  if(r.error){alert("Could not save: "+r.error.message);return;}
+  mcAdminMessage("mcInventoryMsg","Saved "+n+".");
+  await mcAdminLoadInventory();
+  await mcLoadRemoteInventory();
+}
+async function mcAdminDeleteNumber(n){
+  if(!confirm("Delete "+n+" from the shared inventory?"))return;
+  var r=await mcSupabase.from("inventory").delete().eq("number",n);
+  if(r.error){alert("Could not delete: "+r.error.message);return;}
+  mcAdminMessage("mcInventoryMsg","Deleted "+n+".");
+  await mcAdminLoadInventory();
+  await mcLoadRemoteInventory();
+}
+async function mcAdminLoadEnquiries(){
+  var b=document.getElementById("mcAdminEnquiryRows");b.innerHTML="<tr><td colspan='5'>Loading…</td></tr>";
+  var r=await mcSupabase.from("enquiries").select("created_at,enquiry_type,mobile_number,customer_name,customer_phone,message").order("created_at",{ascending:false}).limit(100);
+  if(r.error){b.innerHTML="<tr><td colspan='5'>"+mcAdminEsc(r.error.message)+"</td></tr>";return;}
+  b.innerHTML=(r.data||[]).map(function(x){return "<tr><td>"+mcAdminEsc(new Date(x.created_at).toLocaleString())+"</td><td>"+mcAdminEsc(x.enquiry_type)+"</td><td>"+mcAdminEsc(x.mobile_number||"")+"</td><td>"+mcAdminEsc([x.customer_name,x.customer_phone].filter(Boolean).join(" / "))+"</td><td>"+mcAdminEsc(x.message||"")+"</td></tr>";}).join("")||"<tr><td colspan='5'>No enquiries yet.</td></tr>";
+}
+async function mcAdminLoadAnalytics(){
+  var b=document.getElementById("mcAdminAnalyticsRows");b.innerHTML="<tr><td colspan='3'>Loading…</td></tr>";
+  var r=await mcSupabase.from("number_events").select("mobile_number,event_type,created_at").order("created_at",{ascending:false}).limit(200);
+  if(r.error){b.innerHTML="<tr><td colspan='3'>"+mcAdminEsc(r.error.message)+"</td></tr>";return;}
+  b.innerHTML=(r.data||[]).map(function(x){return "<tr><td>"+mcAdminEsc(x.mobile_number)+"</td><td>"+mcAdminEsc(x.event_type)+"</td><td>"+mcAdminEsc(new Date(x.created_at).toLocaleString())+"</td></tr>";}).join("")||"<tr><td colspan='3'>No activity recorded yet.</td></tr>";
+}
+
 </script>
+
+<div class="mc-admin-overlay" id="mcAdminOverlay" role="dialog" aria-modal="true" aria-label="Manne Communications Admin">
+ <div class="mc-admin-modal">
+  <div class="mc-admin-head"><h2>MANNE COMMUNICATIONS | ADMIN</h2><button class="mc-admin-close" onclick="mcCloseAdmin()">Close ✕</button></div>
+  <div id="mcAdminLogin" class="mc-admin-login">
+   <h3>Administrator Login</h3>
+   <p class="mc-admin-note">Sign in using the email and password created in Supabase Authentication. Do not share your password.</p>
+   <label for="mcAdminEmail">EMAIL ADDRESS</label><input id="mcAdminEmail" class="mc-admin-input" type="email" autocomplete="username" placeholder="Admin email">
+   <label for="mcAdminPassword">PASSWORD</label><input id="mcAdminPassword" class="mc-admin-input" type="password" autocomplete="current-password" placeholder="Your password">
+   <button class="mc-admin-btn" onclick="mcAdminLogin()">SIGN IN</button><div id="mcAdminLoginMsg" class="mc-admin-msg" aria-live="polite"></div>
+  </div>
+  <div id="mcAdminDashboard" style="display:none">
+   <div class="mc-admin-head"><div><b id="mcAdminIdentity"></b><div class="mc-admin-note">Authenticated administrator</div></div><button class="mc-admin-btn secondary" onclick="mcAdminLogout()">SIGN OUT</button></div>
+   <div class="mc-admin-stats">
+    <div class="mc-admin-stat"><span>TOTAL LISTED</span><b id="mcStatTotal">0</b></div>
+    <div class="mc-admin-stat"><span>AVAILABLE</span><b id="mcStatAvailable">0</b></div>
+    <div class="mc-admin-stat"><span>RESERVED</span><b id="mcStatReserved">0</b></div>
+    <div class="mc-admin-stat"><span>SOLD</span><b id="mcStatSold">0</b></div>
+   </div>
+   <div class="mc-admin-tabs">
+    <button class="mc-admin-tab active" onclick="mcAdminTab('stock',this)">INVENTORY</button>
+    <button class="mc-admin-tab" onclick="mcAdminTab('enquiries',this)">ENQUIRIES</button>
+    <button class="mc-admin-tab" onclick="mcAdminTab('analytics',this)">ACTIVITY</button>
+   </div>
+   <section id="mcAdminSectionStock" class="mc-admin-section active">
+    <h3>Manage Number Inventory</h3>
+    <div class="mc-admin-form">
+     <div><label>10-DIGIT NUMBER</label><input id="mcNewNumber" class="mc-admin-input" inputmode="numeric" maxlength="10" placeholder="9XXXXXXXXX"></div>
+     <div><label>DISPLAY NUMBER</label><input id="mcNewDisplay" class="mc-admin-input" maxlength="20" placeholder="9876 543210"></div>
+     <div><label>PRICE (₹)</label><input id="mcNewPrice" class="mc-admin-input" type="number" min="1" placeholder="4999"></div>
+     <div><label>STATUS</label><select id="mcNewStatus" class="mc-admin-input"><option value="available">Available</option><option value="reserved">Reserved</option><option value="sold">Sold</option></select></div>
+     <button class="mc-admin-btn" onclick="mcAdminAddNumber()">ADD</button>
+    </div>
+    <div class="mc-admin-msg" id="mcInventoryMsg"></div>
+    <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>NUMBER</th><th>PRICE (₹)</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="mcAdminInventoryRows"><tr><td colspan="4">Loading inventory…</td></tr></tbody></table></div>
+    <p class="mc-admin-note">Changes are saved to Supabase and shared with website visitors. Availability must still be confirmed before promising a number to a customer.</p>
+   </section>
+   <section id="mcAdminSectionEnquiries" class="mc-admin-section">
+    <h3>Customer Enquiries</h3><button class="mc-admin-btn secondary" onclick="mcAdminLoadEnquiries()">REFRESH</button>
+    <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>DATE</th><th>TYPE</th><th>NUMBER</th><th>NAME / PHONE</th><th>MESSAGE</th></tr></thead><tbody id="mcAdminEnquiryRows"><tr><td colspan="5">Select refresh to load enquiries.</td></tr></tbody></table></div>
+   </section>
+   <section id="mcAdminSectionAnalytics" class="mc-admin-section">
+    <h3>Number Activity</h3><button class="mc-admin-btn secondary" onclick="mcAdminLoadAnalytics()">REFRESH</button>
+    <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>NUMBER</th><th>EVENT</th><th>DATE</th></tr></thead><tbody id="mcAdminAnalyticsRows"><tr><td colspan="3">Select refresh to load activity.</td></tr></tbody></table></div>
+   </section>
+  </div>
+ </div>
+</div>
+
 </body>
 </html>

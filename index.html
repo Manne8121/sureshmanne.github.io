@@ -294,50 +294,6 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
   .wishlist-actions{width:100%}
   .wishlist-btn{flex:1}
 }
-
-/* WISHLIST: RESPONSIVE AND TOUCH-FRIENDLY */
-.nb-fav{
-  width:44px;
-  height:44px;
-  min-width:44px;
-  min-height:44px;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-}
-.nb-fav:focus-visible,
-.wishlist-btn:focus-visible{
-  outline:2px solid var(--gold2);
-  outline-offset:3px;
-}
-.wishlist-toolbar{width:100%}
-.wishlist-btn{
-  min-height:44px;
-  white-space:normal;
-  line-height:1.35;
-  touch-action:manipulation;
-}
-@media(max-width:768px){
-  .wishlist-toolbar{align-items:flex-start}
-  .wishlist-actions{
-    width:100%;
-    justify-content:flex-start;
-  }
-  .wishlist-btn{
-    flex:1 1 0;
-    min-width:0;
-    padding:10px 8px;
-  }
-}
-@media(max-width:360px){
-  .wishlist-actions{flex-direction:column}
-  .wishlist-btn{width:100%}
-  .nb-card-top{gap:6px}
-  .nb-card-top .nb-tier{
-    font-size:7px;
-    letter-spacing:1.2px;
-    padding:4px 7px;
-  }
-}
 /* SKELETON */
 .skel-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;overflow:hidden}
 .skel-line{border-radius:4px;background:linear-gradient(90deg,var(--surface) 25%,var(--bg2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;margin-bottom:10px}
@@ -725,6 +681,61 @@ div[style*="background:var(--bg2"] {
 @media(max-width:1100px){.nf-form-grid{grid-template-columns:1fr 1fr 1fr}.lucky-strip{grid-template-columns:repeat(3,1fr)}.inv-grid{grid-template-columns:1fr 1fr}.cycle-display{grid-template-columns:repeat(5,1fr)}}
 @media(max-width:768px){.nf-form-grid{grid-template-columns:1fr 1fr}.inv-grid{grid-template-columns:1fr}.lucky-strip{grid-template-columns:repeat(2,1fr)}}
 
+
+/* CUSTOMER TOOLS + RESPONSIVE ENHANCEMENTS */
+.nb-status{display:inline-flex;align-items:center;gap:5px;font:700 7px var(--C);letter-spacing:1px;padding:4px 8px;border-radius:20px;margin:0 0 8px}
+.nb-status.available{color:var(--green);background:var(--green-dim);border:1px solid var(--green-bd)}
+.nb-status.reserved{color:#f59e0b;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3)}
+.nb-status.sold{color:#ef4444;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3)}
+.nb-card-tools{display:flex;gap:6px;align-items:center;justify-content:center;margin-top:9px;flex-wrap:wrap}
+.nb-tool-btn{border:1px solid var(--border);background:var(--surface);color:var(--text2);border-radius:5px;padding:6px 9px;font:8px var(--C);letter-spacing:1px;cursor:pointer;min-height:32px}
+.nb-tool-btn.selected{border-color:var(--gold);background:var(--gold-dim);color:var(--gold2)}
+.mc-extra-panel{max-width:1280px;margin:14px auto;padding:16px;background:var(--card);border:1px solid var(--border-g);border-radius:10px}
+.mc-extra-panel[hidden]{display:none!important}
+.mc-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.mc-panel-title{font:11px var(--C);letter-spacing:2px;color:var(--gold2)}
+.mc-panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.mc-field{width:100%;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:10px;font:13px var(--U)}
+.mc-action{border:1px solid var(--border-g);border-radius:6px;padding:10px 13px;background:var(--gold-dim);color:var(--gold2);font:8px var(--C);letter-spacing:1px;cursor:pointer;min-height:40px}
+.mc-action.green{background:var(--green-dim);border-color:var(--green-bd);color:var(--green)}
+.mc-action:focus-visible,.nb-tool-btn:focus-visible,.nb-fav:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.mc-muted{font-size:12px;color:var(--text3);line-height:1.6}
+.mc-compare-tray{position:sticky;bottom:78px;z-index:700;max-width:1280px;margin:12px auto;padding:12px;background:var(--surface);border:1px solid var(--gold-bd);border-radius:10px;box-shadow:0 8px 28px var(--shadow);display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.mc-compare-tray[hidden]{display:none!important}
+.mc-compare-items{display:flex;gap:6px;flex-wrap:wrap}
+.mc-chip{background:var(--gold-dim);border:1px solid var(--gold-bd);color:var(--gold2);border-radius:20px;padding:5px 9px;font-size:11px}
+.mc-table-wrap{overflow-x:auto}
+.mc-compare-table{width:100%;border-collapse:collapse;min-width:460px;font-size:13px}
+.mc-compare-table th,.mc-compare-table td{padding:10px;border-bottom:1px solid var(--border);text-align:left}
+.mc-compare-table th{color:var(--gold2);font-family:var(--C);font-size:9px;letter-spacing:1px}
+.mc-featured-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 15px;margin:0 auto 14px;max-width:1280px;background:linear-gradient(110deg,var(--gold-dim),var(--blue-dim));border:1px solid var(--gold-bd);border-radius:9px}
+.mc-featured-copy{font:9px var(--C);letter-spacing:1.5px;color:var(--gold2)}
+.mc-request-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mc-request-grid .wide{grid-column:1/-1}
+.mc-admin-list{max-height:260px;overflow:auto;border:1px solid var(--border);border-radius:7px;margin-top:10px}
+.mc-admin-row{display:grid;grid-template-columns:1fr 120px 130px;gap:8px;align-items:center;padding:8px;border-bottom:1px solid var(--border);font-size:12px}
+.mc-admin-row:last-child{border-bottom:0}
+.mc-toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:5000;background:var(--surface);border:1px solid var(--gold-bd);color:var(--text);padding:10px 15px;border-radius:8px;box-shadow:0 8px 25px var(--shadow);font-size:12px;max-width:90vw}
+@media(max-width:768px){
+ .mc-panel-grid{grid-template-columns:1fr 1fr}
+ .mc-compare-tray{margin:10px 8px;bottom:78px}
+ .wishlist-toolbar,.mc-extra-panel,.mc-featured-strip{margin-left:0;margin-right:0}
+ .nb-tool-btn{min-height:40px;padding:8px 10px}
+ .nb-fav{width:40px;height:40px}
+}
+@media(max-width:520px){
+ .mc-panel-grid,.mc-request-grid{grid-template-columns:1fr}
+ .mc-request-grid .wide{grid-column:auto}
+ .mc-admin-row{grid-template-columns:1fr 105px}
+ .mc-admin-row>*:last-child{grid-column:1/-1}
+ .mc-compare-tray{align-items:stretch}
+ .mc-compare-tray .mc-action{flex:1}
+ .mc-featured-strip{align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 </head>
 <body>
@@ -874,7 +885,7 @@ div[style*="background:var(--bg2"] {
   <div class="hnc-form">
     <div class="nc-field"><label>DAY</label><input type="number" id="hnc-dd" placeholder="DD" min="1" max="31"/></div>
     <div class="nc-field"><label>MONTH</label><input type="number" id="hnc-mm" placeholder="MM" min="1" max="12"/></div>
-    <div class="nc-field"><label>YEAR</label><input type="number" id="hnc-yy" placeholder="YYYY" min="1900" max="2025"/></div>
+    <div class="nc-field"><label>YEAR</label><input type="number" id="hnc-yy" placeholder="YYYY" min="1900" max="2099"/></div>
   </div>
   <button class="btn-gold" onclick="runHomeNumerology()"><i class="fas fa-star"></i> Find My Lucky Number</a>
   <div class="hnc-result" id="hncResult"></div>
@@ -1051,7 +1062,7 @@ div[style*="background:var(--bg2"] {
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
       <div class="nc-field" style="flex:1;min-width:70px"><label>DAY</label><input type="number" id="nf-dd" placeholder="DD" min="1" max="31"/></div>
       <div class="nc-field" style="flex:1;min-width:70px"><label>MONTH</label><input type="number" id="nf-mm" placeholder="MM" min="1" max="12"/></div>
-      <div class="nc-field" style="flex:2;min-width:100px"><label>YEAR</label><input type="number" id="nf-yy" placeholder="YYYY" min="1900" max="2025"/></div>
+      <div class="nc-field" style="flex:2;min-width:100px"><label>YEAR</label><input type="number" id="nf-yy" placeholder="YYYY" min="1900" max="2099"/></div>
       <button class="btn-gold" style="padding:11px 18px;font-size:9px" onclick="filterByLucky()"><i class="fas fa-star"></i> Filter</button>
       <button class="btn-outline" style="padding:11px 16px;font-size:9px" onclick="clearLuckyFilter()">Clear</button>
     </div>
@@ -1082,6 +1093,69 @@ div[style*="background:var(--bg2"] {
   </div>
 </div>
 
+
+<div class="mc-featured-strip" id="mcFeaturedStrip">
+  <div><div class="mc-featured-copy"><i class="fas fa-crown"></i> NUMBER SPOTLIGHT</div><div id="mcFeaturedNumber" style="font:16px var(--C);color:var(--text);margin-top:4px">Explore our featured collection</div></div>
+  <button class="mc-action" type="button" onclick="mcShowFeatured()">VIEW FEATURED NUMBER</button>
+</div>
+
+<div class="mc-extra-panel">
+  <div class="mc-panel-head">
+    <div><div class="mc-panel-title"><i class="fas fa-history"></i> RECENTLY VIEWED</div><div class="mc-muted">Numbers you have opened during this visit or on this browser.</div></div>
+    <button class="mc-action" type="button" onclick="mcToggleRecent()">SHOW RECENT</button>
+  </div>
+  <div id="mcRecentPanel" hidden class="mc-muted">Your recently viewed numbers will appear here.</div>
+</div>
+
+<div class="mc-compare-tray" id="mcCompareTray" hidden>
+  <div><strong>Compare numbers</strong><div class="mc-compare-items" id="mcCompareItems"></div></div>
+  <button class="mc-action" type="button" onclick="mcCompareNow()">COMPARE</button>
+  <button class="mc-action" type="button" onclick="mcClearCompare()">CLEAR</button>
+</div>
+<div class="mc-extra-panel" id="mcComparePanel" hidden></div>
+
+<div class="mc-extra-panel">
+  <div class="mc-panel-head">
+    <div><div class="mc-panel-title"><i class="fas fa-magnifying-glass"></i> REQUEST YOUR DREAM NUMBER</div><div class="mc-muted">Tell us the pattern you want. We'll check availability and reply on WhatsApp.</div></div>
+  </div>
+  <form class="mc-request-grid" onsubmit="mcSendCustomRequest(event)">
+    <input class="mc-field" id="mcReqStart" maxlength="5" placeholder="Starting digits (e.g. 90000)"/>
+    <input class="mc-field" id="mcReqEnd" maxlength="5" placeholder="Ending digits (e.g. 9999)"/>
+    <input class="mc-field" id="mcReqPattern" placeholder="Pattern (e.g. ABAB, 786, mirror)"/>
+    <select class="mc-field" id="mcReqLucky"><option value="">Lucky total (optional)</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option></select>
+    <textarea class="mc-field wide" id="mcReqNotes" rows="2" placeholder="Any other preference or budget (optional)"></textarea>
+    <button class="mc-action green wide" type="submit"><i class="fab fa-whatsapp"></i> SEND CUSTOM REQUIREMENT</button>
+  </form>
+</div>
+
+<div class="mc-extra-panel">
+  <div class="mc-panel-head"><div><div class="mc-panel-title"><i class="fas fa-briefcase"></i> DEALER & CORPORATE ENQUIRIES</div><div class="mc-muted">For bulk requirements, reseller pricing and business enquiries.</div></div></div>
+  <div class="mc-panel-grid">
+    <a class="mc-action" href="https://wa.me/919090900005?text=Hello%2C%20I%20am%20interested%20in%20dealer%20pricing%20for%20VIP%20mobile%20numbers." target="_blank" rel="noopener">DEALER / RESELLER ENQUIRY</a>
+    <a class="mc-action green" href="https://wa.me/919090900005?text=Hello%2C%20I%20have%20a%20corporate%20bulk%20VIP%20number%20requirement." target="_blank" rel="noopener">CORPORATE BULK ENQUIRY</a>
+    <button class="mc-action" type="button" onclick="mcToggleAdmin()">LOCAL INVENTORY TOOLS</button>
+  </div>
+</div>
+
+<div class="mc-extra-panel" id="mcAdminPanel" hidden>
+  <div class="mc-panel-head"><div><div class="mc-panel-title"><i class="fas fa-boxes-stacked"></i> INVENTORY MANAGER</div><div class="mc-muted">Browser-local tools for testing and managing this device's catalogue. Changes here do not publish to other visitors.</div></div><button class="mc-action" type="button" onclick="mcToggleAdmin()">CLOSE</button></div>
+  <div class="mc-panel-grid">
+    <input class="mc-field" id="mcAdminNumber" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"/>
+    <input class="mc-field" id="mcAdminPrice" type="number" min="1" placeholder="Price in ₹"/>
+    <select class="mc-field" id="mcAdminStatus"><option value="available">Available</option><option value="reserved">Reserved</option><option value="sold">Sold</option></select>
+    <button class="mc-action green" type="button" onclick="mcAdminSave()">ADD / UPDATE NUMBER</button>
+    <button class="mc-action" type="button" onclick="mcExportInventory()">EXPORT LOCAL INVENTORY</button>
+    <label class="mc-action" style="text-align:center;cursor:pointer">IMPORT CSV<input type="file" accept=".csv,text/csv" style="display:none" onchange="mcImportInventory(event)"/></label>
+  </div>
+  <div class="mc-muted" style="margin-top:10px">CSV columns: number, price, status. These edits are saved only in this browser. For a live shared admin system, connect a secure backend before using this for public inventory updates.</div>
+  <div class="mc-admin-list" id="mcAdminList"></div>
+  <div class="mc-panel-grid" style="margin-top:10px">
+    <button class="mc-action" type="button" onclick="mcExportAnalytics()">EXPORT LOCAL INTEREST REPORT</button>
+    <button class="mc-action" type="button" onclick="mcResetLocalChanges()">RESET LOCAL INVENTORY CHANGES</button>
+  </div>
+</div>
+<div id="mcCompareModal" class="mc-extra-panel" hidden></div>
+
 <div id="numberList"></div>
 </div></div>
 <!-- NUMEROLOGY PAGE -->
@@ -1107,7 +1181,7 @@ div[style*="background:var(--bg2"] {
     <div class="nc-field"><label>FULL NAME (English)</label><input type="text" id="nf-name" placeholder="e.g. Suresh Manne" oninput="updateCompleteness()"/></div>
     <div class="nc-field"><label>DAY</label><input type="number" id="nf-dd2" placeholder="DD" min="1" max="31" oninput="updateCompleteness()"/></div>
     <div class="nc-field"><label>MONTH</label><input type="number" id="nf-mm2" placeholder="MM" min="1" max="12" oninput="updateCompleteness()"/></div>
-    <div class="nc-field"><label>YEAR</label><input type="number" id="nf-yy2" placeholder="YYYY" min="1900" max="2025" oninput="updateCompleteness()"/></div>
+    <div class="nc-field"><label>YEAR</label><input type="number" id="nf-yy2" placeholder="YYYY" min="1900" max="2099" oninput="updateCompleteness()"/></div>
     <div class="nc-field"><label>BIRTH TIME (Optional)</label><input type="time" id="nf-time2" oninput="updateCompleteness()"/></div>
     <div class="nc-field"><label>&nbsp;</label><button class="btn-gold" style="width:100%;padding:12px 14px;font-size:9.5px" onclick="runNumerologyFull()"><i class="fas fa-star"></i> Generate Report</button></div>
   </div>
@@ -1428,7 +1502,7 @@ function goPage(id){
 function showHome(){goPage("home");setMbn("home");}
 function showSkeleton(){
   var el=document.getElementById("numberList");if(!el)return;
-  var html="<div style='display:grid;grid-column:1/-1;width:100%;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;max-width:1280px;margin:0 auto'>";
+  var html="<div style='display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1280px;margin:0 auto'>";
   for(var i=0;i<8;i++){html+="<div class='skel-card'><div class='skel-line sm w40'></div><div class='skel-line lg w80' style='margin-top:8px'></div><div class='skel-line sm w60'></div><div class='skel-line sm w60'></div><div class='skel-box'></div></div>";}
   html+="</div>";el.innerHTML=html;
 }
@@ -1490,25 +1564,13 @@ function toggleFavorite(number) {
     savedNumbers.push(number);
   }
 
-  // Keep the wishlist usable if browser storage is restricted.
-  try {
-    localStorage.setItem(
-      "mc-saved-numbers",
-      JSON.stringify(savedNumbers)
-    );
-  } catch (e) {
-    console.warn("Wishlist could not be saved in this browser.", e);
-  }
+  localStorage.setItem(
+    "mc-saved-numbers",
+    JSON.stringify(savedNumbers)
+  );
 
   updateWishlistUI();
-
-  // Number cards are also displayed on the home page.
-  var homePage = document.getElementById("home");
-  if (homePage && homePage.classList.contains("on")) {
-    renderHome();
-  } else {
-    renderNums(getList());
-  }
+  renderNums(getList());
 }
 
 function toggleSavedView() {
@@ -1549,9 +1611,188 @@ function shareSavedNumbers() {
   );
 }
 updateWishlistUI();
+
+// ==========================================
+// CUSTOMER TOOLS, STATUS, LOCAL INVENTORY
+// ==========================================
+function mcReadStore(key, fallback){
+  try { var value=JSON.parse(localStorage.getItem(key)||"null"); return value===null?fallback:value; }
+  catch(e){ return fallback; }
+}
+function mcWriteStore(key, value){
+  try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+  catch(e){ mcToast("Browser storage is unavailable. Changes may not persist."); return false; }
+}
+function mcToast(message){
+  var old=document.getElementById("mcToast"); if(old)old.remove();
+  var el=document.createElement("div"); el.id="mcToast"; el.className="mc-toast"; el.textContent=message;
+  document.body.appendChild(el); setTimeout(function(){if(el)el.remove();},2600);
+}
+var mcStatus=mcReadStore("mc-number-status",{});
+var mcCustomInventory=mcReadStore("mc-custom-inventory",[]);
+var mcInterest=mcReadStore("mc-local-interest",{});
+var mcRecent=mcReadStore("mc-recent-viewed",[]);
+var mcCompare= [];
+function mcEffectiveData(){
+  var base=DATA.map(function(x){return Object.assign({},x);});
+  (Array.isArray(mcCustomInventory)?mcCustomInventory:[]).forEach(function(x){
+    if(x&&/^\\d{10}$/.test(String(x.n))&&!base.some(function(b){return b.n===String(x.n);}))
+      base.push({n:String(x.n),d:String(x.d||x.n),p:Number(x.p)||0});
+  });
+  return base.map(function(x){
+    var st=mcStatus[x.n];
+    return Object.assign({},x,{status:st&&st.status?st.status:"available",p:st&&Number(st.price)>0?Number(st.price):Number(x.p)});
+  });
+}
+function mcStatusFor(n){return (mcStatus[n]&&mcStatus[n].status)||"available";}
+function mcTrack(n,kind){
+  mcInterest[n]=mcInterest[n]||{views:0,interests:0,buys:0};
+  mcInterest[n][kind]=(mcInterest[n][kind]||0)+1;
+  mcWriteStore("mc-local-interest",mcInterest);
+}
+function mcRecordView(n){
+  mcRecent=[String(n)].concat(mcRecent.filter(function(v){return String(v)!==String(n);})).slice(0,8);
+  mcWriteStore("mc-recent-viewed",mcRecent); mcTrack(n,"views");
+}
+function mcToggleRecent(){
+  var panel=document.getElementById("mcRecentPanel"); if(!panel)return;
+  panel.hidden=!panel.hidden;
+  if(!panel.hidden){
+    var items=mcRecent.map(function(n){return mcEffectiveData().find(function(x){return x.n===n;});}).filter(Boolean);
+    panel.innerHTML=items.length?items.map(function(x){return "<div style='display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--border)'><strong>"+x.d+"</strong><span>"+fmtR(x.p)+"</span><button class='nb-tool-btn' onclick='mcOpenNumber(\""+x.n+"\")'>VIEW</button></div>";}).join(""):"No recently viewed numbers yet.";
+  }
+}
+function mcOpenNumber(n){
+  var x=mcEffectiveData().find(function(v){return v.n===n;}); if(!x)return;
+  mcRecordView(n); mcToast("Number "+x.d+" · "+fmtR(x.p));
+}
+function mcToggleCompare(n){
+  if(mcCompare.indexOf(n)>=0)mcCompare=mcCompare.filter(function(v){return v!==n;});
+  else if(mcCompare.length>=4){mcToast("Compare up to 4 numbers at a time.");return;}
+  else mcCompare.push(n);
+  mcUpdateCompare();
+  var list=getList(); renderNums(list);
+}
+function mcUpdateCompare(){
+  var tray=document.getElementById("mcCompareTray"),chips=document.getElementById("mcCompareItems");
+  if(tray)tray.hidden=!mcCompare.length;
+  if(chips)chips.innerHTML=mcCompare.map(function(n){return "<span class='mc-chip'>"+n+"</span>";}).join("");
+}
+function mcClearCompare(){mcCompare=[];mcUpdateCompare();var p=document.getElementById("mcComparePanel");if(p)p.hidden=true;renderNums(getList());}
+function mcCompareNow(){
+  var panel=document.getElementById("mcComparePanel"); if(!panel||!mcCompare.length)return;
+  var rows=mcCompare.map(function(n){return mcEffectiveData().find(function(x){return x.n===n;});}).filter(Boolean);
+  if(!rows.length)return;
+  var html="<div class='mc-panel-title'>NUMBER COMPARISON</div><div class='mc-table-wrap'><table class='mc-compare-table'><thead><tr><th>DETAIL</th>"+rows.map(function(x){return "<th>"+x.d+"</th>";}).join("")+"</tr></thead><tbody>";
+  [["Price",function(x){return fmtR(x.p);}],["Status",function(x){return x.status.toUpperCase();}],["Pattern",function(x){return patLabels(x.n).join(", ")||"Special pattern";}],["2-digit total",function(x){return d2(x.n);}],["Lucky number",function(x){return dT(x.n);}]].forEach(function(r){html+="<tr><td>"+r[0]+"</td>"+rows.map(function(x){return "<td>"+r[1](x)+"</td>";}).join("")+"</tr>";});
+  html+="</tbody></table></div><button class='mc-action' onclick='document.getElementById(\"mcComparePanel\").hidden=true'>CLOSE COMPARISON</button>";
+  panel.innerHTML=html;panel.hidden=false;panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function mcShareNumber(n){
+  var x=mcEffectiveData().find(function(v){return v.n===n;});
+  if(!x)return;
+  var message="VIP Mobile Number: "+x.d+"\nPrice: "+fmtR(x.p)+"\nStatus: "+x.status+"\nManne Communications | WhatsApp +91 90909 00005";
+  if(navigator.share){
+    navigator.share({title:"VIP Number "+x.d,text:message,url:location.href}).catch(function(){});
+  }else if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(message).then(function(){mcToast("Number details copied. You can share them anywhere.");}).catch(function(){mcToast(message);});
+  }else{
+    mcToast(message);
+  }
+}
+function mcSendCustomRequest(event){
+  event.preventDefault();
+  var start=(document.getElementById("mcReqStart").value||"").trim();
+  var end=(document.getElementById("mcReqEnd").value||"").trim();
+  var pattern=(document.getElementById("mcReqPattern").value||"").trim();
+  var lucky=(document.getElementById("mcReqLucky").value||"").trim();
+  var notes=(document.getElementById("mcReqNotes").value||"").trim();
+  if(!start&&!end&&!pattern&&!lucky&&!notes){alert("Please enter at least one number preference.");return;}
+  if((start&&!/^\\d{1,5}$/.test(start))||(end&&!/^\\d{1,5}$/.test(end))){alert("Starting and ending digits should contain numbers only (up to 5 digits).");return;}
+  var msg="Hello Mr. Suresh! I would like to request a VIP mobile number.\\n";
+  if(start)msg+="Starting digits: "+start+"\\n";if(end)msg+="Ending digits: "+end+"\\n";
+  if(pattern)msg+="Pattern: "+pattern+"\\n";if(lucky)msg+="Lucky total: "+lucky+"\\n";if(notes)msg+="Budget / notes: "+notes+"\\n";
+  window.open("https://wa.me/919090900005?text="+encodeURIComponent(msg),"_blank","noopener");
+}
+function mcShowFeatured(){
+  var picks=mcEffectiveData().filter(function(x){return x.status==="available"&&x.p>=25000;});
+  if(!picks.length)picks=mcEffectiveData().filter(function(x){return x.status==="available";});
+  if(!picks.length){mcToast("No available numbers are currently listed.");return;}
+  picks.sort(function(a,b){return b.p-a.p;});
+  var x=picks[0];mcRecordView(x.n);goPage("numbers");
+  var input=document.getElementById("searchInput");if(input){input.value=x.n;runFilter();}
+  mcToast("Featured number: "+x.d+" · "+fmtR(x.p));
+}
+function mcToggleAdmin(){
+  var p=document.getElementById("mcAdminPanel");if(!p)return;p.hidden=!p.hidden;
+  if(!p.hidden){mcRenderAdmin();p.scrollIntoView({behavior:"smooth",block:"nearest"});}
+}
+function mcAdminSave(){
+  var n=(document.getElementById("mcAdminNumber").value||"").replace(/\\D/g,"");
+  var p=Number(document.getElementById("mcAdminPrice").value);
+  var status=document.getElementById("mcAdminStatus").value;
+  if(!/^\\d{10}$/.test(n)||!Number.isFinite(p)||p<=0){alert("Enter a valid 10-digit number and a price greater than zero.");return;}
+  mcStatus[n]={status:status,price:p};
+  if(!DATA.some(function(x){return x.n===n;})&&!mcCustomInventory.some(function(x){return x.n===n;})){
+    mcCustomInventory.push({n:n,d:n,p:p});
+  }
+  mcWriteStore("mc-number-status",mcStatus);mcWriteStore("mc-custom-inventory",mcCustomInventory);
+  document.getElementById("mcAdminNumber").value="";document.getElementById("mcAdminPrice").value="";
+  mcRenderAdmin();renderNums(getList());mcToast("Local inventory updated.");
+}
+function mcRenderAdmin(){
+  var el=document.getElementById("mcAdminList");if(!el)return;
+  var items=mcEffectiveData().filter(function(x){return mcStatus[x.n]||mcCustomInventory.some(function(c){return c.n===x.n;});});
+  el.innerHTML=items.length?items.map(function(x){return "<div class='mc-admin-row'><strong>"+x.n+"</strong><span>"+fmtR(x.p)+"</span><select class='mc-field' aria-label='Status for "+x.n+"' onchange='mcAdminStatusChange(\""+x.n+"\",this.value)'><option value='available' "+(x.status==="available"?"selected":"")+">Available</option><option value='reserved' "+(x.status==="reserved"?"selected":"")+">Reserved</option><option value='sold' "+(x.status==="sold"?"selected":"")+">Sold</option></select></div>";}).join(""):"No local inventory changes yet.";
+}
+function mcAdminStatusChange(n,status){
+  mcStatus[n]=mcStatus[n]||{};mcStatus[n].status=status;mcWriteStore("mc-number-status",mcStatus);renderNums(getList());mcRenderAdmin();
+}
+function mcExportInventory(){
+  var rows=["number,price,status"].concat(mcEffectiveData().map(function(x){return [x.n,x.p,mcStatusFor(x.n)].join(",");}));
+  mcDownload("manne-local-inventory.csv",rows.join("\\r\\n"),"text/csv");
+}
+function mcExportAnalytics(){
+  var rows=["number,views,interests,buys"].concat(Object.keys(mcInterest).map(function(n){var x=mcInterest[n];return [n,x.views||0,x.interests||0,x.buys||0].join(",");}));
+  mcDownload("manne-local-interest.csv",rows.join("\\r\\n"),"text/csv");
+}
+function mcDownload(name,content,type){
+  var blob=new Blob([content],{type:type+";charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+function mcImportInventory(event){
+  var file=event.target.files&&event.target.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(){
+    var rows=String(reader.result||"").split(/\\r?\\n/).slice(1),added=0;
+    rows.forEach(function(row){
+      var c=row.split(",");var n=(c[0]||"").replace(/\\D/g,""),p=Number(c[1]),status=(c[2]||"available").trim().toLowerCase();
+      if(/^\\d{10}$/.test(n)&&Number.isFinite(p)&&p>0&&["available","reserved","sold"].includes(status)){
+        mcStatus[n]={price:p,status:status};
+        if(!DATA.some(function(x){return x.n===n;})&&!mcCustomInventory.some(function(x){return x.n===n;}))mcCustomInventory.push({n:n,d:n,p:p});
+        added++;
+      }
+    });
+    mcWriteStore("mc-number-status",mcStatus);mcWriteStore("mc-custom-inventory",mcCustomInventory);
+    mcRenderAdmin();renderNums(getList());mcToast(added+" inventory rows imported locally.");
+    event.target.value="";
+  };
+  reader.readAsText(file);
+}
+function mcResetLocalChanges(){
+  if(!confirm("Remove all local inventory changes and custom numbers from this browser?"))return;
+  mcStatus={};mcCustomInventory=[];mcWriteStore("mc-number-status",mcStatus);mcWriteStore("mc-custom-inventory",mcCustomInventory);
+  mcRenderAdmin();renderNums(getList());mcToast("Local inventory changes reset.");
+}
+function mcInitSpotlight(){
+  var el=document.getElementById("mcFeaturedNumber");if(!el)return;
+  var p=mcEffectiveData().filter(function(x){return x.status==="available";}).sort(function(a,b){return b.p-a.p;})[0];
+  if(p)el.textContent=p.d+" · "+fmtR(p.p);
+}
+
 var curTier="all",curSort="",curPattern="all",curLucky=null;
 function getList(){
-  var l=[...DATA];
+  var l=mcEffectiveData();
   // WISHLIST FILTER
 if(showSavedOnly){
   l=l.filter(function(x){
@@ -1668,24 +1909,27 @@ function makeCard(x,delay){
     +"<div class='nb-tot'><span class='nb-tot-lbl'>LUCKY NO</span><span class='nb-tot-val'>"+dT(x.n)+"</span></div>"
     +"</div>"
 
+    +"<div class='nb-status "+(x.status||"available")+"'><i class='fas fa-circle' style='font-size:5px'></i> "+String(x.status||"available").toUpperCase()+"</div>"
     +"<div class='nb-price'>"+fmtR(x.p)+"</div>"
     +"<div class='nb-port'>Port Any Network</div>"
+    +"<div class='nb-card-tools'><button type='button' class='nb-tool-btn"+(mcCompare.indexOf(x.n)>=0?" selected":"")+"' onclick='mcToggleCompare(\""+x.n+"\")'>"+(mcCompare.indexOf(x.n)>=0?"✓ SELECTED":"COMPARE")+"</button><button type='button' class='nb-tool-btn' onclick='mcOpenNumber(\""+x.n+"\")'>MARK VIEWED</button><button type='button' class='nb-tool-btn' onclick='mcShareNumber(\""+x.n+"\")'>SHARE</button></div>"
     +"</div>"
 
     +"<div class='nb-banner'>"
-    +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Interested%20in%20"+wa+"' target='_blank' class='nb-int'><i class='fas fa-heart'></i> Interested</a>"
-    +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20"+wa+"%20at%20"+wp+"' target='_blank' class='nb-buy'><i class='fab fa-whatsapp'></i> Buy Now</a>"
+    +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Interested%20in%20"+wa+"' onclick='mcTrack(\""+x.n+"\",\"interests\")' target='_blank' rel='noopener' class='nb-int'><i class='fas fa-heart'></i> Interested</a>"
+    +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20"+wa+"%20at%20"+wp+"' onclick='mcTrack(\""+x.n+"\",\"buys\")' target='_blank' rel='noopener' class='nb-buy'><i class='fab fa-whatsapp'></i> Buy Now</a>"
     +"</div></div>";
 }
 function renderNums(list){
   var el=document.getElementById("numberList");if(!el)return;
+  mcInitSpotlight();
   if(!list.length){el.innerHTML="<div class='no-res'><div class='no-res-t'>No matching numbers found</div><div class='no-res-s'>We have thousands more not listed. Ask Mr. Suresh!</div><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Custom%20requirement' target='_blank' class='btn-wa' style='display:inline-flex;margin-top:12px'><i class='fab fa-whatsapp'></i> Ask Mr. Suresh</a></div>";return;}
   el.innerHTML=list.map(function(x,i){return makeCard(x,i<12?(i%4)*70:0);}).join("");
   if(typeof AOS!=="undefined")AOS.refresh();
 }
 function updateCounts(){
-  var e=document.getElementById("cnt-all");if(e)e.textContent=DATA.length;
-  ["leg","exc","roy","ult","eli","vip","pre","sma","fan","cho"].forEach(function(k){var el=document.getElementById("cnt-"+k);if(el)el.textContent=DATA.filter(function(x){return tier(x.n,x.p)===k;}).length;});
+  var allData=mcEffectiveData();var e=document.getElementById("cnt-all");if(e)e.textContent=allData.length;
+  ["leg","exc","roy","ult","eli","vip","pre","sma","fan","cho"].forEach(function(k){var el=document.getElementById("cnt-"+k);if(el)el.textContent=allData.filter(function(x){return tier(x.n,x.p)===k;}).length;});
 }
 function loadHeroCard(){
   var top=shuffle(DATA.filter(function(x){return x.p>=100000;})).slice(0,1);
@@ -2046,6 +2290,14 @@ function runNumerologyFull(){
 var _rptFont=14;
 function adjFont(d){_rptFont=Math.min(22,Math.max(11,_rptFont+d));var el=document.getElementById("reportSections");if(el)el.style.fontSize=_rptFont+"px";var lbl=document.getElementById("fontSizeLabel");if(lbl)lbl.textContent=_rptFont+"px";}
 function downloadNumerologyReport(){window.print();}
+
+
+// Initialize added catalogue tools safely after the document is ready.
+document.addEventListener("DOMContentLoaded",function(){
+  mcInitSpotlight();
+  mcUpdateCompare();
+  mcRenderAdmin();
+});
 
 </script>
 </body>

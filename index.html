@@ -790,6 +790,19 @@ window.MC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BK4p5lQh2DXVuBVmla_jpQ_4-Pg
 @media(max-width:700px){.mc-admin-form{grid-template-columns:1fr 1fr}.mc-admin-stats{grid-template-columns:1fr 1fr}.mc-admin-modal{padding:14px}.mc-admin-open{padding:7px 9px}}
 </style>
 
+<style>
+.mc-advanced-search{display:grid;grid-template-columns:1fr 1fr 1.1fr 1fr 1fr auto;gap:8px;margin:10px 0 18px}
+.mc-advanced-search input,.mc-advanced-search select{min-width:0;width:100%;box-sizing:border-box;background:var(--surface,#111);color:var(--text,#eee);border:1px solid var(--border,#333);border-radius:5px;padding:10px;font:12px var(--C,Arial)}
+.mc-advanced-search button{background:transparent;color:var(--gold2,#d6b45b);border:1px solid var(--gold-bd, #80652c);border-radius:5px;padding:8px 12px;font:10px var(--C,Arial);letter-spacing:.8px;cursor:pointer}
+@media(max-width:760px){.mc-advanced-search{grid-template-columns:repeat(2,minmax(0,1fr))}.mc-advanced-search button{min-height:38px}}
+.mc-import-panel{border:1px solid var(--border,#333);border-radius:9px;padding:14px;margin:14px 0;background:rgba(255,255,255,.02)}
+.mc-import-panel h4{margin:0 0 8px;color:var(--gold2,#d6b45b)}
+.mc-import-panel input[type=file]{max-width:100%;color:var(--text,#eee)}
+.mc-import-preview{max-height:240px;overflow:auto;border:1px solid var(--border,#333);border-radius:7px;margin-top:10px}
+.mc-import-preview table{width:100%;border-collapse:collapse;font-size:11px}
+.mc-import-preview th,.mc-import-preview td{padding:7px;border-bottom:1px solid var(--border,#333);text-align:left}
+.mc-import-status{font-size:12px;color:var(--gold2,#d6b45b);margin-top:8px}
+</style>
 </head>
 <body>
 <div id="preloader"><div class="pre-brand">MANNE COMMUNICATIONS</div><div class="pre-bar"><div class="pre-fill"></div></div><div class="pre-dots"><div class="pre-dot"></div><div class="pre-dot"></div><div class="pre-dot"></div></div></div>
@@ -1084,6 +1097,19 @@ window.MC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BK4p5lQh2DXVuBVmla_jpQ_4-Pg
       <option value="tot1l">Lucky No: Low to High</option>
       <option value="tot1h">Lucky No: High to Low</option>
     </select>
+  </div>
+  <div class="mc-advanced-search">
+    <input id="mcPrefixFilter" inputmode="numeric" maxlength="10" placeholder="Starts with" oninput="runFilter()">
+    <input id="mcSuffixFilter" inputmode="numeric" maxlength="10" placeholder="Ends with" oninput="runFilter()">
+    <select id="mcLuckyFilter" onchange="runFilter()">
+      <option value="">Any Lucky Number</option>
+      <option value="1">Lucky 1</option><option value="2">Lucky 2</option><option value="3">Lucky 3</option>
+      <option value="4">Lucky 4</option><option value="5">Lucky 5</option><option value="6">Lucky 6</option>
+      <option value="7">Lucky 7</option><option value="8">Lucky 8</option><option value="9">Lucky 9</option>
+    </select>
+    <input id="mcMinPrice" type="number" min="0" placeholder="Min price ₹" oninput="runFilter()">
+    <input id="mcMaxPrice" type="number" min="0" placeholder="Max price ₹" oninput="runFilter()">
+    <button type="button" onclick="mcClearAdvancedFilters()">CLEAR FILTERS</button>
   </div>
   <div class="tier-tabs">
     <button class="ttab on" onclick="filterTier('all',this)">All <span id="cnt-all"></span></button>
@@ -1918,6 +1944,16 @@ if(showSavedOnly){
 }
   var q=((document.getElementById("searchInput")||{value:""}).value||"").trim().replace(/\s/g,"");
   if(q)l=l.filter(function(x){return x.n.includes(q)||x.d.replace(/\s/g,"").includes(q);});
+  var prefix=((document.getElementById("mcPrefixFilter")||{value:""}).value||"").replace(/\D/g,"");
+  var suffix=((document.getElementById("mcSuffixFilter")||{value:""}).value||"").replace(/\D/g,"");
+  var lucky=(document.getElementById("mcLuckyFilter")||{value:""}).value;
+  var minPrice=(document.getElementById("mcMinPrice")||{value:""}).value;
+  var maxPrice=(document.getElementById("mcMaxPrice")||{value:""}).value;
+  if(prefix)l=l.filter(function(x){return x.n.indexOf(prefix)===0;});
+  if(suffix)l=l.filter(function(x){return x.n.slice(-suffix.length)===suffix;});
+  if(lucky!=="")l=l.filter(function(x){return dT(x.n)===Number(lucky);});
+  if(minPrice!=="")l=l.filter(function(x){return x.p>=Number(minPrice);});
+  if(maxPrice!=="")l=l.filter(function(x){return x.p<=Number(maxPrice);});
   if(curTier!=="all")l=l.filter(function(x){return tier(x.n,x.p)===curTier;});
   if(curPattern!=="all")l=l.filter(function(x){return detectPatterns(x.n).includes(curPattern);});
   if(curLucky!==null)l=l.filter(function(x){return dT(x.n)===curLucky;});
@@ -1931,6 +1967,10 @@ if(showSavedOnly){
 }
 function filterTier(t,btn){curTier=t;document.querySelectorAll(".ttab").forEach(function(b){b.classList.remove("on");});btn.classList.add("on");renderNums(getList());}
 function filterPattern(p,btn){curPattern=p;document.querySelectorAll("#numbers .pat-pill").forEach(function(b){b.classList.remove("on");});btn.classList.add("on");renderNums(getList());}
+function mcClearAdvancedFilters(){
+  ["mcPrefixFilter","mcSuffixFilter","mcLuckyFilter","mcMinPrice","mcMaxPrice"].forEach(function(id){var e=document.getElementById(id);if(e)e.value="";});
+  renderNums(getList());
+}
 function runFilter(){renderNums(getList());}
 function runSort(){curSort=document.getElementById("sortType").value;renderNums(getList());}
 function isValidDOB(dd, mm, yy) {
@@ -2557,6 +2597,77 @@ async function mcAdminLoadAnalytics(){
   b.innerHTML=(r.data||[]).map(function(x){return "<tr><td>"+mcAdminEsc(x.mobile_number)+"</td><td>"+mcAdminEsc(x.event_type)+"</td><td>"+mcAdminEsc(new Date(x.created_at).toLocaleString())+"</td></tr>";}).join("")||"<tr><td colspan='3'>No activity recorded yet.</td></tr>";
 }
 
+
+// Stage 2 bulk CSV import with preview, validation, duplicate handling and batched upsert.
+var mcCsvRowsReady=[];
+function mcDownloadCsvTemplate(){
+  var csv="number,display_number,price,status\n9876543210,9876 543210,4999,available\n";
+  var blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+  var url=URL.createObjectURL(blob);var a=document.createElement("a");
+  a.href=url;a.download="manne-communications-inventory-template.csv";a.click();URL.revokeObjectURL(url);
+}
+function mcParseCsvLine(line){
+  var out=[],cur="",quoted=false;
+  for(var i=0;i<line.length;i++){
+    var c=line[i];
+    if(c==='"'&&quoted&&line[i+1]==='"'){cur+='"';i++;}
+    else if(c==='"'){quoted=!quoted;}
+    else if(c===","&&!quoted){out.push(cur.trim());cur="";}
+    else cur+=c;
+  }
+  out.push(cur.trim());return out;
+}
+function mcPreviewCsv(ev){
+  var file=ev.target.files&&ev.target.files[0];mcCsvRowsReady=[];
+  var preview=document.getElementById("mcCsvPreview"),btn=document.getElementById("mcCsvImportBtn"),status=document.getElementById("mcCsvImportStatus");
+  preview.style.display="none";btn.style.display="none";status.textContent="";
+  if(!file)return;
+  if(file.size>5*1024*1024){status.textContent="File is larger than 5 MB. Split it into smaller CSV files.";return;}
+  var reader=new FileReader();
+  reader.onload=function(){
+    var lines=String(reader.result||"").replace(/^\uFEFF/,"").split(/\r?\n/).filter(function(x){return x.trim();});
+    if(lines.length<2){status.textContent="CSV has no data rows.";return;}
+    var headers=mcParseCsvLine(lines.shift()).map(function(x){return x.toLowerCase().replace(/\s/g,"");});
+    var ni=headers.indexOf("number"),di=headers.indexOf("display_number"),pi=headers.indexOf("price"),si=headers.indexOf("status");
+    if(ni<0||pi<0){status.textContent="Missing required CSV headers: number and price.";return;}
+    var map={},invalid=0;
+    lines.forEach(function(line,idx){
+      var c=mcParseCsvLine(line),n=String(c[ni]||"").replace(/\D/g,""),price=Number(c[pi]),st=String(si>=0?c[si]:"available").toLowerCase()||"available";
+      if(!/^\d{10}$/.test(n)||!(price>0)||["available","reserved","sold"].indexOf(st)<0){invalid++;return;}
+      map[n]={number:n,display_number:(di>=0&&c[di]?c[di]:n),price:price,status:st};
+    });
+    mcCsvRowsReady=Object.keys(map).map(function(k){return map[k];});
+    var html="<table><thead><tr><th>NUMBER</th><th>PRICE</th><th>STATUS</th></tr></thead><tbody>";
+    mcCsvRowsReady.slice(0,30).forEach(function(x){html+="<tr><td>"+mcAdminEsc(x.display_number)+"</td><td>₹"+x.price+"</td><td>"+x.status+"</td></tr>";});
+    html+="</tbody></table>";
+    preview.innerHTML=html;preview.style.display="block";
+    status.textContent=mcCsvRowsReady.length+" valid unique rows ready; "+invalid+" invalid rows skipped. Preview shows up to 30 rows.";
+    if(mcCsvRowsReady.length)btn.style.display="inline-block";
+  };
+  reader.onerror=function(){status.textContent="Could not read this CSV file.";};
+  reader.readAsText(file);
+}
+async function mcImportCsv(){
+  if(!mcCsvRowsReady.length)return;
+  var btn=document.getElementById("mcCsvImportBtn"),status=document.getElementById("mcCsvImportStatus");
+  btn.disabled=true;status.textContent="Importing "+mcCsvRowsReady.length+" rows…";
+  var total=mcCsvRowsReady.length;
+  try{
+    for(var i=0;i<total;i+=200){
+      var batch=mcCsvRowsReady.slice(i,i+200);
+      var r=await mcSupabase.from("inventory").upsert(batch,{onConflict:"number"});
+      if(r.error)throw r.error;
+      status.textContent="Imported "+Math.min(i+batch.length,total)+" of "+total+"…";
+    }
+    status.textContent="Success! "+total+" inventory rows imported or updated.";
+    mcCsvRowsReady=[];document.getElementById("mcCsvFile").value="";
+    document.getElementById("mcCsvPreview").style.display="none";btn.style.display="none";
+    await mcAdminLoadInventory();await mcLoadRemoteInventory();
+  }catch(err){
+    status.textContent="Import stopped: "+(err.message||"Unknown error")+". Earlier batches may already have been saved. You can retry the same CSV safely.";
+  }finally{btn.disabled=false;}
+}
+
 </script>
 
 <div class="mc-admin-overlay" id="mcAdminOverlay" role="dialog" aria-modal="true" aria-label="Manne Communications Admin">
@@ -2601,6 +2712,15 @@ async function mcAdminLoadAnalytics(){
      <div><label>PRICE (₹)</label><input id="mcNewPrice" class="mc-admin-input" type="number" min="1" placeholder="4999"></div>
      <div><label>STATUS</label><select id="mcNewStatus" class="mc-admin-input"><option value="available">Available</option><option value="reserved">Reserved</option><option value="sold">Sold</option></select></div>
      <button class="mc-admin-btn" onclick="mcAdminAddNumber()">ADD</button>
+    </div>
+    <div class="mc-import-panel">
+     <h4>Bulk Import Inventory (CSV)</h4>
+     <p class="mc-admin-note">CSV columns: number, display_number, price, status. Required: number and price. Status can be available, reserved or sold. Existing numbers are updated; new numbers are inserted.</p>
+     <p class="mc-admin-note"><button type="button" class="mc-admin-btn secondary" onclick="mcDownloadCsvTemplate()">DOWNLOAD CSV TEMPLATE</button></p>
+     <input type="file" id="mcCsvFile" accept=".csv,text/csv" onchange="mcPreviewCsv(event)">
+     <div id="mcCsvPreview" class="mc-import-preview" style="display:none"></div>
+     <div id="mcCsvImportStatus" class="mc-import-status" aria-live="polite"></div>
+     <button type="button" id="mcCsvImportBtn" class="mc-admin-btn" style="display:none" onclick="mcImportCsv()">IMPORT VALID ROWS</button>
     </div>
     <div class="mc-admin-msg" id="mcInventoryMsg"></div>
     <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>NUMBER</th><th>PRICE (₹)</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="mcAdminInventoryRows"><tr><td colspan="4">Loading inventory…</td></tr></tbody></table></div>

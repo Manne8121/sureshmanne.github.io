@@ -210,7 +210,7 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
 .nb-tot-sep{width:1px;background:var(--border)}
 .nb-price{font-family:var(--C);font-size:17px;color:var(--gold2);margin-bottom:8px;text-align:center}
 .nb-port{font-family:var(--C);font-size:7px;letter-spacing:2px;color:var(--blue2);background:var(--blue-dim);border:1px solid var(--blue-bd);padding:3px 9px;border-radius:3px;display:inline-block}
-.nb-banner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px;border-top:0;align-items:stretch}
+.nb-banner{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:0 12px 12px;border-top:0;align-items:stretch}
 .nb-int,.nb-buy,.nb-banner .nb-tool-btn{min-width:0;padding:9px 5px;font-size:8px;letter-spacing:.55px;white-space:normal;line-height:1.2;min-height:38px}
 .nb-banner .nb-int,.nb-banner .nb-buy{overflow-wrap:anywhere}
 @media(max-width:520px){.nb-banner{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.nb-int,.nb-buy,.nb-banner .nb-tool-btn{font-size:9px;min-height:38px}}
@@ -803,6 +803,27 @@ window.MC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BK4p5lQh2DXVuBVmla_jpQ_4-Pg
 .mc-import-preview th,.mc-import-preview td{padding:7px;border-bottom:1px solid var(--border,#333);text-align:left}
 .mc-import-status{font-size:12px;color:var(--gold2,#d6b45b);margin-top:8px}
 </style>
+
+<style>
+.mc-request-overlay{position:fixed;inset:0;z-index:100100;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;padding:16px}
+.mc-request-overlay.open{display:flex}
+.mc-request-modal{width:min(520px,100%);max-height:92vh;overflow:auto;background:#141414;color:#f4f4f4;border:1px solid rgba(214,180,91,.5);border-radius:12px;padding:22px;box-shadow:0 25px 90px #000}
+.mc-request-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.mc-request-head h3{margin:0;color:#d6b45b;font-size:16px;letter-spacing:1px}
+.mc-request-close{background:transparent;color:#ddd;border:1px solid #555;border-radius:6px;padding:7px 10px;cursor:pointer}
+.mc-request-number{font-size:25px;font-weight:800;letter-spacing:2px;text-align:center;padding:16px 8px;color:#fff}
+.mc-request-modal label{display:block;font-size:10px;letter-spacing:1px;color:#aaa;margin:11px 0 5px}
+.mc-request-modal input,.mc-request-modal textarea{width:100%;box-sizing:border-box;background:#0d0d0d;color:#fff;border:1px solid #444;border-radius:6px;padding:11px;font:13px Arial}
+.mc-request-modal textarea{min-height:75px;resize:vertical}
+.mc-request-submit{width:100%;background:#d0ad4f;color:#111;border:0;border-radius:6px;padding:12px;font-weight:800;margin-top:14px;cursor:pointer}
+.mc-request-note{font-size:11px;line-height:1.5;color:#aaa;margin-top:10px}
+.mc-request-message{font-size:12px;color:#d6b45b;margin-top:9px;min-height:18px}
+.mc-recommendations{border-top:1px solid #333;margin-top:16px;padding-top:12px}
+.mc-recommendations strong{font-size:11px;color:#d6b45b;letter-spacing:1px}
+.mc-recommendation-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.mc-recommendation-list button{background:#1b1b1b;color:#eee;border:1px solid #514323;border-radius:5px;padding:7px 9px;cursor:pointer}
+</style>
+
 </head>
 <body>
 <div id="preloader"><div class="pre-brand">MANNE COMMUNICATIONS</div><div class="pre-bar"><div class="pre-fill"></div></div><div class="pre-dots"><div class="pre-dot"></div><div class="pre-dot"></div><div class="pre-dot"></div></div></div>
@@ -2070,11 +2091,11 @@ function makeCard(x,delay){
     +"</div>"
 
     +"<div class='nb-banner'>"
-    +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Interested%20in%20"+wa+"' onclick='mcTrack(\""+x.n+"\",\"interests\")' target='_blank' rel='noopener' class='nb-int'><i class='fas fa-heart'></i> Interested</a>"
+    +"<button type='button' class='nb-tool-btn mc-convert-btn' onclick='mcOpenRequest(\"reserve\",\""+x.n+"\")'><i class='fas fa-calendar-check'></i> RESERVE</button>"
+    +"<button type='button' class='nb-tool-btn mc-convert-btn' onclick='mcOpenRequest(\"offer\",\""+x.n+"\")'><i class='fas fa-tag'></i> MAKE OFFER</button>"
     +"<button type='button' class='nb-tool-btn"+(mcCompare.indexOf(x.n)>=0?" selected":"")+"' onclick='mcToggleCompare(\""+x.n+"\")'>"+(mcCompare.indexOf(x.n)>=0?"✓ SELECTED":"COMPARE")+"</button>"
-
-    +"<button type='button' class='nb-tool-btn' onclick='mcShareNumber(\""+x.n+"\")'>SHARE</button>"
-    +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20"+wa+"%20at%20"+wp+"' onclick='mcTrack(\""+x.n+"\",\"buys\")' target='_blank' rel='noopener' class='nb-buy'><i class='fab fa-whatsapp'></i> Buy Now</a>"
+    +"<button type='button' class='nb-tool-btn' onclick='mcShareNumber(\""+x.n+"\")'><i class='fas fa-share-alt'></i> SHARE</button>"
+    +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20"+wa+"%20at%20"+wp+"' onclick='mcTrack(\""+x.n+"\",\"buys\")' target='_blank' rel='noopener' class='nb-buy'><i class='fab fa-whatsapp'></i> BUY NOW</a>"
     +"</div></div>";
 }
 function renderNums(list){
@@ -2668,6 +2689,68 @@ async function mcImportCsv(){
   }finally{btn.disabled=false;}
 }
 
+
+// Stage 3: customer reservation and offer requests stored in Supabase.
+var mcCurrentRequestType="reserve",mcCurrentRequestNumber="";
+function mcOpenRequest(type,number){
+  var item=mcEffectiveData().find(function(x){return String(x.n)===String(number);});
+  if(!item){alert("This number is no longer in the current inventory.");return;}
+  if(item.status!=="available"){alert("This number is not currently available. Please contact us on WhatsApp.");return;}
+  mcCurrentRequestType=type;mcCurrentRequestNumber=String(number);
+  document.getElementById("mcRequestTitle").textContent=type==="offer"?"MAKE AN OFFER":"REQUEST A RESERVATION";
+  document.getElementById("mcRequestNumber").textContent=item.d+" · "+fmtR(item.p);
+  document.getElementById("mcOfferBudgetWrap").style.display=type==="offer"?"block":"none";
+  document.getElementById("mcRequestBudget").required=type==="offer";
+  document.getElementById("mcRequestBudget").value="";
+  document.getElementById("mcRequestMessageField").value="";
+  document.getElementById("mcRequestFeedback").textContent="";
+  document.getElementById("mcRequestSubmit").disabled=false;
+  mcRenderRecommendations(item);
+  document.getElementById("mcRequestOverlay").classList.add("open");
+}
+function mcCloseRequest(){document.getElementById("mcRequestOverlay").classList.remove("open");}
+function mcRenderRecommendations(item){
+  var target=document.getElementById("mcRecommendationList");
+  var matches=mcEffectiveData().filter(function(x){
+    return x.n!==item.n&&x.status==="available"&&dT(x.n)===dT(item.n);
+  }).slice(0,4);
+  target.innerHTML=matches.length?matches.map(function(x){
+    return "<button type='button' onclick='mcOpenRequest(\"reserve\",\""+x.n+"\")'>"+mcAdminEsc(x.d)+" · "+fmtR(x.p)+"</button>";
+  }).join(""):"<span class='mc-request-note'>No similar available numbers right now.</span>";
+}
+async function mcSubmitRequest(ev){
+  ev.preventDefault();
+  var submit=document.getElementById("mcRequestSubmit"),feedback=document.getElementById("mcRequestFeedback");
+  var name=document.getElementById("mcRequestName").value.trim();
+  var phone=document.getElementById("mcRequestPhone").value.trim();
+  var budget=document.getElementById("mcRequestBudget").value;
+  var message=document.getElementById("mcRequestMessageField").value.trim();
+  if(!name||!phone){feedback.textContent="Please enter your name and contact number.";return;}
+  if(mcCurrentRequestType==="offer"&&!(Number(budget)>0)){feedback.textContent="Please enter a valid offer amount.";return;}
+  submit.disabled=true;feedback.textContent="Submitting your request…";
+  var item=mcEffectiveData().find(function(x){return x.n===mcCurrentRequestNumber;});
+  if(!item||item.status!=="available"){feedback.textContent="Sorry, this number is no longer available. Please contact us.";submit.disabled=false;return;}
+  var fullMessage=(mcCurrentRequestType==="offer"?"Offer request":"Reservation request")+
+    " for "+item.d+" at listed price "+fmtR(item.p)+". "+(message||"");
+  var payload={
+    enquiry_type:mcCurrentRequestType==="offer"?"number_offer":"reservation_request",
+    mobile_number:mcCurrentRequestNumber,
+    customer_name:name,
+    customer_phone:phone,
+    budget:mcCurrentRequestType==="offer"?String(budget):null,
+    message:fullMessage
+  };
+  var result=await mcSubmitRemoteEnquiry(payload);
+  if(result.error){
+    feedback.textContent="We couldn't save this request right now. Please try again or contact us on WhatsApp.";
+    submit.disabled=false;return;
+  }
+  mcTrack(mcCurrentRequestNumber,"interests");
+  var wa="Hi, I submitted a "+(mcCurrentRequestType==="offer"?"price offer":"reservation request")+" for "+item.d+". Name: "+name+". Contact: "+phone+". "+(budget?"Offer: ₹"+budget+". ":"")+message;
+  feedback.innerHTML="Request received! Our team will contact you after checking availability. <a style='color:#d6b45b;text-decoration:underline' target='_blank' rel='noopener' href='https://wa.me/919090900005?text="+encodeURIComponent(wa)+"'>Continue on WhatsApp</a>";
+  submit.textContent="REQUEST SUBMITTED";
+}
+
 </script>
 
 <div class="mc-admin-overlay" id="mcAdminOverlay" role="dialog" aria-modal="true" aria-label="Manne Communications Admin">
@@ -2735,6 +2818,24 @@ async function mcImportCsv(){
     <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>NUMBER</th><th>EVENT</th><th>DATE</th></tr></thead><tbody id="mcAdminAnalyticsRows"><tr><td colspan="3">Select refresh to load activity.</td></tr></tbody></table></div>
    </section>
   </div>
+ </div>
+</div>
+
+
+<div class="mc-request-overlay" id="mcRequestOverlay" role="dialog" aria-modal="true" aria-labelledby="mcRequestTitle">
+ <div class="mc-request-modal">
+  <div class="mc-request-head"><h3 id="mcRequestTitle">NUMBER REQUEST</h3><button class="mc-request-close" type="button" onclick="mcCloseRequest()">CLOSE ✕</button></div>
+  <div class="mc-request-number" id="mcRequestNumber"></div>
+  <form id="mcRequestForm" onsubmit="mcSubmitRequest(event)">
+   <label for="mcRequestName">YOUR NAME</label><input id="mcRequestName" maxlength="100" autocomplete="name" required placeholder="Enter your name">
+   <label for="mcRequestPhone">WHATSAPP / MOBILE NUMBER</label><input id="mcRequestPhone" maxlength="30" inputmode="tel" autocomplete="tel" required placeholder="Your contact number">
+   <div id="mcOfferBudgetWrap" style="display:none"><label for="mcRequestBudget">YOUR OFFER (₹)</label><input id="mcRequestBudget" type="number" min="1" step="1" placeholder="Enter your offer"></div>
+   <label for="mcRequestMessageField">MESSAGE (OPTIONAL)</label><textarea id="mcRequestMessageField" maxlength="1500" placeholder="Any details or preferred time to contact you"></textarea>
+   <button class="mc-request-submit" id="mcRequestSubmit" type="submit">SUBMIT REQUEST</button>
+   <div class="mc-request-message" id="mcRequestFeedback" aria-live="polite"></div>
+  </form>
+  <p class="mc-request-note">Submitting a request does not confirm a reservation or guarantee availability. Our team will contact you to verify the number and next steps.</p>
+  <div class="mc-recommendations"><strong>YOU MAY ALSO LIKE</strong><div id="mcRecommendationList" class="mc-recommendation-list"></div></div>
  </div>
 </div>
 

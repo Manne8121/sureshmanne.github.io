@@ -1336,12 +1336,29 @@ function isValidDOB(dd, mm, yy) {
            date.getDate() === d &&
            date <= today;
 }
+
 function filterByLucky(){
-  var dd=document.getElementById("nf-dd").value,mm=document.getElementById("nf-mm").value,yy=document.getElementById("nf-yy").value;
-  if(!dd||!mm||!yy){alert("Please enter day, month and year");return;}
+  var dd=document.getElementById("nf-dd").value;
+  var mm=document.getElementById("nf-mm").value;
+  var yy=document.getElementById("nf-yy").value;
+
+  if(!dd||!mm||!yy){
+    alert("Please enter day, month and year");
+    return;
+  }
+
+  // Validate date of birth
+  if(!isValidDOB(dd, mm, yy)){
+    alert("Please enter a valid date of birth.");
+    return;
+  }
+
   curLucky=chalSum(dd+mm+yy);
-  var res=document.getElementById("nfRes");res.style.display="block";
+
+  var res=document.getElementById("nfRes");
+  res.style.display="block";
   res.textContent="SHOWING NUMBERS MATCHING LUCKY NUMBER "+curLucky;
+
   renderNums(getList());
 }
 function clearLuckyFilter(){

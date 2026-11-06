@@ -1395,6 +1395,104 @@ function onPriceSlide(val){
   if(d)d.textContent=curMaxPrice>=1825000?"All Prices":fmtR(curMaxPrice)+" max";
   renderNums(getList());
 }
+// ==========================================
+// WISHLIST FUNCTIONALITY
+// ==========================================
+
+var savedNumbers = [];
+
+try {
+  savedNumbers = JSON.parse(
+    localStorage.getItem("mc-saved-numbers") || "[]"
+  );
+
+  if (!Array.isArray(savedNumbers)) {
+    savedNumbers = [];
+  }
+} catch (e) {
+  savedNumbers = [];
+}
+
+var showSavedOnly = false;
+
+function isSavedNumber(number) {
+  return savedNumbers.indexOf(String(number)) !== -1;
+}
+
+function updateWishlistUI() {
+  var count = document.getElementById("wishlistCount");
+
+  if (count) {
+    count.textContent = savedNumbers.length;
+  }
+
+  var viewBtn = document.getElementById("wishlistViewBtn");
+
+  if (viewBtn) {
+    viewBtn.innerHTML = showSavedOnly
+      ? "<i class='fas fa-list'></i> SHOW ALL NUMBERS"
+      : "<i class='fas fa-heart'></i> VIEW SAVED";
+  }
+}
+
+function toggleFavorite(number) {
+  number = String(number);
+
+  if (isSavedNumber(number)) {
+    savedNumbers = savedNumbers.filter(function(n) {
+      return n !== number;
+    });
+  } else {
+    savedNumbers.push(number);
+  }
+
+  localStorage.setItem(
+    "mc-saved-numbers",
+    JSON.stringify(savedNumbers)
+  );
+
+  updateWishlistUI();
+  renderNums(getList());
+}
+
+function toggleSavedView() {
+  showSavedOnly = !showSavedOnly;
+
+  updateWishlistUI();
+  renderNums(getList());
+}
+
+function shareSavedNumbers() {
+  if (savedNumbers.length === 0) {
+    alert("Please save some numbers to your wishlist first.");
+    return;
+  }
+
+  var selected = DATA.filter(function(x) {
+    return isSavedNumber(x.n);
+  });
+
+  if (selected.length === 0) {
+    alert("No saved numbers found.");
+    return;
+  }
+
+  var message = "MY VIP NUMBER SHORTLIST\n\n";
+
+  selected.forEach(function(x, i) {
+    message += (i + 1) + ". " + x.d +
+      " - " + fmtR(x.p) + "\n";
+  });
+
+  message += "\nPlease share the availability details.";
+
+  window.open(
+    "https://wa.me/919090900005?text=" +
+    encodeURIComponent(message),
+    "_blank"
+  );
+}
+updateWishlistUI();
 var curTier="all",curSort="",curPattern="all",curLucky=null;
 function getList(){
   var l=[...DATA];
@@ -1476,19 +1574,48 @@ function clearLuckyFilter(){
   renderNums(getList());
 }
 function makeCard(x,delay){
-  var wa=encodeURIComponent(x.n),wp=encodeURIComponent(fmt(x.p));
+  var wa=encodeURIComponent(x.n),
+      wp=encodeURIComponent(fmt(x.p));
+
+  var saved=isSavedNumber(x.n);
+
   var pats=patLabels(x.n);
   var ti=tierInfoFull(x.n,x.p);
-  var ph=pats.length?"<div class='nb-pats'>"+pats.map(function(p){return"<span class='nb-pat'>"+p+"</span>";}).join("")+"</div>":"";
-  var hot=x.p>=200000?"<div class='hot-badge'>HOT</div>":"";
-  return "<div class='nb'"+(delay?" data-aos='fade-up' data-aos-delay='"+delay+"'":"")+">"+hot
+
+  var ph=pats.length
+    ? "<div class='nb-pats'>"+pats.map(function(p){
+        return "<span class='nb-pat'>"+p+"</span>";
+      }).join("")+"</div>"
+    : "";
+
+  var hot=x.p>=200000
+    ? "<div class='hot-badge'>HOT</div>"
+    : "";
+
+  return "<div class='nb'"+
+    (delay?" data-aos='fade-up' data-aos-delay='"+delay+"'":"")+">"+hot
+
     +"<div class='nb-body'>"
+
+    +"<div class='nb-card-top'>"
     +"<span class='nb-tier "+ti.cls+"'>"+ti.label+"</span>"
+    +"<button type='button' class='nb-fav"+(saved?" saved":"")+"' onclick='toggleFavorite(\""+x.n+"\")' title='Save to wishlist' aria-label='Save to wishlist'>"
+    +"<i class='fas fa-heart'></i>"
+    +"</button>"
+    +"</div>"
+
     +"<div class='nb-num'>"+x.d+"</div>"+ph
-    +"<div class='nb-totals'><div class='nb-tot'><span class='nb-tot-lbl'>2 DIGIT</span><span class='nb-tot-val'>"+d2(x.n)+"</span></div><div class='nb-tot-sep'></div><div class='nb-tot'><span class='nb-tot-lbl'>LUCKY NO</span><span class='nb-tot-val'>"+dT(x.n)+"</span></div></div>"
+
+    +"<div class='nb-totals'>"
+    +"<div class='nb-tot'><span class='nb-tot-lbl'>2 DIGIT</span><span class='nb-tot-val'>"+d2(x.n)+"</span></div>"
+    +"<div class='nb-tot-sep'></div>"
+    +"<div class='nb-tot'><span class='nb-tot-lbl'>LUCKY NO</span><span class='nb-tot-val'>"+dT(x.n)+"</span></div>"
+    +"</div>"
+
     +"<div class='nb-price'>"+fmtR(x.p)+"</div>"
     +"<div class='nb-port'>Port Any Network</div>"
     +"</div>"
+
     +"<div class='nb-banner'>"
     +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Interested%20in%20"+wa+"' target='_blank' class='nb-int'><i class='fas fa-heart'></i> Interested</a>"
     +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20"+wa+"%20at%20"+wp+"' target='_blank' class='nb-buy'><i class='fab fa-whatsapp'></i> Buy Now</a>"

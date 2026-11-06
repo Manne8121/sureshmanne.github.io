@@ -1685,17 +1685,28 @@ function mcToggleCompare(n){
 }
 function mcUpdateCompare(){
   var tray=document.getElementById("mcCompareTray"),chips=document.getElementById("mcCompareItems");
-  if(tray)tray.hidden=!mcCompare.length;
+  var home=document.getElementById("homeNumGrid"),numbers=document.getElementById("numberList");
+  var homePage=document.getElementById("home");
+  var onHome=homePage&&homePage.classList.contains("on");
+  if(tray){
+    if(onHome&&home&&home.parentNode){home.parentNode.insertBefore(tray,home.nextSibling);}
+    else if(numbers&&numbers.parentNode){numbers.parentNode.insertBefore(tray,numbers);}
+    tray.hidden=!mcCompare.length;
+  }
   if(chips)chips.innerHTML=mcCompare.map(function(n){return "<span class='mc-chip'>"+n+"</span>";}).join("");
 }
-function mcClearCompare(){mcCompare=[];mcUpdateCompare();var p=document.getElementById("mcComparePanel");if(p)p.hidden=true;renderNums(getList());}
+function mcClearCompare(){mcCompare=[];mcUpdateCompare();var p=document.getElementById("mcComparePanel");if(p)p.hidden=true;renderNums(getList());renderHome();}
 function mcCompareNow(){
-  var panel=document.getElementById("mcComparePanel"); if(!panel||!mcCompare.length)return;
+  var panel=document.getElementById("mcComparePanel");
+  if(mcCompare.length<2){mcToast("Select at least 2 numbers to compare.");return;}
+  if(!panel)return;
   var rows=mcCompare.map(function(n){return mcEffectiveData().find(function(x){return x.n===n;});}).filter(Boolean);
   if(!rows.length)return;
   var html="<div class='mc-panel-title'>NUMBER COMPARISON</div><div class='mc-table-wrap'><table class='mc-compare-table'><thead><tr><th>DETAIL</th>"+rows.map(function(x){return "<th>"+x.d+"</th>";}).join("")+"</tr></thead><tbody>";
   [["Price",function(x){return fmtR(x.p);}],["Status",function(x){return x.status.toUpperCase();}],["Pattern",function(x){return patLabels(x.n).join(", ")||"Special pattern";}],["2-digit total",function(x){return d2(x.n);}],["Lucky number",function(x){return dT(x.n);}]].forEach(function(r){html+="<tr><td>"+r[0]+"</td>"+rows.map(function(x){return "<td>"+r[1](x)+"</td>";}).join("")+"</tr>";});
   html+="</tbody></table></div><button class='mc-action' onclick='document.getElementById(\"mcComparePanel\").hidden=true'>CLOSE COMPARISON</button>";
+  var tray=document.getElementById("mcCompareTray");
+  if(tray&&tray.parentNode){tray.parentNode.insertBefore(panel,tray.nextSibling);}
   panel.innerHTML=html;panel.hidden=false;panel.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 function mcShareNumber(n){

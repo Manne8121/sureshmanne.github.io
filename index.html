@@ -210,11 +210,11 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
 .nb-tot-sep{width:1px;background:var(--border)}
 .nb-price{font-family:var(--C);font-size:17px;color:var(--gold2);margin-bottom:8px;text-align:center}
 .nb-port{font-family:var(--C);font-size:7px;letter-spacing:2px;color:var(--blue2);background:var(--blue-dim);border:1px solid var(--blue-bd);padding:3px 9px;border-radius:3px;display:inline-block}
-.nb-banner{display:flex;border-top:1px solid var(--border)}
-.nb-int,.nb-buy{flex:1;text-align:center;padding:11px 4px;font-family:var(--C);font-size:8px;letter-spacing:1.5px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
-.nb-int{color:var(--text3);border-right:1px solid var(--border)}
-.nb-int:hover{background:var(--gold-dim);color:var(--gold2)}
-.nb-buy{color:var(--green)}.nb-buy:hover{background:var(--green);color:#000}
+.nb-banner{display:grid;grid-template-columns:1.05fr .9fr 1.25fr .8fr 1.15fr;gap:5px;padding:0 12px 12px;border-top:0;align-items:stretch}
+.nb-int,.nb-buy,.nb-banner .nb-tool-btn{min-width:0;text-align:center;padding:9px 3px;font-family:var(--C);font-size:8px;letter-spacing:1px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text2);text-decoration:none;white-space:nowrap;cursor:pointer;min-height:34px}
+.nb-int{color:var(--text3)}
+.nb-int:hover{background:var(--gold-dim);color:var(--gold2);border-color:var(--gold-bd)}
+.nb-buy{color:var(--green);border-color:var(--green-bd);background:var(--green-dim)}.nb-buy:hover{background:var(--green);color:#000}
 /* WISHLIST STYLES */
 .nb-fav{
   width:30px;
@@ -236,12 +236,22 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
   border-color:rgba(239,68,68,.4);
 }
 .nb-card-top{
-  display:flex;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
   align-items:center;
-  justify-content:space-between;
   gap:8px;
   margin-bottom:8px;
 }
+.nb-card-top .nb-tier{justify-self:start}
+.nb-card-top .nb-status{justify-self:center;margin:0;white-space:nowrap}
+.nb-card-top .nb-fav{justify-self:end}
+.nb-num{font-size:clamp(21px,2.35vw,28px);font-weight:700;letter-spacing:2.5px;margin:2px 0 10px}
+.nb-pats{display:none}
+.nb-totals{display:grid;grid-template-columns:1fr 1.35fr 1fr;align-items:stretch;margin:0 0 9px}
+.nb-totals .nb-price-cell{display:flex;align-items:center;justify-content:center;font-family:var(--C);font-size:clamp(15px,1.5vw,20px);font-weight:700;color:var(--gold2);text-align:center;padding:6px 4px;border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.nb-below-meta{display:flex;justify-content:center;align-items:center;gap:8px;margin:0 0 10px;flex-wrap:wrap}
+.nb-below-meta .nb-tier{margin:0}
+.nb-port{font-size:7px;letter-spacing:1.5px}
 .nb-card-top .nb-tier{
   margin-bottom:0;
 }
@@ -679,7 +689,7 @@ div[style*="background:var(--bg2"] {
   @page{margin:15mm;size:A4}
 }
 @media(max-width:1100px){.nf-form-grid{grid-template-columns:1fr 1fr 1fr}.lucky-strip{grid-template-columns:repeat(3,1fr)}.inv-grid{grid-template-columns:1fr 1fr}.cycle-display{grid-template-columns:repeat(5,1fr)}}
-@media(max-width:768px){.nf-form-grid{grid-template-columns:1fr 1fr}.inv-grid{grid-template-columns:1fr}.lucky-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.nf-form-grid{grid-template-columns:1fr 1fr}.inv-grid{grid-template-columns:1fr}.lucky-strip{grid-template-columns:repeat(2,1fr)}.nb-banner{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:0 8px 10px}.nb-banner .nb-tool-btn,.nb-int,.nb-buy{font-size:6.5px;letter-spacing:.3px;padding:7px 1px}.nb-body{padding:13px 11px 9px}.nb-num{font-size:clamp(19px,4vw,25px);letter-spacing:1.5px}}
 
 
 /* CUSTOMER TOOLS + RESPONSIVE ENHANCEMENTS */
@@ -1896,27 +1906,27 @@ function makeCard(x,delay){
 
     +"<div class='nb-card-top'>"
     +"<span class='nb-tier "+ti.cls+"'>"+ti.label+"</span>"
+    +"<div class='nb-status "+(x.status||"available")+"'><i class='fas fa-circle' style='font-size:5px'></i> "+String(x.status||"available").toUpperCase()+"</div>"
     +"<button type='button' class='nb-fav"+(saved?" saved":"")+"' onclick='toggleFavorite(\""+x.n+"\")' title='Save to wishlist' aria-label='Save to wishlist'>"
     +"<i class='fas fa-heart'></i>"
     +"</button>"
     +"</div>"
 
-    +"<div class='nb-num'>"+x.d+"</div>"+ph
+    +"<div class='nb-num'>"+x.d+"</div>"
 
     +"<div class='nb-totals'>"
     +"<div class='nb-tot'><span class='nb-tot-lbl'>2 DIGIT</span><span class='nb-tot-val'>"+d2(x.n)+"</span></div>"
-    +"<div class='nb-tot-sep'></div>"
+    +"<div class='nb-price-cell'>"+fmtR(x.p)+"</div>"
     +"<div class='nb-tot'><span class='nb-tot-lbl'>LUCKY NO</span><span class='nb-tot-val'>"+dT(x.n)+"</span></div>"
     +"</div>"
-
-    +"<div class='nb-status "+(x.status||"available")+"'><i class='fas fa-circle' style='font-size:5px'></i> "+String(x.status||"available").toUpperCase()+"</div>"
-    +"<div class='nb-price'>"+fmtR(x.p)+"</div>"
-    +"<div class='nb-port'>Port Any Network</div>"
-    +"<div class='nb-card-tools'><button type='button' class='nb-tool-btn"+(mcCompare.indexOf(x.n)>=0?" selected":"")+"' onclick='mcToggleCompare(\""+x.n+"\")'>"+(mcCompare.indexOf(x.n)>=0?"✓ SELECTED":"COMPARE")+"</button><button type='button' class='nb-tool-btn' onclick='mcOpenNumber(\""+x.n+"\")'>MARK VIEWED</button><button type='button' class='nb-tool-btn' onclick='mcShareNumber(\""+x.n+"\")'>SHARE</button></div>"
+    +"<div class='nb-below-meta'>"+ph+"<span class='nb-port'>Port to Any Network</span></div>"
     +"</div>"
 
     +"<div class='nb-banner'>"
     +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Interested%20in%20"+wa+"' onclick='mcTrack(\""+x.n+"\",\"interests\")' target='_blank' rel='noopener' class='nb-int'><i class='fas fa-heart'></i> Interested</a>"
+    +"<button type='button' class='nb-tool-btn"+(mcCompare.indexOf(x.n)>=0?" selected":"")+"' onclick='mcToggleCompare(\""+x.n+"\")'>"+(mcCompare.indexOf(x.n)>=0?"✓ SELECTED":"COMPARE")+"</button>"
+    +"<button type='button' class='nb-tool-btn' onclick='mcOpenNumber(\""+x.n+"\")'>MARK VIEWED</button>"
+    +"<button type='button' class='nb-tool-btn' onclick='mcShareNumber(\""+x.n+"\")'>SHARE</button>"
     +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20"+wa+"%20at%20"+wp+"' onclick='mcTrack(\""+x.n+"\",\"buys\")' target='_blank' rel='noopener' class='nb-buy'><i class='fab fa-whatsapp'></i> Buy Now</a>"
     +"</div></div>";
 }

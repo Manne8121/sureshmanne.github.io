@@ -1312,6 +1312,30 @@ function filterTier(t,btn){curTier=t;document.querySelectorAll(".ttab").forEach(
 function filterPattern(p,btn){curPattern=p;document.querySelectorAll("#numbers .pat-pill").forEach(function(b){b.classList.remove("on");});btn.classList.add("on");renderNums(getList());}
 function runFilter(){renderNums(getList());}
 function runSort(){curSort=document.getElementById("sortType").value;renderNums(getList());}
+function isValidDOB(dd, mm, yy) {
+    const d = Number(dd);
+    const m = Number(mm);
+    const y = Number(yy);
+
+    if (!Number.isInteger(d) ||
+        !Number.isInteger(m) ||
+        !Number.isInteger(y)) {
+        return false;
+    }
+
+    if (y < 1900 || y > new Date().getFullYear()) {
+        return false;
+    }
+
+    const date = new Date(y, m - 1, d);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return date.getFullYear() === y &&
+           date.getMonth() === m - 1 &&
+           date.getDate() === d &&
+           date <= today;
+}
 function filterByLucky(){
   var dd=document.getElementById("nf-dd").value,mm=document.getElementById("nf-mm").value,yy=document.getElementById("nf-yy").value;
   if(!dd||!mm||!yy){alert("Please enter day, month and year");return;}

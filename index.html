@@ -824,6 +824,36 @@ window.MC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BK4p5lQh2DXVuBVmla_jpQ_4-Pg
 .mc-recommendation-list button{background:#1b1b1b;color:#eee;border:1px solid #514323;border-radius:5px;padding:7px 9px;cursor:pointer}
 </style>
 
+
+<style>
+.mc-budget-finder{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:9px;align-items:center;padding:14px;margin:12px 0 18px;border:1px solid rgba(214,180,91,.35);border-radius:9px;background:rgba(214,180,91,.035)}
+.mc-budget-finder strong,.mc-budget-finder span{display:block}.mc-budget-finder strong{font-size:12px;letter-spacing:1px;color:#d6b45b}.mc-budget-finder span{font-size:10px;color:#999;margin-top:4px}
+.mc-budget-finder input,.mc-budget-finder select{min-width:0;background:#111;color:#eee;border:1px solid #444;border-radius:5px;padding:10px}
+.mc-budget-finder button{background:#c9a64a;color:#111;border:0;border-radius:5px;padding:11px;font-weight:700;cursor:pointer}
+#mcBudgetResults{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+#mcBudgetResults button{background:#181818;color:#eee;border:1px solid #6d5728;border-radius:5px;padding:8px;cursor:pointer}
+@media(max-width:720px){.mc-budget-finder{grid-template-columns:1fr 1fr}.mc-budget-finder>div:first-child{grid-column:1/-1}.mc-budget-finder button{min-height:38px}}
+.mc-wa-link{display:inline-block;background:#123b27;color:#c8f5d9;border:1px solid #1b7547;border-radius:5px;padding:7px 9px;text-decoration:none;font-size:10px;white-space:nowrap}
+</style>
+
+<meta name="description" content="Explore premium VIP and fancy mobile numbers from Manne Communications. Find special patterns, numerology numbers and memorable mobile numbers. Number That Matters. Identity That Stays.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#090909">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Manne Communications | Premium VIP & Fancy Mobile Numbers">
+<meta property="og:description" content="Find a number that matches your identity. Explore premium VIP, fancy and numerology mobile numbers.">
+<meta property="og:url" content="https://www.sureshmanne.com/">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://www.sureshmanne.com/">
+
+<style>
+.mc-request-whatsapp{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;margin-top:12px;padding:13px 16px;border-radius:7px;background:#16a34a;color:#fff!important;text-decoration:none!important;font-size:12px;font-weight:800;letter-spacing:.7px;box-shadow:0 5px 18px rgba(22,163,74,.2)}
+.mc-request-whatsapp i{font-size:21px}
+.mc-request-whatsapp:hover{background:#12813d}
+.mc-request-success{display:block;line-height:1.6;margin-bottom:8px;color:#d6b45b}
+#mcRequestPhone:invalid:not(:placeholder-shown){border-color:#b45309}
+</style>
+
 </head>
 <body>
 <div id="preloader"><div class="pre-brand">MANNE COMMUNICATIONS</div><div class="pre-bar"><div class="pre-fill"></div></div><div class="pre-dots"><div class="pre-dot"></div><div class="pre-dot"></div><div class="pre-dot"></div></div></div>
@@ -1131,6 +1161,13 @@ window.MC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BK4p5lQh2DXVuBVmla_jpQ_4-Pg
     <input id="mcMinPrice" type="number" min="0" placeholder="Min price ₹" oninput="runFilter()">
     <input id="mcMaxPrice" type="number" min="0" placeholder="Max price ₹" oninput="runFilter()">
     <button type="button" onclick="mcClearAdvancedFilters()">CLEAR FILTERS</button>
+  </div>
+  <div class="mc-budget-finder">
+    <div><strong>FIND YOUR VIP NUMBER</strong><span>Get suggestions within your budget</span></div>
+    <input id="mcBudgetFinder" type="number" min="1" placeholder="Your budget ₹">
+    <select id="mcBudgetLucky"><option value="">Any lucky total</option><option value="1">Lucky 1</option><option value="2">Lucky 2</option><option value="3">Lucky 3</option><option value="4">Lucky 4</option><option value="5">Lucky 5</option><option value="6">Lucky 6</option><option value="7">Lucky 7</option><option value="8">Lucky 8</option><option value="9">Lucky 9</option></select>
+    <button type="button" onclick="mcFindBudgetNumbers()">SHOW MATCHES</button>
+    <div id="mcBudgetResults" aria-live="polite"></div>
   </div>
   <div class="tier-tabs">
     <button class="ttab on" onclick="filterTier('all',this)">All <span id="cnt-all"></span></button>
@@ -2529,6 +2566,8 @@ function mcAdminTab(name,btn){
   if(section)section.classList.add("active");
   if(name==="enquiries")mcAdminLoadEnquiries();
   if(name==="analytics")mcAdminLoadAnalytics();
+  if(name==="sales")mcAdminLoadSales();
+  if(name==="followups")mcAdminLoadFollowups();
 }
 var mcAdminInventoryCache=[];
 async function mcAdminLoadInventory(){
@@ -2725,7 +2764,12 @@ async function mcSubmitRequest(ev){
   var phone=document.getElementById("mcRequestPhone").value.trim();
   var budget=document.getElementById("mcRequestBudget").value;
   var message=document.getElementById("mcRequestMessageField").value.trim();
-  if(!name||!phone){feedback.textContent="Please enter your name and contact number.";return;}
+  if(!name){feedback.textContent="Please enter your name.";return;}
+  if(!/^[6-9][0-9]{9}$/.test(phone)){
+    feedback.textContent="Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8 or 9.";
+    var phoneField=document.getElementById("mcRequestPhone");phoneField.focus();phoneField.setCustomValidity("Enter 10 digits starting with 6, 7, 8 or 9.");phoneField.reportValidity();return;
+  }
+  document.getElementById("mcRequestPhone").setCustomValidity("");
   if(mcCurrentRequestType==="offer"&&!(Number(budget)>0)){feedback.textContent="Please enter a valid offer amount.";return;}
   submit.disabled=true;feedback.textContent="Submitting your request…";
   var item=mcEffectiveData().find(function(x){return x.n===mcCurrentRequestNumber;});
@@ -2747,8 +2791,88 @@ async function mcSubmitRequest(ev){
   }
   mcTrack(mcCurrentRequestNumber,"interests");
   var wa="Hi, I submitted a "+(mcCurrentRequestType==="offer"?"price offer":"reservation request")+" for "+item.d+". Name: "+name+". Contact: "+phone+". "+(budget?"Offer: ₹"+budget+". ":"")+message;
-  feedback.innerHTML="Request received! Our team will contact you after checking availability. <a style='color:#d6b45b;text-decoration:underline' target='_blank' rel='noopener' href='https://wa.me/919090900005?text="+encodeURIComponent(wa)+"'>Continue on WhatsApp</a>";
+  feedback.innerHTML="<span class='mc-request-success'>Request submitted successfully! Our team will contact you after checking availability.</span><a class='mc-request-whatsapp' target='_blank' rel='noopener' href='https://wa.me/919090900005?text="+encodeURIComponent(wa)+"'><i class='fab fa-whatsapp' aria-hidden='true'></i><span> SEND DETAILS ON WHATSAPP</span></a>";
   submit.textContent="REQUEST SUBMITTED";
+}
+
+
+// Remaining-stage enhancements: analytics, sales register, budget suggestions and WhatsApp follow-up desk.
+function mcMoney(v){return "₹"+Number(v||0).toLocaleString("en-IN",{maximumFractionDigits:2});}
+function mcFindBudgetNumbers(){
+  var budget=Number(document.getElementById("mcBudgetFinder").value||0);
+  var lucky=document.getElementById("mcBudgetLucky").value;
+  var target=document.getElementById("mcBudgetResults");
+  if(!(budget>0)){target.textContent="Please enter a valid budget.";return;}
+  var matches=mcEffectiveData().filter(function(x){return x.status==="available"&&Number(x.p)<=budget&&(lucky===""||dT(x.n)===Number(lucky));})
+    .sort(function(a,b){return b.p-a.p;}).slice(0,8);
+  target.innerHTML=matches.length?matches.map(function(x){
+    return "<button type='button' onclick='mcOpenRequest(\"reserve\",\""+mcAdminEsc(x.n)+"\")'>"+mcAdminEsc(x.d)+" · "+mcMoney(x.p)+" · Lucky "+dT(x.n)+"</button>";
+  }).join(""):"No matching available numbers within this budget. Try increasing your budget or changing the lucky total.";
+}
+async function mcAdminLoadAnalytics(){
+  var b=document.getElementById("mcAdminAnalyticsRows");b.innerHTML="<tr><td colspan='3'>Loading…</td></tr>";
+  var results=await Promise.all([
+    mcSupabase.from("number_events").select("mobile_number,event_type,created_at").order("created_at",{ascending:false}).limit(1000),
+    mcSupabase.from("enquiries").select("id",{count:"exact",head:true})
+  ]);
+  var r=results[0],enq=results[1];
+  if(r.error){b.innerHTML="<tr><td colspan='3'>"+mcAdminEsc(r.error.message)+"</td></tr>";return;}
+  var events=r.data||[],counts={view:0,interest:0,buy_click:0},byNumber={};
+  events.forEach(function(x){
+    counts[x.event_type]=(counts[x.event_type]||0)+1;
+    byNumber[x.mobile_number]=byNumber[x.mobile_number]||{view:0,interest:0,buy_click:0};
+    byNumber[x.mobile_number][x.event_type]=(byNumber[x.mobile_number][x.event_type]||0)+1;
+  });
+  document.getElementById("mcAnalyticViews").textContent=counts.view||0;
+  document.getElementById("mcAnalyticInterests").textContent=counts.interest||0;
+  document.getElementById("mcAnalyticBuys").textContent=counts.buy_click||0;
+  document.getElementById("mcAnalyticEnquiries").textContent=enq.error?"—":(enq.count||0);
+  var top=Object.keys(byNumber).sort(function(a,b){return byNumber[b].view-byNumber[a].view;}).slice(0,15);
+  document.getElementById("mcTopNumbers").innerHTML=top.map(function(n){var x=byNumber[n];return "<tr><td>"+mcAdminEsc(n)+"</td><td>"+x.view+"</td><td>"+x.interest+"</td><td>"+x.buy_click+"</td></tr>";}).join("")||"<tr><td colspan='4'>No activity yet.</td></tr>";
+  b.innerHTML=events.slice(0,150).map(function(x){return "<tr><td>"+mcAdminEsc(x.mobile_number)+"</td><td>"+mcAdminEsc(x.event_type)+"</td><td>"+mcAdminEsc(new Date(x.created_at).toLocaleString())+"</td></tr>";}).join("")||"<tr><td colspan='3'>No activity recorded yet.</td></tr>";
+}
+async function mcAdminRecordSale(){
+  var n=(document.getElementById("mcSaleNumber").value||"").replace(/\D/g,"");
+  var sale=Number(document.getElementById("mcSalePrice").value),cost=Number(document.getElementById("mcSaleCost").value||0);
+  var buyer=document.getElementById("mcSaleBuyer").value.trim();
+  if(!/^\d{10}$/.test(n)||!(sale>0)||cost<0){alert("Enter a valid 10-digit number, sale price and cost price.");return;}
+  var r=await mcSupabase.from("sales").insert({mobile_number:n,sale_price:sale,cost_price:cost,buyer_name:buyer||null});
+  if(r.error){alert("Could not record sale: "+r.error.message);return;}
+  ["mcSaleNumber","mcSalePrice","mcSaleCost","mcSaleBuyer"].forEach(function(id){document.getElementById(id).value="";});
+  await mcAdminLoadSales();
+}
+async function mcAdminLoadSales(){
+  var body=document.getElementById("mcAdminSalesRows");body.innerHTML="<tr><td colspan='6'>Loading…</td></tr>";
+  var r=await mcSupabase.from("sales").select("id,mobile_number,sale_price,cost_price,buyer_name,created_at").order("created_at",{ascending:false}).limit(1000);
+  if(r.error){body.innerHTML="<tr><td colspan='6'>"+mcAdminEsc(r.error.message)+"</td></tr>";return;}
+  var rows=r.data||[],revenue=0,cost=0;
+  rows.forEach(function(x){revenue+=Number(x.sale_price);cost+=Number(x.cost_price);});
+  document.getElementById("mcSalesCount").textContent=rows.length;
+  document.getElementById("mcSalesRevenue").textContent=mcMoney(revenue);
+  document.getElementById("mcSalesCost").textContent=mcMoney(cost);
+  document.getElementById("mcSalesProfit").textContent=mcMoney(revenue-cost);
+  body.innerHTML=rows.map(function(x){return "<tr><td>"+mcAdminEsc(new Date(x.created_at).toLocaleDateString())+"</td><td>"+mcAdminEsc(x.mobile_number)+"</td><td>"+mcAdminEsc(x.buyer_name||"")+"</td><td>"+mcMoney(x.sale_price)+"</td><td>"+mcMoney(x.cost_price)+"</td><td>"+mcMoney(Number(x.sale_price)-Number(x.cost_price))+"</td></tr>";}).join("")||"<tr><td colspan='6'>No sales recorded yet.</td></tr>";
+  window.mcSalesExportRows=rows;
+}
+function mcAdminExportSales(){
+  var rows=window.mcSalesExportRows||[];
+  if(!rows.length){alert("No sales records to export. Refresh sales first.");return;}
+  var csv="date,number,buyer,sale_price,cost_price,profit\n"+rows.map(function(x){
+    return [new Date(x.created_at).toISOString(),x.mobile_number,x.buyer_name||"",x.sale_price,x.cost_price,Number(x.sale_price)-Number(x.cost_price)].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(",");
+  }).join("\n");
+  var blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="manne-communications-sales.csv";a.click();URL.revokeObjectURL(url);
+}
+async function mcAdminLoadFollowups(){
+  var b=document.getElementById("mcAdminFollowupRows");b.innerHTML="<tr><td colspan='5'>Loading…</td></tr>";
+  var r=await mcSupabase.from("enquiries").select("created_at,enquiry_type,mobile_number,customer_name,customer_phone,budget,message").order("created_at",{ascending:false}).limit(150);
+  if(r.error){b.innerHTML="<tr><td colspan='5'>"+mcAdminEsc(r.error.message)+"</td></tr>";return;}
+  b.innerHTML=(r.data||[]).map(function(x){
+    var phone=String(x.customer_phone||"").replace(/\D/g,"");
+    var msg="Hello "+(x.customer_name||"")+", thank you for your enquiry with Manne Communications. We are following up regarding "+(x.mobile_number||"your number request")+". "+(x.enquiry_type==="number_offer"?"Your offer: ₹"+(x.budget||"")+". ":"")+"Please let us know a convenient time to assist you.";
+    var href=phone?"https://wa.me/"+phone+"?text="+encodeURIComponent(msg):"https://wa.me/919090900005?text="+encodeURIComponent(msg);
+    return "<tr><td>"+mcAdminEsc(new Date(x.created_at).toLocaleString())+"</td><td>"+mcAdminEsc(x.enquiry_type)+"</td><td>"+mcAdminEsc(x.mobile_number||"")+"</td><td>"+mcAdminEsc(x.customer_name||"")+"<br>"+mcAdminEsc(x.customer_phone||"")+"</td><td><a class='mc-wa-link' target='_blank' rel='noopener' href='"+href+"'>OPEN WHATSAPP</a></td></tr>";
+  }).join("")||"<tr><td colspan='5'>No enquiries available for follow-up.</td></tr>";
 }
 
 </script>
@@ -2774,7 +2898,9 @@ async function mcSubmitRequest(ev){
    <div class="mc-admin-tabs">
     <button class="mc-admin-tab active" onclick="mcAdminTab('stock',this)">INVENTORY</button>
     <button class="mc-admin-tab" onclick="mcAdminTab('enquiries',this)">ENQUIRIES</button>
-    <button class="mc-admin-tab" onclick="mcAdminTab('analytics',this)">ACTIVITY</button>
+    <button class="mc-admin-tab" onclick="mcAdminTab('analytics',this)">ANALYTICS</button>
+    <button class="mc-admin-tab" onclick="mcAdminTab('sales',this)">SALES REGISTER</button>
+    <button class="mc-admin-tab" onclick="mcAdminTab('followups',this)">WHATSAPP FOLLOW-UPS</button>
    </div>
    <section id="mcAdminSectionStock" class="mc-admin-section active">
     <h3>Manage Number Inventory</h3>
@@ -2814,8 +2940,44 @@ async function mcSubmitRequest(ev){
     <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>DATE</th><th>TYPE</th><th>NUMBER</th><th>NAME / PHONE</th><th>MESSAGE</th></tr></thead><tbody id="mcAdminEnquiryRows"><tr><td colspan="5">Select refresh to load enquiries.</td></tr></tbody></table></div>
    </section>
    <section id="mcAdminSectionAnalytics" class="mc-admin-section">
-    <h3>Number Activity</h3><button class="mc-admin-btn secondary" onclick="mcAdminLoadAnalytics()">REFRESH</button>
+    <h3>Business Performance</h3>
+    <button class="mc-admin-btn secondary" onclick="mcAdminLoadAnalytics()">REFRESH ANALYTICS</button>
+    <div class="mc-admin-stats">
+     <div class="mc-admin-stat"><span>VIEWS LOGGED</span><b id="mcAnalyticViews">0</b></div>
+     <div class="mc-admin-stat"><span>INTERESTS</span><b id="mcAnalyticInterests">0</b></div>
+     <div class="mc-admin-stat"><span>BUY CLICKS</span><b id="mcAnalyticBuys">0</b></div>
+     <div class="mc-admin-stat"><span>OPEN ENQUIRIES</span><b id="mcAnalyticEnquiries">0</b></div>
+    </div>
+    <h4>Most viewed numbers</h4>
+    <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>NUMBER</th><th>VIEWS</th><th>INTERESTS</th><th>BUY CLICKS</th></tr></thead><tbody id="mcTopNumbers"><tr><td colspan="4">Refresh to calculate.</td></tr></tbody></table></div>
+    <h4>Recent activity</h4>
     <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>NUMBER</th><th>EVENT</th><th>DATE</th></tr></thead><tbody id="mcAdminAnalyticsRows"><tr><td colspan="3">Select refresh to load activity.</td></tr></tbody></table></div>
+   </section>
+   <section id="mcAdminSectionSales" class="mc-admin-section">
+    <h3>Sales Register & Profit Tracking</h3>
+    <p class="mc-admin-note">Record completed sales here. A sale entry does not automatically change stock status; update inventory separately after confirming the transaction.</p>
+    <div class="mc-admin-form">
+     <div><label>10-DIGIT NUMBER</label><input id="mcSaleNumber" class="mc-admin-input" inputmode="numeric" maxlength="10" placeholder="9876543210"></div>
+     <div><label>SALE PRICE (₹)</label><input id="mcSalePrice" class="mc-admin-input" type="number" min="1" placeholder="15000"></div>
+     <div><label>COST PRICE (₹)</label><input id="mcSaleCost" class="mc-admin-input" type="number" min="0" placeholder="8000"></div>
+     <div><label>BUYER / DEALER</label><input id="mcSaleBuyer" class="mc-admin-input" maxlength="100" placeholder="Buyer name"></div>
+     <button class="mc-admin-btn" onclick="mcAdminRecordSale()">RECORD</button>
+    </div>
+    <div class="mc-admin-stats">
+     <div class="mc-admin-stat"><span>RECORDED SALES</span><b id="mcSalesCount">0</b></div>
+     <div class="mc-admin-stat"><span>SALES VALUE</span><b id="mcSalesRevenue">₹0</b></div>
+     <div class="mc-admin-stat"><span>STOCK COST</span><b id="mcSalesCost">₹0</b></div>
+     <div class="mc-admin-stat"><span>GROSS PROFIT</span><b id="mcSalesProfit">₹0</b></div>
+    </div>
+    <button class="mc-admin-btn secondary" onclick="mcAdminLoadSales()">REFRESH SALES</button>
+    <button class="mc-admin-btn secondary" onclick="mcAdminExportSales()">EXPORT CSV</button>
+    <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>DATE</th><th>NUMBER</th><th>BUYER</th><th>SALE</th><th>COST</th><th>PROFIT</th></tr></thead><tbody id="mcAdminSalesRows"><tr><td colspan="6">Refresh to load sales.</td></tr></tbody></table></div>
+   </section>
+   <section id="mcAdminSectionFollowups" class="mc-admin-section">
+    <h3>WhatsApp Follow-up Desk</h3>
+    <p class="mc-admin-note">Create a WhatsApp follow-up message for each enquiry. Messages open in WhatsApp for you to review and send manually. No message is sent automatically.</p>
+    <button class="mc-admin-btn secondary" onclick="mcAdminLoadFollowups()">LOAD FOLLOW-UPS</button>
+    <div class="mc-admin-table-wrap"><table class="mc-admin-table"><thead><tr><th>DATE</th><th>TYPE</th><th>NUMBER</th><th>CUSTOMER</th><th>WHATSAPP</th></tr></thead><tbody id="mcAdminFollowupRows"><tr><td colspan="5">Load enquiries to prepare follow-ups.</td></tr></tbody></table></div>
    </section>
   </div>
  </div>
@@ -2828,7 +2990,7 @@ async function mcSubmitRequest(ev){
   <div class="mc-request-number" id="mcRequestNumber"></div>
   <form id="mcRequestForm" onsubmit="mcSubmitRequest(event)">
    <label for="mcRequestName">YOUR NAME</label><input id="mcRequestName" maxlength="100" autocomplete="name" required placeholder="Enter your name">
-   <label for="mcRequestPhone">WHATSAPP / MOBILE NUMBER</label><input id="mcRequestPhone" maxlength="30" inputmode="tel" autocomplete="tel" required placeholder="Your contact number">
+   <label for="mcRequestPhone">WHATSAPP / MOBILE NUMBER</label><input id="mcRequestPhone" type="tel" maxlength="10" minlength="10" inputmode="numeric" pattern="[6-9][0-9]{9}" autocomplete="tel" required placeholder="10-digit number starting with 6, 7, 8 or 9" oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)">
    <div id="mcOfferBudgetWrap" style="display:none"><label for="mcRequestBudget">YOUR OFFER (₹)</label><input id="mcRequestBudget" type="number" min="1" step="1" placeholder="Enter your offer"></div>
    <label for="mcRequestMessageField">MESSAGE (OPTIONAL)</label><textarea id="mcRequestMessageField" maxlength="1500" placeholder="Any details or preferred time to contact you"></textarea>
    <button class="mc-request-submit" id="mcRequestSubmit" type="submit">SUBMIT REQUEST</button>

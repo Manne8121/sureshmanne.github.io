@@ -1468,6 +1468,11 @@ function runHomeNumerology(){
   var dd=document.getElementById("hnc-dd").value,mm=document.getElementById("hnc-mm").value,yy=document.getElementById("hnc-yy").value;
   var res=document.getElementById("hncResult");
   if(!dd||!mm||!yy){res.innerHTML="<div style='color:var(--text3)'>Please enter day, month and year.</div>";res.className="hnc-result show";return;}
+  if(!isValidDOB(dd, mm, yy)){
+  res.innerHTML="<div style='color:#e74c3c'>Please enter a valid date of birth.</div>";
+  res.className="hnc-result show";
+  return;
+}
   var lucky=chalSum(dd+mm+yy),info=CHALM[lucky],matches=numMatches(lucky);
   res.innerHTML="<div class='hnc-lucky-row'><div class='hnc-lucky-num'>"+lucky+"</div><div class='hnc-lucky-info'><div class='hnc-lucky-lbl'>YOUR CHALDEAN LUCKY NUMBER</div><div class='hnc-lucky-name'>"+info.name+" - "+info.planet+" Energy</div><div class='hnc-lucky-desc'>"+info.traits.join(" - ")+"</div></div></div><div class='hnc-matches-title'>"+matches.length+" NUMBERS MATCHING LUCKY NUMBER "+lucky+"</div>"+matchHTML(matches,lucky)+"<div style='text-align:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)'><a onclick='goPage(this.dataset.p)' data-p='numerology' class='btn-gold' style='font-size:9px;padding:10px 18px;border:none;cursor:pointer'><i class='fas fa-star'></i> Full Reading</button></div>";
   res.className="hnc-result show";
@@ -1476,6 +1481,11 @@ function runFullNumerology(){
   var dd=document.getElementById("nc-dd").value,mm=document.getElementById("nc-mm").value,yy=document.getElementById("nc-yy").value;
   var res=document.getElementById("ncFullResult");
   if(!dd||!mm||!yy){res.innerHTML="<div style='color:var(--text3)'>Please enter day, month and year.</div>";res.className="nc-full-result show";return;}
+  if(!isValidDOB(dd, mm, yy)){
+  res.innerHTML="<div style='color:#e74c3c'>Please enter a valid date of birth.</div>";
+  res.className="nc-full-result show";
+  return;
+}
   var lucky=chalSum(dd+mm+yy),info=CHALM[lucky],matches=numMatches(lucky);
   var invH=matches.length?"<div class='nc-inv-title'>"+matches.length+" VIP NUMBERS MATCHING LUCKY "+lucky+"</div><div class='nc-inv-grid'>"+matches.slice(0,9).map(function(x){return "<div class='nc-inv-card'><div class='nc-inv-num'>"+x.d+"</div><div class='nc-inv-price'>"+fmtR(x.p)+"</div><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Lucky%20"+lucky+"%20I%20want%20"+encodeURIComponent(x.n)+"' target='_blank' class='nc-inv-btn'>Enquire</a></div>";}).join("")+"</div>":"<div style='text-align:center;padding:20px;color:var(--text3)'>No current stock for lucky "+lucky+". <a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Lucky%20"+lucky+"' target='_blank' style='color:var(--green)'>Ask Mr. Suresh</a> to source one!</div>";
   res.innerHTML="<div class='nc-big-num'>"+lucky+"</div><div class='nc-big-lbl'>YOUR CHALDEAN LUCKY NUMBER</div><div class='nc-personality'><div class='nc-p-name'>"+info.name+" - "+info.planet+" Energy</div><div class='nc-p-traits'>"+info.traits.map(function(t){return"<span class='nc-p-trait'>"+t+"</span>";}).join("")+"</div><div class='nc-p-body'>"+info.body+"</div><div class='nc-p-sections'><div class='nc-p-sec'><div class='nc-p-sec-title'>CAREER</div><div class='nc-p-sec-body'>"+info.career+"</div></div><div class='nc-p-sec'><div class='nc-p-sec-title'>RELATIONSHIPS</div><div class='nc-p-sec-body'>"+info.relation+"</div></div><div class='nc-p-sec' style='grid-column:1/-1'><div class='nc-p-sec-title'>WHY THIS PHONE NUMBER MATTERS</div><div class='nc-p-sec-body'>"+info.phone+"</div></div></div></div>"+invH;
@@ -1701,12 +1711,34 @@ function buildInventorySection(){
   h+="<div style='text-align:center;margin-top:20px'><a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20completed%20my%20numerology%20report.%20My%20Life%20Path%20is%20"+lp+".%20Please%20help%20me%20find%20the%20perfect%20VIP%20number.' target='_blank' class='btn-wa' style='display:inline-flex'><i class='fab fa-whatsapp'></i> WhatsApp Mr. Suresh Directly</a></div></div>";
   return h;
 }
+
 function runNumerologyFull(){
+
   var name=(document.getElementById("nf-name")||{value:""}).value.trim();
-  var dd=parseInt((document.getElementById("nf-dd2")||{value:""}).value);
-  var mm=parseInt((document.getElementById("nf-mm2")||{value:""}).value);
-  var yy=parseInt((document.getElementById("nf-yy2")||{value:""}).value);
-  if(!dd||!mm||!yy){alert("Please enter Day, Month and Year of birth");return;}
+
+  // Get original date values
+  var rawDd=(document.getElementById("nf-dd2")||{value:""}).value;
+  var rawMm=(document.getElementById("nf-mm2")||{value:""}).value;
+  var rawYy=(document.getElementById("nf-yy2")||{value:""}).value;
+
+  // Check whether all fields are filled
+  if(!rawDd||!rawMm||!rawYy){
+    alert("Please enter Day, Month and Year of birth");
+    return;
+  }
+
+  // Validate date of birth
+  if(!isValidDOB(rawDd, rawMm, rawYy)){
+    alert("Please enter a valid date of birth.");
+    return;
+  }
+
+  // Convert validated values into numbers
+  var dd=parseInt(rawDd, 10);
+  var mm=parseInt(rawMm, 10);
+  var yy=parseInt(rawYy, 10);
+
+  // Keep the remaining original code unchanged
   var lp=lifePathNum(dd,mm,yy),nm=name?nameNum(name):0;
   var h1=document.getElementById("nf-lp-hidden"),h2=document.getElementById("nf-nm-hidden");
   if(h1)h1.value=lp;if(h2)h2.value=nm;

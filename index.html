@@ -210,7 +210,10 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
 .nb-tot-sep{width:1px;background:var(--border)}
 .nb-price{font-family:var(--C);font-size:17px;color:var(--gold2);margin-bottom:8px;text-align:center}
 .nb-port{font-family:var(--C);font-size:7px;letter-spacing:2px;color:var(--blue2);background:var(--blue-dim);border:1px solid var(--blue-bd);padding:3px 9px;border-radius:3px;display:inline-block}
-.nb-banner{display:grid;grid-template-columns:1.05fr .9fr 1.25fr .8fr 1.15fr;gap:5px;padding:0 12px 12px;border-top:0;align-items:stretch}
+.nb-banner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px;border-top:0;align-items:stretch}
+.nb-int,.nb-buy,.nb-banner .nb-tool-btn{min-width:0;padding:9px 5px;font-size:8px;letter-spacing:.55px;white-space:normal;line-height:1.2;min-height:38px}
+.nb-banner .nb-int,.nb-banner .nb-buy{overflow-wrap:anywhere}
+@media(max-width:520px){.nb-banner{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.nb-int,.nb-buy,.nb-banner .nb-tool-btn{font-size:9px;min-height:38px}}
 .nb-int,.nb-buy,.nb-banner .nb-tool-btn{min-width:0;text-align:center;padding:9px 3px;font-family:var(--C);font-size:8px;letter-spacing:1px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text2);text-decoration:none;white-space:nowrap;cursor:pointer;min-height:34px}
 .nb-int{color:var(--text3)}
 .nb-int:hover{background:var(--gold-dim);color:var(--gold2);border-color:var(--gold-bd)}
@@ -1722,7 +1725,14 @@ var mcInterest=mcReadStore("mc-local-interest",{});
 var mcRecent=mcReadStore("mc-recent-viewed",[]);
 var mcCompare= [];
 function mcEffectiveData(){
-  var base=(Array.isArray(mcRemoteInventory)?mcRemoteInventory:DATA).map(function(x){return Object.assign({},x);});
+  // Once Supabase has loaded, it is the authoritative inventory for every visitor.
+  // Browser-local stock/status/price overrides are used only during offline fallback.
+  if(mcBackendReady && Array.isArray(mcRemoteInventory)){
+    return mcRemoteInventory.map(function(x){
+      return Object.assign({},x,{status:x.status||"available",p:Number(x.p)||0});
+    });
+  }
+  var base=DATA.map(function(x){return Object.assign({},x);});
   (Array.isArray(mcCustomInventory)?mcCustomInventory:[]).forEach(function(x){
     if(x&&/^\\d{10}$/.test(String(x.n))&&!base.some(function(b){return b.n===String(x.n);}))
       base.push({n:String(x.n),d:String(x.d||x.n),p:Number(x.p)||0});
@@ -1732,7 +1742,13 @@ function mcEffectiveData(){
     return Object.assign({},x,{status:st&&st.status?st.status:(x.status||"available"),p:st&&Number(st.price)>0?Number(st.price):Number(x.p)});
   });
 }
-function mcStatusFor(n){return (mcStatus[n]&&mcStatus[n].status)||"available";}
+function mcStatusFor(n){
+  if(mcBackendReady && Array.isArray(mcRemoteInventory)){
+    var remote=mcRemoteInventory.find(function(x){return String(x.n)===String(n);});
+    return remote ? (remote.status||"available") : "sold";
+  }
+  return (mcStatus[n]&&mcStatus[n].status)||"available";
+}
 function mcTrack(n,kind){
   mcLogRemoteEvent(n, kind==="views"?"view":(kind==="interests"?"interest":"buy_click"));
   mcInterest[n]=mcInterest[n]||{views:0,interests:0,buys:0};
@@ -2016,7 +2032,7 @@ function makeCard(x,delay){
     +"<div class='nb-banner'>"
     +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20Interested%20in%20"+wa+"' onclick='mcTrack(\""+x.n+"\",\"interests\")' target='_blank' rel='noopener' class='nb-int'><i class='fas fa-heart'></i> Interested</a>"
     +"<button type='button' class='nb-tool-btn"+(mcCompare.indexOf(x.n)>=0?" selected":"")+"' onclick='mcToggleCompare(\""+x.n+"\")'>"+(mcCompare.indexOf(x.n)>=0?"✓ SELECTED":"COMPARE")+"</button>"
-    +"<button type='button' class='nb-tool-btn' onclick='mcOpenNumber(\""+x.n+"\")'>MARK VIEWED</button>"
+
     +"<button type='button' class='nb-tool-btn' onclick='mcShareNumber(\""+x.n+"\")'>SHARE</button>"
     +"<a href='https://wa.me/919090900005?text=Hi%20Mr.Suresh!%20I%20want%20to%20buy%20"+wa+"%20at%20"+wp+"' onclick='mcTrack(\""+x.n+"\",\"buys\")' target='_blank' rel='noopener' class='nb-buy'><i class='fab fa-whatsapp'></i> Buy Now</a>"
     +"</div></div>";
@@ -2507,6 +2523,7 @@ async function mcAdminAddNumber(){
   document.getElementById("mcNewPrice").value="";
   mcAdminMessage("mcInventoryMsg","Number added successfully.");
   await mcAdminLoadInventory();
+  await mcLoadRemoteInventory();
 }
 async function mcAdminSaveNumber(n){
   var d=document.getElementById("mcEditDisplay_"+n).value.trim();
@@ -2576,6 +2593,7 @@ async function mcAdminLoadAnalytics(){
       <option value="sold">Sold Only</option>
      </select>
      <span class="mc-admin-note" id="mcInventoryCount"></span>
+     <button class="mc-admin-btn secondary" type="button" onclick="mcAdminLoadInventory()">REFRESH STOCK</button>
     </div>
     <div class="mc-admin-form">
      <div><label>10-DIGIT NUMBER</label><input id="mcNewNumber" class="mc-admin-input" inputmode="numeric" maxlength="10" placeholder="9XXXXXXXXX"></div>

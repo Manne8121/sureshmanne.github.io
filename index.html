@@ -215,6 +215,85 @@ nav#mainNav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding
 .nb-int{color:var(--text3);border-right:1px solid var(--border)}
 .nb-int:hover{background:var(--gold-dim);color:var(--gold2)}
 .nb-buy{color:var(--green)}.nb-buy:hover{background:var(--green);color:#000}
+/* WISHLIST STYLES */
+.nb-fav{
+  width:30px;
+  height:30px;
+  border:1px solid var(--border-g);
+  border-radius:50%;
+  background:var(--surface);
+  color:var(--text3);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  flex-shrink:0;
+}
+.nb-fav.saved{
+  color:#ef4444;
+  background:rgba(239,68,68,.12);
+  border-color:rgba(239,68,68,.4);
+}
+.nb-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:8px;
+}
+.nb-card-top .nb-tier{
+  margin-bottom:0;
+}
+.wishlist-toolbar{
+  max-width:1280px;
+  margin:0 auto 16px;
+  padding:13px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  background:var(--card);
+  border:1px solid var(--border-g);
+  border-radius:9px;
+}
+.wishlist-info{
+  font-family:var(--C);
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--text2);
+}
+.wishlist-info span{
+  color:var(--gold2);
+  font-size:14px;
+}
+.wishlist-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.wishlist-btn{
+  padding:9px 13px;
+  border:1px solid var(--border-g);
+  border-radius:5px;
+  background:var(--gold-dim);
+  color:var(--gold2);
+  font-family:var(--C);
+  font-size:8px;
+  letter-spacing:1.5px;
+  cursor:pointer;
+}
+.wishlist-btn.share{
+  background:var(--green-dim);
+  border-color:var(--green-bd);
+  color:var(--green);
+}
+@media(max-width:480px){
+  .wishlist-toolbar{align-items:flex-start}
+  .wishlist-actions{width:100%}
+  .wishlist-btn{flex:1}
+}
 /* SKELETON */
 .skel-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;overflow:hidden}
 .skel-line{border-radius:4px;background:linear-gradient(90deg,var(--surface) 25%,var(--bg2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;margin-bottom:10px}
@@ -935,6 +1014,30 @@ div[style*="background:var(--bg2"] {
     <div id="nfRes" style="display:none;margin-top:10px;font-family:var(--C);font-size:9px;letter-spacing:2px;color:var(--gold2)"></div>
   </div>
 </div>
+<div class="wishlist-toolbar">
+
+  <div class="wishlist-info">
+    <i class="fas fa-heart" style="color:#ef4444"></i>
+    YOUR SHORTLIST:
+    <span id="wishlistCount">0</span> SAVED
+  </div>
+
+  <div class="wishlist-actions">
+
+    <button class="wishlist-btn"
+            id="wishlistViewBtn"
+            onclick="toggleSavedView()">
+      <i class="fas fa-heart"></i> VIEW SAVED
+    </button>
+
+    <button class="wishlist-btn share"
+            onclick="shareSavedNumbers()">
+      <i class="fab fa-whatsapp"></i> SEND SHORTLIST
+    </button>
+
+  </div>
+</div>
+
 <div id="numberList"></div>
 </div></div>
 <!-- NUMEROLOGY PAGE -->
@@ -1295,6 +1398,12 @@ function onPriceSlide(val){
 var curTier="all",curSort="",curPattern="all",curLucky=null;
 function getList(){
   var l=[...DATA];
+  // WISHLIST FILTER
+if(showSavedOnly){
+  l=l.filter(function(x){
+    return isSavedNumber(x.n);
+  });
+}
   var q=((document.getElementById("searchInput")||{value:""}).value||"").trim().replace(/\s/g,"");
   if(q)l=l.filter(function(x){return x.n.includes(q)||x.d.replace(/\s/g,"").includes(q);});
   if(curTier!=="all")l=l.filter(function(x){return tier(x.n,x.p)===curTier;});

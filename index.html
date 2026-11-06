@@ -1453,7 +1453,13 @@ var CHAL={A:1,I:1,J:1,Q:1,Y:1,B:2,K:2,R:2,C:3,G:3,L:3,S:3,D:4,M:4,T:4,E:5,H:5,N:
 function nameNum(name){var s=name.toUpperCase().split("").reduce(function(a,c){return a+(CHAL[c]||0);},0);while(s>9)s=String(s).split("").reduce(function(a,d){return a+parseInt(d);},0);return s||9;}
 function lifePathNum(dd,mm,yy){return chalSum(String(dd)+String(mm)+String(yy));}
 function destinyNum(lp,nm){var s=lp+nm;while(s>9)s=String(s).split("").reduce(function(a,d){return a+parseInt(d);},0);return s||9;}
-function personalYear(dd,mm){return chalSum("2025"+String(mm)+String(dd));}
+function personalYear(dd,mm){
+    return chalSum(
+        String(new Date().getFullYear()) +
+        String(mm) +
+        String(dd)
+    );
+}
 // ══ COMPLETENESS BAR ══
 function updateCompleteness(){
   var name=(document.getElementById("nf-name")||{value:""}).value.trim();

@@ -2586,10 +2586,18 @@ async function mcAdminLoadInventory(){
 }
 function mcAdminApplyInventoryFilter(){
   var filter=(document.getElementById("mcInventoryFilter")||{value:"all"}).value;
-  var items=mcAdminInventoryCache.filter(function(x){return filter==="all"||x.status===filter;});
+  var search=(document.getElementById("mcInventorySearch")||{value:""}).value||"";
+  var query=search.replace(/\\D/g,"");
+  var items=mcAdminInventoryCache.filter(function(x){
+    var statusMatch=filter==="all"||x.status===filter;
+    var numberText=String(x.number||"").replace(/\\D/g,"");
+    var displayText=String(x.display_number||"").replace(/\\D/g,"");
+    var searchMatch=!query||numberText.indexOf(query)!==-1||displayText.indexOf(query)!==-1;
+    return statusMatch&&searchMatch;
+  });
   var body=document.getElementById("mcAdminInventoryRows");
   var count=document.getElementById("mcInventoryCount");
-  if(count)count.textContent="Showing "+items.length+" of "+mcAdminInventoryCache.length+" numbers";
+  if(count)count.textContent="Showing "+items.length+" matching numbers";
   body.innerHTML=items.length?items.map(function(x){
     var n=mcAdminEsc(x.number);
     return "<tr id='mcAdminRow_"+n+"'><td><input disabled aria-label='Display number' id='mcEditDisplay_"+n+"' value='"+mcAdminEsc(x.display_number||x.number)+"'></td>"+
@@ -2599,7 +2607,7 @@ function mcAdminApplyInventoryFilter(){
     "<button class='mc-admin-btn' id='mcSaveBtn_"+n+"' style='display:none' onclick='mcAdminSaveNumber(\""+n+"\")'>SAVE</button> "+
     "<button class='mc-admin-btn secondary' id='mcCancelBtn_"+n+"' style='display:none' onclick='mcAdminCancelEdit(\""+n+"\")'>CANCEL</button> "+
     "<button class='mc-admin-btn secondary' onclick='mcAdminDeleteNumber(\""+n+"\")'>DELETE</button></td></tr>";
-  }).join(""):"<tr><td colspan='4'>No numbers in this category.</td></tr>";
+  }).join(""):"<tr><td colspan='4'>No matching numbers found.</td></tr>";
 }
 function mcAdminToggleEdit(n){
   ["mcEditDisplay_","mcEditPrice_","mcEditStatus_"].forEach(function(prefix){
@@ -2905,6 +2913,10 @@ async function mcAdminLoadFollowups(){
    <section id="mcAdminSectionStock" class="mc-admin-section active">
     <h3>Manage Number Inventory</h3>
     <div class="mc-admin-tabs" style="align-items:center">
+     <label for="mcInventorySearch" style="margin:0">SEARCH NUMBER</label>
+     <input id="mcInventorySearch" class="mc-admin-input" type="search" inputmode="numeric"
+       style="max-width:260px" placeholder="Enter full or partial number"
+       oninput="mcAdminApplyInventoryFilter()" aria-label="Search inventory by mobile number">
      <label for="mcInventoryFilter" style="margin:0">FILTER INVENTORY</label>
      <select id="mcInventoryFilter" class="mc-admin-input" style="max-width:220px" onchange="mcAdminApplyInventoryFilter()">
       <option value="all">All Numbers</option>

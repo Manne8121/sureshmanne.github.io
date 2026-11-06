@@ -1443,10 +1443,38 @@ function runFullNumerology(){
 function toggleFaq(btn){var item=btn.closest(".faq-item"),was=item.classList.contains("open");document.querySelectorAll(".faq-item").forEach(function(f){f.classList.remove("open");});if(!was)item.classList.add("open");}
 function toggleWa(){document.getElementById("waBox").classList.toggle("open");}
 function sendWcMsg(){var inp=document.getElementById("wcInput"),msg=(inp.value||"data").trim();if(!msg)return;window.open("https://wa.me/919090900005?text="+encodeURIComponent(msg),"_blank");inp.value="";}
-window.onload=function(){
-  if(typeof AOS!=="undefined")AOS.init({duration:650,once:true,offset:50,easing:"ease-out-cubic"});
-  setTimeout(function(){var p=document.getElementById("preloader");if(p)p.classList.add("done");},1900);
-  updateViewers();renderHome();goPage("home");
+function setBirthYearLimits() {
+    const currentYear = new Date().getFullYear();
+
+    ["hnc-yy", "nf-yy", "nf-yy2"].forEach(function(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.max = currentYear;
+        }
+    });
+}
+
+window.onload = function() {
+
+    setBirthYearLimits();
+
+    if (typeof AOS !== "undefined") {
+        AOS.init({
+            duration: 650,
+            once: true,
+            offset: 50,
+            easing: "ease-out-cubic"
+        });
+    }
+
+    setTimeout(function() {
+        var p = document.getElementById("preloader");
+        if (p) p.classList.add("done");
+    }, 1900);
+
+    updateViewers();
+    renderHome();
+    goPage("home");
 };
 
 

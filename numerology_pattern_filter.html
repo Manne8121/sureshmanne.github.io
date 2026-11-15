@@ -110,6 +110,17 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 .admin-panel h2{margin-bottom:8px}
 .password-result{display:none;margin-top:14px;padding:14px;border:1px solid var(--green);border-radius:9px;background:#10271f;overflow-wrap:anywhere}
 .password-result code{color:#b9f5d5;font-size:14px}
+.dealer-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.dealer-toolbar input{flex:1;min-width:220px}
+.dealer-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px}
+.dealer-table{width:100%;border-collapse:collapse;min-width:720px}
+.dealer-table th,.dealer-table td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
+.dealer-table th{color:var(--gold);background:var(--panel2)}
+.dealer-table tr:last-child td{border-bottom:0}
+.dealer-actions{display:flex;gap:6px;flex-wrap:wrap}
+.dealer-actions button{padding:7px 10px;font-size:12px}
+.status-active{color:#65d6a0;font-weight:700}.status-suspended{color:#ff8d8d;font-weight:700}
+.dealer-message{font-size:13px;margin:10px 0;min-height:18px}
 @media(max-width:650px){.auth-screen{margin:4vh auto;padding:18px}}
 </style>
 </head>
@@ -148,15 +159,15 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 
 <section class="card" id="passwordPanel">
   <h2>Account Security · Change Password</h2>
-  <p class="hint">You can change your own password anytime after signing in. Use at least 8 characters.</p>
+  <p class="hint">Use exactly 10 characters, including uppercase and lowercase letters, at least one digit, and at least one special character.</p>
   <form id="changePasswordForm" class="grid">
     <div class="field">
       <label for="newPassword">New password</label>
-      <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Enter new password">
+      <input id="newPassword" type="password" minlength="10" maxlength="10" autocomplete="new-password" required placeholder="10 characters: Aa1@...">
     </div>
     <div class="field">
       <label for="confirmNewPassword">Confirm new password</label>
-      <input id="confirmNewPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Re-enter new password">
+      <input id="confirmNewPassword" type="password" minlength="10" maxlength="10" autocomplete="new-password" required placeholder="Re-enter 10-character password">
     </div>
     <div class="field full">
       <button id="changePasswordButton" type="submit">Update My Password</button>
@@ -188,6 +199,28 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
       </div>
     </div>
   </form>
+  <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+  <h2>Dealer Accounts</h2>
+  <p class="hint">View and manage every dealer account. Suspended dealers cannot use the generator. Password resets create a new temporary password.</p>
+  <div class="dealer-toolbar">
+    <input id="dealerSearch" type="search" placeholder="Search by dealer name or email">
+    <select id="dealerStatusFilter" aria-label="Filter dealer status" style="max-width:190px">
+      <option value="all">All statuses</option><option value="active">Active</option><option value="suspended">Suspended</option>
+    </select>
+    <button class="secondary" id="refreshDealersButton" type="button">Refresh List</button>
+  </div>
+  <div id="dealerListMessage" class="dealer-message" role="status"></div>
+  <div class="dealer-table-wrap">
+    <table class="dealer-table">
+      <thead><tr><th>Dealer</th><th>Email</th><th>Created</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="dealerTableBody"><tr><td colspan="5">Click Refresh List to load dealer accounts.</td></tr></tbody>
+    </table>
+  </div>
+  <div class="password-result" id="resetPasswordResult">
+    <strong>Temporary password generated. Share it securely with the dealer.</strong>
+    <p id="resetPasswordEmail"></p><p><code id="resetPasswordValue"></code></p>
+    <button class="secondary" id="copyResetPassword" type="button">Copy Temporary Password</button>
+  </div>
 </section>
 
 <section class="card">
@@ -1026,24 +1059,25 @@ async function identifyAndShowUser(user) {
     currentRole = "admin";
     $("signedInLabel").textContent = "Administrator: " + (user.email || "");
     $("adminPanel").style.display = "block";
+    await loadDealers();
     return;
   }
 
   // Dealers must have a matching dealer_profiles row. RLS should limit this to their own row.
   const { data: dealerRow, error: dealerCheckError } = await supabaseClient
     .from("dealer_profiles")
-    .select("user_id")
+    .select("user_id,status")
     .eq("user_id", user.id)
     .maybeSingle();
 
-  if (dealerCheckError || !dealerRow) {
+  if (dealerCheckError || !dealerRow || dealerRow.status !== "active") {
     console.error("Dealer role check failed:", dealerCheckError);
     await supabaseClient.auth.signOut();
     currentRole = null;
     currentUser = null;
     $("appShell").style.display = "none";
     $("authScreen").style.display = "block";
-    showAuthError("This account is not approved for dealer access. Contact Manne Communications administrator.");
+    showAuthError(dealerRow?.status === "suspended" ? "Your dealer account is suspended. Contact Manne Communications administrator." : "This account is not approved for dealer access. Contact Manne Communications administrator.");
     return;
   }
 
@@ -1095,8 +1129,13 @@ $("changePasswordForm").addEventListener("submit", async (event) => {
   message.style.color = "var(--red)";
   message.textContent = "";
 
-  if (newPassword.length < 8) {
-    message.textContent = "Password must contain at least 8 characters.";
+  if (newPassword.length !== 10) {
+    message.textContent = "Password must contain exactly 10 characters.";
+    return;
+  }
+  if (!/[A-Z]/.test(newPassword) || !/[a-z]/.test(newPassword) ||
+      !/[0-9]/.test(newPassword) || !/[^A-Za-z0-9]/.test(newPassword)) {
+    message.textContent = "Use uppercase and lowercase letters, at least one digit, and at least one special character.";
     return;
   }
   if (newPassword !== confirmPassword) {
@@ -1177,6 +1216,7 @@ $("createDealerForm").addEventListener("submit", async (event) => {
     $("dealerPasswordResult").style.display = "block";
     $("dealerName").value = "";
     $("dealerEmail").value = "";
+    await loadDealers();
   } catch (error) {
     console.error("Dealer creation failed:", error);
     $("dealerError").textContent = error.message || "Dealer creation failed.";
@@ -1184,6 +1224,106 @@ $("createDealerForm").addEventListener("submit", async (event) => {
     button.disabled = false;
     button.textContent = "Create Dealer Login";
   }
+});
+
+// Administrator dealer account management. All privileged actions run server-side.
+let dealerRecords = [];
+async function callDealerManager(action, payload = {}) {
+  if (currentRole !== "admin") throw new Error("Administrator access required.");
+  const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+  if (sessionError) throw sessionError;
+  const token = sessionData.session?.access_token;
+  if (!token) throw new Error("Your session has expired. Sign in again.");
+  const { data, error } = await supabaseClient.functions.invoke("manage-dealers", {
+    body: { action, ...payload }, headers: { Authorization: "Bearer " + token }
+  });
+  if (error) {
+    let detail = error.message || "Dealer management request failed.";
+    if (error.context && typeof error.context.json === "function") {
+      try { const body = await error.context.json(); detail = body.error || detail; } catch (_) {}
+    }
+    throw new Error(detail);
+  }
+  if (!data?.success) throw new Error(data?.error || "Dealer management request failed.");
+  return data;
+}
+
+function renderDealerTable() {
+  const query = $("dealerSearch").value.trim().toLowerCase();
+  const filter = $("dealerStatusFilter").value;
+  const rows = dealerRecords.filter(d =>
+    (filter === "all" || d.status === filter) &&
+    ((d.dealer_name || "").toLowerCase().includes(query) || (d.email || "").toLowerCase().includes(query))
+  );
+  const body = $("dealerTableBody");
+  if (!rows.length) { body.innerHTML = '<tr><td colspan="5">No matching dealer accounts.</td></tr>'; return; }
+  body.innerHTML = rows.map(d => {
+    const safeId = String(d.user_id).replace(/[^a-f0-9-]/gi, "");
+    const created = d.created_at ? new Date(d.created_at).toLocaleDateString("en-IN") : "—";
+    const active = d.status === "active";
+    return `<tr><td>${escapeDealerText(d.dealer_name || "—")}</td><td>${escapeDealerText(d.email || "—")}</td><td>${created}</td><td><span class="${active ? "status-active" : "status-suspended"}">${active ? "Active" : "Suspended"}</span></td><td><div class="dealer-actions"><button class="secondary" type="button" data-dealer-action="toggle" data-id="${safeId}" data-status="${active ? "suspended" : "active"}">${active ? "Suspend" : "Enable"}</button><button class="secondary" type="button" data-dealer-action="reset" data-id="${safeId}" data-email="${encodeURIComponent(d.email || "")}">Reset Password</button><button class="danger" type="button" data-dealer-action="delete" data-id="${safeId}" data-name="${encodeURIComponent(d.dealer_name || d.email || "this dealer")}">Delete</button></div></td></tr>`;
+  }).join("");
+}
+function escapeDealerText(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+async function loadDealers() {
+  if (currentRole !== "admin") return;
+  const message = $("dealerListMessage");
+  message.style.color = "var(--muted)"; message.textContent = "Loading dealer accounts…";
+  $("refreshDealersButton").disabled = true;
+  try {
+    const data = await callDealerManager("list");
+    dealerRecords = Array.isArray(data.dealers) ? data.dealers : [];
+    renderDealerTable();
+    message.style.color = "var(--green)";
+    message.textContent = `${dealerRecords.length} dealer account(s) found.`;
+  } catch (error) {
+    message.style.color = "var(--red)"; message.textContent = error.message;
+  } finally { $("refreshDealersButton").disabled = false; }
+}
+
+$("refreshDealersButton").addEventListener("click", loadDealers);
+$("dealerSearch").addEventListener("input", renderDealerTable);
+$("dealerStatusFilter").addEventListener("change", renderDealerTable);
+$("dealerTableBody").addEventListener("click", async event => {
+  const button = event.target.closest("button[data-dealer-action]");
+  if (!button) return;
+  const action = button.dataset.dealerAction;
+  const userId = button.dataset.id;
+  if (!userId || currentRole !== "admin") return;
+  try {
+    button.disabled = true;
+    if (action === "toggle") {
+      const nextStatus = button.dataset.status;
+      const promptText = nextStatus === "suspended" ? "Suspend this dealer's access?" : "Enable this dealer's access?";
+      if (!confirm(promptText)) return;
+      await callDealerManager("set_status", { user_id: userId, status: nextStatus });
+      $("dealerListMessage").textContent = nextStatus === "active" ? "Dealer access enabled." : "Dealer access suspended.";
+      await loadDealers();
+    } else if (action === "reset") {
+      const email = decodeURIComponent(button.dataset.email || "");
+      if (!confirm(`Generate a new temporary password for ${email}? Their current password will stop working.`)) return;
+      const result = await callDealerManager("reset_password", { user_id: userId });
+      $("resetPasswordEmail").textContent = result.email || email;
+      $("resetPasswordValue").textContent = result.temporary_password;
+      $("resetPasswordResult").style.display = "block";
+    } else if (action === "delete") {
+      const name = decodeURIComponent(button.dataset.name || "this dealer");
+      if (!confirm(`Permanently delete ${name}? This removes the dealer login and profile. This cannot be undone.`)) return;
+      await callDealerManager("delete", { user_id: userId });
+      $("resetPasswordResult").style.display = "none";
+      await loadDealers();
+      $("dealerListMessage").textContent = "Dealer account permanently deleted.";
+    }
+  } catch (error) {
+    $("dealerListMessage").style.color = "var(--red)";
+    $("dealerListMessage").textContent = error.message || "Action failed.";
+  } finally { button.disabled = false; }
+});
+$("copyResetPassword").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText($("resetPasswordValue").textContent); $("copyResetPassword").textContent = "Copied"; }
+  catch (_) { $("dealerListMessage").textContent = "Copy blocked. Select and copy the password manually."; }
 });
 
 $("copyDealerPassword").addEventListener("click", async () => {

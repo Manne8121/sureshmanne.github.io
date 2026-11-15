@@ -3,921 +3,901 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1220">
-<title>Manne Communications | VIP Number Studio</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manne Communications | VIP Number Generator</title>
 <style>
 :root {
   --bg:#0b1220;
-  --card:#152033;
-  --field:#0e1726;
-  --border:#304159;
+  --panel:#152033;
+  --panel2:#1b2a40;
   --gold:#e2bd73;
-  --text:#f1f5f9;
-  --muted:#9eafc3;
-  --green:#25d366;
+  --text:#f4f6fa;
+  --muted:#aab6c8;
+  --border:#30415a;
+  --green:#3bc58a;
+  --red:#ff7373;
 }
-* {box-sizing:border-box}
-body {
+*{box-sizing:border-box}
+body{
   margin:0;
+  padding:20px;
   background:var(--bg);
   color:var(--text);
-  font:15px/1.5 Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 }
-.container {
-  max-width:1200px;
-  margin:auto;
-  padding:18px;
-}
-header {
-  text-align:center;
-  padding:24px 10px;
-}
-.brand {
+.container{max-width:1250px;margin:auto}
+header{text-align:center;padding:20px 10px 25px}
+.brand{
   color:var(--gold);
-  letter-spacing:3px;
-  font-size:12px;
-  font-weight:bold;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:1px;
 }
-h1 {
-  font-size:clamp(24px,4vw,36px);
-  margin:8px 0;
+.tagline{
+  color:#fff;
+  font-size:15px;
+  margin-top:9px;
+  letter-spacing:.5px;
 }
-.subtitle {color:var(--muted)}
-.grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-.card {
-  background:var(--card);
+.subtitle{color:var(--muted);font-size:13px;margin-top:12px}
+.card{
+  background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
   padding:20px;
   margin-bottom:18px;
-  min-width:0;
 }
-h2 {
+h2{
   color:var(--gold);
   font-size:17px;
-  margin:0 0 15px;
+  margin:0 0 16px;
 }
-label {
-  display:block;
-  margin:14px 0 6px;
-  font-size:13px;
-  font-weight:bold;
-}
-input,select,textarea {
-  width:100%;
-  background:var(--field);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:12px;
-  border-radius:8px;
-  font-size:15px;
-}
-textarea {resize:vertical;min-height:85px}
-input:focus,textarea:focus,select:focus {
-  outline:2px solid var(--gold);
-}
-.hint {
-  font-size:12px;
-  color:var(--muted);
-  margin-top:5px;
-}
-.flex {
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.flex>* {flex:1;min-width:140px}
-button {
-  border:0;
-  padding:12px 17px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  background:var(--gold);
-  color:#151515;
-}
-button:disabled {opacity:.45;cursor:default}
-.secondary {background:#29405e;color:white}
-.whatsapp {background:var(--green);color:#082313}
-.danger {background:#71313b;color:white}
-.actions {
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  margin-top:17px;
-}
-.actions button {flex:1}
-.totals {
+h3{font-size:15px;color:var(--gold);margin:18px 0 10px}
+.grid{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+.field{min-width:0}
+label{
+  display:block;
+  color:#dce4ef;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#0d1829;
+  color:white;
+  font-size:14px;
+  outline:none;
+}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+textarea{resize:vertical;min-height:75px;line-height:1.5}
+small,.hint{display:block;color:var(--muted);font-size:11px;margin-top:6px;line-height:1.5}
+.full{grid-column:1/-1}
+.checkbox-grid{
+  display:grid;
+  grid-template-columns:repeat(9,minmax(0,1fr));
   gap:8px;
 }
-.total-option {
-  background:var(--field);
+.check{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  background:#0d1829;
   border:1px solid var(--border);
-  border-radius:8px;
+  border-radius:7px;
   padding:9px 4px;
-  text-align:center;
+  font-size:13px;
+}
+.check input{width:auto;margin:0;accent-color:var(--gold)}
+button{
+  border:0;
+  border-radius:8px;
+  padding:12px 16px;
+  font-size:13px;
+  font-weight:800;
   cursor:pointer;
-  margin:0;
+  background:var(--gold);
+  color:#101827;
 }
-.total-option input {
-  width:auto;
-  accent-color:var(--gold);
+button:hover{filter:brightness(1.08)}
+button.secondary{background:#263851;color:white;border:1px solid var(--border)}
+button.green{background:var(--green);color:#082319}
+button.danger{background:#572c36;color:white}
+button:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.status{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:12px;
+  line-height:1.5;
 }
-.stats {
+.stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  margin:16px 0;
+  margin-bottom:15px;
 }
-.stat {
-  background:var(--field);
+.stat{
+  background:#0d1829;
+  padding:13px;
   border:1px solid var(--border);
-  padding:14px;
-  border-radius:10px;
+  border-radius:9px;
   text-align:center;
 }
-.stat strong {
-  display:block;
-  color:var(--gold);
-  font-size:22px;
+.stat strong{display:block;color:var(--gold);font-size:22px}
+.stat span{font-size:11px;color:var(--muted)}
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:end;
+  margin-bottom:14px;
 }
-.stat small {color:var(--muted)}
-.table-wrap {overflow-x:auto}
-table {
-  width:100%;
-  border-collapse:collapse;
-  min-width:380px;
-}
-th,td {
-  padding:11px;
+.toolbar .field{flex:1;min-width:130px}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:9px}
+table{width:100%;border-collapse:collapse;min-width:480px}
+th,td{
+  padding:11px 12px;
   text-align:left;
   border-bottom:1px solid var(--border);
+  font-size:13px;
 }
-th {color:var(--gold);font-size:12px}
-td.number {
-  font-family:monospace;
-  font-size:16px;
-  font-weight:bold;
+th{background:#213149;color:var(--gold)}
+tr:last-child td{border-bottom:0}
+.number{font-weight:900;letter-spacing:1px;font-size:15px}
+.highlight{color:#ffdf45;font-weight:900}
+.normal-total{color:#fff;font-weight:900}
+.pagination{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-top:16px;
+  flex-wrap:wrap;
 }
-.highlight {color:var(--gold);font-weight:bold}
-.batch {
-  background:var(--field);
+.pagination span{font-size:13px;color:var(--muted)}
+.batch{
+  background:#0d1829;
   border:1px solid var(--border);
-  border-radius:10px;
-  padding:14px;
-  margin:12px 0;
+  border-radius:9px;
+  padding:12px;
+  margin:10px 0;
 }
-.batch-head {
+.batch-head{
   display:flex;
   justify-content:space-between;
+  gap:10px;
   align-items:center;
-  flex-wrap:wrap;
-  gap:8px;
+  margin-bottom:8px;
 }
-.batch-head strong {color:var(--gold)}
-.batch-numbers {
-  font-family:monospace;
+.batch-head strong{color:var(--gold);font-size:13px}
+.batch-numbers{
+  font-size:14px;
   line-height:2;
-  word-spacing:9px;
-  overflow-wrap:anywhere;
-  margin-top:8px;
+  word-break:break-word;
+  letter-spacing:.5px;
 }
-.error {color:#ff8585;margin-top:12px}
-.status {color:#6ee7a0;margin-top:12px}
-.hidden {display:none}
-footer {
-  text-align:center;
-  color:var(--muted);
-  padding:22px;
-  font-size:12px;
-}
-@media(max-width:800px) {
-  .grid {grid-template-columns:1fr}
-}
-@media(max-width:480px) {
-  .container {padding:10px}
-  .card {padding:14px}
-  .stats {gap:6px}
-  .stat {padding:9px}
-  .stat strong {font-size:17px}
-  .actions button {min-width:130px}
+.batch.copied{border-color:var(--green)}
+.empty{color:var(--muted);text-align:center;padding:25px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
+@media(max-width:650px){
+  body{padding:10px}
+  .brand{font-size:23px}
+  .grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+  .checkbox-grid{grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:1fr 1fr 1fr}
+  .card{padding:14px}
+  .actions button{flex:1}
 }
 </style>
 </head>
-
 <body>
 <div class="container">
 
 <header>
   <div class="brand">MANNE COMMUNICATIONS</div>
-  <h1>VIP Number Studio</h1>
-  <div class="subtitle">
-    Number That Matters | Identity That Stays
-  </div>
+  <div class="tagline">Number That Matters - Identity That Stays</div>
+  <div class="subtitle">VIP Mobile Number Pattern Generator</div>
 </header>
 
-<div class="grid">
-<div>
-
 <section class="card">
-<h2>01. Number Pattern</h2>
+  <h2>01. Number Pattern Settings</h2>
 
-<label>10-Digit Pattern(s)</label>
-<textarea id="patterns" spellcheck="false"
-placeholder="98******99&#10;9*******88">**********</textarea>
-<div class="hint">
-Use * for unknown digits. Enter multiple patterns on separate lines.
-</div>
+  <div class="grid">
+    <div class="field full">
+      <label>Enter Number Patterns</label>
+      <textarea id="patterns" placeholder="**********&#10;98765*****&#10;******9999">**********</textarea>
+      <small>Enter multiple patterns, one per line or separated by commas. Use * for digits to be generated. Each pattern must contain exactly 10 characters.</small>
+    </div>
 
-<label>Starting Digit</label>
-<select id="start">
-<option value="auto">Automatic: 6 / 7 / 8 / 9</option>
-<option value="6">Starts with 6</option>
-<option value="7">Starts with 7</option>
-<option value="8">Starts with 8</option>
-<option value="9">Starts with 9</option>
-</select>
+    <div class="field">
+      <label>First Digit</label>
+      <select id="start">
+        <option value="auto">Automatic (6, 7, 8, 9)</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+      <small>Numbers will always start with 6, 7, 8 or 9. A fixed first digit in your pattern is respected.</small>
+    </div>
 
-<div class="flex">
-<div>
-<label>Exclude Digits</label>
-<input id="exclude" value="0,2,4"
-placeholder="0,2,4,8">
-</div>
-<div>
-<label>Only Allow Digits</label>
-<input id="allow" placeholder="1,3,5,7,9">
-</div>
-</div>
+    <div class="field">
+      <label>Exclude Digits in Wildcard Positions</label>
+      <input id="exclude" value="0,2,4" placeholder="Example: 0,2,4">
+      <small>These digits will not be used in * positions.</small>
+    </div>
 
-<div class="hint">
-Only Allow overrides Exclude. Both apply to wildcard positions.
-</div>
+    <div class="field">
+      <label>Only Allow These Digits (Optional)</label>
+      <input id="allow" placeholder="Example: 1,3,5,7,9">
+      <small>If entered, this overrides the exclude list.</small>
+    </div>
+
+    <div class="field">
+      <label>Ending Pattern (Optional)</label>
+      <input id="ending" placeholder="Example: 9999, 8888, 1234">
+      <small>Comma-separated endings. A number must match at least one ending.</small>
+    </div>
+
+    <div class="field full">
+      <label>Exclude Existing Stock Numbers</label>
+      <textarea id="stock" placeholder="Paste your existing numbers here, one per line or separated by commas."></textarea>
+      <small>Numbers entered here will be excluded from the generated results.</small>
+    </div>
+  </div>
 </section>
 
 <section class="card">
-<h2>02. Numerology Filters</h2>
+  <h2>02. Numerology Filters</h2>
 
-<label>Single-Digit Totals</label>
-<div class="totals" id="totalOptions"></div>
+  <label>Target Single-Digit Totals (Chaldean Reduced)</label>
+  <div class="checkbox-grid" id="totals">
+    <label class="check"><input type="checkbox" value="1" checked> 1</label>
+    <label class="check"><input type="checkbox" value="2"> 2</label>
+    <label class="check"><input type="checkbox" value="3"> 3</label>
+    <label class="check"><input type="checkbox" value="4"> 4</label>
+    <label class="check"><input type="checkbox" value="5"> 5</label>
+    <label class="check"><input type="checkbox" value="6"> 6</label>
+    <label class="check"><input type="checkbox" value="7"> 7</label>
+    <label class="check"><input type="checkbox" value="8"> 8</label>
+    <label class="check"><input type="checkbox" value="9"> 9</label>
+  </div>
+  <small>Choose one or more totals. Leave all unchecked to allow every total.</small>
 
-<div class="flex">
-<div>
-<label>Raw Digit Sum</label>
-<input id="raw" placeholder="19,28,37,46">
-</div>
-<div>
-<label>Ending Pattern</label>
-<input id="ending" placeholder="9999,6666">
-</div>
-</div>
-
-<label>Repeated Digit Filter</label>
-<select id="repeat">
-<option value="1">Any Pattern</option>
-<option value="2">At Least 2 Same Digits</option>
-<option value="3">At Least 3 Same Digits</option>
-<option value="4">At Least 4 Same Digits</option>
-<option value="5">At Least 5 Same Digits</option>
-<option value="6">At Least 6 Same Digits</option>
-</select>
-
-<label>Sequence Filter</label>
-<select id="sequence">
-<option value="any">Any Sequence</option>
-<option value="asc">Ascending (123)</option>
-<option value="desc">Descending (987)</option>
-<option value="both">Ascending or Descending</option>
-</select>
-
-<label>Sort Numbers</label>
-<select id="sort">
-<option value="asc">Ascending</option>
-<option value="desc">Descending</option>
-</select>
+  <div class="grid" style="margin-top:17px">
+    <div class="field">
+      <label>Raw Two-Digit Sum (Optional)</label>
+      <input id="rawSums" placeholder="Example: 19,28,37,46,55,64,73">
+      <small>Comma-separated acceptable raw sums.</small>
+    </div>
+    <div class="field">
+      <label>Minimum Repetition of a Digit (Optional)</label>
+      <select id="repeatCount">
+        <option value="0">No repetition requirement</option>
+        <option value="2">At least 2 times</option>
+        <option value="3">At least 3 times</option>
+        <option value="4">At least 4 times</option>
+        <option value="5">At least 5 times</option>
+        <option value="6">At least 6 times</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Repeated Digit (Optional)</label>
+      <select id="repeatDigit">
+        <option value="">Any digit</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Exclude Consecutive Sequences</label>
+      <select id="sequence">
+        <option value="none">Do not exclude</option>
+        <option value="3">Exclude 3 or more consecutive digits</option>
+        <option value="4">Exclude 4 or more consecutive digits</option>
+      </select>
+    </div>
+  </div>
 </section>
 
 <section class="card">
-<h2>03. Existing Stock Exclusion</h2>
-
-<label>Paste Existing / Sold Numbers</label>
-<textarea id="stock"
-placeholder="Paste 10-digit numbers separated by commas, spaces or new lines"></textarea>
-
-<div class="hint">
-Numbers in this list will be excluded from generated results.
-</div>
-
-<div class="actions">
-<button id="generateBtn" onclick="generate()">
-Generate Numbers
-</button>
-<button class="secondary" onclick="resetAll()">
-Reset
-</button>
-</div>
-
-<div id="progress" class="status"></div>
-<div id="error" class="error"></div>
-</section>
-
-</div>
-
-<div>
-
-<section class="card">
-<h2>04. Display Settings</h2>
-
-<label>Results Per Page</label>
-<select id="pageSize" onchange="render()">
-<option value="25">25</option>
-<option value="50" selected>50</option>
-<option value="100">100</option>
-<option value="250">250</option>
-</select>
-
-<label>Batch Size</label>
-<select id="batchSize" onchange="render()">
-<option value="10" selected>10 Numbers</option>
-<option value="20">20 Numbers</option>
-<option value="25">25 Numbers</option>
-<option value="50">50 Numbers</option>
-</select>
+  <h2>03. Generate Numbers</h2>
+  <div class="actions">
+    <button id="generateBtn" onclick="generateNumbers()">Generate Numbers</button>
+    <button class="secondary" onclick="resetFilters()">Reset Filters</button>
+  </div>
+  <div class="status" id="status">Ready to generate numbers.</div>
 </section>
 
 <section class="card">
-<h2>05. Copy, Export & Share</h2>
+  <h2>04. Generated Results</h2>
 
-<div class="actions">
-<button class="secondary" onclick="copyAll()">
-Copy All
-</button>
-<button class="secondary" onclick="downloadTXT()">
-Download TXT
-</button>
-<button class="secondary" onclick="downloadCSV()">
-Download CSV
-</button>
-<button class="whatsapp" onclick="shareAll()">
-WhatsApp Share
-</button>
-</div>
+  <div class="stats">
+    <div class="stat"><strong id="totalCount">0</strong><span>Total Matches</span></div>
+    <div class="stat"><strong id="pageCount">0</strong><span>Current Page</span></div>
+    <div class="stat"><strong id="excludedCount">0</strong><span>Stock Excluded</span></div>
+  </div>
 
-<div class="hint">
-WhatsApp sharing opens a prepared message.
-Choose the recipient and send it yourself.
-</div>
-<div id="status" class="status"></div>
+  <div class="toolbar">
+    <div class="field">
+      <label>Search Number</label>
+      <input id="search" placeholder="Search generated numbers..." oninput="page=1;render()">
+    </div>
+    <div class="field">
+      <label>Results Per Page</label>
+      <select id="pageSize" onchange="page=1;render()">
+        <option value="25">25 Results</option>
+        <option value="50">50 Results</option>
+        <option value="100">100 Results</option>
+        <option value="250">250 Results</option>
+        <option value="all">All Results (One Page)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Numbers Per Batch</label>
+      <select id="batchSize" onchange="renderBatches()">
+        <option value="10">10 Numbers</option>
+        <option value="20">20 Numbers</option>
+        <option value="25">25 Numbers</option>
+        <option value="50">50 Numbers</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Mobile Number</th>
+          <th>Raw Sum</th>
+          <th>Single Total</th>
+        </tr>
+      </thead>
+      <tbody id="resultBody">
+        <tr><td colspan="4" class="empty">Generate numbers to view results.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button class="secondary" id="prevBtn" onclick="changePage(-1)" disabled>Previous</button>
+    <span id="pageInfo">Page 0 of 0</span>
+    <button class="secondary" id="nextBtn" onclick="changePage(1)" disabled>Next</button>
+  </div>
+
+  <div class="actions">
+    <button class="secondary" onclick="copyCurrentPage()">Copy Current Page</button>
+    <button class="secondary" onclick="copyAllNumbers()">Copy All Results</button>
+    <button class="green" onclick="shareWhatsApp()">Share on WhatsApp</button>
+    <button class="secondary" onclick="downloadTXT()">Download TXT</button>
+    <button class="secondary" onclick="downloadCSV()">Download CSV</button>
+  </div>
 </section>
 
-</div>
-</div>
-
-<section class="card hidden" id="results">
-<h2>06. Generated Numbers</h2>
-
-<div class="stats">
-<div class="stat">
-<strong id="matchCount">0</strong>
-<small>Matches</small>
-</div>
-<div class="stat">
-<strong id="excludedCount">0</strong>
-<small>Excluded</small>
-</div>
-<div class="stat">
-<strong id="batchCount">0</strong>
-<small>Batches</small>
-</div>
-</div>
-
-<label>Search Generated Numbers</label>
-<input id="search" type="search"
-placeholder="Search any digits..."
-oninput="page=1;render()">
-
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Mobile Number</th>
-<th>Raw Sum</th>
-<th>Single Total</th>
-</tr>
-</thead>
-<tbody id="resultBody"></tbody>
-</table>
-</div>
-
-<div class="actions">
-<button class="secondary" onclick="previousPage()">
-Previous
-</button>
-<button class="secondary" onclick="nextPage()">
-Next
-</button>
-</div>
-
-<div id="pageInfo" class="hint"></div>
-
-<h2 style="margin-top:25px">Copy / WhatsApp Batches</h2>
-<div id="batchContainer"></div>
+<section class="card">
+  <h2>05. Copy Number Batches</h2>
+  <div class="status">Batches are created from the currently filtered results. Copy individual batches as required.</div>
+  <div id="batches"><div class="empty">No batches available yet.</div></div>
+  <div class="actions">
+    <button class="secondary" onclick="resetCopiedMarks()">Reset Copied Marks</button>
+  </div>
 </section>
 
 <footer>
-MANNE COMMUNICATIONS © 2026
+  MANNE COMMUNICATIONS<br>
+  Number That Matters - Identity That Stays
 </footer>
 
 </div>
 
 <script>
-"use strict";
-
-let results = [];
-let filtered = [];
+let allResults = [];
+let filteredResults = [];
 let page = 1;
-let excluded = 0;
-let generationToken = 0;
+let excludedCount = 0;
+let copiedBatches = new Set();
+let generationRunning = false;
 
 const $ = id => document.getElementById(id);
 
-function digitSum(str) {
-  return [...str].reduce((a,b) => a + Number(b),0);
+function parseDigits(value) {
+  return [...new Set((value || "").match(/[0-9]/g) || [])];
 }
 
-function reduceTotal(n) {
-  while(n > 9) n = digitSum(String(n));
-  return n;
+function parseList(value) {
+  return (value || "")
+    .split(/[\n,;]+/)
+    .map(x => x.trim())
+    .filter(Boolean);
 }
 
-function listDigits(text,label) {
-  if(!text.trim()) return null;
-  const parts = text.split(",").map(x=>x.trim()).filter(Boolean);
-  if(parts.some(x=>!/^[0-9]$/.test(x))) {
-    throw Error(label+" must contain single digits separated by commas.");
+function digitSum(number) {
+  return [...number].reduce((sum, digit) => sum + Number(digit), 0);
+}
+
+function reducedTotal(sum) {
+  while (sum > 9) {
+    sum = [...String(sum)].reduce((a, b) => a + Number(b), 0);
   }
-  return [...new Set(parts.map(Number))];
+  return sum;
 }
 
-function numberSet(text,label,min,max) {
-  if(!text.trim()) return null;
-  const parts=text.split(",").map(x=>x.trim()).filter(Boolean);
-  if(parts.some(x=>!/^\d+$/.test(x) ||
-     Number(x)<min || Number(x)>max)) {
-    throw Error("Invalid "+label);
+function getSelectedTotals() {
+  return [...document.querySelectorAll("#totals input:checked")]
+    .map(input => Number(input.value));
+}
+
+function getStockNumbers() {
+  return new Set(($("stock").value.match(/[6789]\d{9}/g) || []));
+}
+
+function hasSequence(number, minimum) {
+  if (!minimum) return false;
+  let run = 1;
+  for (let i = 1; i < number.length; i++) {
+    if (Number(number[i]) === Number(number[i-1]) + 1 ||
+        Number(number[i]) === Number(number[i-1]) - 1) {
+      run++;
+      if (run >= minimum) return true;
+    } else {
+      run = 1;
+    }
   }
-  return new Set(parts.map(Number));
+  return false;
 }
 
-function selectedTotals() {
-  return new Set(
-    [...document.querySelectorAll(".totalCheck:checked")]
-    .map(x=>Number(x.value))
-  );
+function validatePattern(pattern) {
+  return pattern.length === 10 && /^[0-9*]{10}$/.test(pattern);
 }
 
-function initTotals() {
-  $("totalOptions").innerHTML =
-    Array.from({length:9},(_,i)=>{
-      let n=i+1;
-      return `<label class="total-option">
-      <input class="totalCheck" type="checkbox"
-      value="${n}" ${n===1?"checked":""}>
-      ${n}</label>`;
-    }).join("")+
-    `<label class="total-option">
-      <input type="checkbox" id="allTotals">
-      All
-    </label>`;
+function getAllowedDigits(pattern, position, exclude, allow, fixedStart) {
+  if (pattern[position] !== "*") return [pattern[position]];
 
-  $("allTotals").addEventListener("change",e=>{
-    document.querySelectorAll(".totalCheck")
-      .forEach(x=>x.checked=e.target.checked);
-  });
-}
-
-initTotals();
-
-function sequenceMatch(num,mode) {
-  if(mode==="any") return true;
-
-  let up=false,down=false;
-  for(let i=0;i<num.length-2;i++) {
-    const a=Number(num[i]);
-    const b=Number(num[i+1]);
-    const c=Number(num[i+2]);
-    if(b===a+1 && c===b+1) up=true;
-    if(b===a-1 && c===b-1) down=true;
+  if (position === 0) {
+    if (fixedStart !== "auto") return [fixedStart];
+    return ["6","7","8","9"];
   }
 
-  if(mode==="asc") return up;
-  if(mode==="desc") return down;
-  return up||down;
+  if (allow.length) return allow;
+  return ["0","1","2","3","4","5","6","7","8","9"]
+    .filter(digit => !exclude.includes(digit));
 }
 
-function parseConfig() {
-  const patterns=[...new Set(
-    $("patterns").value.split(/[\n,;]+/)
-    .map(x=>x.trim()).filter(Boolean)
-  )];
+function checkNumber(number, settings) {
+  if (!/^[6789]\d{9}$/.test(number)) return null;
 
-  if(!patterns.length || patterns.length>20)
-    throw Error("Enter 1 to 20 patterns.");
+  const raw = digitSum(number);
+  const single = reducedTotal(raw);
 
-  for(const p of patterns) {
-    if(!/^[0-9*]{10}$/.test(p))
-      throw Error("Every pattern must have exactly 10 digits or * characters.");
+  if (settings.totals.length && !settings.totals.includes(single)) return null;
+  if (settings.rawSums.length && !settings.rawSums.includes(raw)) return null;
+
+  if (settings.endings.length &&
+      !settings.endings.some(ending => number.endsWith(ending))) return null;
+
+  if (settings.repeatCount > 0) {
+    const digit = settings.repeatDigit;
+    const counts = {};
+    for (const d of number) counts[d] = (counts[d] || 0) + 1;
+
+    const maximum = Math.max(...Object.values(counts));
+    if (digit) {
+      if ((counts[digit] || 0) < settings.repeatCount) return null;
+    } else if (maximum < settings.repeatCount) {
+      return null;
+    }
   }
 
-  const excludedDigits=listDigits($("exclude").value,"Exclude");
-  const onlyDigits=listDigits($("allow").value,"Only Allow");
+  if (settings.sequence && hasSequence(number, settings.sequence)) return null;
 
-  const allowed=onlyDigits ||
-    [0,1,2,3,4,5,6,7,8,9]
-    .filter(x=>!(excludedDigits||[]).includes(x));
+  return {number, raw, single};
+}
 
-  if(!allowed.length)
-    throw Error("No wildcard digits available.");
-
-  const totals=selectedTotals();
-  if(!totals.size)
-    throw Error("Select at least one numerology total.");
-
-  const raw=numberSet($("raw").value,"raw sum",1,90);
-
-  const endings=$("ending").value
-    .split(/[,\s;]+/).map(x=>x.trim()).filter(Boolean);
-
-  if(endings.some(x=>!/^\d{1,10}$/.test(x)))
-    throw Error("Ending patterns must contain digits only.");
-
-  const stock=new Set(
-    ($("stock").value.match(/\b[6789]\d{9}\b/g)||[])
-  );
-
+function getSettings() {
   return {
-    patterns,allowed,totals,raw,endings,stock,
-    start:$("start").value,
-    repeat:Number($("repeat").value),
-    sequence:$("sequence").value,
-    sort:$("sort").value
+    totals:getSelectedTotals(),
+    rawSums:parseList($("rawSums").value)
+      .map(Number).filter(n => Number.isInteger(n) && n >= 0 && n <= 90),
+    endings:parseList($("ending").value)
+      .filter(x => /^\d+$/.test(x) && x.length <= 10),
+    repeatCount:Number($("repeatCount").value),
+    repeatDigit:$("repeatDigit").value,
+    sequence:Number($("sequence").value) || 0
   };
 }
 
-async function generate() {
-  const token=++generationToken;
-  $("error").textContent="";
-  $("progress").textContent="";
-  $("generateBtn").disabled=true;
+function generateNumbers() {
+  if (generationRunning) return;
 
-  try {
-    const cfg=parseConfig();
-    const plans=[];
-    let estimate=0;
-
-    for(const pattern of cfg.patterns) {
-      let starts;
-
-      if(pattern[0]==="*") {
-        starts=cfg.start==="auto" ?
-          [6,7,8,9] : [Number(cfg.start)];
-        starts=starts.filter(x=>cfg.allowed.includes(x));
-      } else {
-        const first=Number(pattern[0]);
-
-        if(![6,7,8,9].includes(first))
-          throw Error("Mobile numbers must start with 6, 7, 8 or 9.");
-
-        starts=cfg.start==="auto" ||
-          first===Number(cfg.start) ? [first] : [];
-      }
-
-      const positions=[...pattern]
-        .map((c,i)=>c==="*"&&i>0?i:-1)
-        .filter(i=>i>=0);
-
-      if(!starts.length) continue;
-
-      const combinations=
-        starts.length*Math.pow(cfg.allowed.length,positions.length);
-
-      estimate+=combinations;
-      plans.push({pattern,starts,positions});
-    }
-
-    if(!plans.length)
-      throw Error("No patterns match the starting digit settings.");
-
-    if(estimate>500000)
-      throw Error(
-        "Too many combinations: "+
-        estimate.toLocaleString()+
-        ". Add fixed digits or reduce allowed digits. Maximum is 500,000."
-      );
-
-    const found=new Map();
-    let checked=0;
-    let excludedNumbers=new Set();
-
-    function checkNumber(num) {
-      checked++;
-
-      if(cfg.stock.has(num)) {
-        excludedNumbers.add(num);
-        return;
-      }
-
-      const raw=digitSum(num);
-      const single=reduceTotal(raw);
-
-      if(!cfg.totals.has(single)) return;
-      if(cfg.raw && !cfg.raw.has(raw)) return;
-
-      if(cfg.endings.length &&
-        !cfg.endings.some(x=>num.endsWith(x))) return;
-
-      const counts={};
-      for(const digit of num)
-        counts[digit]=(counts[digit]||0)+1;
-
-      if(Math.max(...Object.values(counts))<cfg.repeat)
-        return;
-
-      if(!sequenceMatch(num,cfg.sequence)) return;
-
-      found.set(num,{num,raw,single});
-    }
-
-    for(const plan of plans) {
-      const {pattern,starts,positions}=plan;
-
-      for(const first of starts) {
-        const base=pattern.split("");
-        base[0]=String(first);
-
-        const count=Math.pow(cfg.allowed.length,positions.length);
-
-        for(let index=0;index<count;index++) {
-          if(token!==generationToken) return;
-
-          const arr=base.slice();
-          let value=index;
-
-          for(let j=positions.length-1;j>=0;j--) {
-            arr[positions[j]]=String(
-              cfg.allowed[value%cfg.allowed.length]
-            );
-            value=Math.floor(value/cfg.allowed.length);
-          }
-
-          checkNumber(arr.join(""));
-
-          if(checked%3000===0) {
-            $("progress").textContent=
-              "Processing "+checked.toLocaleString()+
-              " / "+estimate.toLocaleString();
-
-            await new Promise(resolve=>setTimeout(resolve,0));
-          }
-        }
-      }
-    }
-
-    results=[...found.values()].sort((a,b)=>
-      a.num.localeCompare(b.num)
-    );
-
-    if(cfg.sort==="desc") results.reverse();
-
-    excluded=excludedNumbers.size;
-    page=1;
-    $("search").value="";
-
-    render();
-
-    $("results").classList.remove("hidden");
-    $("progress").textContent=
-      "Completed. "+checked.toLocaleString()+" combinations checked.";
-
-    if(!results.length)
-      $("error").textContent="No matches found. Adjust your filters.";
-
-  } catch(err) {
-    $("error").textContent=err.message;
-  } finally {
-    if(token===generationToken)
-      $("generateBtn").disabled=false;
+  const patterns = parseList($("patterns").value);
+  if (!patterns.length) {
+    $("status").textContent = "Please enter at least one pattern.";
+    return;
   }
+
+  const invalid = patterns.filter(pattern => !validatePattern(pattern));
+  if (invalid.length) {
+    $("status").textContent =
+      "Invalid pattern(s): " + invalid.join(", ") +
+      ". Every pattern must contain exactly 10 characters using digits and * only.";
+    return;
+  }
+
+  const exclude = parseDigits($("exclude").value);
+  const allow = parseDigits($("allow").value);
+  const fixedStart = $("start").value;
+  const stock = getStockNumbers();
+  const settings = getSettings();
+
+  const resultMap = new Map();
+  let excluded = 0;
+  let examined = 0;
+  const MAX_COMBINATIONS = 1000000;
+
+  let estimated = 0;
+  for (const pattern of patterns) {
+    let count = 1;
+    for (let i = 0; i < 10; i++) {
+      count *= getAllowedDigits(pattern, i, exclude, allow, fixedStart).length;
+    }
+    estimated += count;
+  }
+
+  if (estimated > MAX_COMBINATIONS) {
+    $("status").textContent =
+      "This pattern creates " + estimated.toLocaleString() +
+      " possible combinations, exceeding the 1,000,000 combination safety limit. Add more fixed digits or use more restrictive patterns.";
+    return;
+  }
+
+  generationRunning = true;
+  $("generateBtn").disabled = true;
+  $("status").textContent = "Generating numbers...";
+
+  allResults = [];
+  filteredResults = [];
+  copiedBatches.clear();
+  page = 1;
+
+  const work = patterns.map(pattern => {
+    const options = [];
+    for (let i = 0; i < 10; i++) {
+      options.push(getAllowedDigits(pattern, i, exclude, allow, fixedStart));
+    }
+    return {pattern, options};
+  });
+
+  let patternIndex = 0;
+  let currentDigits = [];
+  let positions = [];
+  let optionIndexes = [];
+  let started = false;
+
+  function setupPattern(index) {
+    const item = work[index];
+    currentDigits = item.pattern.split("");
+    positions = [];
+    optionIndexes = new Array(10).fill(0);
+    for (let i = 0; i < 10; i++) {
+      if (item.pattern[i] === "*") positions.push(i);
+    }
+    started = true;
+  }
+
+  function nextCombination() {
+    if (!started) setupPattern(patternIndex);
+    const item = work[patternIndex];
+
+    if (positions.length === 0) {
+      if (optionIndexes[0] === 0) {
+        optionIndexes[0] = 1;
+        return currentDigits.join("");
+      }
+      patternIndex++;
+      started = false;
+      return null;
+    }
+
+    const digits = positions.map(pos => item.options[pos][optionIndexes[pos]]);
+    for (let i = 0; i < positions.length; i++) {
+      currentDigits[positions[i]] = digits[i];
+    }
+    const number = currentDigits.join("");
+
+    let carry = true;
+    for (let i = positions.length - 1; i >= 0 && carry; i--) {
+      optionIndexes[i]++;
+      if (optionIndexes[i] >= item.options[positions[i]].length) {
+        optionIndexes[i] = 0;
+      } else {
+        carry = false;
+      }
+    }
+
+    if (carry) {
+      patternIndex++;
+      started = false;
+    }
+    return number;
+  }
+
+  function processChunk() {
+    const chunkSize = 3000;
+    let processed = 0;
+
+    while (patternIndex < work.length && processed < chunkSize) {
+      const number = nextCombination();
+      if (!number) continue;
+
+      processed++;
+      examined++;
+
+      if (stock.has(number)) {
+        excluded++;
+        continue;
+      }
+
+      const result = checkNumber(number, settings);
+      if (result) resultMap.set(number, result);
+    }
+
+    $("status").textContent =
+      "Generating... " + examined.toLocaleString() +
+      " combinations checked.";
+
+    if (patternIndex < work.length) {
+      setTimeout(processChunk, 0);
+    } else {
+      allResults = [...resultMap.values()].sort((a,b) =>
+        a.number.localeCompare(b.number)
+      );
+      excludedCount = excluded;
+      $("search").value = "";
+      render();
+      renderBatches();
+      generationRunning = false;
+      $("generateBtn").disabled = false;
+      $("status").textContent =
+        "Completed. Checked " + examined.toLocaleString() +
+        " combinations. Found " + allResults.length.toLocaleString() +
+        " matching numbers.";
+    }
+  }
+
+  processChunk();
+}
+
+function getVisibleResults() {
+  const query = $("search").value.trim();
+  return query
+    ? allResults.filter(item => item.number.includes(query))
+    : allResults;
 }
 
 function render() {
-  const q=$("search").value.trim();
-  filtered=results.filter(x=>x.num.includes(q));
+  filteredResults = getVisibleResults();
 
-  const size=Number($("pageSize").value);
-  const pages=Math.max(1,Math.ceil(filtered.length/size));
-  page=Math.max(1,Math.min(page,pages));
+  const sizeValue = $("pageSize").value;
+  const size = sizeValue === "all"
+    ? Math.max(filteredResults.length, 1)
+    : Number(sizeValue);
 
-  const start=(page-1)*size;
-  const items=filtered.slice(start,start+size);
+  const totalPages = Math.max(1, Math.ceil(filteredResults.length / size));
+  if (page > totalPages) page = totalPages;
 
-  $("matchCount").textContent=filtered.length.toLocaleString();
-  $("excludedCount").textContent=excluded.toLocaleString();
+  const start = (page - 1) * size;
+  const rows = filteredResults.slice(start, start + size);
 
-  const batchSize=Number($("batchSize").value);
-  $("batchCount").textContent=
-    Math.ceil(filtered.length/batchSize).toLocaleString();
+  $("totalCount").textContent = filteredResults.length.toLocaleString();
+  $("pageCount").textContent = rows.length.toLocaleString();
+  $("excludedCount").textContent = excludedCount.toLocaleString();
 
-  $("resultBody").innerHTML=items.map((r,i)=>`
-    <tr>
-      <td>${start+i+1}</td>
-      <td class="number">${r.num}</td>
-      <td>${r.raw}</td>
-      <td class="${[5,6,9].includes(r.single)?"highlight":""}">
-        ${r.single}
-      </td>
-    </tr>
-  `).join("");
+  $("resultBody").innerHTML = "";
 
-  $("pageInfo").textContent=
-    "Page "+page+" of "+pages+
-    " | "+filtered.length.toLocaleString()+" results";
+  if (!rows.length) {
+    $("resultBody").innerHTML =
+      '<tr><td colspan="4" class="empty">No matching numbers found.</td></tr>';
+  } else {
+    const fragment = document.createDocumentFragment();
+
+    rows.forEach((item, index) => {
+      const tr = document.createElement("tr");
+      const totalClass = [1,3,5,6,7,9].includes(item.single)
+        ? "highlight" : "normal-total";
+
+      tr.innerHTML =
+        '<td>' + (start + index + 1) + '</td>' +
+        '<td class="number">' + item.number + '</td>' +
+        '<td>' + item.raw + '</td>' +
+        '<td class="' + totalClass + '">' + item.single + '</td>';
+
+      fragment.appendChild(tr);
+    });
+    $("resultBody").appendChild(fragment);
+  }
+
+  $("pageInfo").textContent =
+    "Page " + page + " of " + totalPages;
+
+  $("prevBtn").disabled = page <= 1 || !filteredResults.length;
+  $("nextBtn").disabled = page >= totalPages || !filteredResults.length;
 
   renderBatches();
 }
 
-function renderBatches() {
-  const container=$("batchContainer");
-  container.innerHTML="";
+function changePage(direction) {
+  page += direction;
+  render();
+}
 
-  const size=Number($("batchSize").value);
-  const fragment=document.createDocumentFragment();
+function getCurrentPageNumbers() {
+  const sizeValue = $("pageSize").value;
+  const size = sizeValue === "all"
+    ? Math.max(filteredResults.length, 1)
+    : Number(sizeValue);
+  return filteredResults.slice((page - 1) * size, page * size)
+    .map(item => item.number);
+}
 
-  // Show 20 batches at a time to keep the page responsive.
-  const batchStart=(page-1)*20*size;
-  const slice=filtered.slice(batchStart,batchStart+20*size);
+function copyText(text) {
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    $("status").textContent = "Copied successfully.";
+  }).catch(() => {
+    $("status").textContent = "Clipboard access was unavailable. Please select and copy manually.";
+  });
+}
 
-  for(let i=0;i<slice.length;i+=size) {
-    const nums=slice.slice(i,i+size).map(x=>x.num);
-    const div=document.createElement("div");
-    div.className="batch";
+function copyCurrentPage() {
+  copyText(getCurrentPageNumbers().join("\n"));
+}
 
-    const head=document.createElement("div");
-    head.className="batch-head";
+function copyAllNumbers() {
+  copyText(filteredResults.map(item => item.number).join("\n"));
+}
 
-    const title=document.createElement("strong");
-    title.textContent="Batch "+(Math.floor((batchStart+i)/size)+1);
-
-    const actions=document.createElement("div");
-    actions.className="actions";
-    actions.style.margin="0";
-
-    const copy=document.createElement("button");
-    copy.className="secondary";
-    copy.textContent="Copy";
-    copy.onclick=()=>copyText(nums.join("\n"));
-
-    const share=document.createElement("button");
-    share.className="whatsapp";
-    share.textContent="WhatsApp";
-    share.onclick=()=>shareNumbers(nums);
-
-    actions.append(copy,share);
-    head.append(title,actions);
-
-    const body=document.createElement("div");
-    body.className="batch-numbers";
-    body.textContent=nums.join("   ");
-
-    div.append(head,body);
-    fragment.append(div);
+function shareWhatsApp() {
+  const numbers = getCurrentPageNumbers().slice(0,60);
+  if (!numbers.length) {
+    $("status").textContent = "No numbers available to share.";
+    return;
   }
-
-  container.append(fragment);
+  const message = "VIP Mobile Numbers\n\n" + numbers.join("\n") +
+    "\n\nNumber That Matters - Identity That Stays";
+  window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
 }
 
-function previousPage() {
-  if(page>1) {page--;render();}
-}
-
-function nextPage() {
-  const pages=Math.ceil(
-    filtered.length/Number($("pageSize").value)
-  );
-  if(page<pages) {page++;render();}
-}
-
-async function copyText(text) {
-  try {
-    if(navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-    } else {
-      const temp=document.createElement("textarea");
-      temp.value=text;
-      document.body.append(temp);
-      temp.select();
-      const ok=document.execCommand("copy");
-      temp.remove();
-      if(!ok) throw Error("Copy failed");
-    }
-    $("status").textContent="Numbers copied successfully.";
-  } catch(e) {
-    $("status").textContent="Clipboard blocked. Try another browser.";
-  }
-}
-
-function copyAll() {
-  if(!filtered.length) return;
-  copyText(filtered.map(x=>x.num).join("\n"));
-}
-
-function shareNumbers(numbers) {
-  if(!numbers.length) return;
-
-  const selected=numbers.slice(0,60);
-
-  let message="VIP MOBILE NUMBERS\n\n"+
-    selected.map((n,i)=>(i+1)+". "+n).join("\n")+
-    "\n\nMANNE COMMUNICATIONS";
-
-  if(numbers.length>60)
-    message+="\nShowing first 60 numbers only.";
-
-  const url="https://wa.me/?text="+encodeURIComponent(message);
-  window.open(url,"_blank");
-}
-
-function shareAll() {
-  shareNumbers(filtered.map(x=>x.num));
-}
-
-function download(name,content,type) {
-  const blob=new Blob([content],{type});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download=name;
-  document.body.append(a);
+function downloadFile(filename, content, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
   a.click();
   a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  URL.revokeObjectURL(url);
 }
 
 function downloadTXT() {
-  if(!filtered.length) return;
-  download(
-    "VIP_Numbers.txt",
-    filtered.map(x=>x.num).join("\n"),
-    "text/plain"
-  );
+  const content = filteredResults.map(item => item.number).join("\n");
+  downloadFile("manne-vip-numbers.txt", content, "text/plain;charset=utf-8");
 }
 
 function downloadCSV() {
-  if(!filtered.length) return;
-  const csv="Mobile Number,Raw Sum,Single Total\n"+
-    filtered.map(x=>`${x.num},${x.raw},${x.single}`).join("\n");
-
-  download("VIP_Numbers.csv",csv,"text/csv");
+  const lines = [["Mobile Number","Raw Sum","Single Total"]];
+  filteredResults.forEach(item =>
+    lines.push([item.number,item.raw,item.single])
+  );
+  const csv = lines.map(row => row.join(",")).join("\n");
+  downloadFile("manne-vip-numbers.csv", csv, "text/csv;charset=utf-8");
 }
 
-function resetAll() {
-  generationToken++;
-  $("patterns").value="**********";
-  $("start").value="auto";
-  $("exclude").value="0,2,4";
-  $("allow").value="";
-  $("raw").value="";
-  $("ending").value="";
-  $("repeat").value="1";
-  $("sequence").value="any";
-  $("sort").value="asc";
-  $("stock").value="";
-  $("search").value="";
-  $("allTotals").checked=false;
+function renderBatches() {
+  const numbers = getVisibleResults().map(item => item.number);
+  const batchSize = Number($("batchSize").value);
+  const totalBatches = Math.ceil(numbers.length / batchSize);
+  $("batches").innerHTML = "";
 
-  document.querySelectorAll(".totalCheck").forEach(x=>
-    x.checked=x.value==="1"
-  );
+  if (!numbers.length) {
+    $("batches").innerHTML = '<div class="empty">No batches available.</div>';
+    return;
+  }
 
-  results=[];
-  filtered=[];
-  page=1;
-  excluded=0;
+  const fragment = document.createDocumentFragment();
 
-  $("results").classList.add("hidden");
-  $("error").textContent="";
-  $("progress").textContent="";
-  $("status").textContent="";
-  $("generateBtn").disabled=false;
+  for (let i = 0; i < totalBatches; i++) {
+    const batchNumbers = numbers.slice(i * batchSize, (i + 1) * batchSize);
+    const batchId = "batch-" + i;
+    const div = document.createElement("div");
+    div.className = "batch" + (copiedBatches.has(batchId) ? " copied" : "");
+
+    const head = document.createElement("div");
+    head.className = "batch-head";
+
+    const title = document.createElement("strong");
+    title.textContent = "Batch " + (i + 1) + " (" + batchNumbers.length + " Numbers)";
+
+    const button = document.createElement("button");
+    button.className = "secondary";
+    button.textContent = copiedBatches.has(batchId) ? "Copied" : "Copy Batch";
+    button.onclick = () => {
+      copyText(batchNumbers.join("\n"));
+      copiedBatches.add(batchId);
+      renderBatches();
+    };
+
+    head.append(title, button);
+
+    const content = document.createElement("div");
+    content.className = "batch-numbers";
+    content.textContent = batchNumbers.join("   |   ");
+
+    div.append(head, content);
+    fragment.appendChild(div);
+  }
+
+  $("batches").appendChild(fragment);
+}
+
+function resetCopiedMarks() {
+  copiedBatches.clear();
+  renderBatches();
+}
+
+function resetFilters() {
+  $("patterns").value = "**********";
+  $("start").value = "auto";
+  $("exclude").value = "0,2,4";
+  $("allow").value = "";
+  $("ending").value = "";
+  $("stock").value = "";
+  $("rawSums").value = "";
+  $("repeatCount").value = "0";
+  $("repeatDigit").value = "";
+  $("sequence").value = "none";
+  $("search").value = "";
+  $("pageSize").value = "25";
+  $("batchSize").value = "10";
+
+  document.querySelectorAll("#totals input").forEach(input => {
+    input.checked = input.value === "1";
+  });
+
+  allResults = [];
+  filteredResults = [];
+  page = 1;
+  excludedCount = 0;
+  copiedBatches.clear();
+
+  $("resultBody").innerHTML =
+    '<tr><td colspan="4" class="empty">Generate numbers to view results.</td></tr>';
+  $("batches").innerHTML = '<div class="empty">No batches available yet.</div>';
+  $("totalCount").textContent = "0";
+  $("pageCount").textContent = "0";
+  $("excludedCount").textContent = "0";
+  $("pageInfo").textContent = "Page 0 of 0";
+  $("prevBtn").disabled = true;
+  $("nextBtn").disabled = true;
+  $("status").textContent = "Filters reset. Ready to generate numbers.";
 }
 </script>
 </body>

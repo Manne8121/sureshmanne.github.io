@@ -6,6 +6,10 @@
 <title>Manne Communications — Astrology Platform</title>
 
 <style>
+.number-check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.number-check-grid input{width:100%;min-width:0}
+@media(max-width:640px){.number-check-grid{grid-template-columns:1fr}.wrap{width:min(100% - 24px,100%)}.g2,.g3{grid-template-columns:1fr!important}.nums-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--gold:#c9a84c;--gold-l:#e8c97a;--gold-d:#8a6620;--bg:#080808;--card:#111111;--card2:#1a1a1a;--border:#252525;--text:#f0ede4;--muted:#77776e;--red:#e24b4a;--grn:#22c55e}
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:20px}
@@ -160,6 +164,53 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
 .fld input[type=checkbox]{width:17px;height:17px;accent-color:var(--gold);flex:0 0 auto}
 a{color:var(--gold)}
 </style>
+
+<style>
+.mc-number-card,.mc-ranking,.mc-recommend{border:1px solid var(--border);border-radius:14px;padding:1rem;margin:.85rem 0;background:var(--card)}
+.mc-num-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.mc-muted,.mc-num-head small,.mc-stats small{color:var(--muted);font-size:12px}
+.mc-number{font-size:25px;font-weight:850;letter-spacing:.06em;overflow-wrap:anywhere}
+.mc-score{font-size:31px;font-weight:900;text-align:right}
+.mc-score small,.mc-winner-score small{font-size:13px;color:var(--muted)}
+.mc-status{font-size:12px;font-weight:700}
+.mc-meter{height:12px;background:var(--border);border-radius:99px;overflow:hidden;margin:.8rem 0}
+.mc-meter span{display:block;height:100%;border-radius:99px}
+.mc-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem}
+.mc-stats div{background:rgba(128,128,128,.08);padding:.65rem;border-radius:9px;min-width:0}
+.mc-stats b{display:block;font-size:19px;margin-top:.2rem}
+.mc-details{margin-top:.8rem;border-top:1px solid var(--border);padding-top:.7rem}
+.mc-details summary{cursor:pointer;font-weight:700;color:var(--gold)}
+.mc-two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+.mc-two-col>div{padding:.65rem;border:1px solid var(--border);border-radius:9px;min-width:0}
+.mc-two-col h4,.mc-recommend h4,.mc-ranking h4{margin:.1rem 0 .4rem}
+.mc-two-col p,.mc-recommend p{margin:.2rem 0;overflow-wrap:anywhere}
+.mc-winner{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem;border-radius:14px;background:linear-gradient(120deg,#123b2e,#10231e);color:white}
+.mc-winner h2{margin:.2rem 0;font-size:28px;overflow-wrap:anywhere}
+.mc-winner p{margin:0;color:#d3e9df}
+.mc-winner-score{font-size:38px;font-weight:900;white-space:nowrap}
+.mc-ranking ol{padding-left:1.4rem;margin:.5rem 0}
+.mc-ranking li{padding:.5rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap}
+.mc-disclaimer{font-size:11px;color:var(--muted);line-height:1.6;margin-top:1rem}
+.mc-report-actions{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:700px){.mc-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.mc-two-col{grid-template-columns:1fr}.mc-report-actions{width:100%;justify-content:stretch}.mc-report-actions button{flex:1}.mc-winner h2{font-size:22px}}
+@media print{
+  body{background:white!important;color:#111!important}
+  .topbar,.mc-report-actions,#newbtn,.abar,.btn,.mc-consult-cta{display:none!important}
+  .screen{display:none!important}
+  #screen-report{display:block!important}
+  #screen-report .wrap{width:100%!important;max-width:none!important;padding:0!important}
+  #rpage{background:white!important;color:#111!important}
+  .card,.mc-number-card,.mc-ranking,.mc-recommend{break-inside:avoid;background:white!important;color:#111!important;border:1px solid #ddd!important}
+  .mc-winner{background:#e8f3ee!important;color:#111!important}
+  .mc-winner p{color:#333!important}
+  .mc-disclaimer,.mc-muted,.mc-stats small{color:#444!important}
+  details{display:block!important}
+  details>summary{display:none!important}
+  details:not([open])>*{display:block!important}
+  a{color:#111!important;text-decoration:none!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -346,7 +397,7 @@ a{color:var(--gold)}
 
     <div class="stitle" style="margin-top:0">Personal details</div>
     <div class="g2">
-      <div class="fld"><label>Full name <span class="req">*</span></label><input type="text" id="fn" placeholder="As per birth certificate"><div class="er" id="fn-er"></div></div>
+      <div class="fld"><label>Full name <span class="req">*</span></label><input type="text" id="fn" maxlength="60" autocomplete="name" placeholder="Enter name using alphabets and spaces only"><div class="er" id="fn-er"></div><div style="font-size:12px;color:var(--muted);margin-top:-.35rem">Only letters and spaces are allowed. Numbers and punctuation are not accepted.</div></div>
       <div class="fld"><label>Gender (optional)</label><select id="fg"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select><div class="er" id="fg-er"></div></div>
     </div>
     <div class="stitle">Birth details</div>
@@ -360,7 +411,17 @@ a{color:var(--gold)}
       <div class="fld"><label>State / Country <span class="req">*</span></label><input type="text" id="fst" placeholder="Type or select state..." list="states-list" autocomplete="off"><div class="er" id="fst-er"></div></div><datalist id="states-list"><option value="Andhra Pradesh"><option value="Arunachal Pradesh"><option value="Assam"><option value="Bihar"><option value="Chhattisgarh"><option value="Goa"><option value="Gujarat"><option value="Haryana"><option value="Himachal Pradesh"><option value="Jharkhand"><option value="Karnataka"><option value="Kerala"><option value="Madhya Pradesh"><option value="Maharashtra"><option value="Manipur"><option value="Meghalaya"><option value="Mizoram"><option value="Nagaland"><option value="Odisha"><option value="Punjab"><option value="Rajasthan"><option value="Sikkim"><option value="Tamil Nadu"><option value="Telangana"><option value="Tripura"><option value="Uttar Pradesh"><option value="Uttarakhand"><option value="West Bengal"><option value="Andaman and Nicobar Islands"><option value="Chandigarh"><option value="Dadra and Nagar Haveli and Daman and Diu"><option value="Delhi"><option value="Jammu and Kashmir"><option value="Ladakh"><option value="Lakshadweep"><option value="Puducherry"><option value="Outside India"></datalist>
     </div>
     <div class="stitle">VIP number evaluation</div>
-    <div class="fld"><label>Mobile number you want to evaluate (optional)</label><input type="tel" id="fnumbercheck" inputmode="numeric" maxlength="10" placeholder="Enter a 10-digit mobile number"><div class="er" id="fnumbercheck-er"></div><div style="font-size:12px;color:var(--muted)">Enter the VIP number you are considering. Your contact mobile below is used only to identify the enquiry.</div></div>
+    <div class="fld"><label>VIP mobile numbers to evaluate <span class="req">*</span></label>
+      <div class="number-check-grid">
+        <input type="tel" id="fnumbercheck1" inputmode="numeric" maxlength="10" placeholder="Number 1 (required)">
+        <input type="tel" id="fnumbercheck2" inputmode="numeric" maxlength="10" placeholder="Number 2 (optional)">
+        <input type="tel" id="fnumbercheck3" inputmode="numeric" maxlength="10" placeholder="Number 3 (optional)">
+        <input type="tel" id="fnumbercheck4" inputmode="numeric" maxlength="10" placeholder="Number 4 (optional)">
+        <input type="tel" id="fnumbercheck5" inputmode="numeric" maxlength="10" placeholder="Number 5 (optional)">
+      </div>
+      <div class="er" id="fnumbercheck-er"></div>
+      <div style="font-size:12px;color:var(--muted)">Enter at least one number. You can compare up to five 10-digit numbers. Only digits starting with 6, 7, 8 or 9 are accepted.</div>
+    </div>
     <div class="stitle">Contact & purpose</div>
     <div class="g2">
       <div class="fld"><label>Client mobile <span class="req">*</span></label><input type="tel" id="fmob" placeholder="+91 XXXXX XXXXX"><div class="er" id="fmob-er"></div></div>
@@ -426,7 +487,7 @@ a{color:var(--gold)}
   <div class="wrap" id="rpage">
     <div class="topbar">
       <div><div class="pg">Consultation Report</div><div class="ps" id="r-offline-badge" style="color:#22c55e">● Offline Report — No API Cost</div></div>
-      <button class="btn bo bsm" id="newbtn" onclick="doNewConsult()">+ New</button>
+      <div class="mc-report-actions"><button class="btn bo bsm" onclick="window.print()">⬇ Download / Print PDF</button><button class="btn bo bsm" id="newbtn" onclick="doNewConsult()">+ New</button></div>
     </div>
     <div class="rh"><div class="rname" id="rn"></div><div class="rmeta" id="rm"></div></div>
     <div id="r-lucky-top" style="margin-bottom:.75rem"></div>
@@ -1420,7 +1481,7 @@ function toggleHistory(){
 function adminLogout(){sessionStorage.removeItem('mc_admin');showScreen('role');}
 function doNewConsult(){
   if(S.dealer.type==='trial'&&S.reportCount>=5){toast('5 reports completed. Contact Manne Communications for paid access.',5000);setTimeout(doLogout,2500);return;}
-  ['fn','fdob','ftob','fct','fst','fmob','fpur'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['fn','fdob','ftob','fct','fst','fmob','fpur','fnumbercheck1','fnumbercheck2','fnumbercheck3','fnumbercheck4','fnumbercheck5','biz-name','biz-date','biz-location','biz-mobile','biz-goals'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('fg').value='';document.getElementById('fbud').value='';
   S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('form');
 }
@@ -1447,95 +1508,93 @@ function toggleBusinessFields(){
 }
 
 
+
 function doGenReport(){
-  const val = id => (document.getElementById(id)?.value || '').trim();
-  const mode = val('assessment-mode') || 'Personal';
-  const name = val('fn');
-  const mobile = val('fmob').replace(/[^\d]/g,'');
-  const dob = val('fdob');
-  const city = val('fct');
-  const state = val('fst');
-  const businessName = val('biz-name');
-  const isPersonal = mode === 'Personal' || mode === 'Combined';
-  const isBusiness = mode === 'Business' || mode === 'Combined';
+  try {
+    const val = id => (document.getElementById(id)?.value || '').trim();
+    const mode = val('assessment-mode') || 'Personal';
+    const isPersonal = mode === 'Personal' || mode === 'Combined';
+    const isBusiness = mode === 'Business' || mode === 'Combined';
+    const name = val('fn');
+    const businessName = val('biz-name');
+    const mobile = val('fmob');
+    const numbers = [1,2,3,4,5].map(i=>val('fnumbercheck'+i)).filter(Boolean);
 
-  if(isPersonal && !name){
-    toast('Please enter your full name'); document.getElementById('fn').focus(); return;
-  }
-  if(isBusiness && !businessName){
-    toast('Please enter your business or brand name'); document.getElementById('biz-name').focus(); return;
-  }
-  if(isPersonal && (!dob || !city || !state)){
-    toast('Please enter date and place of birth for the personal assessment'); return;
-  }
-  if(!/^\d{10,13}$/.test(mobile)){
-    toast('Please enter a valid mobile number with country code if needed');
-    document.getElementById('fmob').focus(); return;
-  }
-  if(!document.getElementById('privacy-consent')?.checked){
-    toast('Please confirm consent before generating the assessment'); return;
-  }
-
-  const displayName = isPersonal ? name : businessName;
-  const d = {
-    name: displayName,
-    gender: val('fg') || 'Not specified',
-    dob: dob || '',
-    tob: val('ftob') ? val('ftob') + ' ' + val('fampm') : '12:00 PM',
-    city: city || 'Not provided',
-    state: state || 'Not provided',
-    mobile,
-    numberToEvaluate: val('fnumbercheck'),
-    budget: val('fbud'),
-    purpose: val('fpur') || val('biz-goals'),
-    assessmentMode: mode,
-    business: {
-      name: businessName,
-      category: val('biz-category'),
-      status: val('biz-status'),
-      date: val('biz-date'),
-      location: val('biz-location'),
-      mobile: val('biz-mobile'),
-      goals: val('biz-goals')
+    if(isPersonal && !/^[A-Za-z]+(?:\s+[A-Za-z]+)*$/.test(name)){
+      toast('Name can contain alphabets and spaces only.');
+      document.getElementById('fn').focus(); return;
     }
-  };
+    if(isBusiness && !/^[A-Za-z][A-Za-z0-9 &.'-]*$/.test(businessName)){
+      toast('Please enter a valid business name.'); document.getElementById('biz-name').focus(); return;
+    }
+    if(isPersonal && (!val('fdob') || !val('fct') || !val('fst'))){
+      toast('Please complete date and place of birth.'); return;
+    }
+    if(!/^[6-9]\d{9}$/.test(mobile)){
+      toast('Client mobile must be exactly 10 digits and start with 6, 7, 8 or 9.');
+      document.getElementById('fmob').focus(); return;
+    }
+    if(numbers.length===0){
+      toast('Please enter at least one VIP number to evaluate.');
+      document.getElementById('fnumbercheck1').focus(); return;
+    }
+    const invalid=numbers.find(n=>!/^[6-9]\d{9}$/.test(n));
+    if(invalid){
+      toast('Every VIP number must be exactly 10 digits and start with 6, 7, 8 or 9.'); return;
+    }
+    if(!document.getElementById('privacy-consent')?.checked){
+      toast('Please confirm consent before generating the assessment.'); return;
+    }
 
-  S.dealer = S.dealer || {};
-  S.dealer.name = 'Manne Communications Online Assessment';
-  S.dealer.type = 'public';
-  S.fd = d;
-  S.matched = null;
-  S.aiNarrative = null;
-  S.reportId = 'MC-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(1000 + Math.random()*9000);
+    const d={
+      name:isPersonal?name:businessName,
+      gender:val('fg') || 'Not specified',
+      dob:val('fdob'),
+      tob:val('ftob') ? val('ftob')+' '+val('fampm') : '12:00 PM',
+      city:val('fct') || 'Not provided',
+      state:val('fst') || 'Not provided',
+      mobile, numbersToEvaluate:numbers,
+      budget:val('fbud'), purpose:val('fpur') || val('biz-goals'),
+      assessmentMode:mode,
+      business:{
+        name:businessName, category:val('biz-category'), status:val('biz-status'),
+        date:val('biz-date'), location:val('biz-location'),
+        mobile:val('biz-mobile'), goals:val('biz-goals')
+      }
+    };
 
-  if(isPersonal){
-    const lp=calcLP(d.dob), expr=calcExpr(d.name), su=calcSU(d.name), pn=calcPN(d.name);
-    const mat=calcMat(lp,expr), bal=calcBal(d.name), py=calcPY(d.dob,new Date().getFullYear());
-    const grid=getNameGrid(d.name), rashi=getVedicRashi(d.dob,d.tob), nak=getVedicNak(d.dob,d.tob);
-    const lucky=getLuckyFromLP(lp);
-    S.nums={lp,expr,su,pn,mat,bal,py,lucky};
-    renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky);
-    const meta = document.getElementById('rm');
-    if(meta) meta.innerHTML = `${d.gender} &nbsp;·&nbsp; ${fmtDate(d.dob)} at ${d.tob} &nbsp;·&nbsp; ${d.city}, ${d.state}<br>Mobile: ${d.mobile} &nbsp;·&nbsp; <span style="color:var(--gold);font-size:13px">Ref: ${S.reportId}</span>`;
-  } else {
-    renderBusinessOnlyReport(d);
+    S.dealer={name:'Manne Communications Online Assessment',code:'',type:'public'};
+    S.fd=d; S.matched=null; S.aiNarrative=null;
+    const now=new Date(), pad=n=>String(n).padStart(2,'0');
+    S.reportId='MC-'+now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'-'+String(Math.floor(Math.random()*9000)+1000);
+
+    if(isPersonal){
+      const lp=calcLP(d.dob), expr=calcExpr(d.name), su=calcSU(d.name), pn=calcPN(d.name);
+      const mat=calcMat(lp,expr), bal=calcBal(d.name), py=calcPY(d.dob,now.getFullYear());
+      const grid=getNameGrid(d.name), rashi=getVedicRashi(d.dob,d.tob), nak=getVedicNak(d.dob,d.tob);
+      const lucky=getLuckyFromLP(lp);
+      S.nums={lp,expr,su,pn,mat,bal,py,lucky};
+      renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky);
+      const meta=document.getElementById('rm');
+      if(meta) meta.innerHTML=`${d.gender} · ${fmtDate(d.dob)} at ${d.tob} · ${d.city}, ${d.state}<br>Mobile: ${d.mobile} · Ref: ${S.reportId}`;
+    } else {
+      renderBusinessOnlyReport(d);
+    }
+    if(isBusiness && typeof renderBusinessAnalysis==='function') renderBusinessAnalysis(d);
+    const biz=document.getElementById('r-business-analysis');
+    if(biz && !isBusiness) biz.innerHTML='';
+    renderNumberEvaluations(d.numbersToEvaluate,d.dob);
+
+    const personalSections=['r-lucky-top','r-core','r-namegrid','r-lp','r-su','r-destiny','r-rashi','r-nak','r-dasha','r-py','r-lucky'];
+    personalSections.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isPersonal?'':'none';});
+    ['mcard','ai-section'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=isPersonal?'':'none';});
+    const rn=document.getElementById('rn'); if(rn)rn.textContent=d.name;
+    const nb=document.getElementById('newbtn'); if(nb)nb.style.display='';
+    showScreen('report');
+  } catch(err) {
+    console.error('Assessment generation failed:',err);
+    toast('We could not generate the assessment. Please check the entered details and try again.');
   }
-
-  if(isBusiness) renderBusinessAnalysis(d);
-  else document.getElementById('r-business-analysis').innerHTML = '';
-  renderNumberEvaluation(d.numberToEvaluate, d.dob);
-
-  // Hide sections that depend on personal birth data for a business-only assessment.
-  const personalSections = ['r-lucky-top','r-core','r-namegrid','r-lp','r-su','r-destiny','r-rashi','r-nak','r-dasha','r-py','r-lucky'];
-  personalSections.forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.style.display = isPersonal ? '' : 'none';
-  });
-  document.getElementById('mcard').style.display = isPersonal ? '' : 'none';
-  document.getElementById('ai-section').style.display = isPersonal ? '' : 'none';
-  document.getElementById('rn').textContent = isBusiness && !isPersonal ? businessName : name;
-  document.getElementById('newbtn').style.display = '';
-  showScreen('report');
 }
 
 
@@ -1544,70 +1603,105 @@ function mcDigitRoot(n){
   while(x>9 && x!==11 && x!==22 && x!==33) x=String(x).split('').reduce((a,c)=>a+Number(c),0);
   return x;
 }
-function mcEvaluateMobile(raw, dob){
-  const number=String(raw||'').replace(/\D/g,'');
-  if(!/^\d{10}$/.test(number)) return null;
-  const day=dob ? Number(dob.split('-')[2]) : null;
-  const birth=day ? mcDigitRoot(day) : null;
-  const life=dob ? calcLP(dob) : null;
-  const lucky=life ? getLuckyFromLP(life) : {single:[],avoid:[8]};
+
+function mcEvaluateMobile(raw,dob){
+  const number=String(raw||'');
+  if(!/^[6-9]\d{9}$/.test(number)) return null;
+  const digits=number.split('').map(Number);
+  const day=dob?Number(dob.split('-')[2]):null;
+  const birth=day?mcDigitRoot(day):null;
+  const life=dob?calcLP(dob):null;
+  const lucky=life?getLuckyFromLP(life):{single:[],avoid:[]};
   const fav=[...new Set([...(birth?[birth]:[]),...(lucky.single||[])])];
   const avoid=[...new Set(lucky.avoid||[])].filter(x=>!fav.includes(x));
-  const sum=number.split('').reduce((a,c)=>a+Number(c),0);
-  const root=mcDigitRoot(number);
-  const digits=number.split('').map(Number);
+  const sum=digits.reduce((a,x)=>a+x,0), root=mcDigitRoot(number);
   const favHits=digits.filter(x=>fav.includes(x)).length;
   const avoidHits=digits.filter(x=>avoid.includes(x)).length;
-  const repeats=digits.reduce((m,x)=>(m[x]=(m[x]||0)+1,m),{});
-  const repeatBonus=Object.values(repeats).some(v=>v>=3)?8:0;
-  let score=48 + (fav.includes(root)?25:0) + Math.min(18,favHits*3) - Math.min(30,avoidHits*7) + repeatBonus;
-  score=Math.max(5,Math.min(98,score));
-  const status=score>=80?'Strong alignment':score>=65?'Good alignment':score>=45?'Moderate alignment':'Low alignment';
-  const twoDigitTotals=[];
-  for(let n=10;n<=99;n++) if(mcDigitRoot(n)===root) twoDigitTotals.push(n);
-  const okayRoots=[...new Set([...(fav||[]), ...((fav||[]).map(x=>x===9?1:x+1))])].filter(x=>x<=9);
+  const freq=digits.reduce((m,x)=>(m[x]=(m[x]||0)+1,m),{});
+  const repeats=Object.entries(freq).filter(([,n])=>n>=2).map(([d,n])=>`${d} × ${n}`);
+  const triples=Object.entries(freq).filter(([,n])=>n>=3).map(([d,n])=>`${d} repeated ${n} times`);
+  const ending=number.slice(-3), first=number.slice(0,3);
+  const hasSequential=/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/.test(number);
+  const repeatBonus=triples.length?8:repeats.length?4:0;
+  const rootBonus=fav.includes(root)?20:0;
+  const digitBonus=Math.min(18,favHits*3);
+  const avoidPenalty=Math.min(30,avoidHits*6);
+  const score=Math.max(5,Math.min(98,48+rootBonus+digitBonus-avoidPenalty+repeatBonus));
+  const status=score>=85?'Excellent':score>=75?'Very Good':score>=60?'Good':score>=45?'Average':'Low Compatibility';
+  const compoundTotals=[];
+  for(let n=10;n<=99;n++) if(mcDigitRoot(n)===root) compoundTotals.push(n);
+  const compatibleRoots=[...new Set(fav.filter(x=>x!==root))];
   const okayTotals=[];
-  for(let n=10;n<=99;n++) if(okayRoots.includes(mcDigitRoot(n)) && mcDigitRoot(n)!==root) okayTotals.push(n);
+  for(let n=10;n<=99;n++) if(compatibleRoots.includes(mcDigitRoot(n))) okayTotals.push(n);
   const avoidTotals=[];
   for(let n=10;n<=99;n++) if(avoid.includes(mcDigitRoot(n))) avoidTotals.push(n);
-  return {number,sum,root,score,status,fav,avoid,favHits,avoidHits,twoDigitTotals,okayTotals,avoidTotals};
+  const idealDigits=fav.length?fav:[1,3,5,6,9];
+  const recommendations=[
+    `Prefer a final single-digit root of ${fav.join(' or ')||'a personally selected compatible total'}.`,
+    `Look for a compound total that reduces to ${root} (the current number's root) or another personally supportive root.`,
+    `Use preferred digits ${idealDigits.join(', ')} naturally in the number pattern; avoid forcing a pattern at the cost of memorability.`
+  ];
+  const explanations=[
+    {label:'Root compatibility',points:rootBonus,detail:`Root ${root} ${fav.includes(root)?'matches':'does not currently match'} the preferred root set.`},
+    {label:'Preferred digit presence',points:digitBonus,detail:`${favHits} digits belong to the preferred set ${fav.join(', ')||'not calculated'}.`},
+    {label:'Avoid-digit presence',points:-avoidPenalty,detail:`${avoidHits} digits belong to the caution set ${avoid.join(', ')||'none'}.`},
+    {label:'Pattern repetition',points:repeatBonus,detail:repeats.length?`Repeated digits: ${repeats.join(', ')}.`:'No repeated digit pairs detected.'}
+  ];
+  return {number,sum,root,score,status,fav,avoid,favHits,avoidHits,compoundTotals,okayTotals,avoidTotals,repeats,triples,ending,first,hasSequential,recommendations,explanations};
 }
-function renderNumberEvaluation(raw,dob){
+
+
+function renderNumberEvaluations(numbers,dob){
   const el=document.getElementById('number-evaluation');
-  if(!el) return;
-  if(!raw){el.innerHTML='';return;}
-  const r=mcEvaluateMobile(raw,dob);
-  if(!r){
-    el.innerHTML='<div class="rsec"><h3>📱 VIP Number Evaluation</h3><p>Please enter a valid 10-digit mobile number in the assessment form to see its score.</p></div>';return;
-  }
-  const barColor=r.score>=80?'#16a34a':r.score>=65?'#84cc16':r.score>=45?'#eab308':'#ea580c';
-  const fmt=a=>a.length?a.join(', '):'No totals in this category for the current profile';
-  el.innerHTML=`<div class="rsec"><h3>📱 VIP Mobile Number Evaluation</h3>
-    <div style="border:1px solid var(--border);border-radius:14px;padding:1rem;background:var(--card)">
-      <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap">
-        <div><div style="font-size:12px;color:var(--muted)">Number analysed</div><div style="font-size:25px;font-weight:800;letter-spacing:.08em">${r.number}</div></div>
-        <div style="text-align:right"><div style="font-size:34px;font-weight:900">${r.score}<span style="font-size:16px;color:var(--muted)"> / 100</span></div><strong style="color:${barColor}">${r.status}</strong></div>
+  if(!el)return;
+  if(!numbers||!numbers.length){el.innerHTML='';return;}
+  const results=numbers.map((n,i)=>({...mcEvaluateMobile(n,dob),option:i+1})).filter(x=>x.number);
+  const ranked=[...results].sort((a,b)=>b.score-a.score);
+  const winner=ranked[0];
+  const fmt=a=>a.length?a.join(', '):'None identified';
+  const cards=results.map(r=>{
+    const color=r.score>=75?'#16a34a':r.score>=60?'#84cc16':r.score>=45?'#eab308':'#ea580c';
+    return `<article class="mc-number-card">
+      <div class="mc-num-head"><div><div class="mc-muted">Option ${r.option}${r.number===winner.number?' · TOP RANKED':''}</div><div class="mc-number">${r.number}</div></div>
+      <div class="mc-score">${r.score}<small>/100</small><div class="mc-status" style="color:${color}">${r.status}</div></div></div>
+      <div class="mc-meter"><span style="width:${r.score}%;background:${color}"></span></div>
+      <div class="mc-stats">
+        <div><small>Digit sum</small><b>${r.sum}</b></div><div><small>Single-digit root</small><b>${r.root}</b></div>
+        <div><small>Preferred digit hits</small><b>${r.favHits}/10</b></div><div><small>Caution digit hits</small><b>${r.avoidHits}/10</b></div>
       </div>
-      <div style="height:13px;border-radius:99px;background:var(--border);overflow:hidden;margin:1rem 0 .45rem"><div style="height:100%;width:${r.score}%;background:${barColor};border-radius:99px"></div></div>
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>Low alignment</span><span>Excellent alignment</span></div>
-      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:1rem">
-        <div><div style="font-size:12px;color:var(--muted)">Total of all digits</div><strong style="font-size:22px">${r.sum}</strong></div>
-        <div><div style="font-size:12px;color:var(--muted)">Single-digit / root total</div><strong style="font-size:22px">${r.root}</strong></div>
-        <div><div style="font-size:12px;color:var(--muted)">Favourable digit hits</div><strong style="font-size:22px">${r.favHits}/10</strong></div>
-      </div>
+      <details class="mc-details"><summary>View full number analysis</summary>
+        <div class="mc-two-col">
+          <div><h4>Preferred digits</h4><p>${fmt(r.fav)}</p></div>
+          <div><h4>Digits to limit</h4><p>${fmt(r.avoid)}</p></div>
+          <div><h4>Repeated patterns</h4><p>${fmt(r.repeats)}</p></div>
+          <div><h4>Ending / prefix</h4><p>Prefix: ${r.first} · Ending: ${r.ending}</p></div>
+          <div><h4>Best-matching compound totals</h4><p>${fmt(r.compoundTotals)}</p></div>
+          <div><h4>Other compatible totals</h4><p>${fmt(r.okayTotals)}</p></div>
+          <div><h4>Totals to de-prioritise</h4><p>${fmt(r.avoidTotals)}</p></div>
+          <div><h4>Sequence pattern</h4><p>${r.hasSequential?'Contains a consecutive digit sequence.':'No obvious consecutive sequence detected.'}</p></div>
+        </div>
+        <h4>How the score was formed</h4>
+        <ul>${r.explanations.map(x=>`<li>${x.label}: ${x.points>=0?'+':''}${x.points} points. ${x.detail}</li>`).join('')}</ul>
+      </details>
+    </article>`;
+  }).join('');
+  const bestDigitList=winner.fav.length?winner.fav.join(', '):'Birth details not supplied';
+  const suggestedTotals=winner.compoundTotals.slice(0,18).join(', ');
+  el.innerHTML=`<section class="rsec mc-evaluation">
+    <h3>📱 VIP Number Comparison & Ranking</h3>
+    <div class="mc-winner"><div><small>Best match among the numbers entered</small><h2>${winner.number}</h2><p>${winner.status} · Score ${winner.score}/100</p></div><div class="mc-winner-score">${winner.score}<small>/100</small></div></div>
+    <div class="mc-ranking"><h4>Comparison ranking</h4><ol>${ranked.map(r=>`<li><span>${r.number}</span><strong>#${ranked.indexOf(r)+1} · ${r.score}/100</strong></li>`).join('')}</ol></div>
+    <div class="mc-recommend"><h4>Your number-selection guide</h4>
+      <p><b>Preferred digits:</b> ${bestDigitList}</p>
+      <p><b>Compound totals to look for:</b> ${suggestedTotals||'Use the personalised root shown in the detailed analysis.'}</p>
+      <p><b>Single-digit total:</b> ${winner.root} for the top-ranked number. Your preferred single-digit roots are ${fmt(winner.fav)}.</p>
+      <p><b>Practical advice:</b> Prefer a number that combines personal compatibility with easy recall, a clean pattern and a number you genuinely like. Do not reject a number solely because of one digit.</p>
     </div>
-    <div class="g2" style="margin-top:.75rem">
-      <div class="card"><h4 style="margin:.1rem 0 .5rem;color:#16a34a">✓ Preferred digits</h4><div style="font-size:22px;font-weight:800">${r.fav.join(', ')||'Profile needed'}</div><p style="font-size:12px;color:var(--muted)">Derived from the birth number and the platform's life-path compatibility mapping.</p></div>
-      <div class="card"><h4 style="margin:.1rem 0 .5rem;color:#ea580c">! Digits to limit</h4><div style="font-size:22px;font-weight:800">${r.avoid.join(', ')||'None flagged'}</div><p style="font-size:12px;color:var(--muted)">Treat these as digits to avoid making dominant or heavily repeated, not an absolute prohibition.</p></div>
-    </div>
-    <div class="card" style="margin-top:.75rem"><h4 style="margin:.1rem 0 .5rem;color:var(--gold)">Two-digit compound totals</h4>
-      <p style="font-size:12px;color:var(--muted)">Perfect: compound totals reducing to this number's favourable root (${r.root}).</p><div style="font-weight:700;line-height:1.8">${fmt(r.twoDigitTotals)}</div>
-      <p style="font-size:12px;color:var(--muted);margin-top:.7rem">Also compatible: totals reducing to other supportive roots.</p><div style="font-weight:700;line-height:1.8">${fmt(r.okayTotals)}</div>
-      <p style="font-size:12px;color:var(--muted);margin-top:.7rem">Totals to avoid prioritising: totals reducing to flagged digits.</p><div style="font-weight:700;line-height:1.8">${fmt(r.avoidTotals)}</div>
-    </div>
-    <p style="font-size:11px;color:var(--muted);margin-top:.65rem">This is an indicative numerology score based on the platform's current compatibility rules. It is not a scientific measurement or a guarantee of outcomes. A detailed consultation can review the full number pattern and compound-number meanings.</p>
-  </div>`;
+    ${cards}
+    <p class="mc-disclaimer">Numerology is a traditional belief system, not a scientifically validated way to predict success. Scores are heuristic comparison indicators based on the rules displayed here. They are not probabilities or guarantees. Compound totals are listed by digital-root grouping; individual compound meanings may differ across numerology traditions.</p>
+  </section>`;
 }
+
 function renderBusinessOnlyReport(d){
   const b=d.business, n=b.name;
   const expr=calcExpr(n), su=calcSU(n), pn=calcPN(n), grid=getNameGrid(n);
@@ -1667,6 +1761,28 @@ window.onload = () => {
   showScreen('role');
   toggleBusinessFields();
 };
+
+
+function mcBindStrictInputs(){
+  const digitsOnly=(el,max=10)=>{
+    if(!el)return;
+    el.setAttribute('inputmode','numeric'); el.setAttribute('maxlength',String(max));
+    el.addEventListener('input',()=>{el.value=el.value.replace(/\D/g,'').slice(0,max);});
+    el.addEventListener('paste',e=>{
+      e.preventDefault();
+      const text=(e.clipboardData||window.clipboardData).getData('text');
+      el.value=text.replace(/\D/g,'').slice(0,max);
+      el.dispatchEvent(new Event('input',{bubbles:true}));
+    });
+  };
+  [1,2,3,4,5].forEach(i=>digitsOnly(document.getElementById('fnumbercheck'+i),10));
+  digitsOnly(document.getElementById('fmob'),10);
+  const mob=document.getElementById('fmob');
+  if(mob){mob.setAttribute('pattern','[6-9][0-9]{9}');mob.setAttribute('placeholder','10-digit mobile starting 6, 7, 8 or 9');}
+  const name=document.getElementById('fn');
+  if(name) name.addEventListener('input',()=>{name.value=name.value.replace(/[^A-Za-z ]/g,'').replace(/\s{2,}/g,' ').replace(/^\s+/, '');});
+}
+document.addEventListener('DOMContentLoaded',mcBindStrictInputs);
 
 </script>
 </body>

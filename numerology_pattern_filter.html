@@ -9,7 +9,7 @@
 :root {
   --bg:#0b1220;
   --panel:#152033;
-  --panel2:#1b2a40;
+  --panel2:#0d1829;
   --gold:#e2bd73;
   --text:#f4f6fa;
   --muted:#aab6c8;
@@ -19,189 +19,121 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  padding:20px;
-  background:var(--bg);
-  color:var(--text);
+  margin:0;padding:20px;background:var(--bg);color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
 }
 .container{max-width:1250px;margin:auto}
 header{text-align:center;padding:20px 10px 25px}
-.brand{
-  color:var(--gold);
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-.tagline{
-  color:#fff;
-  font-size:15px;
-  margin-top:9px;
-  letter-spacing:.5px;
-}
+.brand{color:var(--gold);font-size:29px;font-weight:900;letter-spacing:1px}
+.tagline{color:#fff;font-size:15px;margin-top:9px}
 .subtitle{color:var(--muted);font-size:13px;margin-top:12px}
 .card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:18px;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:14px;padding:20px;margin-bottom:18px;
 }
-h2{
-  color:var(--gold);
-  font-size:17px;
-  margin:0 0 16px;
-}
-h3{font-size:15px;color:var(--gold);margin:18px 0 10px}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:15px;
-}
+h2{color:var(--gold);font-size:17px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
 .field{min-width:0}
-label{
-  display:block;
-  color:#dce4ef;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:7px;
-}
+label{display:block;color:#dce4ef;font-size:13px;font-weight:700;margin-bottom:7px}
 input,textarea,select{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:8px;
-  background:#0d1829;
-  color:white;
-  font-size:14px;
+  width:100%;padding:12px;border:1px solid var(--border);
+  border-radius:8px;background:var(--panel2);color:white;font-size:14px;
   outline:none;
 }
 input:focus,textarea:focus,select:focus{border-color:var(--gold)}
-textarea{resize:vertical;min-height:75px;line-height:1.5}
-small,.hint{display:block;color:var(--muted);font-size:11px;margin-top:6px;line-height:1.5}
+textarea{resize:vertical;min-height:85px;line-height:1.6}
+small,.hint{display:block;color:var(--muted);font-size:11px;margin-top:6px;line-height:1.6}
 .full{grid-column:1/-1}
-.checkbox-grid{
-  display:grid;
-  grid-template-columns:repeat(9,minmax(0,1fr));
-  gap:8px;
-}
+.checkbox-grid{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px}
 .check{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  background:#0d1829;
-  border:1px solid var(--border);
-  border-radius:7px;
-  padding:9px 4px;
-  font-size:13px;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  background:var(--panel2);border:1px solid var(--border);
+  border-radius:7px;padding:9px 4px;font-size:13px;
 }
 .check input{width:auto;margin:0;accent-color:var(--gold)}
 button{
-  border:0;
-  border-radius:8px;
-  padding:12px 16px;
-  font-size:13px;
-  font-weight:800;
-  cursor:pointer;
-  background:var(--gold);
-  color:#101827;
+  border:0;border-radius:8px;padding:12px 16px;font-size:13px;
+  font-weight:800;cursor:pointer;background:var(--gold);color:#101827;
 }
 button:hover{filter:brightness(1.08)}
 button.secondary{background:#263851;color:white;border:1px solid var(--border)}
 button.green{background:var(--green);color:#082319}
-button.danger{background:#572c36;color:white}
 button:disabled{opacity:.45;cursor:not-allowed}
 .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
-.status{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:12px;
-  line-height:1.5;
-}
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:15px;
-}
+.status{color:var(--muted);font-size:13px;margin-top:12px;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}
 .stat{
-  background:#0d1829;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:9px;
-  text-align:center;
+  background:var(--panel2);padding:13px;border:1px solid var(--border);
+  border-radius:9px;text-align:center;
 }
 .stat strong{display:block;color:var(--gold);font-size:22px}
 .stat span{font-size:11px;color:var(--muted)}
-.toolbar{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:end;
-  margin-bottom:14px;
-}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:14px}
 .toolbar .field{flex:1;min-width:130px}
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:9px}
 table{width:100%;border-collapse:collapse;min-width:480px}
-th,td{
-  padding:11px 12px;
-  text-align:left;
-  border-bottom:1px solid var(--border);
-  font-size:13px;
-}
+th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--border);font-size:13px}
 th{background:#213149;color:var(--gold)}
 tr:last-child td{border-bottom:0}
 .number{font-weight:900;letter-spacing:1px;font-size:15px}
 .highlight{color:#ffdf45;font-weight:900}
 .normal-total{color:#fff;font-weight:900}
-.pagination{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  margin-top:16px;
-  flex-wrap:wrap;
-}
+.pagination{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap}
 .pagination span{font-size:13px;color:var(--muted)}
-.batch{
-  background:#0d1829;
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:12px;
-  margin:10px 0;
-}
-.batch-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  margin-bottom:8px;
-}
+.batch{background:var(--panel2);border:1px solid var(--border);border-radius:9px;padding:12px;margin:10px 0}
+.batch-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
 .batch-head strong{color:var(--gold);font-size:13px}
-.batch-numbers{
-  font-size:14px;
-  line-height:2;
-  word-break:break-word;
-  letter-spacing:.5px;
-}
+.batch-numbers{font-size:14px;line-height:2;word-break:break-word;letter-spacing:.5px}
 .batch.copied{border-color:var(--green)}
 .empty{color:var(--muted);text-align:center;padding:25px}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 @media(max-width:650px){
-  body{padding:10px}
-  .brand{font-size:23px}
-  .grid{grid-template-columns:1fr}
-  .full{grid-column:auto}
-  .checkbox-grid{grid-template-columns:repeat(3,1fr)}
-  .stats{grid-template-columns:1fr 1fr 1fr}
-  .card{padding:14px}
-  .actions button{flex:1}
+  body{padding:10px}.brand{font-size:23px}.grid{grid-template-columns:1fr}
+  .full{grid-column:auto}.checkbox-grid{grid-template-columns:repeat(3,1fr)}
+  .card{padding:14px}.actions button{flex:1}.stats{gap:6px}
 }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+/* AUTHENTICATION */
+.auth-screen{max-width:460px;margin:7vh auto;padding:26px;background:var(--panel);border:1px solid var(--border);border-radius:16px}
+.auth-screen h1{color:var(--gold);font-size:24px;margin:0 0 8px}
+.auth-screen p{color:var(--muted);font-size:13px;line-height:1.6}
+.auth-screen .field{margin:15px 0}
+.auth-screen button{width:100%;margin-top:8px}
+.auth-error{color:var(--red);font-size:13px;min-height:20px;margin-top:10px}
+.auth-note{font-size:11px;color:var(--muted);line-height:1.6}
+#appShell{display:none}
+.userbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 18px;padding:12px 15px;background:var(--panel2);border:1px solid var(--border);border-radius:10px}
+.userbar small{margin:0}
+.admin-panel{border:1px solid var(--gold)}
+.admin-panel h2{margin-bottom:8px}
+.password-result{display:none;margin-top:14px;padding:14px;border:1px solid var(--green);border-radius:9px;background:#10271f;overflow-wrap:anywhere}
+.password-result code{color:#b9f5d5;font-size:14px}
+@media(max-width:650px){.auth-screen{margin:4vh auto;padding:18px}}
 </style>
 </head>
 <body>
-<div class="container">
+
+<section class="auth-screen" id="authScreen">
+  <h1>MANNE COMMUNICATIONS</h1>
+  <p>VIP Mobile Number Generator<br>Number That Matters - Identity That Stays</p>
+  <form id="loginForm">
+    <div class="field">
+      <label for="loginEmail">Email address</label>
+      <input id="loginEmail" type="email" autocomplete="username" required placeholder="Enter your registered email">
+    </div>
+    <div class="field">
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter your password">
+    </div>
+    <button id="loginButton" type="submit">Sign In</button>
+    <div class="auth-error" id="loginError" role="alert"></div>
+  </form>
+  <p class="auth-note">Access is available only to approved Manne Communications administrators and dealers. Contact the administrator if you need an account or password reset.</p>
+</section>
+
+<div class="container" id="appShell">
 
 <header>
   <div class="brand">MANNE COMMUNICATIONS</div>
@@ -209,26 +141,58 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
   <div class="subtitle">VIP Mobile Number Pattern Generator</div>
 </header>
 
+<div class="userbar">
+  <small id="signedInLabel">Signed in</small>
+  <button class="secondary" id="logoutButton" type="button">Sign Out</button>
+</div>
+
+<section class="card admin-panel" id="adminPanel" style="display:none">
+  <h2>Dealer Management</h2>
+  <p class="hint">Create an individual dealer login. A temporary password will be shown once after successful creation. Share it securely with that dealer.</p>
+  <form id="createDealerForm" class="grid">
+    <div class="field">
+      <label for="dealerName">Dealer name</label>
+      <input id="dealerName" maxlength="100" required placeholder="Enter dealer or business name">
+    </div>
+    <div class="field">
+      <label for="dealerEmail">Dealer email</label>
+      <input id="dealerEmail" type="email" required placeholder="dealer@example.com">
+    </div>
+    <div class="field full">
+      <button id="createDealerButton" type="submit">Create Dealer Login</button>
+      <div class="auth-error" id="dealerError" role="alert"></div>
+      <div class="password-result" id="dealerPasswordResult">
+        <strong>Dealer account created. Copy and securely share this temporary password now.</strong>
+        <p><span id="createdDealerEmail"></span></p>
+        <p><code id="createdDealerPassword"></code></p>
+        <button class="secondary" id="copyDealerPassword" type="button">Copy Temporary Password</button>
+      </div>
+    </div>
+  </form>
+</section>
+
 <section class="card">
   <h2>01. Number Pattern Settings</h2>
-
   <div class="grid">
+
     <div class="field full">
-      <label>Enter Number Patterns</label>
-      <textarea id="patterns" placeholder="**********&#10;98765*****&#10;******9999">**********</textarea>
-      <small>Enter multiple patterns, one per line or separated by commas. Use * for digits to be generated. Each pattern must contain exactly 10 characters.</small>
+      <label for="patterns">Enter Number Patterns</label>
+      <textarea id="patterns" spellcheck="false"
+        placeholder="9****99999, 8****88888"></textarea>
+      <div id="patternHint" class="hint">
+        Enter exactly 10 characters per pattern. First digit must be 6, 7, 8 or 9. Use * for automatic digits.
+        A comma will be inserted automatically after the 10th character.
+      </div>
     </div>
 
     <div class="field">
       <label>First Digit</label>
       <select id="start">
         <option value="auto">Automatic (6, 7, 8, 9)</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
+        <option value="6">6</option><option value="7">7</option>
+        <option value="8">8</option><option value="9">9</option>
       </select>
-      <small>Numbers will always start with 6, 7, 8 or 9. A fixed first digit in your pattern is respected.</small>
+      <small>Used when the first character of your pattern is *.</small>
     </div>
 
     <div class="field">
@@ -240,48 +204,46 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
     <div class="field">
       <label>Only Allow These Digits (Optional)</label>
       <input id="allow" placeholder="Example: 1,3,5,7,9">
-      <small>If entered, this overrides the exclude list.</small>
+      <small>If entered, this overrides the exclude list for wildcard positions.</small>
     </div>
 
     <div class="field">
       <label>Ending Pattern (Optional)</label>
       <input id="ending" placeholder="Example: 9999, 8888, 1234">
-      <small>Comma-separated endings. A number must match at least one ending.</small>
+      <small>Comma-separated endings.</small>
     </div>
 
     <div class="field full">
       <label>Exclude Existing Stock Numbers</label>
-      <textarea id="stock" placeholder="Paste your existing numbers here, one per line or separated by commas."></textarea>
-      <small>Numbers entered here will be excluded from the generated results.</small>
+      <textarea id="stock" placeholder="Paste your existing mobile numbers here, one per line or separated by commas."></textarea>
+      <small>Existing stock numbers will be excluded from generated results.</small>
     </div>
   </div>
 </section>
 
 <section class="card">
   <h2>02. Numerology Filters</h2>
-
-  <label>Target Single-Digit Totals (Chaldean Reduced)</label>
+  <label>Target Single-Digit Totals</label>
   <div class="checkbox-grid" id="totals">
-    <label class="check"><input type="checkbox" value="1" checked> 1</label>
-    <label class="check"><input type="checkbox" value="2"> 2</label>
-    <label class="check"><input type="checkbox" value="3"> 3</label>
-    <label class="check"><input type="checkbox" value="4"> 4</label>
-    <label class="check"><input type="checkbox" value="5"> 5</label>
-    <label class="check"><input type="checkbox" value="6"> 6</label>
-    <label class="check"><input type="checkbox" value="7"> 7</label>
-    <label class="check"><input type="checkbox" value="8"> 8</label>
-    <label class="check"><input type="checkbox" value="9"> 9</label>
+    <label class="check"><input type="checkbox" value="1" checked>1</label>
+    <label class="check"><input type="checkbox" value="2">2</label>
+    <label class="check"><input type="checkbox" value="3">3</label>
+    <label class="check"><input type="checkbox" value="4">4</label>
+    <label class="check"><input type="checkbox" value="5">5</label>
+    <label class="check"><input type="checkbox" value="6">6</label>
+    <label class="check"><input type="checkbox" value="7">7</label>
+    <label class="check"><input type="checkbox" value="8">8</label>
+    <label class="check"><input type="checkbox" value="9">9</label>
   </div>
-  <small>Choose one or more totals. Leave all unchecked to allow every total.</small>
+  <small>Select one or more totals. Leave all unchecked to allow every total.</small>
 
   <div class="grid" style="margin-top:17px">
     <div class="field">
       <label>Raw Two-Digit Sum (Optional)</label>
-      <input id="rawSums" placeholder="Example: 19,28,37,46,55,64,73">
-      <small>Comma-separated acceptable raw sums.</small>
+      <input id="rawSums" placeholder="Example: 19,28,37,46,55">
     </div>
     <div class="field">
-      <label>Minimum Repetition of a Digit (Optional)</label>
+      <label>Minimum Repetition of a Digit</label>
       <select id="repeatCount">
         <option value="0">No repetition requirement</option>
         <option value="2">At least 2 times</option>
@@ -295,14 +257,10 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
       <label>Repeated Digit (Optional)</label>
       <select id="repeatDigit">
         <option value="">Any digit</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
+        <option value="1">1</option><option value="2">2</option>
+        <option value="3">3</option><option value="4">4</option>
+        <option value="5">5</option><option value="6">6</option>
+        <option value="7">7</option><option value="8">8</option>
         <option value="9">9</option>
       </select>
     </div>
@@ -328,7 +286,6 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 
 <section class="card">
   <h2>04. Generated Results</h2>
-
   <div class="stats">
     <div class="stat"><strong id="totalCount">0</strong><span>Total Matches</span></div>
     <div class="stat"><strong id="pageCount">0</strong><span>Current Page</span></div>
@@ -363,14 +320,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 
   <div class="table-wrap">
     <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Mobile Number</th>
-          <th>Raw Sum</th>
-          <th>Single Total</th>
-        </tr>
-      </thead>
+      <thead><tr><th>#</th><th>Mobile Number</th><th>Raw Sum</th><th>Single Total</th></tr></thead>
       <tbody id="resultBody">
         <tr><td colspan="4" class="empty">Generate numbers to view results.</td></tr>
       </tbody>
@@ -394,7 +344,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
 
 <section class="card">
   <h2>05. Copy Number Batches</h2>
-  <div class="status">Batches are created from the currently filtered results. Copy individual batches as required.</div>
+  <div class="status">Batches are created from the currently filtered results.</div>
   <div id="batches"><div class="empty">No batches available yet.</div></div>
   <div class="actions">
     <button class="secondary" onclick="resetCopiedMarks()">Reset Copied Marks</button>
@@ -405,7 +355,6 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
   MANNE COMMUNICATIONS<br>
   Number That Matters - Identity That Stays
 </footer>
-
 </div>
 
 <script>
@@ -418,15 +367,108 @@ let generationRunning = false;
 
 const $ = id => document.getElementById(id);
 
-function parseDigits(value) {
-  return [...new Set((value || "").match(/[0-9]/g) || [])];
+/* PATTERN ENTRY: AUTO COMMA + FIRST DIGIT VALIDATION */
+
+const patternInput = $("patterns");
+
+patternInput.addEventListener("keydown", function(e) {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key.length !== 1 || !/[0-9*]/.test(e.key)) return;
+
+  const start = this.selectionStart;
+  const end = this.selectionEnd;
+  const before = this.value.slice(0, start);
+  const selected = this.value.slice(start, end);
+
+  const segment = before.split(/[,\n]/).pop().trim() + selected;
+  const isFirstCharacter = segment.length === 0;
+
+  if (isFirstCharacter && !/[6789*]/.test(e.key)) {
+    e.preventDefault();
+    showPatternError(
+      "Error: Every pattern must start with 6, 7, 8, 9 or *."
+    );
+    return;
+  }
+
+  if (segment.length >= 10 && !selected) {
+    e.preventDefault();
+    showPatternError(
+      "This pattern already has 10 characters. Start the next pattern after the comma."
+    );
+  }
+});
+
+patternInput.addEventListener("input", function() {
+  const cursor = this.selectionStart;
+  const before = this.value.slice(0, cursor);
+  const segment = before.split(/[,\n]/).pop().trim();
+
+  if (segment.length === 10 && !/[,\n]\s*$/.test(before)) {
+    const trimmed = before.trimEnd();
+    if (trimmed.length === cursor) {
+      const after = this.value.slice(cursor);
+      this.value = trimmed + ", " + after;
+      this.setSelectionRange(trimmed.length + 2, trimmed.length + 2);
+    }
+  }
+  updatePatternHint();
+});
+
+function showPatternError(message) {
+  $("patternHint").textContent = message;
+  $("patternHint").style.color = "#ff7373";
 }
 
 function parseList(value) {
-  return (value || "")
-    .split(/[\n,;]+/)
-    .map(x => x.trim())
-    .filter(Boolean);
+  return (value || "").split(/[,\n;]+/).map(x => x.trim()).filter(Boolean);
+}
+
+function validatePattern(pattern) {
+  return pattern.length === 10 &&
+    /^[0-9*]{10}$/.test(pattern) &&
+    (pattern[0] === "*" || /^[6789]$/.test(pattern));
+}
+
+function updatePatternHint() {
+  const patterns = parseList(patternInput.value);
+  const hint = $("patternHint");
+
+  if (!patterns.length) {
+    showPatternError("Please enter at least one pattern.");
+    return false;
+  }
+
+  const errors = [];
+  patterns.forEach((pattern, index) => {
+    if (pattern.length !== 10) {
+      errors.push("Pattern " + (index + 1) + ": " +
+        pattern.length + "/10 characters. Exactly 10 required.");
+    } else if (!/^[0-9*]{10}$/.test(pattern)) {
+      errors.push("Pattern " + (index + 1) +
+        ": Only digits and * are allowed.");
+    } else if (pattern[0] !== "*" && !/^[6789]$/.test(pattern[0])) {
+      errors.push("Pattern " + (index + 1) +
+        ": First digit must be 6, 7, 8 or 9.");
+    }
+  });
+
+  if (errors.length) {
+    hint.innerHTML = errors.join("<br>");
+    hint.style.color = "#ff7373";
+    return false;
+  }
+
+  hint.textContent = "✓ " + patterns.length +
+    " valid pattern(s). Exactly 10 characters each.";
+  hint.style.color = "#3bc58a";
+  return true;
+}
+
+/* NUMBER GENERATION AND FILTERS */
+
+function parseDigits(value) {
+  return [...new Set((value || "").match(/[0-9]/g) || [])];
 }
 
 function digitSum(number) {
@@ -446,15 +488,16 @@ function getSelectedTotals() {
 }
 
 function getStockNumbers() {
-  return new Set(($("stock").value.match(/[6789]\d{9}/g) || []));
+  return new Set($("stock").value.match(/[6789]\d{9}/g) || []);
 }
 
 function hasSequence(number, minimum) {
   if (!minimum) return false;
   let run = 1;
+
   for (let i = 1; i < number.length; i++) {
-    if (Number(number[i]) === Number(number[i-1]) + 1 ||
-        Number(number[i]) === Number(number[i-1]) - 1) {
+    const difference = Number(number[i]) - Number(number[i-1]);
+    if (difference === 1 || difference === -1) {
       run++;
       if (run >= minimum) return true;
     } else {
@@ -464,51 +507,17 @@ function hasSequence(number, minimum) {
   return false;
 }
 
-function validatePattern(pattern) {
-  return pattern.length === 10 && /^[0-9*]{10}$/.test(pattern);
-}
-
 function getAllowedDigits(pattern, position, exclude, allow, fixedStart) {
   if (pattern[position] !== "*") return [pattern[position]];
 
   if (position === 0) {
-    if (fixedStart !== "auto") return [fixedStart];
-    return ["6","7","8","9"];
+    return fixedStart === "auto" ? ["6","7","8","9"] : [fixedStart];
   }
 
   if (allow.length) return allow;
+
   return ["0","1","2","3","4","5","6","7","8","9"]
     .filter(digit => !exclude.includes(digit));
-}
-
-function checkNumber(number, settings) {
-  if (!/^[6789]\d{9}$/.test(number)) return null;
-
-  const raw = digitSum(number);
-  const single = reducedTotal(raw);
-
-  if (settings.totals.length && !settings.totals.includes(single)) return null;
-  if (settings.rawSums.length && !settings.rawSums.includes(raw)) return null;
-
-  if (settings.endings.length &&
-      !settings.endings.some(ending => number.endsWith(ending))) return null;
-
-  if (settings.repeatCount > 0) {
-    const digit = settings.repeatDigit;
-    const counts = {};
-    for (const d of number) counts[d] = (counts[d] || 0) + 1;
-
-    const maximum = Math.max(...Object.values(counts));
-    if (digit) {
-      if ((counts[digit] || 0) < settings.repeatCount) return null;
-    } else if (maximum < settings.repeatCount) {
-      return null;
-    }
-  }
-
-  if (settings.sequence && hasSequence(number, settings.sequence)) return null;
-
-  return {number, raw, single};
 }
 
 function getSettings() {
@@ -524,20 +533,42 @@ function getSettings() {
   };
 }
 
+function checkNumber(number, settings) {
+  if (!/^[6789]\d{9}$/.test(number)) return null;
+
+  const raw = digitSum(number);
+  const single = reducedTotal(raw);
+
+  if (settings.totals.length && !settings.totals.includes(single)) return null;
+  if (settings.rawSums.length && !settings.rawSums.includes(raw)) return null;
+
+  if (settings.endings.length &&
+      !settings.endings.some(ending => number.endsWith(ending))) return null;
+
+  if (settings.repeatCount > 0) {
+    const counts = {};
+    for (const digit of number) counts[digit] = (counts[digit] || 0) + 1;
+
+    if (settings.repeatDigit) {
+      if ((counts[settings.repeatDigit] || 0) < settings.repeatCount) return null;
+    } else if (Math.max(...Object.values(counts)) < settings.repeatCount) {
+      return null;
+    }
+  }
+
+  if (settings.sequence && hasSequence(number, settings.sequence)) return null;
+  return {number, raw, single};
+}
+
 function generateNumbers() {
   if (generationRunning) return;
 
   const patterns = parseList($("patterns").value);
-  if (!patterns.length) {
-    $("status").textContent = "Please enter at least one pattern.";
-    return;
-  }
 
-  const invalid = patterns.filter(pattern => !validatePattern(pattern));
-  if (invalid.length) {
+  if (!patterns.length || patterns.some(p => !validatePattern(p))) {
+    updatePatternHint();
     $("status").textContent =
-      "Invalid pattern(s): " + invalid.join(", ") +
-      ". Every pattern must contain exactly 10 characters using digits and * only.";
+      "Error: Correct all patterns. Each must contain exactly 10 characters and start with *, 6, 7, 8 or 9.";
     return;
   }
 
@@ -547,24 +578,26 @@ function generateNumbers() {
   const stock = getStockNumbers();
   const settings = getSettings();
 
-  const resultMap = new Map();
-  let excluded = 0;
-  let examined = 0;
-  const MAX_COMBINATIONS = 1000000;
+  const work = patterns.map(pattern => {
+    const options = [];
+    for (let i = 0; i < 10; i++) {
+      options.push(getAllowedDigits(pattern, i, exclude, allow, fixedStart));
+    }
+    return {pattern, options};
+  });
 
   let estimated = 0;
-  for (const pattern of patterns) {
+  for (const item of work) {
     let count = 1;
-    for (let i = 0; i < 10; i++) {
-      count *= getAllowedDigits(pattern, i, exclude, allow, fixedStart).length;
-    }
+    item.options.forEach(option => count *= option.length);
     estimated += count;
   }
 
+  const MAX_COMBINATIONS = 1000000;
   if (estimated > MAX_COMBINATIONS) {
     $("status").textContent =
-      "This pattern creates " + estimated.toLocaleString() +
-      " possible combinations, exceeding the 1,000,000 combination safety limit. Add more fixed digits or use more restrictive patterns.";
+      "Too many combinations (" + estimated.toLocaleString() +
+      "). The maximum is 1,000,000. Add fixed digits or narrow your filters.";
     return;
   }
 
@@ -577,56 +610,56 @@ function generateNumbers() {
   copiedBatches.clear();
   page = 1;
 
-  const work = patterns.map(pattern => {
-    const options = [];
-    for (let i = 0; i < 10; i++) {
-      options.push(getAllowedDigits(pattern, i, exclude, allow, fixedStart));
-    }
-    return {pattern, options};
-  });
-
+  const resultMap = new Map();
+  let excludedStock = 0;
+  let examined = 0;
   let patternIndex = 0;
-  let currentDigits = [];
   let positions = [];
-  let optionIndexes = [];
+  let indexes = [];
+  let digits = [];
   let started = false;
+  let fixedPatternDone = false;
 
-  function setupPattern(index) {
-    const item = work[index];
-    currentDigits = item.pattern.split("");
+  function setupPattern() {
+    const item = work[patternIndex];
+    digits = item.pattern.split("");
     positions = [];
-    optionIndexes = new Array(10).fill(0);
+
     for (let i = 0; i < 10; i++) {
       if (item.pattern[i] === "*") positions.push(i);
     }
+
+    indexes = new Array(positions.length).fill(0);
+    fixedPatternDone = false;
     started = true;
   }
 
   function nextCombination() {
-    if (!started) setupPattern(patternIndex);
+    if (!started) setupPattern();
+
     const item = work[patternIndex];
 
     if (positions.length === 0) {
-      if (optionIndexes[0] === 0) {
-        optionIndexes[0] = 1;
-        return currentDigits.join("");
+      if (fixedPatternDone) {
+        patternIndex++;
+        started = false;
+        return null;
       }
-      patternIndex++;
-      started = false;
-      return null;
+      fixedPatternDone = true;
+      return digits.join("");
     }
 
-    const digits = positions.map(pos => item.options[pos][optionIndexes[pos]]);
-    for (let i = 0; i < positions.length; i++) {
-      currentDigits[positions[i]] = digits[i];
-    }
-    const number = currentDigits.join("");
+    positions.forEach((position, i) => {
+      digits[position] = item.options[position][indexes[i]];
+    });
+
+    const number = digits.join("");
 
     let carry = true;
     for (let i = positions.length - 1; i >= 0 && carry; i--) {
-      optionIndexes[i]++;
-      if (optionIndexes[i] >= item.options[positions[i]].length) {
-        optionIndexes[i] = 0;
+      indexes[i]++;
+      if (indexes[i] >= item.options[positions[i]].length) {
+        indexes[i] = 0;
       } else {
         carry = false;
       }
@@ -636,22 +669,22 @@ function generateNumbers() {
       patternIndex++;
       started = false;
     }
+
     return number;
   }
 
   function processChunk() {
-    const chunkSize = 3000;
     let processed = 0;
 
-    while (patternIndex < work.length && processed < chunkSize) {
+    while (patternIndex < work.length && processed < 3000) {
       const number = nextCombination();
-      if (!number) continue;
+      if (number === null) continue;
 
       processed++;
       examined++;
 
       if (stock.has(number)) {
-        excluded++;
+        excludedStock++;
         continue;
       }
 
@@ -660,8 +693,7 @@ function generateNumbers() {
     }
 
     $("status").textContent =
-      "Generating... " + examined.toLocaleString() +
-      " combinations checked.";
+      "Generating... " + examined.toLocaleString() + " combinations checked.";
 
     if (patternIndex < work.length) {
       setTimeout(processChunk, 0);
@@ -669,10 +701,11 @@ function generateNumbers() {
       allResults = [...resultMap.values()].sort((a,b) =>
         a.number.localeCompare(b.number)
       );
-      excludedCount = excluded;
+
+      excludedCount = excludedStock;
       $("search").value = "";
       render();
-      renderBatches();
+
       generationRunning = false;
       $("generateBtn").disabled = false;
       $("status").textContent =
@@ -685,11 +718,11 @@ function generateNumbers() {
   processChunk();
 }
 
+/* RESULTS, PAGINATION AND BATCHES */
+
 function getVisibleResults() {
   const query = $("search").value.trim();
-  return query
-    ? allResults.filter(item => item.number.includes(query))
-    : allResults;
+  return query ? allResults.filter(item => item.number.includes(query)) : allResults;
 }
 
 function render() {
@@ -710,11 +743,11 @@ function render() {
   $("pageCount").textContent = rows.length.toLocaleString();
   $("excludedCount").textContent = excludedCount.toLocaleString();
 
-  $("resultBody").innerHTML = "";
+  const body = $("resultBody");
+  body.innerHTML = "";
 
   if (!rows.length) {
-    $("resultBody").innerHTML =
-      '<tr><td colspan="4" class="empty">No matching numbers found.</td></tr>';
+    body.innerHTML = '<tr><td colspan="4" class="empty">No matching numbers found.</td></tr>';
   } else {
     const fragment = document.createDocumentFragment();
 
@@ -724,19 +757,18 @@ function render() {
         ? "highlight" : "normal-total";
 
       tr.innerHTML =
-        '<td>' + (start + index + 1) + '</td>' +
-        '<td class="number">' + item.number + '</td>' +
-        '<td>' + item.raw + '</td>' +
-        '<td class="' + totalClass + '">' + item.single + '</td>';
+        "<td>" + (start + index + 1) + "</td>" +
+        '<td class="number">' + item.number + "</td>" +
+        "<td>" + item.raw + "</td>" +
+        '<td class="' + totalClass + '">' + item.single + "</td>";
 
       fragment.appendChild(tr);
     });
-    $("resultBody").appendChild(fragment);
+
+    body.appendChild(fragment);
   }
 
-  $("pageInfo").textContent =
-    "Page " + page + " of " + totalPages;
-
+  $("pageInfo").textContent = "Page " + page + " of " + totalPages;
   $("prevBtn").disabled = page <= 1 || !filteredResults.length;
   $("nextBtn").disabled = page >= totalPages || !filteredResults.length;
 
@@ -753,17 +785,29 @@ function getCurrentPageNumbers() {
   const size = sizeValue === "all"
     ? Math.max(filteredResults.length, 1)
     : Number(sizeValue);
+
   return filteredResults.slice((page - 1) * size, page * size)
     .map(item => item.number);
 }
 
-function copyText(text) {
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(() => {
+async function copyText(text) {
+  if (!text) {
+    $("status").textContent = "No numbers available to copy.";
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
     $("status").textContent = "Copied successfully.";
-  }).catch(() => {
-    $("status").textContent = "Clipboard access was unavailable. Please select and copy manually.";
-  });
+  } catch (error) {
+    const temporary = document.createElement("textarea");
+    temporary.value = text;
+    document.body.appendChild(temporary);
+    temporary.select();
+    document.execCommand("copy");
+    temporary.remove();
+    $("status").textContent = "Copied.";
+  }
 }
 
 function copyCurrentPage() {
@@ -775,13 +819,16 @@ function copyAllNumbers() {
 }
 
 function shareWhatsApp() {
-  const numbers = getCurrentPageNumbers().slice(0,60);
+  const numbers = getCurrentPageNumbers().slice(0, 60);
+
   if (!numbers.length) {
     $("status").textContent = "No numbers available to share.";
     return;
   }
+
   const message = "VIP Mobile Numbers\n\n" + numbers.join("\n") +
     "\n\nNumber That Matters - Identity That Stays";
+
   window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank");
 }
 
@@ -789,24 +836,31 @@ function downloadFile(filename, content, type) {
   const blob = new Blob([content], {type});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
+
   a.href = url;
   a.download = filename;
   document.body.appendChild(a);
   a.click();
   a.remove();
+
   URL.revokeObjectURL(url);
 }
 
 function downloadTXT() {
-  const content = filteredResults.map(item => item.number).join("\n");
-  downloadFile("manne-vip-numbers.txt", content, "text/plain;charset=utf-8");
+  downloadFile(
+    "manne-vip-numbers.txt",
+    filteredResults.map(item => item.number).join("\n"),
+    "text/plain;charset=utf-8"
+  );
 }
 
 function downloadCSV() {
   const lines = [["Mobile Number","Raw Sum","Single Total"]];
+
   filteredResults.forEach(item =>
     lines.push([item.number,item.raw,item.single])
   );
+
   const csv = lines.map(row => row.join(",")).join("\n");
   downloadFile("manne-vip-numbers.csv", csv, "text/csv;charset=utf-8");
 }
@@ -815,10 +869,12 @@ function renderBatches() {
   const numbers = getVisibleResults().map(item => item.number);
   const batchSize = Number($("batchSize").value);
   const totalBatches = Math.ceil(numbers.length / batchSize);
-  $("batches").innerHTML = "";
+  const container = $("batches");
+
+  container.innerHTML = "";
 
   if (!numbers.length) {
-    $("batches").innerHTML = '<div class="empty">No batches available.</div>';
+    container.innerHTML = '<div class="empty">No batches available.</div>';
     return;
   }
 
@@ -828,17 +884,20 @@ function renderBatches() {
     const batchNumbers = numbers.slice(i * batchSize, (i + 1) * batchSize);
     const batchId = "batch-" + i;
     const div = document.createElement("div");
+
     div.className = "batch" + (copiedBatches.has(batchId) ? " copied" : "");
 
     const head = document.createElement("div");
     head.className = "batch-head";
 
     const title = document.createElement("strong");
-    title.textContent = "Batch " + (i + 1) + " (" + batchNumbers.length + " Numbers)";
+    title.textContent = "Batch " + (i + 1) +
+      " (" + batchNumbers.length + " Numbers)";
 
     const button = document.createElement("button");
     button.className = "secondary";
     button.textContent = copiedBatches.has(batchId) ? "Copied" : "Copy Batch";
+
     button.onclick = () => {
       copyText(batchNumbers.join("\n"));
       copiedBatches.add(batchId);
@@ -855,7 +914,7 @@ function renderBatches() {
     fragment.appendChild(div);
   }
 
-  $("batches").appendChild(fragment);
+  container.appendChild(fragment);
 }
 
 function resetCopiedMarks() {
@@ -864,7 +923,7 @@ function resetCopiedMarks() {
 }
 
 function resetFilters() {
-  $("patterns").value = "**********";
+  $("patterns").value = "";
   $("start").value = "auto";
   $("exclude").value = "0,2,4";
   $("allow").value = "";
@@ -891,14 +950,208 @@ function resetFilters() {
   $("resultBody").innerHTML =
     '<tr><td colspan="4" class="empty">Generate numbers to view results.</td></tr>';
   $("batches").innerHTML = '<div class="empty">No batches available yet.</div>';
+
   $("totalCount").textContent = "0";
   $("pageCount").textContent = "0";
   $("excludedCount").textContent = "0";
   $("pageInfo").textContent = "Page 0 of 0";
   $("prevBtn").disabled = true;
   $("nextBtn").disabled = true;
-  $("status").textContent = "Filters reset. Ready to generate numbers.";
+  $("status").textContent = "Filters reset. Enter your patterns to begin.";
+  updatePatternHint();
 }
+
+updatePatternHint();
+
+/* SUPABASE AUTHENTICATION AND ROLE GATING */
+const SUPABASE_URL = "https://sehhxaoolzgqwjxtiqeg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BK4p5lQh2DXVuBVmla_jpQ_4-PgnnxD";
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+  { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }
+);
+
+let currentRole = null;
+let currentUser = null;
+
+function showAuthError(message) {
+  $("loginError").textContent = message || "";
+}
+
+async function identifyAndShowUser(user) {
+  currentUser = user;
+  $("authScreen").style.display = "none";
+  $("appShell").style.display = "block";
+  $("signedInLabel").textContent = "Signed in: " + (user.email || "Account") + " · Checking access…";
+  $("adminPanel").style.display = "none";
+
+  // The existing RLS policy permits an authenticated user to read their own admin_users row.
+  const { data: adminRow, error: adminCheckError } = await supabaseClient
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (adminCheckError) {
+    console.error("Administrator role check failed:", adminCheckError);
+    await supabaseClient.auth.signOut();
+    $("appShell").style.display = "none";
+    $("authScreen").style.display = "block";
+    showAuthError("Unable to verify administrator access. Please check the admin_users table RLS policy.");
+    return;
+  }
+
+  if (adminRow) {
+    currentRole = "admin";
+    $("signedInLabel").textContent = "Administrator: " + (user.email || "");
+    $("adminPanel").style.display = "block";
+    return;
+  }
+
+  // Dealers must have a matching dealer_profiles row. RLS should limit this to their own row.
+  const { data: dealerRow, error: dealerCheckError } = await supabaseClient
+    .from("dealer_profiles")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (dealerCheckError || !dealerRow) {
+    console.error("Dealer role check failed:", dealerCheckError);
+    await supabaseClient.auth.signOut();
+    currentRole = null;
+    currentUser = null;
+    $("appShell").style.display = "none";
+    $("authScreen").style.display = "block";
+    showAuthError("This account is not approved for dealer access. Contact Manne Communications administrator.");
+    return;
+  }
+
+  currentRole = "dealer";
+  $("signedInLabel").textContent = "Dealer access: " + (user.email || "");
+}
+
+$("loginForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = $("loginButton");
+  button.disabled = true;
+  button.textContent = "Signing in…";
+  showAuthError("");
+
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: $("loginEmail").value.trim(),
+      password: $("loginPassword").value
+    });
+    if (error) throw error;
+    if (!data.user) throw new Error("Sign-in did not return a user.");
+    await identifyAndShowUser(data.user);
+  } catch (error) {
+    showAuthError(error.message || "Sign-in failed.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Sign In";
+  }
+});
+
+$("logoutButton").addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  currentRole = null;
+  currentUser = null;
+  $("appShell").style.display = "none";
+  $("authScreen").style.display = "block";
+  $("loginPassword").value = "";
+  showAuthError("You have signed out.");
+});
+
+$("createDealerForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (currentRole !== "admin") {
+    $("dealerError").textContent = "Administrator access required.";
+    return;
+  }
+
+  const button = $("createDealerButton");
+  button.disabled = true;
+  button.textContent = "Creating dealer…";
+  $("dealerError").textContent = "";
+  $("dealerPasswordResult").style.display = "none";
+
+  try {
+    const { data: sessionData, error: sessionError } = await supabaseClient.auth.getSession();
+    if (sessionError) throw sessionError;
+    const accessToken = sessionData.session?.access_token;
+    if (!accessToken) throw new Error("Your login session has expired. Sign in again.");
+
+    const { data, error } = await supabaseClient.functions.invoke("create-dealer", {
+      body: {
+        dealer_name: $("dealerName").value.trim(),
+        email: $("dealerEmail").value.trim().toLowerCase()
+      },
+      headers: { Authorization: "Bearer " + accessToken }
+    });
+
+    if (error) {
+      let detail = error.message || "Dealer creation request failed.";
+      if (error.context && typeof error.context.json === "function") {
+        try {
+          const payload = await error.context.json();
+          detail = payload.error || detail;
+        } catch (_) {}
+      }
+      throw new Error(detail);
+    }
+    if (!data || !data.success || !data.temporary_password) {
+      throw new Error(data?.error || "The server did not return a completed dealer account.");
+    }
+
+    $("createdDealerEmail").textContent = data.dealer.email;
+    $("createdDealerPassword").textContent = data.temporary_password;
+    $("dealerPasswordResult").style.display = "block";
+    $("dealerName").value = "";
+    $("dealerEmail").value = "";
+  } catch (error) {
+    console.error("Dealer creation failed:", error);
+    $("dealerError").textContent = error.message || "Dealer creation failed.";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Create Dealer Login";
+  }
+});
+
+$("copyDealerPassword").addEventListener("click", async () => {
+  const password = $("createdDealerPassword").textContent;
+  try {
+    await navigator.clipboard.writeText(password);
+    $("copyDealerPassword").textContent = "Copied";
+    setTimeout(() => $("copyDealerPassword").textContent = "Copy Temporary Password", 1800);
+  } catch (_) {
+    $("dealerError").textContent = "Copy was blocked by the browser. Select and copy the password manually.";
+  }
+});
+
+// Restore an existing session when the page reloads.
+(async () => {
+  const { data, error } = await supabaseClient.auth.getSession();
+  if (error) {
+    showAuthError("Could not restore your login session. Please sign in again.");
+    return;
+  }
+  if (data.session?.user) {
+    await identifyAndShowUser(data.session.user);
+  }
+})();
+
+// Keep the role gate synchronized with sign-in, sign-out and token refresh.
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === "SIGNED_OUT" && currentUser) {
+    currentUser = null;
+    currentRole = null;
+    $("appShell").style.display = "none";
+    $("authScreen").style.display = "block";
+  }
+});
+
 </script>
 </body>
 </html>

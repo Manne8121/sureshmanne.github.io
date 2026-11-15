@@ -429,8 +429,23 @@ patternInput.addEventListener("input", function() {
     this.value = cleaned;
     this.setSelectionRange(pos, pos);
   }
+  syncExcludedDigitsWithPattern();
   updatePatternHint();
 });
+
+// Digits already fixed in the pattern cannot be excluded from wildcard positions.
+// Remove them automatically from the exclusion list to avoid contradictory settings.
+function syncExcludedDigitsWithPattern() {
+  const pattern = patternInput.value || "";
+  const fixedDigits = new Set([...pattern].filter(char => /\d/.test(char)));
+  const excludeInput = $("exclude");
+  const currentDigits = parseDigits(excludeInput.value);
+  const cleanedDigits = currentDigits.filter(digit => !fixedDigits.has(digit));
+  const cleanedValue = cleanedDigits.join(",");
+  if (excludeInput.value !== cleanedValue) excludeInput.value = cleanedValue;
+}
+
+$("exclude").addEventListener("input", syncExcludedDigitsWithPattern);
 
 function showPatternError(message) {
   $("patternHint").textContent = message;
@@ -471,6 +486,8 @@ function updatePatternHint() {
 function parseDigits(value) {
   return [...new Set((value || "").match(/[0-9]/g) || [])];
 }
+
+syncExcludedDigitsWithPattern();
 
 function digitSum(number) {
   return [...number].reduce((sum, digit) => sum + Number(digit), 0);

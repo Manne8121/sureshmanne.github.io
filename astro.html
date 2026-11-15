@@ -359,6 +359,8 @@ a{color:var(--gold)}
       <div class="fld"><label>City of birth <span class="req">*</span></label><input type="text" id="fct" placeholder="Type or select city..." list="cities-list" autocomplete="off"><div class="er" id="fct-er"></div></div><datalist id="cities-list"><option value="Agartala"><option value="Agra"><option value="Ahmadnagar"><option value="Ahmedabad"><option value="Ajmer"><option value="Akola"><option value="Aligarh"><option value="Allahabad"><option value="Ambattur"><option value="Amravati"><option value="Amritsar"><option value="Aurangabad"><option value="Avadi"><option value="Bangalore"><option value="Bareilly"><option value="Belgaum"><option value="Bellary"><option value="Berhampur"><option value="Bhagalpur"><option value="Bhatpara"><option value="Bhilai"><option value="Bhilwara"><option value="Bhiwandi"><option value="Bhopal"><option value="Bhubaneswar"><option value="Bijapur"><option value="Bikaner"><option value="Bilaspur"><option value="Bokaro"><option value="Chandigarh"><option value="Chandrapur"><option value="Chennai"><option value="Coimbatore"><option value="Cuttack"><option value="Davanagere"><option value="Dehradun"><option value="Delhi"><option value="Dhanbad"><option value="Dhule"><option value="Faridabad"><option value="Firozabad"><option value="Gaya"><option value="Gopalpur"><option value="Gorakhpur"><option value="Gulbarga"><option value="Guntur"><option value="Gurgaon"><option value="Guwahati"><option value="Gwalior"><option value="Howrah"><option value="Hubli"><option value="Hyderabad"><option value="Indore"><option value="Jabalpur"><option value="Jaipur"><option value="Jalandhar"><option value="Jalgaon"><option value="Jammu"><option value="Jamnagar"><option value="Jamshedpur"><option value="Jhansi"><option value="Jodhpur"><option value="Junagadh"><option value="Kadapa"><option value="Kakinada"><option value="Kalyan"><option value="Kamarhati"><option value="Kanpur"><option value="Kochi"><option value="Kolhapur"><option value="Kolkata"><option value="Kollam"><option value="Korba"><option value="Kozhikode"><option value="Kurnool"><option value="Latur"><option value="Loni"><option value="Lucknow"><option value="Ludhiana"><option value="Madurai"><option value="Maheshtala"><option value="Malegaon"><option value="Mangalore"><option value="Mathura"><option value="Meerut"><option value="Mira-Bhayandar"><option value="Moradabad"><option value="Mumbai"><option value="Muzaffarnagar"><option value="Muzaffarpur"><option value="Mysore"><option value="Nagpur"><option value="Nanded"><option value="Nashik"><option value="Nellore"><option value="Noida"><option value="Ongole"><option value="Panihati"><option value="Patiala"><option value="Patna"><option value="Pondicherry"><option value="Pune"><option value="Raipur"><option value="Rajahmundry"><option value="Rajkot"><option value="Rajpur Sonarpur"><option value="Rampur"><option value="Ranchi"><option value="Rohtak"><option value="Saharanpur"><option value="Salem"><option value="Sambalpur"><option value="Satara"><option value="Secunderabad"><option value="Shahjahanpur"><option value="Shivamogga"><option value="Siliguri"><option value="Solapur"><option value="South Dumdum"><option value="Srinagar"><option value="Surat"><option value="Tenali"><option value="Thiruvananthapuram"><option value="Tiruchirappalli"><option value="Tirunelveli"><option value="Tirupati"><option value="Tiruppur"><option value="Udaipur"><option value="Ujjain"><option value="Ulhasnagar"><option value="Varanasi"><option value="Vasai"><option value="Vijayawada"><option value="Visakhapatnam"><option value="Warangal"></datalist>
       <div class="fld"><label>State / Country <span class="req">*</span></label><input type="text" id="fst" placeholder="Type or select state..." list="states-list" autocomplete="off"><div class="er" id="fst-er"></div></div><datalist id="states-list"><option value="Andhra Pradesh"><option value="Arunachal Pradesh"><option value="Assam"><option value="Bihar"><option value="Chhattisgarh"><option value="Goa"><option value="Gujarat"><option value="Haryana"><option value="Himachal Pradesh"><option value="Jharkhand"><option value="Karnataka"><option value="Kerala"><option value="Madhya Pradesh"><option value="Maharashtra"><option value="Manipur"><option value="Meghalaya"><option value="Mizoram"><option value="Nagaland"><option value="Odisha"><option value="Punjab"><option value="Rajasthan"><option value="Sikkim"><option value="Tamil Nadu"><option value="Telangana"><option value="Tripura"><option value="Uttar Pradesh"><option value="Uttarakhand"><option value="West Bengal"><option value="Andaman and Nicobar Islands"><option value="Chandigarh"><option value="Dadra and Nagar Haveli and Daman and Diu"><option value="Delhi"><option value="Jammu and Kashmir"><option value="Ladakh"><option value="Lakshadweep"><option value="Puducherry"><option value="Outside India"></datalist>
     </div>
+    <div class="stitle">VIP number evaluation</div>
+    <div class="fld"><label>Mobile number you want to evaluate (optional)</label><input type="tel" id="fnumbercheck" inputmode="numeric" maxlength="10" placeholder="Enter a 10-digit mobile number"><div class="er" id="fnumbercheck-er"></div><div style="font-size:12px;color:var(--muted)">Enter the VIP number you are considering. Your contact mobile below is used only to identify the enquiry.</div></div>
     <div class="stitle">Contact & purpose</div>
     <div class="g2">
       <div class="fld"><label>Client mobile <span class="req">*</span></label><input type="tel" id="fmob" placeholder="+91 XXXXX XXXXX"><div class="er" id="fmob-er"></div></div>
@@ -450,23 +452,11 @@ a{color:var(--gold)}
       </div>
     </div>
     <div id="mresults" style="display:none;margin-top:.75rem"></div>
-    <!-- AI UPGRADE -->
-    <div class="divider"><span>Optional AI Enhancement</span></div>
-    <div class="ai-box" id="ai-section">
-      <h3>✨ Add AI Personalized Narrative</h3>
-      <p>The offline report gives you all the numbers and analysis. The AI narrative weaves it into a flowing, personalized reading — in the client's language. Requires an AI credit code from Manne Communications admin.</p>
-      <div id="ai-state-request" style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
-        <input type="text" id="ai-code-input" placeholder="AI-XXXX-XXXX" style="background:var(--card2);border:0.5px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;font-family:monospace;text-transform:uppercase;letter-spacing:.05em;width:180px;transition:border-color .15s" oninput="this.value=this.value.toUpperCase()">
-        <button class="btn bpur" onclick="doAINarrative()">Use AI Credit →</button>
-        <a href="https://wa.me/919090900005?text=Hello%2C%20I%20need%20an%20AI%20credit%20code%20for%20a%20client%20consultation" target="_blank" class="btn bo bsm" style="color:var(--grn);border-color:#166534">💬 Request Credit</a>
-      </div>
-      <div class="er" id="ai-code-er" style="margin-top:.5rem"></div>
-      <div id="ai-loading" style="display:none;align-items:center;gap:.75rem;padding:.75rem 0">
-        <div class="spnsm"></div><span style="font-size:13px;color:var(--muted)">Generating AI narrative...</span>
-      </div>
-      <div id="ai-narrative-output" style="display:none">
-        <div class="ai-narrative" id="ai-narrative-text"></div>
-      </div>
+    <div id="number-evaluation"></div>
+    <div class="card" style="margin:.9rem 0;border:1px solid var(--gold);background:linear-gradient(135deg,#171300,#10100d)">
+      <h3 style="color:var(--gold);margin:0 0 .55rem">Want a detailed VIP number consultation?</h3>
+      <p style="color:var(--muted);margin:.2rem 0 .9rem">Get a personalised review of number patterns, compound totals, compatibility and number selection guidance. Consultations start at <strong style="color:var(--gold)">₹999 onwards</strong>.</p>
+      <a class="btn bg" style="display:inline-flex;text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/919090900005?text=Hello%20Manne%20Communications%2C%20I%20would%20like%20to%20know%20more%20about%20the%20detailed%20VIP%20number%20consultation%20starting%20at%20Rs.999.">💬 Know More on WhatsApp</a>
     </div>
     <div class="abar">
       <button class="btn bg" onclick="doPDF()">🖨 Save as PDF / Print</button>
@@ -1495,6 +1485,7 @@ function doGenReport(){
     city: city || 'Not provided',
     state: state || 'Not provided',
     mobile,
+    numberToEvaluate: val('fnumbercheck'),
     budget: val('fbud'),
     purpose: val('fpur') || val('biz-goals'),
     assessmentMode: mode,
@@ -1532,6 +1523,7 @@ function doGenReport(){
 
   if(isBusiness) renderBusinessAnalysis(d);
   else document.getElementById('r-business-analysis').innerHTML = '';
+  renderNumberEvaluation(d.numberToEvaluate, d.dob);
 
   // Hide sections that depend on personal birth data for a business-only assessment.
   const personalSections = ['r-lucky-top','r-core','r-namegrid','r-lp','r-su','r-destiny','r-rashi','r-nak','r-dasha','r-py','r-lucky'];
@@ -1546,6 +1538,76 @@ function doGenReport(){
   showScreen('report');
 }
 
+
+function mcDigitRoot(n){
+  let x=String(n).replace(/\D/g,'').split('').reduce((a,c)=>a+Number(c),0);
+  while(x>9 && x!==11 && x!==22 && x!==33) x=String(x).split('').reduce((a,c)=>a+Number(c),0);
+  return x;
+}
+function mcEvaluateMobile(raw, dob){
+  const number=String(raw||'').replace(/\D/g,'');
+  if(!/^\d{10}$/.test(number)) return null;
+  const day=dob ? Number(dob.split('-')[2]) : null;
+  const birth=day ? mcDigitRoot(day) : null;
+  const life=dob ? calcLP(dob) : null;
+  const lucky=life ? getLuckyFromLP(life) : {single:[],avoid:[8]};
+  const fav=[...new Set([...(birth?[birth]:[]),...(lucky.single||[])])];
+  const avoid=[...new Set(lucky.avoid||[])].filter(x=>!fav.includes(x));
+  const sum=number.split('').reduce((a,c)=>a+Number(c),0);
+  const root=mcDigitRoot(number);
+  const digits=number.split('').map(Number);
+  const favHits=digits.filter(x=>fav.includes(x)).length;
+  const avoidHits=digits.filter(x=>avoid.includes(x)).length;
+  const repeats=digits.reduce((m,x)=>(m[x]=(m[x]||0)+1,m),{});
+  const repeatBonus=Object.values(repeats).some(v=>v>=3)?8:0;
+  let score=48 + (fav.includes(root)?25:0) + Math.min(18,favHits*3) - Math.min(30,avoidHits*7) + repeatBonus;
+  score=Math.max(5,Math.min(98,score));
+  const status=score>=80?'Strong alignment':score>=65?'Good alignment':score>=45?'Moderate alignment':'Low alignment';
+  const twoDigitTotals=[];
+  for(let n=10;n<=99;n++) if(mcDigitRoot(n)===root) twoDigitTotals.push(n);
+  const okayRoots=[...new Set([...(fav||[]), ...((fav||[]).map(x=>x===9?1:x+1))])].filter(x=>x<=9);
+  const okayTotals=[];
+  for(let n=10;n<=99;n++) if(okayRoots.includes(mcDigitRoot(n)) && mcDigitRoot(n)!==root) okayTotals.push(n);
+  const avoidTotals=[];
+  for(let n=10;n<=99;n++) if(avoid.includes(mcDigitRoot(n))) avoidTotals.push(n);
+  return {number,sum,root,score,status,fav,avoid,favHits,avoidHits,twoDigitTotals,okayTotals,avoidTotals};
+}
+function renderNumberEvaluation(raw,dob){
+  const el=document.getElementById('number-evaluation');
+  if(!el) return;
+  if(!raw){el.innerHTML='';return;}
+  const r=mcEvaluateMobile(raw,dob);
+  if(!r){
+    el.innerHTML='<div class="rsec"><h3>📱 VIP Number Evaluation</h3><p>Please enter a valid 10-digit mobile number in the assessment form to see its score.</p></div>';return;
+  }
+  const barColor=r.score>=80?'#16a34a':r.score>=65?'#84cc16':r.score>=45?'#eab308':'#ea580c';
+  const fmt=a=>a.length?a.join(', '):'No totals in this category for the current profile';
+  el.innerHTML=`<div class="rsec"><h3>📱 VIP Mobile Number Evaluation</h3>
+    <div style="border:1px solid var(--border);border-radius:14px;padding:1rem;background:var(--card)">
+      <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap">
+        <div><div style="font-size:12px;color:var(--muted)">Number analysed</div><div style="font-size:25px;font-weight:800;letter-spacing:.08em">${r.number}</div></div>
+        <div style="text-align:right"><div style="font-size:34px;font-weight:900">${r.score}<span style="font-size:16px;color:var(--muted)"> / 100</span></div><strong style="color:${barColor}">${r.status}</strong></div>
+      </div>
+      <div style="height:13px;border-radius:99px;background:var(--border);overflow:hidden;margin:1rem 0 .45rem"><div style="height:100%;width:${r.score}%;background:${barColor};border-radius:99px"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>Low alignment</span><span>Excellent alignment</span></div>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:1rem">
+        <div><div style="font-size:12px;color:var(--muted)">Total of all digits</div><strong style="font-size:22px">${r.sum}</strong></div>
+        <div><div style="font-size:12px;color:var(--muted)">Single-digit / root total</div><strong style="font-size:22px">${r.root}</strong></div>
+        <div><div style="font-size:12px;color:var(--muted)">Favourable digit hits</div><strong style="font-size:22px">${r.favHits}/10</strong></div>
+      </div>
+    </div>
+    <div class="g2" style="margin-top:.75rem">
+      <div class="card"><h4 style="margin:.1rem 0 .5rem;color:#16a34a">✓ Preferred digits</h4><div style="font-size:22px;font-weight:800">${r.fav.join(', ')||'Profile needed'}</div><p style="font-size:12px;color:var(--muted)">Derived from the birth number and the platform's life-path compatibility mapping.</p></div>
+      <div class="card"><h4 style="margin:.1rem 0 .5rem;color:#ea580c">! Digits to limit</h4><div style="font-size:22px;font-weight:800">${r.avoid.join(', ')||'None flagged'}</div><p style="font-size:12px;color:var(--muted)">Treat these as digits to avoid making dominant or heavily repeated, not an absolute prohibition.</p></div>
+    </div>
+    <div class="card" style="margin-top:.75rem"><h4 style="margin:.1rem 0 .5rem;color:var(--gold)">Two-digit compound totals</h4>
+      <p style="font-size:12px;color:var(--muted)">Perfect: compound totals reducing to this number's favourable root (${r.root}).</p><div style="font-weight:700;line-height:1.8">${fmt(r.twoDigitTotals)}</div>
+      <p style="font-size:12px;color:var(--muted);margin-top:.7rem">Also compatible: totals reducing to other supportive roots.</p><div style="font-weight:700;line-height:1.8">${fmt(r.okayTotals)}</div>
+      <p style="font-size:12px;color:var(--muted);margin-top:.7rem">Totals to avoid prioritising: totals reducing to flagged digits.</p><div style="font-weight:700;line-height:1.8">${fmt(r.avoidTotals)}</div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:.65rem">This is an indicative numerology score based on the platform's current compatibility rules. It is not a scientific measurement or a guarantee of outcomes. A detailed consultation can review the full number pattern and compound-number meanings.</p>
+  </div>`;
+}
 function renderBusinessOnlyReport(d){
   const b=d.business, n=b.name;
   const expr=calcExpr(n), su=calcSU(n), pn=calcPN(n), grid=getNameGrid(n);

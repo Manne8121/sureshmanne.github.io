@@ -483,6 +483,14 @@ function updatePatternHint() {
 
 /* NUMBER GENERATION AND FILTERS */
 
+function parseList(value) {
+  // Split optional comma/newline-separated filter values and ignore empty entries.
+  return (value || "")
+    .split(/[\s,;]+/)
+    .map(item => item.trim())
+    .filter(Boolean);
+}
+
 function parseDigits(value) {
   return [...new Set((value || "").match(/[0-9]/g) || [])];
 }

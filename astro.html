@@ -157,6 +157,8 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
   #pdfbody { display: block !important; }
   .ph { display: block !important; }
 }
+.fld input[type=checkbox]{width:17px;height:17px;accent-color:var(--gold);flex:0 0 auto}
+a{color:var(--gold)}
 </style>
 </head>
 <body>
@@ -174,13 +176,37 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
 
 <!-- ROLE -->
 <div class="screen cflex" id="screen-role" style="flex-direction:column">
-  <div class="wrap narrow" style="display:flex;flex-direction:column;align-items:center;gap:2rem">
-    <div><div class="brand">MANNE COMMUNICATIONS</div><div class="sub">Astrology Consultation Platform</div></div>
-    <div class="rg">
-      <div class="rc" onclick="goAdmin()"><div class="ico">🔐</div><div class="rt">Admin Panel</div><div class="rd">Manage codes & settings</div></div>
-      <div class="rc" onclick="showScreen('dealer-login')"><div class="ico">🔭</div><div class="rt">Dealer / Consultant</div><div class="rd">Generate client reports</div></div>
+  <div class="wrap wide" style="padding-top:2.5rem">
+    <div style="text-align:center;margin-bottom:2rem">
+      <div class="brand" style="font-size:clamp(24px,4vw,34px)">MANNE COMMUNICATIONS</div>
+      <div class="sub">Numerology & Astrology Alignment Platform</div>
+      <h1 style="font-size:clamp(27px,5vw,42px);line-height:1.2;margin:2rem auto .8rem;color:var(--gold-l);max-width:850px">Discover Your Numbers. Understand Your Potential.</h1>
+      <p style="max-width:760px;margin:0 auto;color:var(--muted);line-height:1.7;font-size:17px">A structured personal and business assessment using established numerology and astrology traditions. Share your details for a personal review by Suresh Manne.</p>
+      <button class="btn bg" style="margin-top:1.5rem;padding:14px 28px" onclick="showScreen('form')">Start Your Free Assessment →</button>
+      <div style="margin-top:.8rem;color:var(--muted);font-size:13px">No customer login · No online payment · Personal WhatsApp follow-up</div>
     </div>
-    <div style="font-size:11px;color:var(--muted)">Designed & Built for India, for the World</div>
+    <div class="g2" style="gap:14px;margin:2rem auto;max-width:900px">
+      <div class="card"><div style="font-size:25px;margin-bottom:.5rem;color:var(--gold)">✦ Personal Alignment</div><p style="color:var(--muted);font-size:15px;line-height:1.7">Birth-date numbers, name analysis, mobile-number assessment and relevant astrology factors, subject to complete and reliable birth information.</p></div>
+      <div class="card"><div style="font-size:25px;margin-bottom:.5rem;color:var(--gold)">◈ Business Alignment</div><p style="color:var(--muted);font-size:15px;line-height:1.7">Business and brand name analysis, owner details, business category, start date and contact-number assessment.</p></div>
+    </div>
+    <div class="card" style="max-width:900px;margin:0 auto 1.25rem">
+      <div class="stitle" style="margin-top:0">Knowledge-based reasoning</div>
+      <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:1rem">The assessment is designed to explain why an interpretation is reached. Results should identify the method, inputs, calculation and reasoning, rather than presenting unexplained conclusions.</p>
+      <div class="g2">
+        <div class="card-s"><b style="color:var(--gold)">Chaldean Numerology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Letter values, compound totals, name analysis and number patterns.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Pythagorean Numerology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Life Path, Expression, Soul Urge, Personality and personal cycles.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Vedic Astrology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Lagna, Rashi, Nakshatra, planetary placements and Dasha, when calculations are validated.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">KP Astrology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Nakshatra lord, sub-lord and house significations, where validated chart data is available.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Vedic Numerology & Lo Shu</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Birth-date grid patterns, planetary number associations and repeated or missing digits.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Method comparison</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Where systems agree or differ, the explanation should make those differences clear.</p></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:1rem">Complete and exact information supports more precise calculations and personalised interpretations. Astrology and numerology are traditional belief systems, not scientifically validated guarantees or certain predictions.</p>
+    </div>
+    <div style="text-align:center;color:var(--muted);font-size:13px;line-height:1.8">
+      <div><b style="color:var(--gold)">Number That Matters</b> · <b style="color:var(--gold)">Identity That Stays</b></div>
+      <div>Consultation enquiries: <a href="https://wa.me/919090900005" target="_blank" rel="noopener" style="color:var(--gold)">WhatsApp 9090900005</a></div>
+      <button class="btn bgh bsm" style="margin-top:1rem;font-size:12px" onclick="goAdmin()">Admin access</button>
+    </div>
   </div>
 </div>
 
@@ -288,18 +314,45 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
 <div class="screen" id="screen-form" style="flex-direction:column">
   <div class="wrap">
     <div class="topbar">
-      <div><div class="pg">New Consultation</div><div class="ps" id="dealer-disp"></div></div>
-      <button class="btn bo bsm" onclick="doLogout()">Logout</button>
+      <div><div class="pg">Free Assessment Form</div><div class="ps">Personal, Business or Combined Consultation</div></div>
+      <button class="btn bo bsm" onclick="showScreen('role')">← Home</button>
     </div>
+
+    <div class="card-s" style="margin-bottom:1.25rem">
+      <div class="fld" style="margin:0">
+        <label>Assessment type <span class="req">*</span></label>
+        <select id="assessment-mode" onchange="toggleBusinessFields()">
+          <option value="Personal">Personal Numerology & Astrology</option>
+          <option value="Business">Business Numerology & Astrology</option>
+          <option value="Combined">Combined Personal + Business Assessment</option>
+        </select>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:.65rem;line-height:1.6">Choose the assessment you need. You can leave unrelated sections blank.</p>
+    </div>
+    <div id="business-fields" style="display:none">
+      <div class="stitle">Business details</div>
+      <div class="card-s" style="margin-bottom:1.25rem">
+        <div class="g2">
+          <div class="fld"><label>Business / brand name <span class="req">*</span></label><input id="biz-name" type="text" placeholder="Business or brand name"></div>
+          <div class="fld"><label>Business category</label><select id="biz-category"><option value="">Select category</option><option>Retail</option><option>Trading</option><option>Manufacturing</option><option>IT / Technology</option><option>Professional Services</option><option>Education</option><option>Healthcare</option><option>Real Estate</option><option>Finance</option><option>Hospitality</option><option>Other</option></select></div>
+          <div class="fld"><label>Business status</label><select id="biz-status"><option value="">Select</option><option>Planning</option><option>New business</option><option>Already operating</option></select></div>
+          <div class="fld"><label>Business commencement date (if known)</label><input id="biz-date" type="date"></div>
+          <div class="fld"><label>Business location</label><input id="biz-location" type="text" placeholder="City, State, Country"></div>
+          <div class="fld"><label>Business mobile number(s)</label><input id="biz-mobile" type="text" placeholder="One or more contact numbers"></div>
+        </div>
+        <div class="fld"><label>Business goals / questions</label><textarea id="biz-goals" placeholder="Brand name, business direction, launch timing, contact numbers, etc."></textarea></div>
+      </div>
+    </div>
+
     <div class="stitle" style="margin-top:0">Personal details</div>
     <div class="g2">
       <div class="fld"><label>Full name <span class="req">*</span></label><input type="text" id="fn" placeholder="As per birth certificate"><div class="er" id="fn-er"></div></div>
-      <div class="fld"><label>Gender <span class="req">*</span></label><select id="fg"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select><div class="er" id="fg-er"></div></div>
+      <div class="fld"><label>Gender (optional)</label><select id="fg"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select><div class="er" id="fg-er"></div></div>
     </div>
     <div class="stitle">Birth details</div>
     <div class="g3">
       <div class="fld"><label>Date of birth <span class="req">*</span></label><input type="date" id="fdob" style="cursor:pointer"><div class="er" id="fdob-er"></div></div>
-      <div class="fld"><label>Time of birth <span class="req">*</span></label><input type="time" id="ftob" style="cursor:pointer"><div class="er" id="ftob-er"></div></div>
+      <div class="fld"><label>Time of birth (if known)</label><input type="time" id="ftob" style="cursor:pointer"><div class="er" id="ftob-er"></div></div>
       <div class="fld"><label>AM / PM</label><select id="fampm"><option>AM</option><option>PM</option></select></div>
     </div>
     <div class="g2">
@@ -309,11 +362,17 @@ input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3
     <div class="stitle">Contact & purpose</div>
     <div class="g2">
       <div class="fld"><label>Client mobile <span class="req">*</span></label><input type="tel" id="fmob" placeholder="+91 XXXXX XXXXX"><div class="er" id="fmob-er"></div></div>
-      <div class="fld"><label>VIP number budget <span class="req">*</span></label><select id="fbud"><option value="">Select range</option><option value="under5k">Under ₹5,000</option><option value="5k-15k">₹5,000 – ₹15,000</option><option value="15k-50k">₹15,000 – ₹50,000</option><option value="50k-1L">₹50,000 – ₹1 Lakh</option><option value="above1L">Above ₹1 Lakh</option></select><div class="er" id="fbud-er"></div></div>
+      <div class="fld" style="display:none"><label>VIP number budget (optional)</label><select id="fbud"><option value="">Select range</option><option value="under5k">Under ₹5,000</option><option value="5k-15k">₹5,000 – ₹15,000</option><option value="15k-50k">₹15,000 – ₹50,000</option><option value="50k-1L">₹50,000 – ₹1 Lakh</option><option value="above1L">Above ₹1 Lakh</option></select><div class="er" id="fbud-er"></div></div>
     </div>
     <div class="fld"><label>Purpose / concern (optional)</label><textarea id="fpur" placeholder="e.g. Looking for business number, career issues, marriage delay..."></textarea></div>
-    <button class="btn bg bfull" style="padding:14px;font-size:15px" onclick="doGenReport()">➜ Review & Confirm Details</button>
-    <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:.75rem">Full Chaldean numerology · Sun sign · Personal year · VIP numbers — all offline, no API needed</div>
+    <div class="fld" style="margin-top:.75rem">
+      <label style="display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:13px">
+        <input id="privacy-consent" type="checkbox" style="width:auto;margin-top:3px">
+        I agree to share these details with Manne Communications for this consultation enquiry.
+      </label>
+    </div>
+    <button class="btn bg bfull" style="padding:14px;font-size:15px" onclick="doGenReport()">Submit Assessment via WhatsApp</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:.75rem">Your enquiry will open in WhatsApp. Review the prepared message and tap Send to contact Manne Communications.</div>
   </div>
 </div>
 
@@ -1383,6 +1442,78 @@ window.onload=()=>setTimeout(()=>{
     showScreen('role');
   }
 },2200);
+
+
+// ─────────────────────────────────────────────
+// MANNE COMMUNICATIONS PUBLIC ENQUIRY FLOW
+// ─────────────────────────────────────────────
+const MC_PUBLIC_WHATSAPP = '919090900005';
+
+function toggleBusinessFields(){
+  const mode = document.getElementById('assessment-mode')?.value || 'Personal';
+  const box = document.getElementById('business-fields');
+  if(box) box.style.display = (mode === 'Business' || mode === 'Combined') ? 'block' : 'none';
+}
+
+function doGenReport(){
+  const val = id => (document.getElementById(id)?.value || '').trim();
+  const mode = val('assessment-mode') || 'Personal';
+  const name = val('fn');
+  const mobile = val('fmob').replace(/[^\d]/g,'');
+  const dob = val('fdob');
+  const city = val('fct');
+  const state = val('fst');
+  const consent = document.getElementById('privacy-consent')?.checked;
+
+  if(!name){toast('Please enter your full name');document.getElementById('fn').focus();return;}
+  if(!/^\d{10,13}$/.test(mobile)){toast('Please enter a valid mobile number with country code if needed');document.getElementById('fmob').focus();return;}
+  if((mode === 'Personal' || mode === 'Combined') && (!dob || !city || !state)){
+    toast('Please enter date and place of birth for the personal assessment');return;
+  }
+  if((mode === 'Business' || mode === 'Combined') && !val('biz-name')){
+    toast('Please enter your business or brand name');document.getElementById('biz-name').focus();return;
+  }
+  if(!consent){toast('Please confirm consent before submitting');return;}
+
+  const msg = [
+    '*MANNE COMMUNICATIONS | CONSULTATION ENQUIRY*',
+    '',
+    '*Assessment type:* ' + mode,
+    '*Full name:* ' + name,
+    '*Gender:* ' + (val('fg') || 'Not specified'),
+    '*Date of birth:* ' + (dob || 'Not provided'),
+    '*Time of birth:* ' + (val('ftob') ? val('ftob') + ' ' + val('fampm') : 'Not known / not provided'),
+    '*Birth place:* ' + [city,state].filter(Boolean).join(', '),
+    '*Contact mobile:* ' + mobile,
+    '*Additional number / number requirements:* ' + (val('fpur') || 'Not specified'),
+    '',
+    ...(mode === 'Business' || mode === 'Combined' ? [
+      '*BUSINESS DETAILS*',
+      '*Business / brand name:* ' + val('biz-name'),
+      '*Category:* ' + (val('biz-category') || 'Not specified'),
+      '*Business status:* ' + (val('biz-status') || 'Not specified'),
+      '*Commencement date:* ' + (val('biz-date') || 'Not provided'),
+      '*Business location:* ' + (val('biz-location') || 'Not provided'),
+      '*Business mobile number(s):* ' + (val('biz-mobile') || 'Not provided'),
+      '*Business goals / questions:* ' + (val('biz-goals') || 'Not specified'),
+      ''
+    ] : []),
+    '*Consultation purpose / questions:* ' + (val('fpur') || 'Not specified'),
+    '',
+    'I have completed the assessment form on the Manne Communications website. Please guide me on the next steps.'
+  ];
+
+  const url = 'https://wa.me/' + MC_PUBLIC_WHATSAPP + '?text=' + encodeURIComponent(msg.join('\n'));
+  window.open(url, '_blank');
+  toast('WhatsApp opened. Please review the enquiry and tap Send.', 4500);
+}
+
+// Public visitors always land on the new landing page.
+// Admin remains accessible through the Admin access link.
+window.onload = () => {
+  showScreen('role');
+  toggleBusinessFields();
+};
 
 </script>
 </body>

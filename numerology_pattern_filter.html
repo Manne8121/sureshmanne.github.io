@@ -228,12 +228,11 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
   <div class="grid">
 
     <div class="field full">
-      <label for="patterns">Enter Number Patterns</label>
-      <textarea id="patterns" spellcheck="false"
-        placeholder="9****99999, 8****88888"></textarea>
+      <label for="patterns">Enter One Number Pattern</label>
+      <input id="patterns" type="text" inputmode="text" maxlength="10"
+        autocomplete="off" spellcheck="false" placeholder="Example: 9666*000**">
       <div id="patternHint" class="hint">
-        Enter exactly 10 characters per pattern. First digit must be 6, 7, 8 or 9. Use * for automatic digits.
-        A comma will be inserted automatically after the 10th character.
+        Enter exactly 10 characters using digits and *. Consecutive * wildcards are allowed. Example: 9666*000**. Only one pattern is accepted.
       </div>
     </div>
 
@@ -419,51 +418,16 @@ let generationRunning = false;
 
 const $ = id => document.getElementById(id);
 
-/* PATTERN ENTRY: AUTO COMMA + FIRST DIGIT VALIDATION */
+/* SINGLE PATTERN ENTRY: NO COMMAS OR MULTIPLE PATTERNS */
 
 const patternInput = $("patterns");
 
-patternInput.addEventListener("keydown", function(e) {
-  if (e.ctrlKey || e.metaKey || e.altKey) return;
-  if (e.key.length !== 1 || !/[0-9*]/.test(e.key)) return;
-
-  const start = this.selectionStart;
-  const end = this.selectionEnd;
-  const before = this.value.slice(0, start);
-  const selected = this.value.slice(start, end);
-
-  const segment = before.split(/[,\n]/).pop().trim() + selected;
-  const isFirstCharacter = segment.length === 0;
-
-  if (isFirstCharacter && !/[6789*]/.test(e.key)) {
-    e.preventDefault();
-    showPatternError(
-      "Error: Every pattern must start with 6, 7, 8, 9 or *."
-    );
-    return;
-  }
-
-  if (segment.length >= 10 && !selected) {
-    e.preventDefault();
-    showPatternError(
-      "This pattern already has 10 characters. Start the next pattern after the comma."
-    );
-  }
-});
-
-patternInput.addEventListener("input", function(event) {
-  const cursor = this.selectionStart;
-  const before = this.value.slice(0, cursor);
-  const segment = before.split(/[,\n]/).pop().trim();
-  const after = this.value.slice(cursor);
-  const isDeletion = event.inputType && event.inputType.startsWith("delete");
-
-  // Add a separator after the 10th character only while typing, never while
-  // the user is deleting or editing an existing separator.
-  if (!isDeletion && segment.length === 10 && cursor === this.value.length &&
-      !/[ ,\n]\s*$/.test(before)) {
-    this.value = before + ", ";
-    this.setSelectionRange(this.value.length, this.value.length);
+patternInput.addEventListener("input", function() {
+  const cleaned = this.value.replace(/[\s,;]+/g, "").replace(/[^0-9*]/g, "").slice(0, 10);
+  if (this.value !== cleaned) {
+    const pos = Math.min(cleaned.length, this.selectionStart || cleaned.length);
+    this.value = cleaned;
+    this.setSelectionRange(pos, pos);
   }
   updatePatternHint();
 });
@@ -473,47 +437,31 @@ function showPatternError(message) {
   $("patternHint").style.color = "#ff7373";
 }
 
-function parseList(value) {
-  return (value || "").split(/[,\n;]+/).map(x => x.trim()).filter(Boolean);
-}
-
 function validatePattern(pattern) {
-  return pattern.length === 10 &&
-    /^[0-9*]{10}$/.test(pattern) &&
-    (pattern[0] === "*" || /^[6789]$/.test(pattern));
+  // Accept any single 10-character pattern made of digits and *.
+  // Wildcards may appear in any position, including the first and last.
+  return typeof pattern === "string" &&
+    pattern.length === 10 &&
+    /^[0-9*]{10}$/.test(pattern);
 }
 
 function updatePatternHint() {
-  const patterns = parseList(patternInput.value);
+  const pattern = patternInput.value.trim();
   const hint = $("patternHint");
-
-  if (!patterns.length) {
-    showPatternError("Please enter at least one pattern.");
+  if (!pattern) {
+    hint.textContent = "Enter exactly 10 characters using digits and *. Consecutive * wildcards are allowed. Example: 9666*000**. Only one pattern is accepted.";
+    hint.style.color = "";
     return false;
   }
-
-  const errors = [];
-  patterns.forEach((pattern, index) => {
-    if (pattern.length !== 10) {
-      errors.push("Pattern " + (index + 1) + ": " +
-        pattern.length + "/10 characters. Exactly 10 required.");
-    } else if (!/^[0-9*]{10}$/.test(pattern)) {
-      errors.push("Pattern " + (index + 1) +
-        ": Only digits and * are allowed.");
-    } else if (pattern[0] !== "*" && !/^[6789]$/.test(pattern[0])) {
-      errors.push("Pattern " + (index + 1) +
-        ": First digit must be 6, 7, 8 or 9.");
-    }
-  });
-
-  if (errors.length) {
-    hint.innerHTML = errors.join("<br>");
-    hint.style.color = "#ff7373";
+  if (pattern.length !== 10) {
+    showPatternError("Pattern has " + pattern.length + "/10 characters. Enter exactly 10.");
     return false;
   }
-
-  hint.textContent = "✓ " + patterns.length +
-    " valid pattern(s). Exactly 10 characters each.";
+  if (!/^[0-9*]{10}$/.test(pattern)) {
+    showPatternError("Only digits and * are allowed.");
+    return false;
+  }
+  hint.textContent = "✓ Valid single pattern. Exactly 10 characters. Consecutive * wildcards are accepted in any position.";
   hint.style.color = "#3bc58a";
   return true;
 }
@@ -616,12 +564,12 @@ function checkNumber(number, settings) {
 function generateNumbers() {
   if (generationRunning) return;
 
-  const patterns = parseList($("patterns").value);
+  const pattern = $("patterns").value.trim();
 
-  if (!patterns.length || patterns.some(p => !validatePattern(p))) {
+  if (!validatePattern(pattern)) {
     updatePatternHint();
     $("status").textContent =
-      "Error: Correct all patterns. Each must contain exactly 10 characters and start with *, 6, 7, 8 or 9.";
+      "Error: Enter one pattern containing exactly 10 characters. Use digits (0-9) and * in any position.";
     return;
   }
 
@@ -631,13 +579,11 @@ function generateNumbers() {
   const stock = getStockNumbers();
   const settings = getSettings();
 
-  const work = patterns.map(pattern => {
-    const options = [];
-    for (let i = 0; i < 10; i++) {
-      options.push(getAllowedDigits(pattern, i, exclude, allow, fixedStart));
-    }
-    return {pattern, options};
-  });
+  const options = [];
+  for (let i = 0; i < 10; i++) {
+    options.push(getAllowedDigits(pattern, i, exclude, allow, fixedStart));
+  }
+  const work = [{pattern, options}];
 
   let estimated = 0;
   for (const item of work) {

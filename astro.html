@@ -371,8 +371,8 @@ a{color:var(--gold)}
         I agree to share these details with Manne Communications for this consultation enquiry.
       </label>
     </div>
-    <button class="btn bg bfull" style="padding:14px;font-size:15px" onclick="doGenReport()">Submit Assessment via WhatsApp</button>
-    <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:.75rem">Your enquiry will open in WhatsApp. Review the prepared message and tap Send to contact Manne Communications.</div>
+    <button class="btn bg bfull" style="padding:14px;font-size:15px" onclick="doGenReport()">Generate My Assessment</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:.75rem">Your assessment will be calculated instantly and displayed on this page. No WhatsApp message is required.</div>
   </div>
 </div>
 
@@ -438,6 +438,7 @@ a{color:var(--gold)}
     <div id="r-dasha"></div>
     <div id="r-py"></div>
     <div id="r-lucky"></div>
+    <div id="r-business-analysis"></div>
     <!-- NUMBER MATCH -->
     <div class="card" id="mcard" style="margin-top:.75rem;border-color:#2a2a00">
       <div style="font-size:15px;font-weight:600;color:var(--gold);margin-bottom:.5rem">🔢 Match your VIP inventory</div>
@@ -1455,6 +1456,7 @@ function toggleBusinessFields(){
   if(box) box.style.display = (mode === 'Business' || mode === 'Combined') ? 'block' : 'none';
 }
 
+
 function doGenReport(){
   const val = id => (document.getElementById(id)?.value || '').trim();
   const mode = val('assessment-mode') || 'Personal';
@@ -1463,50 +1465,139 @@ function doGenReport(){
   const dob = val('fdob');
   const city = val('fct');
   const state = val('fst');
-  const consent = document.getElementById('privacy-consent')?.checked;
+  const businessName = val('biz-name');
+  const isPersonal = mode === 'Personal' || mode === 'Combined';
+  const isBusiness = mode === 'Business' || mode === 'Combined';
 
-  if(!name){toast('Please enter your full name');document.getElementById('fn').focus();return;}
-  if(!/^\d{10,13}$/.test(mobile)){toast('Please enter a valid mobile number with country code if needed');document.getElementById('fmob').focus();return;}
-  if((mode === 'Personal' || mode === 'Combined') && (!dob || !city || !state)){
-    toast('Please enter date and place of birth for the personal assessment');return;
+  if(isPersonal && !name){
+    toast('Please enter your full name'); document.getElementById('fn').focus(); return;
   }
-  if((mode === 'Business' || mode === 'Combined') && !val('biz-name')){
-    toast('Please enter your business or brand name');document.getElementById('biz-name').focus();return;
+  if(isBusiness && !businessName){
+    toast('Please enter your business or brand name'); document.getElementById('biz-name').focus(); return;
   }
-  if(!consent){toast('Please confirm consent before submitting');return;}
+  if(isPersonal && (!dob || !city || !state)){
+    toast('Please enter date and place of birth for the personal assessment'); return;
+  }
+  if(!/^\d{10,13}$/.test(mobile)){
+    toast('Please enter a valid mobile number with country code if needed');
+    document.getElementById('fmob').focus(); return;
+  }
+  if(!document.getElementById('privacy-consent')?.checked){
+    toast('Please confirm consent before generating the assessment'); return;
+  }
 
-  const msg = [
-    '*MANNE COMMUNICATIONS | CONSULTATION ENQUIRY*',
-    '',
-    '*Assessment type:* ' + mode,
-    '*Full name:* ' + name,
-    '*Gender:* ' + (val('fg') || 'Not specified'),
-    '*Date of birth:* ' + (dob || 'Not provided'),
-    '*Time of birth:* ' + (val('ftob') ? val('ftob') + ' ' + val('fampm') : 'Not known / not provided'),
-    '*Birth place:* ' + [city,state].filter(Boolean).join(', '),
-    '*Contact mobile:* ' + mobile,
-    '*Additional number / number requirements:* ' + (val('fpur') || 'Not specified'),
-    '',
-    ...(mode === 'Business' || mode === 'Combined' ? [
-      '*BUSINESS DETAILS*',
-      '*Business / brand name:* ' + val('biz-name'),
-      '*Category:* ' + (val('biz-category') || 'Not specified'),
-      '*Business status:* ' + (val('biz-status') || 'Not specified'),
-      '*Commencement date:* ' + (val('biz-date') || 'Not provided'),
-      '*Business location:* ' + (val('biz-location') || 'Not provided'),
-      '*Business mobile number(s):* ' + (val('biz-mobile') || 'Not provided'),
-      '*Business goals / questions:* ' + (val('biz-goals') || 'Not specified'),
-      ''
-    ] : []),
-    '*Consultation purpose / questions:* ' + (val('fpur') || 'Not specified'),
-    '',
-    'I have completed the assessment form on the Manne Communications website. Please guide me on the next steps.'
-  ];
+  const displayName = isPersonal ? name : businessName;
+  const d = {
+    name: displayName,
+    gender: val('fg') || 'Not specified',
+    dob: dob || '',
+    tob: val('ftob') ? val('ftob') + ' ' + val('fampm') : '12:00 PM',
+    city: city || 'Not provided',
+    state: state || 'Not provided',
+    mobile,
+    budget: val('fbud'),
+    purpose: val('fpur') || val('biz-goals'),
+    assessmentMode: mode,
+    business: {
+      name: businessName,
+      category: val('biz-category'),
+      status: val('biz-status'),
+      date: val('biz-date'),
+      location: val('biz-location'),
+      mobile: val('biz-mobile'),
+      goals: val('biz-goals')
+    }
+  };
 
-  const url = 'https://wa.me/' + MC_PUBLIC_WHATSAPP + '?text=' + encodeURIComponent(msg.join('\n'));
-  window.open(url, '_blank');
-  toast('WhatsApp opened. Please review the enquiry and tap Send.', 4500);
+  S.dealer = S.dealer || {};
+  S.dealer.name = 'Manne Communications Online Assessment';
+  S.dealer.type = 'public';
+  S.fd = d;
+  S.matched = null;
+  S.aiNarrative = null;
+  S.reportId = 'MC-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + Math.floor(1000 + Math.random()*9000);
+
+  if(isPersonal){
+    const lp=calcLP(d.dob), expr=calcExpr(d.name), su=calcSU(d.name), pn=calcPN(d.name);
+    const mat=calcMat(lp,expr), bal=calcBal(d.name), py=calcPY(d.dob,new Date().getFullYear());
+    const grid=getNameGrid(d.name), rashi=getVedicRashi(d.dob,d.tob), nak=getVedicNak(d.dob,d.tob);
+    const lucky=getLuckyFromLP(lp);
+    S.nums={lp,expr,su,pn,mat,bal,py,lucky};
+    renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky);
+    const meta = document.getElementById('rm');
+    if(meta) meta.innerHTML = `${d.gender} &nbsp;·&nbsp; ${fmtDate(d.dob)} at ${d.tob} &nbsp;·&nbsp; ${d.city}, ${d.state}<br>Mobile: ${d.mobile} &nbsp;·&nbsp; <span style="color:var(--gold);font-size:13px">Ref: ${S.reportId}</span>`;
+  } else {
+    renderBusinessOnlyReport(d);
+  }
+
+  if(isBusiness) renderBusinessAnalysis(d);
+  else document.getElementById('r-business-analysis').innerHTML = '';
+
+  // Hide sections that depend on personal birth data for a business-only assessment.
+  const personalSections = ['r-lucky-top','r-core','r-namegrid','r-lp','r-su','r-destiny','r-rashi','r-nak','r-dasha','r-py','r-lucky'];
+  personalSections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display = isPersonal ? '' : 'none';
+  });
+  document.getElementById('mcard').style.display = isPersonal ? '' : 'none';
+  document.getElementById('ai-section').style.display = isPersonal ? '' : 'none';
+  document.getElementById('rn').textContent = isBusiness && !isPersonal ? businessName : name;
+  document.getElementById('newbtn').style.display = '';
+  showScreen('report');
 }
+
+function renderBusinessOnlyReport(d){
+  const b=d.business, n=b.name;
+  const expr=calcExpr(n), su=calcSU(n), pn=calcPN(n), grid=getNameGrid(n);
+  const digitRoot = value => {
+    const digits=String(value||'').replace(/\D/g,'');
+    if(!digits) return null;
+    return red(digits.split('').reduce((a,x)=>a+Number(x),0));
+  };
+  const mobileRoot=digitRoot(b.mobile);
+  document.getElementById('rn').textContent=n;
+  document.getElementById('rm').innerHTML =
+    `${b.category || 'Business assessment'} &nbsp;·&nbsp; ${b.location || 'Location not provided'}<br>Contact: ${d.mobile} &nbsp;·&nbsp; <span style="color:var(--gold);font-size:13px">Ref: ${S.reportId}</span>`;
+  document.getElementById('r-core').innerHTML =
+    `<div class="rsec"><h3>✦ Business Name Numerology · Chaldean System</h3><div class="nums-grid">
+    <div class="nc"><div class="nn">${expr}</div><div class="nt">Business Name</div><div class="ns">Name vibration</div></div>
+    <div class="nc"><div class="nn">${su}</div><div class="nt">Vowel Total</div><div class="ns">Inner brand tone</div></div>
+    <div class="nc"><div class="nn">${pn}</div><div class="nt">Consonant Total</div><div class="ns">Public impression</div></div>
+    ${mobileRoot===null?'':`<div class="nc"><div class="nn">${mobileRoot}</div><div class="nt">Business Mobile</div><div class="ns">Digit root</div></div>`}
+    </div></div>`;
+  document.getElementById('r-namegrid').innerHTML =
+    `<div class="rsec"><h3>✦ Business Name Letter Analysis</h3><div class="ngrid">${grid.map(g=>g.space?'<div class="nletter space"></div>':`<div class="nletter${g.vowel?' vowel':''}"><div class="lc">${g.c}</div><div class="lv">${g.v||'—'}</div></div>`).join('')}</div><div class="interp">Name total: ${expr}. This is a traditional Chaldean numerology reading, not a measure of business performance.</div></div>`;
+  ['r-lp','r-su','r-destiny','r-rashi','r-nak','r-dasha','r-py','r-lucky','r-lucky-top'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.innerHTML='';
+  });
+}
+
+function renderBusinessAnalysis(d){
+  const b=d.business;
+  const nameTotal=calcExpr(b.name);
+  const nameData=LP_DATA[nameTotal] || LP_DATA[1];
+  const mobileDigits=(b.mobile||'').replace(/\D/g,'');
+  const mobileTotal=mobileDigits ? red(mobileDigits.split('').reduce((a,x)=>a+Number(x),0)) : null;
+  const goals=b.goals || d.purpose || 'No specific goal supplied';
+  document.getElementById('r-business-analysis').innerHTML = `
+    <div class="rsec"><h3>✦ Business Profile & Guidance</h3>
+      <div class="profile-row">
+        <div class="pitem"><div class="pk">Business</div><div class="pv">${b.name}</div></div>
+        <div class="pitem"><div class="pk">Category</div><div class="pv">${b.category || 'Not specified'}</div></div>
+        <div class="pitem"><div class="pk">Stage</div><div class="pv">${b.status || 'Not specified'}</div></div>
+        <div class="pitem"><div class="pk">Name number</div><div class="pv">${nameTotal}</div></div>
+        ${mobileTotal===null?'':`<div class="pitem"><div class="pk">Business mobile root</div><div class="pv">${mobileTotal}</div></div>`}
+      </div>
+      <div class="interp"><strong>Traditional numerology interpretation:</strong> ${nameData.title}. ${nameData.interp}</div>
+      <div class="rcontent" style="margin-top:.8rem">
+        <p><strong>Business objective / question:</strong> ${goals}</p>
+        <p><strong>Practical next steps:</strong> Keep the brand name consistent across registrations, signage and digital platforms; validate customer demand and unit economics before major investment; choose a contact number that is easy for customers to remember; and review the business plan against measurable monthly targets.</p>
+        ${b.date?`<p><strong>Commencement date supplied:</strong> ${b.date}. The current page does not calculate a full electional astrology chart for a business start date.</p>`:''}
+        ${b.location?`<p><strong>Business location:</strong> ${b.location}</p>`:''}
+      </div>
+    </div>`;
+}
+
 
 // Public visitors always land on the new landing page.
 // Admin remains accessible through the Admin access link.

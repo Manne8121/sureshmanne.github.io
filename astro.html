@@ -1130,7 +1130,12 @@ document.getElementById('r-nak').innerHTML=`<div class="rsec"><h3>✦ జన్�
   document.getElementById('r-py').innerHTML=`<div class="rsec"><h3>✦ Personal Year ${py} — 2025 Theme</h3><div class="rcontent">${PY_DATA[py]||PY_DATA[1]}</div></div>`;
   document.getElementById('r-lucky').innerHTML=`<div class="rsec"><h3>✦ Lucky Numbers & Remedies</h3><div style="display:flex;flex-wrap:wrap;gap:8px;margin:.5rem 0">${lucky.single.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Lucky</div></div>`).join('')}${lucky.compound.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Compound</div></div>`).join('')}</div><div class="profile-row" style="margin-top:.75rem"><div class="pitem"><div class="pk">Avoid digits</div><div class="pv" style="color:var(--red)">${lucky.avoid.join(', ')}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lucky.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lucky.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lucky.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lucky.mantra}</div></div></div></div>`;
   document.getElementById('mcard').style.display='block';document.getElementById('mresults').style.display='none';document.getElementById('minput').value='';
-  document.getElementById('ai-narrative-output').style.display='none';document.getElementById('ai-code-input').value='';document.getElementById('ai-code-er').textContent='';document.getElementById('ai-loading').style.display='none';document.getElementById('ai-state-request').style.display='flex';
+  // AI enhancement UI was intentionally removed from the public report.
+  // Keep legacy report rendering safe when those optional elements are absent.
+  [['ai-narrative-output','display','none'],['ai-code-input','value',''],['ai-code-er','textContent',''],['ai-loading','display','none'],['ai-state-request','display','flex']].forEach(([id,prop,value])=>{
+    const node=document.getElementById(id);
+    if(node) node[prop]=value;
+  });
 }
 
 // ═══════════════════════════════════════════

@@ -1609,6 +1609,7 @@ function mcDigitRoot(n){
   return x;
 }
 
+
 function mcEvaluateMobile(raw,dob){
   const number=String(raw||'');
   if(!/^[6-9]\d{9}$/.test(number)) return null;
@@ -1626,13 +1627,20 @@ function mcEvaluateMobile(raw,dob){
   const repeats=Object.entries(freq).filter(([,n])=>n>=2).map(([d,n])=>`${d} × ${n}`);
   const triples=Object.entries(freq).filter(([,n])=>n>=3).map(([d,n])=>`${d} repeated ${n} times`);
   const ending=number.slice(-3), first=number.slice(0,3);
+  const tailFavHits=digits.slice(-4).filter(x=>fav.includes(x)).length;
+  const distinctCount=Object.keys(freq).length;
   const hasSequential=/012|123|234|345|456|567|678|789|987|876|765|654|543|432|321|210/.test(number);
-  const repeatBonus=triples.length?8:repeats.length?4:0;
-  const rootBonus=fav.includes(root)?20:0;
-  const digitBonus=Math.min(18,favHits*3);
-  const avoidPenalty=Math.min(30,avoidHits*6);
-  const score=Math.max(5,Math.min(98,48+rootBonus+digitBonus-avoidPenalty+repeatBonus));
-  const status=score>=85?'Excellent':score>=75?'Very Good':score>=60?'Good':score>=45?'Average':'Low Compatibility';
+  const rootMatch=fav.includes(root);
+  const rootPoints=rootMatch?22:0;
+  const digitPoints=Math.min(18,favHits*3);
+  const tailPoints=Math.min(8,tailFavHits*2);
+  const varietyPoints=Math.max(0,Math.min(6,(distinctCount-4)*2));
+  const patternPoints=triples.length?4:(repeats.length?2:0);
+  const sequencePenalty=hasSequential?2:0;
+  const avoidPenalty=avoidHits*18;
+  let score=Math.max(0,Math.min(100,42+rootPoints+digitPoints+tailPoints+varietyPoints+patternPoints-sequencePenalty-avoidPenalty));
+  if(avoidHits>0) score=Math.min(score,39);
+  const status=avoidHits>0?'AVOID · Caution digit present':score>=85?'Excellent':score>=75?'Very Good':score>=60?'Good':score>=45?'Average':'Low Compatibility';
   const compoundTotals=[];
   for(let n=10;n<=99;n++) if(mcDigitRoot(n)===root) compoundTotals.push(n);
   const compatibleRoots=[...new Set(fav.filter(x=>x!==root))];
@@ -1640,19 +1648,16 @@ function mcEvaluateMobile(raw,dob){
   for(let n=10;n<=99;n++) if(compatibleRoots.includes(mcDigitRoot(n))) okayTotals.push(n);
   const avoidTotals=[];
   for(let n=10;n<=99;n++) if(avoid.includes(mcDigitRoot(n))) avoidTotals.push(n);
-  const idealDigits=fav.length?fav:[1,3,5,6,9];
-  const recommendations=[
-    `Prefer a final single-digit root of ${fav.join(' or ')||'a personally selected compatible total'}.`,
-    `Look for a compound total that reduces to ${root} (the current number's root) or another personally supportive root.`,
-    `Use preferred digits ${idealDigits.join(', ')} naturally in the number pattern; avoid forcing a pattern at the cost of memorability.`
-  ];
   const explanations=[
-    {label:'Root compatibility',points:rootBonus,detail:`Root ${root} ${fav.includes(root)?'matches':'does not currently match'} the preferred root set.`},
-    {label:'Preferred digit presence',points:digitBonus,detail:`${favHits} digits belong to the preferred set ${fav.join(', ')||'not calculated'}.`},
-    {label:'Avoid-digit presence',points:-avoidPenalty,detail:`${avoidHits} digits belong to the caution set ${avoid.join(', ')||'none'}.`},
-    {label:'Pattern repetition',points:repeatBonus,detail:repeats.length?`Repeated digits: ${repeats.join(', ')}.`:'No repeated digit pairs detected.'}
+    {label:'Compound/root match',points:rootPoints,detail:`Root ${root} ${rootMatch?'matches':'does not match'} preferred roots ${fav.join(', ')}.`},
+    {label:'Preferred digit presence',points:digitPoints,detail:`${favHits} preferred digits appear in the number.`},
+    {label:'Last-four position',points:tailPoints,detail:`${tailFavHits} preferred digits appear in the final four positions.`},
+    {label:'Digit variety',points:varietyPoints,detail:`${distinctCount} distinct digits appear.`},
+    {label:'Repeated pattern',points:patternPoints,detail:repeats.length?`Repeated digits: ${repeats.join(', ')}.`:'No repeated pairs detected.'},
+    {label:'Sequential pattern',points:-sequencePenalty,detail:hasSequential?'A consecutive sequence was detected.':'No obvious consecutive sequence detected.'},
+    {label:'Caution digits',points:-avoidPenalty,detail:avoidHits?`${avoidHits} occurrence(s) of caution digit(s) ${avoid.join(', ')}. This triggers AVOID.`:'No caution digits detected.'}
   ];
-  return {number,sum,root,score,status,fav,avoid,favHits,avoidHits,compoundTotals,okayTotals,avoidTotals,repeats,triples,ending,first,hasSequential,recommendations,explanations};
+  return {number,sum,root,score,status,fav,avoid,favHits,avoidHits,compoundTotals,okayTotals,avoidTotals,repeats,triples,ending,first,hasSequential,avoidFlag:avoidHits>0,explanations};
 }
 
 
@@ -1665,9 +1670,9 @@ function renderNumberEvaluations(numbers,dob){
   const winner=ranked[0];
   const fmt=a=>a.length?a.join(', '):'None identified';
   const cards=results.map(r=>{
-    const color=r.score>=75?'#16a34a':r.score>=60?'#84cc16':r.score>=45?'#eab308':'#ea580c';
+    const color=r.avoidFlag?'#dc2626':r.score>=85?'#16a34a':r.score>=75?'#84cc16':r.score>=60?'#eab308':'#ea580c';
     return `<article class="mc-number-card">
-      <div class="mc-num-head"><div><div class="mc-muted">Option ${r.option}${r.number===winner.number?' · TOP RANKED':''}</div><div class="mc-number">${r.number}</div></div>
+      <div class="mc-num-head"><div><div class="mc-muted">Option ${r.option}${r.number===winner.number?' · TOP RANKED':''}${r.avoidFlag?' · AVOID':''}</div><div class="mc-number">${r.number}</div></div>
       <div class="mc-score">${r.score}<small>/100</small><div class="mc-status" style="color:${color}">${r.status}</div></div></div>
       <div class="mc-meter"><span style="width:${r.score}%;background:${color}"></span></div>
       <div class="mc-stats">
@@ -1677,7 +1682,7 @@ function renderNumberEvaluations(numbers,dob){
       <details class="mc-details"><summary>View full number analysis</summary>
         <div class="mc-two-col">
           <div><h4>Preferred digits</h4><p>${fmt(r.fav)}</p></div>
-          <div><h4>Digits to limit</h4><p>${fmt(r.avoid)}</p></div>
+          <div><h4>${r.avoidFlag?'⛔ Avoid digits present':'Digits to limit'}</h4><p>${fmt(r.avoid)}${r.avoidFlag?` · Found ${r.avoidHits} time(s)`:''}</p></div>
           <div><h4>Repeated patterns</h4><p>${fmt(r.repeats)}</p></div>
           <div><h4>Ending / prefix</h4><p>Prefix: ${r.first} · Ending: ${r.ending}</p></div>
           <div><h4>Best-matching compound totals</h4><p>${fmt(r.compoundTotals)}</p></div>
@@ -1695,12 +1700,13 @@ function renderNumberEvaluations(numbers,dob){
   el.innerHTML=`<section class="rsec mc-evaluation">
     <h3>📱 VIP Number Comparison & Ranking</h3>
     <div class="mc-winner"><div><small>Best match among the numbers entered</small><h2>${winner.number}</h2><p>${winner.status} · Score ${winner.score}/100</p></div><div class="mc-winner-score">${winner.score}<small>/100</small></div></div>
+    ${results.some(r=>r.avoidFlag)?`<div class="mc-recommend" style="border-color:#dc2626"><strong style="color:#ef4444">⚠ Caution: ${results.filter(r=>r.avoidFlag).length} number(s) contain profile avoid digits.</strong><p>These are explicitly flagged AVOID and cannot score above 39/100.</p></div>`:''}
     <div class="mc-ranking"><h4>Comparison ranking</h4><ol>${ranked.map(r=>`<li><span>${r.number}</span><strong>#${ranked.indexOf(r)+1} · ${r.score}/100</strong></li>`).join('')}</ol></div>
     <div class="mc-recommend"><h4>Your number-selection guide</h4>
       <p><b>Preferred digits:</b> ${bestDigitList}</p>
       <p><b>Compound totals to look for:</b> ${suggestedTotals||'Use the personalised root shown in the detailed analysis.'}</p>
       <p><b>Single-digit total:</b> ${winner.root} for the top-ranked number. Your preferred single-digit roots are ${fmt(winner.fav)}.</p>
-      <p><b>Practical advice:</b> Prefer a number that combines personal compatibility with easy recall, a clean pattern and a number you genuinely like. Do not reject a number solely because of one digit.</p>
+      <p><b>Strict caution rule:</b> Any number containing one or more profile caution digits is flagged AVOID and capped below 40/100.</p><p><b>Practical advice:</b> First remove numbers flagged AVOID, then compare compound totals, preferred-digit placement, repetition and memorability.</p>
     </div>
     ${cards}
     <p class="mc-disclaimer">Numerology is a traditional belief system, not a scientifically validated way to predict success. Scores are heuristic comparison indicators based on the rules displayed here. They are not probabilities or guarantees. Compound totals are listed by digital-root grouping; individual compound meanings may differ across numerology traditions.</p>

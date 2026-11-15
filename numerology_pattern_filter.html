@@ -146,6 +146,25 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
   <button class="secondary" id="logoutButton" type="button">Sign Out</button>
 </div>
 
+<section class="card" id="passwordPanel">
+  <h2>Account Security · Change Password</h2>
+  <p class="hint">You can change your own password anytime after signing in. Use at least 8 characters.</p>
+  <form id="changePasswordForm" class="grid">
+    <div class="field">
+      <label for="newPassword">New password</label>
+      <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Enter new password">
+    </div>
+    <div class="field">
+      <label for="confirmNewPassword">Confirm new password</label>
+      <input id="confirmNewPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Re-enter new password">
+    </div>
+    <div class="field full">
+      <button id="changePasswordButton" type="submit">Update My Password</button>
+      <div class="auth-error" id="passwordChangeMessage" role="status"></div>
+    </div>
+  </form>
+</section>
+
 <section class="card admin-panel" id="adminPanel" style="display:none">
   <h2>Dealer Management</h2>
   <p class="hint">Create an individual dealer login. A temporary password will be shown once after successful creation. Share it securely with that dealer.</p>
@@ -399,18 +418,19 @@ patternInput.addEventListener("keydown", function(e) {
   }
 });
 
-patternInput.addEventListener("input", function() {
+patternInput.addEventListener("input", function(event) {
   const cursor = this.selectionStart;
   const before = this.value.slice(0, cursor);
   const segment = before.split(/[,\n]/).pop().trim();
+  const after = this.value.slice(cursor);
+  const isDeletion = event.inputType && event.inputType.startsWith("delete");
 
-  if (segment.length === 10 && !/[,\n]\s*$/.test(before)) {
-    const trimmed = before.trimEnd();
-    if (trimmed.length === cursor) {
-      const after = this.value.slice(cursor);
-      this.value = trimmed + ", " + after;
-      this.setSelectionRange(trimmed.length + 2, trimmed.length + 2);
-    }
+  // Add a separator after the 10th character only while typing, never while
+  // the user is deleting or editing an existing separator.
+  if (!isDeletion && segment.length === 10 && cursor === this.value.length &&
+      !/[ ,\n]\s*$/.test(before)) {
+    this.value = before + ", ";
+    this.setSelectionRange(this.value.length, this.value.length);
   }
   updatePatternHint();
 });
@@ -1062,6 +1082,53 @@ $("logoutButton").addEventListener("click", async () => {
   $("authScreen").style.display = "block";
   $("loginPassword").value = "";
   showAuthError("You have signed out.");
+});
+
+// Allow any authenticated administrator or dealer to change their own password.
+$("changePasswordForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const message = $("passwordChangeMessage");
+  const button = $("changePasswordButton");
+  const newPassword = $("newPassword").value;
+  const confirmPassword = $("confirmNewPassword").value;
+
+  message.style.color = "var(--red)";
+  message.textContent = "";
+
+  if (newPassword.length < 8) {
+    message.textContent = "Password must contain at least 8 characters.";
+    return;
+  }
+  if (newPassword !== confirmPassword) {
+    message.textContent = "The passwords do not match.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Updating…";
+
+  try {
+    const { data: sessionData, error: sessionError } =
+      await supabaseClient.auth.getSession();
+    if (sessionError) throw sessionError;
+    if (!sessionData.session) throw new Error("Your session has expired. Please sign in again.");
+
+    const { error } = await supabaseClient.auth.updateUser({
+      password: newPassword
+    });
+    if (error) throw error;
+
+    $("newPassword").value = "";
+    $("confirmNewPassword").value = "";
+    message.style.color = "var(--green)";
+    message.textContent = "Your password has been updated successfully.";
+  } catch (error) {
+    message.style.color = "var(--red)";
+    message.textContent = error.message || "Password update failed. Please try again.";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Update My Password";
+  }
 });
 
 $("createDealerForm").addEventListener("submit", async (event) => {

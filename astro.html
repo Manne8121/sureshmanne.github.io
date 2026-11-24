@@ -2,466 +2,1519 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101827">
-<meta name="description" content="Free VIP mobile number total calculator by Manne Communications. Calculate digit sums and single digit roots for Indian mobile numbers in bulk.">
-<title>VIP Number Total Calculator | Manne Communications</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manne Communications — Astrology Platform</title>
+
 <style>
-:root{--bg:#f4f6fa;--panel:#fff;--ink:#172033;--muted:#687386;--line:#e4e8ef;--navy:#101827;--gold:#c7a45b;--gold2:#ead7a8;--green:#137a55;--red:#c23c42;--shadow:0 14px 38px rgba(18,31,51,.08)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-header{background:linear-gradient(135deg,#101827,#1c2b43);color:#fff;padding:27px 18px 30px;border-bottom:3px solid var(--gold)}
-.head{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
-.brand{display:flex;align-items:center;gap:13px}.mark{width:44px;height:44px;border:1px solid rgba(234,215,168,.7);border-radius:13px;display:grid;place-items:center;color:var(--gold2);font-size:23px;font-weight:800}
-.brand-name{font-weight:800;letter-spacing:.4px;font-size:17px}.tagline{font-size:11px;color:#d5dbea;margin-top:4px;letter-spacing:.7px}
-.head-note{font-size:12px;color:#d5dbea;text-align:right}
-main{max-width:1120px;margin:28px auto;padding:0 16px 45px}
-.intro{text-align:center;margin:0 auto 23px}.intro h1{font-size:clamp(25px,4vw,35px);margin:0 0 8px;letter-spacing:-.8px}.intro p{color:var(--muted);margin:0;font-size:15px}
-.layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:18px;align-items:start}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);padding:21px}
-.panel h2{font-size:17px;margin:0 0 7px}.sub{font-size:13px;color:var(--muted);margin:0 0 17px;line-height:1.5}
-textarea{width:100%;min-height:225px;resize:vertical;border:1px solid #d9dfe8;border-radius:12px;padding:15px;font:15px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--ink);outline:none;background:#fbfcfe}
-textarea:focus,input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(199,164,91,.14)}
-.entry-workspace{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(210px,.85fr);gap:12px;align-items:stretch}
-.entry-workspace textarea{min-height:225px}
-.live-check{border:1px solid var(--line);border-radius:12px;background:#fbfcfe;padding:12px;min-width:0}
-.live-check h3{font-size:13px;margin:0 0 5px}
-.live-check .live-note{font-size:11px;color:var(--muted);margin:0 0 10px;line-height:1.45}
-.live-list{display:grid;gap:7px;max-height:225px;overflow:auto}
-.live-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px}
-.live-item .live-number{font:700 12px ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
-.live-meta{display:flex;align-items:center;gap:6px;white-space:nowrap}
-.live-sum{font-size:11px;color:var(--muted);font-weight:700}
-.live-empty{font-size:12px;color:var(--muted);padding:14px 5px;text-align:center}
-@media(max-width:800px){.entry-workspace{grid-template-columns:1fr}.entry-workspace textarea{min-height:180px}.live-list{max-height:180px}}
-.hint{font-size:12px;color:var(--muted);margin:9px 0 15px}
-.actions{display:flex;gap:9px;flex-wrap:wrap}
-button{border:0;border-radius:10px;padding:11px 15px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
-button:focus-visible{outline:3px solid rgba(199,164,91,.4);outline-offset:2px}
-.primary{background:var(--navy);color:#fff}.primary:hover{background:#263953}.secondary{background:#f2eee4;color:#6b5427;border:1px solid #e7d8b5}.light{background:#f3f5f8;color:#354157;border:1px solid var(--line)}button:disabled{opacity:.45;cursor:not-allowed}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:0 0 16px}
-.stat{background:#f7f8fb;border:1px solid var(--line);border-radius:12px;padding:12px}.stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.stat strong{font-size:22px;letter-spacing:-.5px}
-.tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px}
-.tools input,.tools select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:10px 11px;background:#fff;color:var(--ink);font-size:14px}
-.tools input{flex:1;min-width:140px}.tools select{min-width:130px}
-.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
-table{width:100%;border-collapse:collapse;min-width:510px;font-size:14px}
-th{background:#f7f8fb;color:#697487;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.55px;padding:12px 13px;white-space:nowrap}
-td{padding:12px 13px;border-top:1px solid #edf0f4;white-space:nowrap}
-tbody tr:hover{background:#fcfaf5}.number{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:14px;font-weight:750;letter-spacing:.5px}
-.root{display:inline-grid;place-items:center;min-width:30px;height:30px;padding:0 8px;border-radius:9px;font-weight:850}
-.root-1{background:#fff0ed;color:#b33a2c}.root-2{background:#eaf3ff;color:#245da8}.root-3{background:#fff5d9;color:#946800}
-.root-4{background:#e9f6ed;color:#247343}.root-5{background:#f1eaff;color:#7043ad}.root-6{background:#ffeaf3;color:#a52e68}
-.root-7{background:#e6f6f5;color:#176c69}.root-8{background:#f0eff2;color:#49434f}.root-9{background:#ffeddf;color:#a64c16}
-.filter-box{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fbfcfe;margin:0 0 12px}
-.group-panel{border:1px solid var(--line);border-radius:12px;padding:13px;margin-top:13px;background:#fff}
-.wa-panel{border:1px solid #cfe5d7;background:#f6fbf7;border-radius:13px;padding:14px;margin-top:13px}
-.wa-panel[hidden]{display:none}.wa-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
-.batch-size{font-size:11px;font-weight:700;color:#687386;min-width:135px}.batch-size select{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff}
-.batch-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
-.batch-card{background:#fff;border:1px solid #dce9df;border-radius:10px;padding:11px;min-width:0}
-.batch-card strong{font-size:14px}.batch-card small{display:block;color:var(--muted);font-size:11px;margin:4px 0 9px}
-.batch-actions{display:flex;gap:6px;flex-wrap:wrap}.batch-actions button{flex:1;padding:8px 9px;font-size:12px}
-@media(max-width:480px){.wa-head{display:block}.batch-size{display:block;margin-top:10px}.batch-list{grid-template-columns:1fr}}
-.group-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.group-card{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fbfcfe;display:flex;align-items:center;gap:9px;min-width:0}
-.group-card strong{font-size:18px}.group-card small{display:block;color:var(--muted);font-size:10px}
-.group-card button{margin-left:auto;padding:6px 8px;font-size:10px;background:#f0f2f6;color:#344157}
-@media(max-width:480px){.group-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.filter-title{font-size:12px;font-weight:800;color:#344157;margin-bottom:10px}
-.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.filter-grid label{font-size:11px;font-weight:700;color:#687386}
-.filter-grid input{display:block;width:100%;margin-top:5px;border:1px solid #d9dfe8;border-radius:9px;padding:10px;background:white;color:var(--ink);font-size:14px}
-@media(max-width:480px){.filter-grid{grid-template-columns:1fr}}
-.empty{text-align:center;color:var(--muted);padding:28px 12px!important}
-.bad{color:var(--red);font-size:12px;margin-top:12px;line-height:1.5}.good{color:var(--green);font-size:12px;margin-top:12px}
-footer{text-align:center;color:#7c8798;font-size:12px;padding:20px 12px 30px}footer b{color:#344057}
-.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#172235;color:white;padding:11px 16px;border-radius:10px;font-size:13px;box-shadow:var(--shadow);transition:.2s;z-index:5}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:800px){.layout{grid-template-columns:1fr}.head-note{display:none}main{margin-top:22px}.panel{padding:17px}}
-@media(max-width:420px){.stats{gap:6px}.stat{padding:10px 8px}.stat strong{font-size:19px}.actions button{flex:1}.intro p{font-size:14px}}
-@media print{header,.intro,.entry-panel,.tools,.actions,footer{display:none!important}body{background:#fff}.layout{display:block}main{margin:0;padding:0}.panel{box-shadow:none;border:0;padding:0}.table-wrap{overflow:visible}table{min-width:0}th,td{padding:7px;font-size:12px}}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a84c;--gold-l:#e8c97a;--gold-d:#8a6620;--bg:#080808;--card:#111111;--card2:#1a1a1a;--border:#252525;--text:#f0ede4;--muted:#77776e;--red:#e24b4a;--grn:#22c55e}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:20px}
+.screen{display:none;min-height:100vh;flex-direction:column}.screen.show{display:flex}
+.cflex{align-items:center;justify-content:center}
+.wrap{width:100%;max-width:720px;margin:0 auto;padding:2rem 1.25rem}.wrap.wide{max-width:1100px}
+.narrow{max-width:440px}
+.brand{font-size:24px;font-weight:700;color:var(--gold);letter-spacing:.06em;text-align:center}
+.sub{font-size:16px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-top:4px}
+#tbar{position:sticky;top:0;z-index:200;background:#0d0b02;border-bottom:0.5px solid #3a2a00;padding:9px 1.5rem;display:none;align-items:center;justify-content:space-between}
+#tbar.warn{background:#110800;border-bottom-color:#7a3500}
+#ttxt{font-size:18px;color:var(--gold);font-weight:600}
+#tbar.warn #ttxt{color:#f59e0b}
+.card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:1.5rem}
+.card-s{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:1rem 1.25rem}
+.fld{margin-bottom:1rem}.fld label{display:block;font-size:17px;color:var(--muted);margin-bottom:5px;letter-spacing:.02em}
+.req{color:var(--red);margin-left:2px}
+.fld input,.fld select,.fld textarea{width:100%;background:var(--card2);border:0.5px solid var(--border);border-radius:8px;color:var(--text);font-size:19px;padding:10px 12px;outline:none;font-family:inherit;transition:border-color .15s}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--gold)}
+.fld select option{background:var(--card)}.fld textarea{resize:vertical;min-height:80px}
+.fld .er{font-size:16px;color:var(--red);margin-top:3px;min-height:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;border-radius:8px;font-size:19px;font-weight:500;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
+.bg{background:var(--gold);color:#000}.bg:hover{background:var(--gold-l)}.bg:disabled{opacity:.4;cursor:not-allowed}
+.bo{background:transparent;color:var(--text);border:0.5px solid var(--border)}.bo:hover{border-color:var(--gold);color:var(--gold)}
+.bgh{background:transparent;color:var(--muted);border:none;cursor:pointer;font-family:inherit;font-size:19px}.bgh:hover{color:var(--text)}
+.bw{background:#14532d;color:#bbf7d0;border:none}.bw:hover{background:#166534}
+.bv{background:#7f1d1d;color:#fecaca;border:none}.bv:hover{background:#991b1b}
+.bpur{background:#4c1d95;color:#ddd6fe;border:none}.bpur:hover{background:#5b21b6}
+.bfull{width:100%}.bsm{padding:6px 14px;font-size:18px}
+.stitle{font-size:16px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:1.5rem 0 .75rem}
+/* REPORT STYLES */
+.rh{background:var(--card2);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.rname{font-size:27px;font-weight:700;color:var(--gold);margin-bottom:5px}
+.rmeta{font-size:18px;color:var(--muted);line-height:1.7}
+.rsec{background:var(--card);border:0.5px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:.75rem}
+.rsec h3{font-size:16px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;display:flex;align-items:center;gap:6px}
+.rcontent{font-size:19px;color:var(--text);line-height:1.75}
+/* NAME GRID */
+.ngrid{display:flex;flex-wrap:wrap;gap:6px;margin:.75rem 0}
+.nletter{background:var(--card2);border:0.5px solid var(--border);border-radius:6px;padding:6px 10px;text-align:center;min-width:44px}
+.nletter.vowel{border-color:var(--gold-d)}
+.nletter .lc{font-size:20px;font-weight:700;color:var(--gold)}
+.nletter .lv{font-size:16px;color:var(--muted);margin-top:2px}
+.nletter.space{background:transparent;border:none;width:10px;min-width:10px}
+/* CORE NUMBERS */
+.nums-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:.75rem 0}
+.nc{background:var(--card2);border:0.5px solid var(--border);border-radius:8px;padding:.85rem;text-align:center}
+.nc .nn{font-size:31px;font-weight:700;color:var(--gold)}
+.nc .nt{font-size:15px;color:var(--muted);margin-top:2px;letter-spacing:.03em}
+.nc .ns{font-size:16px;color:var(--text);margin-top:3px;font-style:italic}
+/* PROFILE */
+.profile-row{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin:.75rem 0}
+.pitem .pk{font-size:16px;color:var(--muted);margin-bottom:2px}
+.pitem .pv{font-size:18px;color:var(--text);font-weight:500}
+.interp{font-size:19px;color:var(--text);line-height:1.75;margin-top:.75rem}
+/* MATCH */
+.mi{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border);flex-wrap:wrap}
+.mi:last-child{border-bottom:none}
+.mnum{font-size:20px;font-weight:600;font-family:monospace;color:var(--text);min-width:115px}
+.mreason{font-size:17px;color:var(--muted);flex:1}
+.tag{font-size:16px;padding:3px 10px;border-radius:20px;font-weight:700;white-space:nowrap}
+.tbest{background:#14532d;color:#bbf7d0}.tgood{background:#1e3a5f;color:#bfdbfe}
+.tavoid{background:#7f1d1d;color:#fecaca}.tneut{background:#1f1f1f;color:var(--muted)}
+.abar{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.5rem;border-top:0.5px solid var(--border)}
+/* ADMIN */
+.sstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.sc{background:var(--card2);border-radius:8px;padding:.85rem;text-align:center}
+.sc .sn{font-size:29px;font-weight:700;color:var(--gold)}.sc .sl{font-size:16px;color:var(--muted);margin-top:2px}
+.ctbl{width:100%;min-width:700px;border-collapse:collapse;font-size:16px}
+.ctbl th{text-align:left;font-size:14px;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:0.5px solid var(--border);text-transform:uppercase;letter-spacing:.04em}
+.ctbl td{padding:10px 8px;border-bottom:0.5px solid var(--border);vertical-align:middle;white-space:nowrap}
+.ctbl tr:last-child td{border-bottom:none}
+.cm{font-family:monospace;font-size:16px;letter-spacing:.04em;color:var(--gold);white-space:nowrap}
+.sb{font-size:15px;padding:2px 8px;border-radius:20px;font-weight:700}
+.su-b{background:#14532d;color:#bbf7d0}.sac{background:#1e3a5f;color:#bfdbfe}
+.sus{background:#1f1f1f;color:var(--muted)}.sex{background:#1c1008;color:#f59e0b}
+.srv{background:#7f1d1d;color:#fecaca}.spd{background:#4c1d95;color:#ddd6fe}
+.sai{background:#065f46;color:#d1fae5}
+.tbl-wrap{overflow-x:auto;margin-top:.75rem}
+.ldwrap{display:flex;flex-direction:column;align-items:center;gap:1.5rem;padding:5rem 0}
+.spn{width:52px;height:52px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+.spnsm{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.dot{display:inline-block;width:5px;height:5px;background:var(--gold);border-radius:50%;margin:0 2px;animation:pp 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes pp{0%,100%{opacity:.2}50%{opacity:1}}
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--card);border:0.5px solid var(--border);border-radius:8px;padding:.75rem 1.25rem;font-size:18px;color:var(--text);z-index:999;white-space:nowrap;transition:all .25s;opacity:0;pointer-events:none}
+#toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:440px;width:100%}
+.rc{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:2rem 1.5rem;cursor:pointer;text-align:center;transition:all .2s}
+.rc:hover{border-color:var(--gold);background:var(--card2)}
+.rc .ico{font-size:41px;margin-bottom:.75rem}.rc .rt{font-size:20px;font-weight:600;color:var(--text);margin-bottom:4px}.rc .rd{font-size:17px;color:var(--muted)}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.topbar .pg{font-size:22px;font-weight:600;color:var(--gold)}.topbar .ps{font-size:17px;color:var(--muted);margin-top:2px}
+.ai-box{background:linear-gradient(135deg,#1a1408,#0d0d0d);border:0.5px solid var(--gold-d);border-radius:12px;padding:1.25rem;margin-top:.75rem}
+.ai-box h3{font-size:18px;font-weight:600;color:var(--gold);margin-bottom:.5rem}
+.ai-box p{font-size:18px;color:var(--muted);margin-bottom:1rem}
+.ai-narrative{font-size:19px;color:var(--text);line-height:1.8;font-style:italic;padding:.75rem;background:var(--card2);border-radius:8px;border-left:3px solid var(--gold);margin-top:.75rem}
+.divider{display:flex;align-items:center;gap:.75rem;margin:1.5rem 0}
+.divider::before,.divider::after{content:'';flex:1;height:0.5px;background:var(--border)}
+.divider span{font-size:16px;color:var(--muted);white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}
+/* PDF */
+#pdfout{display:none;position:absolute;left:-9999px;top:-9999px;width:210mm;background:#fff}
+#pdfc{padding:14mm;color:#111;font-family:Georgia,serif;font-size:10pt;line-height:1.6}
+#pdfc .ph{text-align:center;border-bottom:2.5px solid #c9a84c;padding-bottom:12px;margin-bottom:16px}
+#pdfc .pc{font-size:20pt;font-weight:bold;color:#c9a84c;letter-spacing:.07em;font-family:sans-serif}
+#pdfc .pp{font-size:8.5pt;color:#555;margin-top:3px;font-family:sans-serif}
+#pdfc .pt{font-size:8pt;color:#888;font-style:italic;margin-top:2px;font-family:sans-serif}
+#pdfc .pw{font-size:8pt;color:#aaa;margin-top:3px;font-family:sans-serif}
+#pdfc .pcb{background:#fdf8ec;border:1px solid #e8c97a;border-radius:6px;padding:12px;margin-bottom:14px}
+#pdfc .pcn{font-size:14pt;font-weight:bold;color:#8a6620;margin-bottom:5px;font-family:sans-serif}
+#pdfc .pcs{font-size:9pt;color:#555;line-height:1.65;font-family:sans-serif}
+#pdfc .psec{margin-bottom:14px;page-break-inside:avoid;break-inside:avoid}
+#pdfc .psec h3{font-size:9pt;font-weight:bold;color:#8a6620;text-transform:uppercase;letter-spacing:.05em;border-bottom:0.5px solid #e8c97a;padding-bottom:3px;margin-bottom:6px;font-family:sans-serif}
+#pdfc .psec p{font-size:9.5pt;line-height:1.65;margin-bottom:4px}
+#pdfc .pnums{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0}
+#pdfc .pn{border:1px solid #c9a84c;border-radius:5px;padding:4px 10px;text-align:center}
+#pdfc .pn .pnn{font-size:13pt;font-weight:bold;color:#8a6620;font-family:sans-serif}
+#pdfc .pn .pnl{font-size:7pt;color:#888;font-family:sans-serif}
+#pdfc .pmr{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:0.5px solid #f0e8d0;font-size:9pt}
+#pdfc .ptag{padding:2px 7px;border-radius:8px;font-size:7.5pt;font-weight:bold;font-family:sans-serif}
+#pdfc .ptbest{background:#d1fae5;color:#065f46}
+#pdfc .ptgood{background:#dbeafe;color:#1e40af}
+#pdfc .ptavoid{background:#fee2e2;color:#991b1b}
+#pdfc .pngrid{display:flex;flex-wrap:wrap;gap:4px;margin:.4rem 0}
+#pdfc .pnl2{border:0.5px solid #c9a84c;border-radius:4px;padding:3px 7px;text-align:center;font-family:sans-serif}
+#pdfc .pnl2 .lc{font-size:10pt;font-weight:bold;color:#8a6620}
+#pdfc .pnl2 .lv{font-size:7pt;color:#888}
+#pdfc .pfoot{text-align:center;border-top:0.5px solid #e8c97a;padding-top:10px;margin-top:16px;font-size:8pt;color:#888;font-family:sans-serif;line-height:1.6}
+@media(max-width:520px){.g2,.g3,.rg{grid-template-columns:1fr}.sstrip{grid-template-columns:1fr 1fr}.abar{flex-direction:column}.wrap{padding:1.25rem .85rem}.nums-grid{grid-template-columns:1fr 1fr 1fr}}
 
-/* Matte black and glowing gold visual theme */
-:root{--bg:#07080d;--panel:#0d101b;--ink:#f4f1e9;--muted:#a7afc2;--line:#252a3c;--navy:#d6a93d;--gold:#f3c85b;--gold2:#ffe28a;--green:#4fd3a0;--red:#ff7777;--shadow:0 18px 55px rgba(0,0,0,.38)}
-body{background-color:#07080d;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),radial-gradient(ellipse at 50% 0%,rgba(184,132,34,.13),transparent 48%);background-size:58px 58px,58px 58px,auto;color:var(--ink)}
-header{background:rgba(7,8,13,.94);border-bottom:1px solid rgba(243,200,91,.2)}
-.mark{background:#15120b;color:var(--gold2);box-shadow:0 0 22px rgba(243,200,91,.13)}
-.brand-name{color:#f5f0e4}.tagline{color:#c6a95f}
-.head-note{color:#9ca6bb}
-main{max-width:1320px;margin:34px auto}
-.intro{margin:0 auto 48px;max-width:850px}
-.tool-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(243,200,91,.32);border-radius:30px;padding:9px 18px;color:#f2c95f;background:rgba(243,200,91,.08);font:600 11px ui-monospace,monospace;letter-spacing:3px;margin-bottom:28px}
-.tool-badge span{width:8px;height:8px;border-radius:50%;background:#ffd76a;box-shadow:0 0 14px #ffd76a}
-.intro h1{font-size:clamp(42px,7vw,78px);line-height:1.03;letter-spacing:1px;font-weight:950;text-transform:uppercase;margin:0 0 22px;text-shadow:0 5px 30px rgba(255,255,255,.08)}
-.intro h1 span,.intro h1 strong{display:block}
-.intro h1 span{color:#f4f1e9}
-.intro h1 strong{font-weight:950;color:#f4c85d;text-shadow:0 0 12px rgba(243,200,91,.55),0 0 38px rgba(243,200,91,.32)}
-.intro p{color:#aeb7cb;font-size:16px;line-height:1.7}
-.layout{max-width:1240px;margin:0 auto;gap:22px}
-.panel{background:linear-gradient(145deg,rgba(16,19,31,.98),rgba(10,12,21,.98));border:1px solid #292d40;box-shadow:0 20px 55px rgba(0,0,0,.3);border-radius:20px}
-.panel h2{color:#f4f0e6}
-.sub,.hint,.live-check .live-note{color:#a8b1c5}
-textarea{background:#111523;color:#f4f0e6;border-color:#34394d;caret-color:#ffd76a}
-textarea::placeholder,input::placeholder{color:#737e96}
-textarea:focus,input:focus,select:focus{border-color:#e8bd51;box-shadow:0 0 0 3px rgba(243,200,91,.12)}
-.live-check{background:#101421;border-color:#30364b}
-.live-check h3{color:#f5d47c}
-.live-item{background:#171c2b;border-color:#30364b}
-.live-number{color:#f2f0e9}
-.live-sum{color:#aeb8cc}
-.live-empty{color:#929db3}
-.primary{background:linear-gradient(135deg,#f4d477,#c9972d);color:#17120a}
-.primary:hover{background:linear-gradient(135deg,#ffe49a,#d6a43b)}
-.secondary{background:#211c11;color:#f5d47c;border:1px solid #665125}
-.light{background:#171c2a;color:#dce2ef;border:1px solid #34394d}
-.stat{background:#141927;border-color:#30364b}
-.stat small{color:#a9b3c7}.stat strong{color:#f7f3e9}
-.tools input,.tools select{background:#111624;color:#eee9df;border-color:#34394d}
-.tools input:focus,.tools select:focus{border-color:#e8bd51}
-.table-wrap{border-color:#30364b}
-th{background:#171c2a;color:#c2cad9}
-td{border-top-color:#282e40;color:#e9eaf0}
-tbody tr:hover{background:#1a1c26}
-.group-card{background:#141927;border-color:#30364b;color:#f0eee8}
-.group-card button{background:#292315;color:#f2ce70;border:1px solid #5b4924}
-#message.good{color:#65d9aa}#message.bad{color:#ff9292}
-footer{color:#8792a9}
-.layout{grid-template-columns:minmax(0,1fr)}
-.filter-panel{width:100%}
-@media(max-width:800px){main{margin-top:25px}.intro{margin-bottom:30px}.intro h1{font-size:clamp(38px,10vw,58px)}}
+.rv-row{display:flex;align-items:center;justify-content:space-between;background:#181818;border:0.5px solid var(--border);border-radius:10px;padding:.75rem 1rem;gap:.5rem}
+.rv-label{font-size:13px;color:var(--muted);min-width:90px;flex-shrink:0}
+.rv-val{font-size:16px;font-weight:600;color:var(--text);flex:1;text-align:right}
+.rv-edit{font-size:12px;color:var(--gold);background:transparent;border:1px solid var(--gold);border-radius:6px;padding:3px 10px;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.rv-edit:active{background:var(--gold);color:#000}
 
+
+input[list]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c9a84c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+
+@media print {
+  @page { margin: 10mm; size: A4; }
+  body { background: #fff !important; }
+  body > * { display: none !important; }
+  #pdfout { display: block !important; position: static !important; left: 0 !important; width: 100% !important; opacity: 1 !important; }
+  #pdfc { display: block !important; background: #fff !important; }
+  #pdfbody { display: block !important; }
+  .ph { display: block !important; }
+}
+.fld input[type=checkbox]{width:17px;height:17px;accent-color:var(--gold);flex:0 0 auto}
+a{color:var(--gold)}
 </style>
 </head>
 <body>
-<header><div class="head">
-  <div class="brand"><div class="mark">M</div><div><div class="brand-name">MANNE COMMUNICATIONS</div><div class="tagline">NUMBER THAT MATTERS · IDENTITY THAT STAYS</div></div></div>
-  <div class="head-note">VIP & Fancy Mobile Number Tools<br>Made for quick, accurate calculations</div>
-</div></header>
-<main>
-  <div class="intro"><div class="tool-badge"><span></span> FREE ONLINE TOOL</div><h1><span>NUMBER TOTAL</span><strong>INSTANT CALCULATOR</strong></h1><p>Paste any number list, in any format. Get digit totals and single-digit roots instantly.</p></div>
-  <div class="layout">
-    <section class="panel entry-panel">
-      <h2>Enter mobile numbers</h2>
-      <p class="sub">Paste up to 1,000 mobile numbers per calculation from WhatsApp, Excel, websites or messages. Emojis, icons, spaces and decorative characters between digits are ignored.</p>
-      <div class="entry-workspace">
-        <textarea id="numbers" spellcheck="false" inputmode="numeric" autocomplete="off" autocorrect="off" placeholder="9090900005&#10;9999944449&#10;8888877777"></textarea>
-        <aside class="live-check" aria-live="polite">
-          <h3>Quick live total</h3>
-          <p class="live-note">Digit total and single-digit root appear here as you type or paste.</p>
-          <div id="liveResults" class="live-list"><div class="live-empty">Start entering a 10-digit mobile number.</div></div>
-        </aside>
+
+<div id="toast"></div>
+<div id="tbar"><span id="ttxt">⏱ Trial: 10:00</span><span style="font-size:12px;color:var(--muted)">Manne Communications</span></div>
+
+<!-- SPLASH -->
+<div class="screen show cflex" id="screen-splash" style="flex-direction:column;gap:1rem;text-align:center">
+  <div style="font-size:26px;font-weight:800;color:var(--gold);letter-spacing:.07em">MANNE COMMUNICATIONS</div>
+  <div style="font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase">Astrology Consultation Platform v2</div>
+  <div style="margin-top:.5rem"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <div style="font-size:11px;color:var(--muted)">Offline Chaldean Engine · Powered by Anthropic AI</div>
+</div>
+
+<!-- ROLE -->
+<div class="screen cflex" id="screen-role" style="flex-direction:column">
+  <div class="wrap wide" style="padding-top:2.5rem">
+    <div style="text-align:center;margin-bottom:2rem">
+      <div class="brand" style="font-size:clamp(24px,4vw,34px)">MANNE COMMUNICATIONS</div>
+      <div class="sub">Numerology & Astrology Alignment Platform</div>
+      <h1 style="font-size:clamp(27px,5vw,42px);line-height:1.2;margin:2rem auto .8rem;color:var(--gold-l);max-width:850px">Discover Your Numbers. Understand Your Potential.</h1>
+      <p style="max-width:760px;margin:0 auto;color:var(--muted);line-height:1.7;font-size:17px">A structured personal and business assessment using established numerology and astrology traditions. Share your details for a personal review by Suresh Manne.</p>
+      <button class="btn bg" style="margin-top:1.5rem;padding:14px 28px" onclick="showScreen('form')">Start Your Free Assessment →</button>
+      <div style="margin-top:.8rem;color:var(--muted);font-size:13px">No customer login · No online payment · Personal WhatsApp follow-up</div>
+    </div>
+    <div class="g2" style="gap:14px;margin:2rem auto;max-width:900px">
+      <div class="card"><div style="font-size:25px;margin-bottom:.5rem;color:var(--gold)">✦ Personal Alignment</div><p style="color:var(--muted);font-size:15px;line-height:1.7">Birth-date numbers, name analysis, mobile-number assessment and relevant astrology factors, subject to complete and reliable birth information.</p></div>
+      <div class="card"><div style="font-size:25px;margin-bottom:.5rem;color:var(--gold)">◈ Business Alignment</div><p style="color:var(--muted);font-size:15px;line-height:1.7">Business and brand name analysis, owner details, business category, start date and contact-number assessment.</p></div>
+    </div>
+    <div class="card" style="max-width:900px;margin:0 auto 1.25rem">
+      <div class="stitle" style="margin-top:0">Knowledge-based reasoning</div>
+      <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:1rem">The assessment is designed to explain why an interpretation is reached. Results should identify the method, inputs, calculation and reasoning, rather than presenting unexplained conclusions.</p>
+      <div class="g2">
+        <div class="card-s"><b style="color:var(--gold)">Chaldean Numerology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Letter values, compound totals, name analysis and number patterns.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Pythagorean Numerology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Life Path, Expression, Soul Urge, Personality and personal cycles.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Vedic Astrology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Lagna, Rashi, Nakshatra, planetary placements and Dasha, when calculations are validated.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">KP Astrology</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Nakshatra lord, sub-lord and house significations, where validated chart data is available.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Vedic Numerology & Lo Shu</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Birth-date grid patterns, planetary number associations and repeated or missing digits.</p></div>
+        <div class="card-s"><b style="color:var(--gold)">Method comparison</b><p style="font-size:14px;color:var(--muted);margin-top:5px;line-height:1.6">Where systems agree or differ, the explanation should make those differences clear.</p></div>
       </div>
-      <div class="hint">Typing accepts digits only. After 10 digits, the cursor moves to the next line automatically. Pasted text is cleaned into 10-digit numbers. Each number must start with 6, 7, 8 or 9. Maximum: 1,000 valid unique numbers per calculation.</div>
-      <div class="actions">
-        <button class="secondary" id="sample">Load sample</button>
-        <button class="light" id="clear">Clear</button>
-      </div>
-      <div id="message" aria-live="polite"></div>
-    </section>
-    <section class="panel filter-panel">
-      <div class="filter-box">
-        <div class="filter-title">Optional exclusions</div>
-        <div class="filter-grid">
-          <label>Include digits in numbers
-            <input id="includeDigits" type="text" inputmode="numeric" maxlength="10" placeholder="Example: 9, 0">
-          </label>
-          <label>Include single-digit totals
-            <input id="includeTotals" type="text" inputmode="numeric" maxlength="17" placeholder="Example: 1, 5">
-          </label>
-          <label>Exclude digits in numbers
-            <input id="excludeDigits" type="text" inputmode="numeric" maxlength="10" placeholder="Example: 2, 4, 8">
-          </label>
-          <label>Exclude single-digit totals
-            <input id="excludeTotals" type="text" inputmode="numeric" maxlength="17" placeholder="Example: 4, 8">
-          </label>
-        </div>
-        <div class="hint" style="margin:8px 0 0">Include digits requires every entered digit to appear in the number. Exclude digits removes a number if it contains any excluded digit. Include/exclude totals work on the final single-digit root. Exports follow the active filters.</div>
-      </div>
-      <div class="tools" style="margin-top:13px">
-        <input id="search" type="search" placeholder="Search number or total…" aria-label="Search results">
-        <select id="filter" aria-label="Filter by total"><option value="all">All totals</option><option value="1">Total 1</option><option value="2">Total 2</option><option value="3">Total 3</option><option value="4">Total 4</option><option value="5">Total 5</option><option value="6">Total 6</option><option value="7">Total 7</option><option value="8">Total 8</option><option value="9">Total 9</option></select>
-        <select id="sort" aria-label="Sort results"><option value="input">Original order</option><option value="number">Number: low to high</option><option value="sumAsc">Total: low to high</option><option value="sumDesc">Total: high to low</option><option value="root">Root: low to high</option></select>
-      </div>
-      <div class="table-wrap"><table><thead><tr><th>#</th><th>Mobile number</th><th>Digit total</th><th>Single digit</th></tr></thead><tbody id="results"><tr><td colspan="4" class="empty">Your calculated numbers will appear here.</td></tr></tbody></table></div>
-      <div class="group-panel">
-        <div class="filter-title">Numbers grouped by single-digit total</div>
-        <div id="groupSummary" class="group-grid"><div class="empty">Groups will appear after calculation.</div></div>
-      </div>
-      <div class="actions" style="margin-top:13px">
-        <button class="secondary" id="copy" disabled>Copy results</button>
-        <button class="light" id="txt" disabled>Download TXT</button>
-        <button class="light" id="csv" disabled>Download CSV</button>
-        <button class="light" id="whatsapp" disabled>WhatsApp batches</button>
-        <button class="light" id="print" disabled>Print</button>
-      </div>
-      <div class="wa-panel" id="waPanel" hidden>
-        <div class="wa-head">
-          <div><div class="filter-title">WhatsApp copy & send batches</div><div class="hint" style="margin:4px 0 0">Large lists are split into smaller messages. Copy a batch, paste it into the WhatsApp chat, send it, then move to the next batch.</div></div>
-          <label class="batch-size">Numbers per message
-            <select id="batchSize"><option value="25">25</option><option value="50">50</option><option value="75">75</option><option value="100" selected>100</option><option value="150">150</option><option value="200">200</option></select>
-          </label>
-        </div>
-        <div id="batchInfo" class="hint" aria-live="polite"></div>
-        <div id="batchList" class="batch-list"></div>
-      </div>
-    </section>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:1rem">Complete and exact information supports more precise calculations and personalised interpretations. Astrology and numerology are traditional belief systems, not scientifically validated guarantees or certain predictions.</p>
+    </div>
+    <div style="text-align:center;color:var(--muted);font-size:13px;line-height:1.8">
+      <div><b style="color:var(--gold)">Number That Matters</b> · <b style="color:var(--gold)">Identity That Stays</b></div>
+      <div>Consultation enquiries: <a href="https://wa.me/919090900005" target="_blank" rel="noopener" style="color:var(--gold)">WhatsApp 9090900005</a></div>
+      <button class="btn bgh bsm" style="margin-top:1rem;font-size:12px" onclick="goAdmin()">Admin access</button>
+    </div>
   </div>
-</main>
-<footer><b>Manne Communications</b> · All calculations happen in your browser. No numbers are uploaded or stored.</footer>
-<div class="toast" id="toast" role="status"></div>
-<script>
-const $=id=>document.getElementById(id);
-let allResults=[],invalidEntries=[];
-function digitsOnly(s){return String(s).replace(/\D/g,'')}
-function reduceTotal(n){while(n>9)n=String(n).split('').reduce((a,d)=>a+Number(d),0);return n}
-function parseEntries(raw){
-  // Keep each pasted line as a record. This prevents a bad 11-digit entry
-  // from being silently combined with the next mobile number.
-  return String(raw).split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
-}
-function extractMobile(line){
-  let text=String(line);
+</div>
 
-  // A currency or price label marks the start of the price, not part of the mobile.
-  // Examples: ₹5,000, Rs. 5000, INR 5000, Price: 5000.
-  text=text.split(/₹|\b(?:INR|RS\.?|PRICE|COST|AMOUNT|MRP)\b|[ \t]+[-–—|][ \t]+/i)[0];
+<!-- ADMIN LOGIN -->
+<div class="screen cflex" id="screen-admin-login" style="flex-direction:column">
+  <div class="wrap narrow">
+    <div style="margin-bottom:2rem;text-align:center"><div class="brand">MANNE COMMUNICATIONS</div><div class="sub">Admin Access</div></div>
+    <div class="card">
+      <div class="fld"><label>Username</label><input type="text" value="Manne" disabled style="opacity:.5"></div>
+      <div class="fld"><label>Password <span class="req">*</span></label><input type="password" id="apass" placeholder="Admin password" onkeydown="if(event.key==='Enter')doAdminLogin()"><div class="er" id="apass-er"></div></div>
+      <button class="btn bg bfull" style="padding:13px" onclick="doAdminLogin()">Enter Admin Panel</button>
+    </div>
+    <div style="text-align:center;margin-top:1rem"><button class="btn bgh bsm" onclick="showScreen('role')">← Back</button></div>
+  </div>
+</div>
 
-  // Collect digits despite emojis, icons, spaces, brackets, dots, hyphens,
-  // slashes or other decorative characters between them.
-  let d=digitsOnly(text);
-
-  // Accept an explicit +91 country prefix followed by exactly 10 mobile digits.
-  if(d.length===12 && d.startsWith('91')) d=d.slice(2);
-
-  // If several complete numbers were pasted on one line, split only into exact
-  // 10-digit chunks. Every chunk must independently start with 6, 7, 8 or 9.
-  if(d.length>10 && d.length%10===0){
-    const chunks=d.match(/.{10}/g)||[];
-    if(chunks.length && chunks.every(n=>/^[6-9]\d{9}$/.test(n))) return chunks;
-  }
-
-  // Never truncate 11, 13, 14... digit entries into a false 10-digit number.
-  if(d.length===10 && /^[6-9]\d{9}$/.test(d)) return [d];
-  return [];
-}
-
-function numberInfo(number){
-  const sum=[...number].reduce((a,x)=>a+Number(x),0);
-  return {number,sum,root:reduceTotal(sum)};
-}
-function liveNumbers(){
-  const raw=$('numbers').value;
-  const seen=new Set(),out=[];
-  raw.split(/\r?\n/).forEach(line=>{
-    const d=digitsOnly(line);
-    let chunks=[];
-    if(d.length===12 && d.startsWith('91')) chunks=[d.slice(2)];
-    else if(d.length===10) chunks=[d];
-    else if(d.length>10 && d.length%10===0) chunks=d.match(/.{10}/g)||[];
-    chunks.forEach(n=>{
-      if(/^[6-9]\d{9}$/.test(n)&&!seen.has(n)){seen.add(n);out.push(numberInfo(n));}
-    });
-  });
-  return out;
-}
-function renderLive(){
-  const rows=liveNumbers(),el=$('liveResults');
-  if(!rows.length){el.innerHTML='<div class="live-empty">Enter 10 digits to see the total instantly.</div>';return;}
-  el.innerHTML=rows.slice(-20).reverse().map(r=>`<div class="live-item"><span class="live-number">${r.number}</span><span class="live-meta"><span class="live-sum">Total ${r.sum}</span><span class="root root-${r.root}">${r.root}</span></span></div>`).join('');
-}
-function cleanPastedText(text){
-  const output=[];
-  String(text).split(/\r?\n/).forEach(line=>{
-    let part=line.trim();
-    if(!part)return;
-    // Ignore any price suffix, but allow country code +91 before the number.
-    part=part.split(/₹|\b(?:INR|RS\.?|PRICE|COST|AMOUNT|MRP)\b|[ \t]+[-–—|][ \t]+/i)[0];
-    let d=digitsOnly(part);
-    if(d.startsWith('91')&&d.length===12)d=d.slice(2);
-    if(d.length>0){
-      // Split pasted digit runs into ten-digit lines, preserving a short final
-      // chunk so it can be completed. This also handles pasted text with letters
-      // or symbols inserted between digits.
-      for(let i=0;i<d.length;i+=10){
-        const chunk=d.slice(i,i+10);
-        if(chunk.length===10){
-          if(/^[6-9]\d{9}$/.test(chunk))output.push(chunk);
-        }else if(/^[6-9]\d{0,8}$/.test(chunk)){
-          output.push(chunk);
-        }
-      }
-    }
-  });
-  return output.join('\n');
-}
-function bindNumberEntry(){
-  const field=$('numbers');
-  field.addEventListener('keydown',e=>{
-    if(e.ctrlKey||e.metaKey||e.altKey||['Backspace','Delete','Tab','Enter','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(e.key))return;
-    if(e.key.length===1 && !/[0-9]/.test(e.key))e.preventDefault();
-  });
-  field.addEventListener('paste',e=>{
-    e.preventDefault();
-    const pasted=(e.clipboardData||window.clipboardData).getData('text');
-    const cleaned=cleanPastedText(pasted);
-    const start=field.selectionStart,end=field.selectionEnd;
-    const before=field.value.slice(0,start),after=field.value.slice(end);
-    const prefix=before && !before.endsWith('\n') && cleaned ? '\n' : '';
-    const suffix=after && cleaned && !cleaned.endsWith('\n') ? '\n' : '';
-    field.value=before+prefix+cleaned+suffix+after;
-    field.dispatchEvent(new Event('input',{bubbles:true}));
-  });
-  field.addEventListener('input',()=>{
-    const pos=field.selectionStart;
-    const before=field.value.slice(0,pos);
-    const currentLine=before.split(/\r?\n/).pop()||'';
-    const lineStart=before.length-currentLine.length;
-    let cleaned=field.value.replace(/[^\d\n\r]/g,'');
-    // Enforce ten digits per line during manual entry, moving overflow to the next line.
-    const lines=cleaned.split(/\r?\n/),normalized=[];
-    lines.forEach((line,index)=>{
-      let digits=line;
-      while(digits.length>=10){
-        normalized.push(digits.slice(0,10));
-        digits=digits.slice(10);
-      }
-      if(digits.length)normalized.push(digits);
-      else if(index===lines.length-1 && line.length===10)normalized.push('');
-    });
-    const next=normalized.join('\n');
-    if(next!==field.value){
-      const beforeDigits=digitsOnly(before);
-      field.value=next;
-      let cursor=0,remaining=beforeDigits.length;
-      for(let i=0;i<next.length&&remaining>0;i++){if(/\d/.test(next[i]))remaining--;cursor=i+1;}
-      if(remaining===0 && next[cursor]==='\n')cursor++;
-      field.setSelectionRange(cursor,cursor);
-    }
-    renderLive();
-    calculate();
-  });
-}
-
-function calculate(){
-  const entries=parseEntries($('numbers').value),seen=new Set(),valid=[],invalid=[];
-  entries.forEach(entry=>{
-    const extracted=extractMobile(entry);
-    if(extracted.length){
-      extracted.forEach(number=>{
-        if(!seen.has(number)){
-          seen.add(number);
-          const sum=[...number].reduce((a,x)=>a+Number(x),0);
-          valid.push({number,sum,root:reduceTotal(sum)});
-        }
-      });
-    }else invalid.push(entry);
-  });
-  const overLimit=valid.length>1000?valid.slice(1000):[];
-  const accepted=valid.slice(0,1000);
-  allResults=accepted;invalidEntries=invalid.concat(overLimit.map(x=>x.number));
-  $('message').className=(invalid.length||overLimit.length)?'bad':'good';
-  $('message').textContent=overLimit.length
-    ?`Calculated the first 1,000 valid unique numbers. ${overLimit.length} additional valid number(s) were not included. Split your list and calculate the remaining numbers separately.`
-    :invalid.length
-      ?`${accepted.length} valid unique number(s) calculated. ${invalid.length} line(s) skipped. Each accepted number must contain exactly 10 digits and start with 6, 7, 8 or 9.`
-      :`Successfully calculated ${accepted.length} valid unique number(s).`;
-  ['copy','txt','csv','whatsapp','print'].forEach(id=>$(id).disabled=!valid.length);
-  render();
-}
-function visibleResults(){
-  const q=$('search').value.trim().toLowerCase(),f=$('filter').value,s=$('sort').value;
-  const excludedDigits=new Set(digitsOnly($('excludeDigits').value));
-  const excludedTotals=new Set(digitsOnly($('excludeTotals').value));
-  const includedDigits=new Set(digitsOnly($('includeDigits').value));
-  const includedTotals=new Set(digitsOnly($('includeTotals').value));
-  let rows=allResults.filter(r=>{
-    const hasIncludedDigit=!includedDigits.size||[...includedDigits].every(d=>r.number.includes(d));
-    const hasIncludedTotal=!includedTotals.size||includedTotals.has(String(r.root));
-    return (f==='all'||String(r.root)===f) &&
-      !excludedTotals.has(String(r.root)) &&
-      ![...r.number].some(d=>excludedDigits.has(d)) &&
-      hasIncludedDigit && hasIncludedTotal &&
-      (!q||r.number.includes(q)||String(r.sum).includes(q)||String(r.root).includes(q));
-  });
-  rows=[...rows];
-  if(s==='number')rows.sort((a,b)=>a.number.localeCompare(b.number));
-  if(s==='sumAsc')rows.sort((a,b)=>a.sum-b.sum||a.number.localeCompare(b.number));
-  if(s==='sumDesc')rows.sort((a,b)=>b.sum-a.sum||a.number.localeCompare(b.number));
-  if(s==='root')rows.sort((a,b)=>a.root-b.root||a.sum-b.sum);
-  return rows;
-}
-function render(){
-  const rows=visibleResults(),body=$('results');
-  if(!rows.length){body.innerHTML='<tr><td colspan="4" class="empty">No numbers match the current filters.</td></tr>';}
-  else body.innerHTML=rows.map((r,i)=>`<tr><td>${i+1}</td><td class="number">${r.number}</td><td><b>${r.sum}</b></td><td><span class="root root-${r.root}">${r.root}</span></td></tr>`).join('');
-  renderGroups(rows);
-}
-function renderGroups(rows){
-  const el=$('groupSummary');if(!el)return;
-  const counts=Array.from({length:9},(_,i)=>({root:i+1,count:rows.filter(r=>r.root===i+1).length}));
-  el.innerHTML=counts.map(x=>`<div class="group-card"><span class="root root-${x.root}">${x.root}</span><div><strong>${x.count}</strong><small>Number${x.count===1?'':'s'}</small></div><button type="button" data-root="${x.root}">Show</button></div>`).join('');
-  el.querySelectorAll('button[data-root]').forEach(btn=>btn.addEventListener('click',()=>{
-    $('filter').value=btn.dataset.root;render();
-  }));
-}
-function outputText(rows){return ['MOBILE NUMBER\tDIGIT TOTAL\tSINGLE DIGIT',...rows.map(r=>`${r.number}\t${r.sum}\t${r.root}`)].join('\n')}
-function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2100)}
-bindNumberEntry();renderLive();
-$('sample').addEventListener('click',()=>{$('numbers').value='9090900005\n9999944449\n8888877777\n9876543210\n9000000009';renderLive();calculate()});
-$('clear').addEventListener('click',()=>{$('numbers').value='';renderLive();$('message').textContent='';$('message').className='';$('waPanel').hidden=true;$('batchList').innerHTML='';allResults=[];invalidEntries=[];$('results').innerHTML='<tr><td colspan="4" class="empty">Your calculated numbers will appear here.</td></tr>';$('groupSummary').innerHTML='<div class="empty">Groups will appear after calculation.</div>';['copy','txt','csv','whatsapp','print'].forEach(id=>$(id).disabled=true)});
-['search','filter','sort'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',()=>{render();if(!$('waPanel').hidden)makeWhatsAppBatches()}));
-['excludeDigits','excludeTotals','includeDigits','includeTotals'].forEach(id=>$(id).addEventListener('input',()=>{render();if(!$('waPanel').hidden)makeWhatsAppBatches()}));
-$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(outputText(visibleResults()));toast('Visible results copied')}catch(e){toast('Clipboard unavailable. Use Download TXT instead.')}});
-$('txt').addEventListener('click',()=>{
-  const rows=visibleResults();
-  const lines=['MANNE COMMUNICATIONS - VIP NUMBER TOTALS','='.repeat(42),'','Mobile Number | Digit Total | Single Digit','-'.repeat(42),...rows.map(r=>`${r.number} | ${r.sum} | ${r.root}`),'','Total numbers: '+rows.length,'Generated using Manne Communications VIP Number Total Calculator'];
-  const blob=new Blob([lines.join('\\r\\n')],{type:'text/plain;charset=utf-8'});
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='manne-vip-number-totals.txt';a.click();URL.revokeObjectURL(url);
-});
-function makeWhatsAppBatches(){
-  const rows=visibleResults();
-  const size=Number($('batchSize').value)||100;
-  const batches=[];
-  for(let i=0;i<rows.length;i+=size)batches.push(rows.slice(i,i+size));
-  const panel=$('waPanel');
-  panel.hidden=false;
-  $('batchInfo').textContent=`${rows.length} filtered number(s) · ${batches.length} WhatsApp message(s) · ${size} numbers maximum per message.`;
-  $('batchList').innerHTML=batches.length?batches.map((batch,i)=>`
-    <div class="batch-card">
-      <strong>Batch ${i+1} of ${batches.length}</strong>
-      <small>${batch.length} numbers · ${batch[0].number} to ${batch[batch.length-1].number}</small>
-      <div class="batch-actions">
-        <button class="secondary" type="button" data-copy-batch="${i}">Copy batch</button>
-        <button class="light" type="button" data-open-batch="${i}">Open WhatsApp</button>
+<!-- ADMIN PANEL -->
+<div class="screen" id="screen-admin" style="flex-direction:column">
+  <div class="wrap wide">
+    <div class="topbar">
+      <div><div class="pg">Admin Panel</div><div class="ps">Manne Communications</div></div>
+      <button class="btn bo bsm" onclick="showScreen('role')">← Exit</button>
+    </div>
+    <!-- API KEY SETTING -->
+    <div class="card-s" style="margin-bottom:1.5rem;border-color:#2a2800">
+      <div class="stitle" style="margin-top:0">⚙ API Settings (Admin Only)</div>
+      <div class="fld" style="margin-bottom:.75rem">
+        <label>Anthropic API key (stored in this browser)</label>
+        <input type="password" id="adm-apikey" placeholder="sk-ant-api03-..." style="font-family:monospace;font-size:13px">
       </div>
-    </div>`).join(''):'<div class="empty">No numbers match the current filters.</div>';
-  $('batchList').querySelectorAll('[data-copy-batch]').forEach(btn=>btn.addEventListener('click',async()=>{
-    const batch=batches[Number(btn.dataset.copyBatch)];
-    try{await navigator.clipboard.writeText(whatsAppMessage(batch,Number(btn.dataset.copyBatch)+1,batches.length));toast(`Batch ${Number(btn.dataset.copyBatch)+1} copied. Paste it into WhatsApp.`)}
-    catch(e){toast('Copy was blocked by the browser. Select and copy the batch using the text export instead.')}
-  }));
-  $('batchList').querySelectorAll('[data-open-batch]').forEach(btn=>btn.addEventListener('click',()=>{
-    const idx=Number(btn.dataset.openBatch);
-    const msg=whatsAppMessage(batches[idx],idx+1,batches.length);
-    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
-  }));
+      <div class="fld" style="margin-bottom:.75rem;margin-top:.5rem">
+        <label>Cloudflare Proxy URL <span style="color:var(--grn);font-size:11px">(Required for mobile)</span></label>
+        <input type="text" id="adm-proxyurl" placeholder="https://manne-proxy.yourname.workers.dev" style="font-size:13px">
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">Paste your Cloudflare Worker URL here. Fixes mobile / in-app browser issues.</div>
+      </div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="btn bg bsm" onclick="saveAdminKey()">Save API Key</button>
+        <button class="btn bg bsm" onclick="saveProxyUrl()">Save Proxy URL</button>
+      </div>
+      <span style="font-size:12px;color:var(--muted);margin-left:.75rem" id="key-status"></span>
+    </div>
+    <div class="sstrip" id="adm-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem"></div>
+    <!-- ACCESS CODES -->
+    <div class="card-s" style="margin-bottom:1.5rem">
+      <div class="stitle" style="margin-top:0">Generate access codes</div>
+      <div class="g2" style="align-items:flex-end">
+        <div class="fld" style="margin:0"><label>Count</label><select id="gc"><option>10</option><option>25</option><option selected>50</option><option>100</option></select></div>
+        <div class="fld" style="margin:0"><label>Type</label><select id="gt"><option value="trial">Trial (20 min · 5 reports)</option><option value="paid">Paid (unlimited)</option></select></div>
+      </div>
+      <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap">
+        <button class="btn bg" onclick="doGenCodes()">Generate Codes</button>
+        <button class="btn bo" onclick="doCopyUnused()">Copy All Unused</button>
+        <button class="btn bo" onclick="doExport()">Export CSV</button>
+      </div>
+    </div>
+    <!-- AI CREDITS -->
+    <div class="card-s" style="margin-bottom:1.5rem;border-color:#1a1a40">
+      <div class="stitle" style="margin-top:0">✨ AI Credit codes (for AI narratives)</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:.75rem">AI credits are separate codes. Each code = 1 AI narrative. Charge dealers per credit.</div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="btn bpur" onclick="doGenAI(10)">Generate 10 AI Credits</button>
+        <button class="btn bo" onclick="doCopyUnusedAI()">Copy Unused AI Credits</button>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.5rem">
+  <div class="stitle" style="margin:0">Access codes</div>
+  <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+    <select id="code-filter" onchange="applyFilter()" style="background:var(--card2);border:0.5px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:6px 10px;outline:none">
+      <option value="all">All codes</option>
+      <option value="unused">Unused only</option>
+      <option value="active">Active only</option>
+      <option value="used">Used only</option>
+      <option value="revoked">Revoked only</option>
+    </select>
+    <button class="btn bo bsm" onclick="renderAdmin()">&#8635; Refresh</button>
+  </div>
+</div>
+    <div class="tbl-wrap">
+      <table class="ctbl"><thead><tr><th>Code</th><th>Type</th><th>Status</th><th>Dealer</th><th>Used</th><th>Actions</th></tr></thead>
+      <tbody id="ctbody"></tbody></table>
+    </div>
+    <div class="stitle" style="margin-top:1.5rem">AI credit codes</div>
+    <div class="tbl-wrap">
+      <table class="ctbl"><thead><tr><th>Code</th><th>Status</th><th>Used by</th><th>Used at</th><th>Actions</th></tr></thead>
+      <tbody id="aitbody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- DEALER LOGIN -->
+<div class="screen cflex" id="screen-dealer-login" style="flex-direction:column">
+  <div class="wrap narrow">
+    <div style="margin-bottom:2rem;text-align:center"><div class="brand">MANNE COMMUNICATIONS</div><div class="sub">Dealer / Consultant Login</div></div>
+    <div class="card">
+      <div class="fld"><label>Your name <span class="req">*</span></label><input type="text" id="dn" placeholder="Enter your full name"><div class="er" id="dn-er"></div></div>
+      <div class="fld"><label>Access code <span class="req">*</span></label><input type="text" id="dc" placeholder="MC-XXXX-XXXX" style="text-transform:uppercase;letter-spacing:.15em;font-family:monospace;font-size:18px" onkeydown="if(event.key==='Enter')doDealerLogin()" oninput="formatAccessCode(this)" maxlength="12" autocomplete="off" autocorrect="off" spellcheck="false"><div class="er" id="dc-er"></div></div>
+      <button class="btn bg bfull" style="padding:13px" onclick="doDealerLogin()">Access Consultation</button>
+      <div style="text-align:center;margin-top:1rem;font-size:13px;color:var(--muted)">No code? <a href="https://wa.me/919090900005?text=Hello%20Manne%20Communications%2C%20I%20need%20a%20consultation%20access%20code" target="_blank" style="color:var(--gold);text-decoration:none">WhatsApp us →</a></div>
+    </div>
+    <div style="text-align:center;margin-top:1rem"><button class="btn bgh bsm" onclick="showScreen('role')">← Back</button></div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="screen" id="screen-form" style="flex-direction:column">
+  <div class="wrap">
+    <div class="topbar">
+      <div><div class="pg">Free Assessment Form</div><div class="ps">Personal, Business or Combined Consultation</div></div>
+      <button class="btn bo bsm" onclick="showScreen('role')">← Home</button>
+    </div>
+
+    <div class="card-s" style="margin-bottom:1.25rem">
+      <div class="fld" style="margin:0">
+        <label>Assessment type <span class="req">*</span></label>
+        <select id="assessment-mode" onchange="toggleBusinessFields()">
+          <option value="Personal">Personal Numerology & Astrology</option>
+          <option value="Business">Business Numerology & Astrology</option>
+          <option value="Combined">Combined Personal + Business Assessment</option>
+        </select>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:.65rem;line-height:1.6">Choose the assessment you need. You can leave unrelated sections blank.</p>
+    </div>
+    <div id="business-fields" style="display:none">
+      <div class="stitle">Business details</div>
+      <div class="card-s" style="margin-bottom:1.25rem">
+        <div class="g2">
+          <div class="fld"><label>Business / brand name <span class="req">*</span></label><input id="biz-name" type="text" placeholder="Business or brand name"></div>
+          <div class="fld"><label>Business category</label><select id="biz-category"><option value="">Select category</option><option>Retail</option><option>Trading</option><option>Manufacturing</option><option>IT / Technology</option><option>Professional Services</option><option>Education</option><option>Healthcare</option><option>Real Estate</option><option>Finance</option><option>Hospitality</option><option>Other</option></select></div>
+          <div class="fld"><label>Business status</label><select id="biz-status"><option value="">Select</option><option>Planning</option><option>New business</option><option>Already operating</option></select></div>
+          <div class="fld"><label>Business commencement date (if known)</label><input id="biz-date" type="date"></div>
+          <div class="fld"><label>Business location</label><input id="biz-location" type="text" placeholder="City, State, Country"></div>
+          <div class="fld"><label>Business mobile number(s)</label><input id="biz-mobile" type="text" placeholder="One or more contact numbers"></div>
+        </div>
+        <div class="fld"><label>Business goals / questions</label><textarea id="biz-goals" placeholder="Brand name, business direction, launch timing, contact numbers, etc."></textarea></div>
+      </div>
+    </div>
+
+    <div class="stitle" style="margin-top:0">Personal details</div>
+    <div class="g2">
+      <div class="fld"><label>Full name <span class="req">*</span></label><input type="text" id="fn" placeholder="As per birth certificate"><div class="er" id="fn-er"></div></div>
+      <div class="fld"><label>Gender (optional)</label><select id="fg"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select><div class="er" id="fg-er"></div></div>
+    </div>
+    <div class="stitle">Birth details</div>
+    <div class="g3">
+      <div class="fld"><label>Date of birth <span class="req">*</span></label><input type="date" id="fdob" style="cursor:pointer"><div class="er" id="fdob-er"></div></div>
+      <div class="fld"><label>Time of birth (if known)</label><input type="time" id="ftob" style="cursor:pointer"><div class="er" id="ftob-er"></div></div>
+      <div class="fld"><label>AM / PM</label><select id="fampm"><option>AM</option><option>PM</option></select></div>
+    </div>
+    <div class="g2">
+      <div class="fld"><label>City of birth <span class="req">*</span></label><input type="text" id="fct" placeholder="Type or select city..." list="cities-list" autocomplete="off"><div class="er" id="fct-er"></div></div><datalist id="cities-list"><option value="Agartala"><option value="Agra"><option value="Ahmadnagar"><option value="Ahmedabad"><option value="Ajmer"><option value="Akola"><option value="Aligarh"><option value="Allahabad"><option value="Ambattur"><option value="Amravati"><option value="Amritsar"><option value="Aurangabad"><option value="Avadi"><option value="Bangalore"><option value="Bareilly"><option value="Belgaum"><option value="Bellary"><option value="Berhampur"><option value="Bhagalpur"><option value="Bhatpara"><option value="Bhilai"><option value="Bhilwara"><option value="Bhiwandi"><option value="Bhopal"><option value="Bhubaneswar"><option value="Bijapur"><option value="Bikaner"><option value="Bilaspur"><option value="Bokaro"><option value="Chandigarh"><option value="Chandrapur"><option value="Chennai"><option value="Coimbatore"><option value="Cuttack"><option value="Davanagere"><option value="Dehradun"><option value="Delhi"><option value="Dhanbad"><option value="Dhule"><option value="Faridabad"><option value="Firozabad"><option value="Gaya"><option value="Gopalpur"><option value="Gorakhpur"><option value="Gulbarga"><option value="Guntur"><option value="Gurgaon"><option value="Guwahati"><option value="Gwalior"><option value="Howrah"><option value="Hubli"><option value="Hyderabad"><option value="Indore"><option value="Jabalpur"><option value="Jaipur"><option value="Jalandhar"><option value="Jalgaon"><option value="Jammu"><option value="Jamnagar"><option value="Jamshedpur"><option value="Jhansi"><option value="Jodhpur"><option value="Junagadh"><option value="Kadapa"><option value="Kakinada"><option value="Kalyan"><option value="Kamarhati"><option value="Kanpur"><option value="Kochi"><option value="Kolhapur"><option value="Kolkata"><option value="Kollam"><option value="Korba"><option value="Kozhikode"><option value="Kurnool"><option value="Latur"><option value="Loni"><option value="Lucknow"><option value="Ludhiana"><option value="Madurai"><option value="Maheshtala"><option value="Malegaon"><option value="Mangalore"><option value="Mathura"><option value="Meerut"><option value="Mira-Bhayandar"><option value="Moradabad"><option value="Mumbai"><option value="Muzaffarnagar"><option value="Muzaffarpur"><option value="Mysore"><option value="Nagpur"><option value="Nanded"><option value="Nashik"><option value="Nellore"><option value="Noida"><option value="Ongole"><option value="Panihati"><option value="Patiala"><option value="Patna"><option value="Pondicherry"><option value="Pune"><option value="Raipur"><option value="Rajahmundry"><option value="Rajkot"><option value="Rajpur Sonarpur"><option value="Rampur"><option value="Ranchi"><option value="Rohtak"><option value="Saharanpur"><option value="Salem"><option value="Sambalpur"><option value="Satara"><option value="Secunderabad"><option value="Shahjahanpur"><option value="Shivamogga"><option value="Siliguri"><option value="Solapur"><option value="South Dumdum"><option value="Srinagar"><option value="Surat"><option value="Tenali"><option value="Thiruvananthapuram"><option value="Tiruchirappalli"><option value="Tirunelveli"><option value="Tirupati"><option value="Tiruppur"><option value="Udaipur"><option value="Ujjain"><option value="Ulhasnagar"><option value="Varanasi"><option value="Vasai"><option value="Vijayawada"><option value="Visakhapatnam"><option value="Warangal"></datalist>
+      <div class="fld"><label>State / Country <span class="req">*</span></label><input type="text" id="fst" placeholder="Type or select state..." list="states-list" autocomplete="off"><div class="er" id="fst-er"></div></div><datalist id="states-list"><option value="Andhra Pradesh"><option value="Arunachal Pradesh"><option value="Assam"><option value="Bihar"><option value="Chhattisgarh"><option value="Goa"><option value="Gujarat"><option value="Haryana"><option value="Himachal Pradesh"><option value="Jharkhand"><option value="Karnataka"><option value="Kerala"><option value="Madhya Pradesh"><option value="Maharashtra"><option value="Manipur"><option value="Meghalaya"><option value="Mizoram"><option value="Nagaland"><option value="Odisha"><option value="Punjab"><option value="Rajasthan"><option value="Sikkim"><option value="Tamil Nadu"><option value="Telangana"><option value="Tripura"><option value="Uttar Pradesh"><option value="Uttarakhand"><option value="West Bengal"><option value="Andaman and Nicobar Islands"><option value="Chandigarh"><option value="Dadra and Nagar Haveli and Daman and Diu"><option value="Delhi"><option value="Jammu and Kashmir"><option value="Ladakh"><option value="Lakshadweep"><option value="Puducherry"><option value="Outside India"></datalist>
+    </div>
+    <div class="stitle">Contact & purpose</div>
+    <div class="g2">
+      <div class="fld"><label>Client mobile <span class="req">*</span></label><input type="tel" id="fmob" placeholder="+91 XXXXX XXXXX"><div class="er" id="fmob-er"></div></div>
+      <div class="fld" style="display:none"><label>VIP number budget (optional)</label><select id="fbud"><option value="">Select range</option><option value="under5k">Under ₹5,000</option><option value="5k-15k">₹5,000 – ₹15,000</option><option value="15k-50k">₹15,000 – ₹50,000</option><option value="50k-1L">₹50,000 – ₹1 Lakh</option><option value="above1L">Above ₹1 Lakh</option></select><div class="er" id="fbud-er"></div></div>
+    </div>
+    <div class="fld"><label>Purpose / concern (optional)</label><textarea id="fpur" placeholder="e.g. Looking for business number, career issues, marriage delay..."></textarea></div>
+    <div class="fld" style="margin-top:.75rem">
+      <label style="display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:13px">
+        <input id="privacy-consent" type="checkbox" style="width:auto;margin-top:3px">
+        I agree to share these details with Manne Communications for this consultation enquiry.
+      </label>
+    </div>
+    <button class="btn bg bfull" style="padding:14px;font-size:15px" onclick="doGenReport()">Submit Assessment via WhatsApp</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-top:.75rem">Your enquiry will open in WhatsApp. Review the prepared message and tap Send to contact Manne Communications.</div>
+  </div>
+</div>
+
+
+<!-- REVIEW SCREEN -->
+<div class="screen" id="screen-review" style="flex-direction:column">
+  <div class="wrap">
+    <div class="topbar">
+      <div><div class="pg">Review Details</div><div class="ps" id="review-dealer-disp"></div></div>
+      <button class="btn bo bsm" onclick="doLogout()">Logout</button>
+    </div>
+    <div id="tbar-review" style="display:none" class="tbar">
+      <span id="ttxt-review" class="ttxt"></span>
+      <span id="rcount-review" style="font-size:13px;color:var(--muted);margin-left:auto"></span>
+    </div>
+
+    <!-- review card -->
+    <div style="background:linear-gradient(135deg,#1a1500 0%,#0d0d0d 100%);border:1px solid var(--gold);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <div style="width:42px;height:42px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">👤</div>
+        <div>
+          <div style="font-size:20px;font-weight:700;color:var(--gold)" id="rv-name">—</div>
+          <div style="font-size:14px;color:var(--muted)" id="rv-sub">—</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem" id="rv-grid"></div>
+    </div>
+
+    <!-- confirmation -->
+    <div style="background:#0d1a0d;border:1px solid #2a4a2a;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem">
+      <label style="display:flex;align-items:flex-start;gap:.75rem;cursor:pointer">
+        <input type="checkbox" id="rv-confirm" onchange="toggleProceed()" style="width:22px;height:22px;margin-top:2px;accent-color:var(--gold);flex-shrink:0">
+        <span style="font-size:16px;line-height:1.5;color:var(--text)">I confirm that all the above details are <strong style="color:var(--gold)">correct and accurate</strong>. I understand that the report is generated based on this information.</span>
+      </label>
+    </div>
+
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+      <button class="btn bo bfull" style="padding:14px;font-size:17px;flex:1;min-width:120px" onclick="goBackEdit()">✏️ Edit Details</button>
+      <button class="btn bg bfull" id="proceed-btn" style="padding:14px;font-size:17px;flex:2;min-width:180px;opacity:.45;cursor:not-allowed" onclick="doProceed()" disabled>✅ Proceed & Generate Report</button>
+    </div>
+    <button class="btn bo bfull" style="padding:12px;font-size:15px;margin-top:.5rem;width:100%;background:#0d2010;border-color:#25a244;color:#4ade80" onclick="doQuickWA()">📲 Quick WhatsApp Share (without report)</button>
+    <div style="font-size:13px;color:var(--muted);text-align:center;margin-top:.75rem">Please verify all details carefully — especially date and time of birth</div>
+  </div>
+</div>
+
+<!-- REPORT -->
+<div class="screen" id="screen-report" style="flex-direction:column">
+  <div class="wrap" id="rpage">
+    <div class="topbar">
+      <div><div class="pg">Consultation Report</div><div class="ps" id="r-offline-badge" style="color:#22c55e">● Offline Report — No API Cost</div></div>
+      <button class="btn bo bsm" id="newbtn" onclick="doNewConsult()">+ New</button>
+    </div>
+    <div class="rh"><div class="rname" id="rn"></div><div class="rmeta" id="rm"></div></div>
+    <div id="r-lucky-top" style="margin-bottom:.75rem"></div>
+    <div id="r-core"></div>
+    <div id="r-namegrid"></div>
+    <div id="r-lp"></div>
+    <div id="r-su"></div>
+    <div id="r-destiny"></div>
+    <div id="r-rashi"></div>
+    <div id="r-nak"></div>
+    <div id="r-dasha"></div>
+    <div id="r-py"></div>
+    <div id="r-lucky"></div>
+    <!-- NUMBER MATCH -->
+    <div class="card" id="mcard" style="margin-top:.75rem;border-color:#2a2a00">
+      <div style="font-size:15px;font-weight:600;color:var(--gold);margin-bottom:.5rem">🔢 Match your VIP inventory</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:1rem">Paste your available numbers below — one per line or comma-separated. The system will score each one against this client's numerology.</div>
+      <textarea id="minput" placeholder="9848012345&#10;9100456789&#10;7799012345" style="background:var(--card2);border:0.5px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;padding:10px;width:100%;min-height:90px;font-family:monospace;resize:vertical;outline:none;transition:border-color .15s"></textarea>
+      <div style="display:flex;gap:.75rem;margin-top:.75rem;flex-wrap:wrap">
+        <button class="btn bg" onclick="doMatch()">Match Numbers →</button>
+        <button class="btn bgh bsm" onclick="document.getElementById('mcard').style.display='none'">Skip</button>
+      </div>
+    </div>
+    <div id="mresults" style="display:none;margin-top:.75rem"></div>
+    <!-- AI UPGRADE -->
+    <div class="divider"><span>Optional AI Enhancement</span></div>
+    <div class="ai-box" id="ai-section">
+      <h3>✨ Add AI Personalized Narrative</h3>
+      <p>The offline report gives you all the numbers and analysis. The AI narrative weaves it into a flowing, personalized reading — in the client's language. Requires an AI credit code from Manne Communications admin.</p>
+      <div id="ai-state-request" style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+        <input type="text" id="ai-code-input" placeholder="AI-XXXX-XXXX" style="background:var(--card2);border:0.5px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;font-family:monospace;text-transform:uppercase;letter-spacing:.05em;width:180px;transition:border-color .15s" oninput="this.value=this.value.toUpperCase()">
+        <button class="btn bpur" onclick="doAINarrative()">Use AI Credit →</button>
+        <a href="https://wa.me/919090900005?text=Hello%2C%20I%20need%20an%20AI%20credit%20code%20for%20a%20client%20consultation" target="_blank" class="btn bo bsm" style="color:var(--grn);border-color:#166534">💬 Request Credit</a>
+      </div>
+      <div class="er" id="ai-code-er" style="margin-top:.5rem"></div>
+      <div id="ai-loading" style="display:none;align-items:center;gap:.75rem;padding:.75rem 0">
+        <div class="spnsm"></div><span style="font-size:13px;color:var(--muted)">Generating AI narrative...</span>
+      </div>
+      <div id="ai-narrative-output" style="display:none">
+        <div class="ai-narrative" id="ai-narrative-text"></div>
+      </div>
+    </div>
+    <div class="abar">
+      <button class="btn bg" onclick="doPDF()">🖨 Save as PDF / Print</button>
+      <button class="btn bo" onclick="toggleHistory()" id="hist-btn">📋 Session (1)</button>
+      <button class="btn bo" onclick="doCopy()">📋 Copy Report</button>
+      <button class="btn bo" onclick="doWA()" style="color:var(--grn);border-color:#166534">💬 WhatsApp Client</button>
+    </div>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:1rem;margin-bottom:2rem">
+      Manne Communications · sureshmanne.com · +91 90909 00005
+    </div>
+  </div>
+</div>
+
+<!-- PDF TEMPLATE -->
+<div id="pdfout" style="display:none"><div id="pdfc" style="display:none">
+  <div class="ph">
+    <div class="pc">MANNE COMMUNICATIONS</div>
+    <div class="pp">Powered by Anthropic AI</div>
+    <div class="pt">Designed &amp; Built for India, for the World</div>
+    <div class="pw">sureshmanne.com &nbsp;|&nbsp; +91 90909 00005</div>
+  </div>
+  <div id="pdfbody"></div>
+  <div class="pfoot">Manne Communications Astrology Report · Chaldean Numerology System<br><span id="pdfdate"></span></div>
+</div></div>
+
+<script>
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+const ADMIN_PASS = 'Manne8121';
+const WA = '919090900005';
+const SHEETS_URL = 'https://mc-proxy.sureshchowdarymanne18.workers.dev';
+
+// ═══════════════════════════════════════════
+// CHALDEAN ENGINE
+// ═══════════════════════════════════════════
+const CV = {A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7};
+const VOWELS = new Set(['A','E','I','O','U']);
+const chv = c => CV[c.toUpperCase()] || 0;
+const red = n => { while(n>9&&n!==11&&n!==22&&n!==33) n=String(n).split('').reduce((a,b)=>a+parseInt(b),0); return n; };
+const calcLP  = dob  => red(dob.replace(/-/g,'').split('').reduce((a,b)=>a+parseInt(b),0));
+const calcExpr = name => red(name.toUpperCase().replace(/[^A-Z]/g,'').split('').reduce((a,b)=>a+chv(b),0));
+const calcSU   = name => red(name.toUpperCase().replace(/[^A-Z]/g,'').split('').filter(c=>VOWELS.has(c)).reduce((a,b)=>a+chv(b),0));
+const calcPN   = name => red(name.toUpperCase().replace(/[^A-Z]/g,'').split('').filter(c=>!VOWELS.has(c)&&CV[c]).reduce((a,b)=>a+chv(b),0));
+const calcMat  = (lp,ex) => red(lp+ex);
+const calcBal  = name => red(name.trim().split(/\s+/).map(w=>w[0]||'').join('').toUpperCase().split('').reduce((a,b)=>a+chv(b),0));
+const calcPY   = (dob,yr) => { const p=dob.split('-'); return red(parseInt(p[2])+parseInt(p[1])+String(yr).split('').reduce((a,b)=>a+parseInt(b),0)); };
+const numSum   = n => red(n.replace(/[^0-9]/g,'').split('').reduce((a,b)=>a+parseInt(b),0));
+function getNameGrid(name){return name.toUpperCase().split('').map(c=>({c,v:CV[c]||null,vowel:VOWELS.has(c),space:c===' '}));}
+
+// ═══════════════════════════════════════════
+// INTERPRETATION TABLES
+// ═══════════════════════════════════════════
+const LP_DATA = {
+  1:{title:'The Pioneer',planet:'Sun',element:'Fire',color:'Gold / Orange',day:'Sunday',gem:'Ruby',mantra:'Om Suryaya Namah',interp:'Born with the energy of the Sun, you are a natural leader and pioneer. Your life path demands independence, originality, and the courage to forge new paths. You thrive when in charge of your own destiny — working under others long-term drains your spirit. Challenges come when stubbornness or ego block collaboration. Best careers: entrepreneur, CEO, politics, military, innovation. In relationships, you need a partner who respects your independence and matches your ambition. Health focus: head, eyes, heart, and spine. Guard against stress and burnout by learning when to delegate.'},
+  2:{title:'The Diplomat',planet:'Moon',element:'Water',color:'Silver / White',day:'Monday',gem:'Pearl or Moonstone',mantra:'Om Chandraya Namah',interp:'The Moon guides your path, making you the most sensitive, intuitive, and deeply relational of all numbers. You feel everything intensely and read people effortlessly. Harmony is your natural language, and conflict physically exhausts you. Best careers: counselling, music, psychology, diplomacy, nursing, and healing arts. The challenge is maintaining boundaries and not losing yourself in others emotions. In relationships, you are devoted and deeply loving, but you need consistent reassurance. Health focus: digestive system, hormones. Anxiety and worry affect you physically — meditation and routine are essential.'},
+  3:{title:'The Creator',planet:'Jupiter',element:'Fire',color:'Yellow / Bright',day:'Thursday',gem:'Yellow Topaz',mantra:'Om Guruve Namah',interp:'Jupiter blesses you as the creative communicator — words, art, music, and self-expression flow through you naturally. You radiate joy, optimism, and a magnetic social energy that draws others to you effortlessly. Your greatest challenge is scattered energy — too many interests, too many ideas begun and abandoned. Best careers: arts, entertainment, writing, teaching, marketing, and public speaking. In relationships, you are romantic and deeply fun, but you need mental stimulation and variety to stay committed. Health focus: throat, respiratory system, and skin.'},
+  4:{title:'The Builder',planet:'Rahu',element:'Earth',color:'Green / Brown',day:'Saturday',gem:'Hessonite Garnet',mantra:'Om Rahave Namah',interp:'Rahu gives you the builder hands — patient, systematic, disciplined, and endlessly reliable. You construct what others only dream about, one careful brick at a time. Your word is your bond and people trust you instinctively. Best careers: engineering, law, real estate, finance, construction, medicine. The challenge is rigidity — resistance to change and difficulty trusting the unknown. In relationships, you are loyal and deeply steady, but emotional expression comes slowly. Health focus: joints, bones, and teeth. Physical activity is your best medicine.'},
+  5:{title:'The Freedom Seeker',planet:'Mercury',element:'Air',color:'Light / Mixed',day:'Wednesday',gem:'Emerald',mantra:'Om Budhaya Namah',interp:'Mercury makes you the ultimate freedom seeker — versatile, quick-witted, adventurous, and magnetically charming. Change is not something you merely accept; you require it to feel alive. Your life is meant to be a grand adventure of experiences, travel, and constant discovery. Best careers: sales, media, travel, politics, consulting, and communication. The challenge is commitment and follow-through. In relationships, you need a partner who gives you space and keeps you genuinely excited. Health focus: nervous system, adrenal glands, and anxiety.'},
+  6:{title:'The Nurturer',planet:'Venus',element:'Earth',color:'Blue / Green',day:'Friday',gem:'Turquoise or Diamond',mantra:'Om Shukraya Namah',interp:'Venus blesses you with a deep sense of responsibility, beauty, and love. Family, community, and service are at the center of your world. You create beauty wherever you go. Best careers: healing, teaching, hospitality, interior design, counselling, and social work. The challenge is learning that carrying everyone burdens is not love — it is martyrdom. You must receive as generously as you give. In relationships, you give deeply — ensure your love is genuinely reciprocated. Health focus: heart, kidneys, lower back, and throat.'},
+  7:{title:'The Seeker',planet:'Ketu',element:'Water',color:'Purple / Grey',day:'Saturday',gem:'Cat Eye or Amethyst',mantra:'Om Ketave Namah',interp:'Ketu guides the seeker within you — analytical, spiritual, deeply introspective, and relentlessly truth-seeking. You are wired differently from most people, and that difference is your greatest gift. Solitude is not loneliness for you — it is where your wisdom grows. Best careers: research, technology, philosophy, spirituality, medicine, and science. The challenge is isolation and over-analysis. In relationships, you need a deep spiritual or intellectual connection. Health focus: nervous system, sleep quality, and the immune system.'},
+  8:{title:'The Achiever',planet:'Saturn',element:'Earth',color:'Black / Dark Blue',day:'Saturday',gem:'Blue Sapphire',mantra:'Om Shanicharaya Namah',interp:'Saturn power runs through you — ambitious, authoritative, financially minded, and built for large-scale success. You are drawn to power and material achievement with an intensity that can intimidate others. Your capacity for discipline and long-term thinking is unmatched. Best careers: business, finance, law, politics, and corporate leadership. The challenge is balance between material and spiritual worlds. In relationships, you need a partner who respects your ambition and matches your strength. Health focus: blood pressure, circulation, and stress-related conditions.'},
+  9:{title:'The Humanitarian',planet:'Mars',element:'Fire',color:'Red / Crimson',day:'Tuesday',gem:'Red Coral',mantra:'Om Mangalaya Namah',interp:'Mars gives you the fire of the humanitarian — compassionate, globally minded, intensely creative, and driven by service to something larger than yourself. Your life is meant to complete cycles and contribute meaningfully to the world. Best careers: social work, arts, healing, spiritual guidance, medicine, and international work. The challenge is attachment — you must learn to give without expecting return. In relationships, you are deeply loving but prone to idealism. Health focus: immune system, blood, liver.'},
+  11:{title:'The Visionary',planet:'Moon/Neptune',element:'Air',color:'Silver / Violet',day:'Monday',gem:'Moonstone',mantra:'Om Chandraya Namah',interp:'You carry the Master Number of the Visionary — heightened intuition, extraordinary spiritual sensitivity, and the rare ability to inspire others beyond what most can comprehend. The challenge is learning to live at this intensity without breaking down — anxiety and self-doubt are constant companions. Best careers: spiritual teaching, counselling, arts, and psychology. In relationships, you need a partner with genuine depth and spiritual awareness. Health focus: nervous system and anxiety — grounding practices and meditation are essential daily habits.'},
+  22:{title:'The Master Builder',planet:'Saturn/Uranus',element:'Earth',color:'Earth Tones',day:'Saturday',gem:'Jade',mantra:'Om Shanicharaya Namah',interp:'The Master Builder — you carry the most powerful practical potential of all numbers. Your vision is grand, your execution is precise, and your impact can be genuinely transformational across generations. The challenge is the crushing weight of this potential — perfectionism and self-doubt. Best careers: architecture, large organizations, international business, and government. In relationships, you set high standards and must remember that not everyone operates at your frequency. Health focus: heart and stress-related conditions.'},
+  33:{title:'The Master Teacher',planet:'Venus',element:'Fire',color:'Rose / Gold',day:'Friday',gem:'Rose Quartz',mantra:'Om Shukraya Namah',interp:'The Master Teacher carries the highest vibration in Chaldean numerology — unconditional love, selfless service, and a healing presence that operates at a global level. The challenge is martyrdom — giving so completely that nothing remains for yourself. Best careers: healing, spiritual service, teaching, creative arts, and humanitarian work. In relationships, your love is pure and boundless — ensure it is genuinely reciprocated. Health focus: adrenal glands and overall vitality.'},
+};
+
+const SU_DATA = {
+  1:'Your soul craves independence, recognition, and the right to lead. Deep inside, you want to be first — not from ego, but from an authentic need to express your unique vision on your own terms.',
+  2:'Your soul seeks harmony, deep partnership, and emotional belonging. You crave genuine connection and will sacrifice much for the sake of peace and mutual love.',
+  3:'Your soul yearns to create, express, and be seen. Suppressing your creativity is suppressing your very essence — you must have a meaningful outlet or your spirit dims.',
+  4:'Your soul seeks security, order, and the deep satisfaction of building something real and lasting. Chaos and instability drain you at the deepest level.',
+  5:'Your soul craves freedom, rich experience, and perpetual forward motion. Any long-term restriction feels like a form of spiritual suffocation to you.',
+  6:'Your soul deepest desire is to love and be loved — to create a beautiful, harmonious home and family. Serving others genuinely feeds and replenishes your soul.',
+  7:'Your soul is a pure truth-seeker. Superficiality repels you at every level. You crave understanding, wisdom, and the quiet peace of solitude and deep inner knowing.',
+  8:'Your soul craves achievement, material mastery, and the genuine respect that comes with earned power. You want to build something significant — whether financial or spiritual.',
+  9:'Your soul seeks universal love and meaningful completion. You want to be of service to humanity in some form and leave the world genuinely better than you found it.',
+  11:'Your soul vibrates at a frequency of spiritual inspiration. You are meant to light the way for others — this is both your greatest gift and your heaviest burden.',
+  22:'Your soul wants to build systems that change the world — not just for yourself, but for generations yet unborn. Your ambitions are ultimately rooted in love and service.',
+  33:'Your soul is driven by pure, unconditional love. You feel a sacred responsibility to heal, teach, and nurture all those around you.',
+};
+
+const PN_DATA = {
+  1:'You appear confident, decisive, and in control. Others see a natural leader and instinctively expect you to take charge of any situation.',
+  2:'You appear gentle, approachable, and easy to confide in. People feel safe sharing their deepest concerns with you — you radiate genuine trustworthiness.',
+  3:'You appear cheerful, creative, and full of energy. Your social magnetism is real — people are drawn to your enthusiasm and warmth before you even speak.',
+  4:'You appear steady, serious, and completely dependable. Others trust you instinctively with important matters and see you as the reliable anchor.',
+  5:'You appear dynamic, exciting, and delightfully unpredictable. Others find you fascinating — there is always something more to discover about you.',
+  6:'You appear warm, responsible, and deeply caring. Others naturally bring their problems to you — your presence communicates safety and unconditional support.',
+  7:'You appear mysterious, highly intelligent, and quietly powerful. Others sense depth in you even before you speak — you carry an unmistakable aura of wisdom.',
+  8:'You appear powerful, authoritative, and naturally commanding. Others instinctively respect you and sometimes feel slightly intimidated by your confident presence.',
+  9:'You appear compassionate, wise, and spiritually deep. Others sense that you have lived deeply and understand much. You carry an old soul energy people feel immediately.',
+  11:'You appear unusually perceptive and quietly inspiring. Others sense your sensitivity and depth and feel both drawn to you and slightly in awe.',
+  22:'You appear highly capable, visionary, and quietly extraordinary. Others sense that you operate at a different scale — your ambition is visible and magnetic.',
+  33:'You appear unconditionally loving and spiritually elevated. Others feel healed simply by being in your presence — your compassion radiates without effort.',
+};
+
+const PY_DATA = {
+  1:'A year of bold new beginnings. This is the start of a new 9-year cycle — what you plant now will shape the next decade. Courage is required. Start that business, take that leap, make that decision you have been postponing. The universe strongly rewards first steps this year.',
+  2:'A year of patience, partnerships, and allowing things to develop naturally. Do not force or rush — relationships deepen, collaborations form, and quiet progress builds the foundation for future success. Sensitivity is heightened; protect your emotional energy carefully.',
+  3:'A year of creativity, expansion, and genuine joy. Express yourself fully and without apology. Social life flourishes, opportunities come through people, and your creative gifts attract good things into your life. This is your year to shine and celebrate.',
+  4:'A year of disciplined hard work and solid foundation-building. Nothing arrives easily this year, but everything built with patience will last. Focus on systems, health habits, career structure, and long-term investments. Effort is always rewarded in a 4 Personal Year.',
+  5:'A year of significant change, freedom, and movement. Expect the unexpected — travel, new opportunities, and major shifts in direction are highlighted. Embrace change rather than resist it. New chapters open rapidly. What falls away was holding you back.',
+  6:'A year of home, family, responsibility, and healing. Relationships and domestic matters take center stage. Service to loved ones is highlighted. This is also a powerful year for health improvements and for bringing beauty and harmony into your immediate environment.',
+  7:'A year of deep inner reflection, spiritual development, and serious study. This is not a year for aggressive external achievement — it is a year for wisdom, analysis, and inner work. What you discover about yourself this year will guide the next cycle profoundly.',
+  8:'A year of achievement, financial opportunity, and well-deserved recognition. The hard work of previous years begins to pay off materially. Claim what you have earned. Power and money are genuinely accessible this year to those who step forward boldly.',
+  9:'A year of completion, release, and meaningful endings. Let go of what no longer serves your growth. This year closes a major 9-year chapter. Clearing space is essential preparation for the powerful new beginning that follows.',
+};
+
+const RASHI_DATA = [
+  {name:'Aries (Mesha)',from:[3,21],to:[4,19],planet:'Mars',element:'Fire',quality:'Cardinal',traits:'Bold, energetic, pioneering, and fiercely independent. You lead with courage and act on instinct. A natural initiator who excels at starting new things. Guard against impatience and impulsive decisions.'},
+  {name:'Taurus (Vrishabha)',from:[4,20],to:[5,20],planet:'Venus',element:'Earth',quality:'Fixed',traits:'Steadfast, sensual, practical, and deeply devoted. You build slowly and solidly — your staying power is remarkable. A love of beauty, luxury, and the finer things in life drives much of your motivation. Guard against stubbornness and resistance to necessary change.'},
+  {name:'Gemini (Mithuna)',from:[5,21],to:[6,20],planet:'Mercury',element:'Air',quality:'Mutable',traits:'Quick-minded, versatile, communicative, and endlessly curious. You need variety and intellectual stimulation to thrive. A natural connector of people and ideas — though commitment can sometimes feel like a constraint on your freedom.'},
+  {name:'Cancer (Karka)',from:[6,21],to:[7,22],planet:'Moon',element:'Water',quality:'Cardinal',traits:'Deeply intuitive, emotionally rich, protective, and home-loving. Your feelings are your internal compass. Nurturing and protecting those you love is your natural superpower — though maintaining firm boundaries is your most important lifelong lesson.'},
+  {name:'Leo (Simha)',from:[7,23],to:[8,22],planet:'Sun',element:'Fire',quality:'Fixed',traits:'Radiant, generous, creative, and naturally commanding. You were born to lead and to be genuinely seen. At your best, you inspire and uplift everyone around you. Guard against the need for constant validation.'},
+  {name:'Virgo (Kanya)',from:[8,23],to:[9,22],planet:'Mercury',element:'Earth',quality:'Mutable',traits:'Analytical, precise, service-oriented, and quietly compassionate. You notice what others miss and skillfully correct what others ignore. Your perfectionism is both your greatest professional gift and your most demanding personal challenge.'},
+  {name:'Libra (Tula)',from:[9,23],to:[10,22],planet:'Venus',element:'Air',quality:'Cardinal',traits:'Diplomatic, aesthetically refined, fair-minded, and deeply relational. Balance and beauty are your natural languages. Decisions come hard because you genuinely see every side — learning to trust your instincts is your key growth edge.'},
+  {name:'Scorpio (Vrischika)',from:[10,23],to:[11,21],planet:'Mars',element:'Water',quality:'Fixed',traits:'Intense, transformative, magnetically powerful, and deeply private. You feel everything at a profound level of intensity. Power and absolute truth are your core obsessions — you have a rare ability to see through illusion and penetrate to what is real.'},
+  {name:'Sagittarius (Dhanu)',from:[11,22],to:[12,21],planet:'Jupiter',element:'Fire',quality:'Mutable',traits:'Philosophical, adventurous, truth-seeking, and free-spirited. You live for the big picture and the open horizon. Wisdom, freedom, and expansion are your highest values — routine and constraint are your natural enemies.'},
+  {name:'Capricorn (Makara)',from:[12,22],to:[1,19],planet:'Saturn',element:'Earth',quality:'Cardinal',traits:'Ambitious, disciplined, responsible, and built for the long game. You rise steadily and fall rarely. Success is virtually inevitable for those who carry your level of patient determination and strategic thinking.'},
+  {name:'Aquarius (Kumbha)',from:[1,20],to:[2,18],planet:'Saturn',element:'Air',quality:'Fixed',traits:'Visionary, humanitarian, unconventional, and intellectually electric. You think in systems and see futures others cannot yet imagine. Your greatest challenge is learning to connect emotionally as naturally as you connect intellectually.'},
+  {name:'Pisces (Meena)',from:[2,19],to:[3,20],planet:'Jupiter',element:'Water',quality:'Mutable',traits:'Spiritually attuned, deeply imaginative, compassionate, and profoundly feeling. You absorb the emotional energy of your environment like a sponge. Your extraordinary empathy is your greatest gift — clear boundaries are your greatest protection.'},
+];
+
+
+const VEDIC_RASHI = [
+  {name:'Mesha (Aries)',te:'మేషం',lord:'Mars',element:'Fire',quality:'Cardinal',symbol:'Ram',
+   traits:'Bold, energetic, pioneering, and fiercely independent. You lead with courage and act on instinct. A natural initiator who excels at starting new things. Guard against impatience and impulsive decisions.'},
+  {name:'Vrishabha (Taurus)',te:'వృషభం',lord:'Venus',element:'Earth',quality:'Fixed',symbol:'Bull',
+   traits:'Steadfast, sensual, practical, and deeply devoted. You build slowly and solidly. A love of beauty, luxury, and the finer things drives your motivation. Guard against stubbornness and resistance to necessary change.'},
+  {name:'Mithuna (Gemini)',te:'మిథునం',lord:'Mercury',element:'Air',quality:'Mutable',symbol:'Twins',
+   traits:'Quick-minded, versatile, communicative, and endlessly curious. You need variety and intellectual stimulation to thrive. A natural connector of people and ideas.'},
+  {name:'Karka (Cancer)',te:'కర్కాటకం',lord:'Moon',element:'Water',quality:'Cardinal',symbol:'Crab',
+   traits:'Deeply intuitive, emotionally rich, protective, and home-loving. Your feelings are your internal compass. Nurturing and protecting those you love is your natural superpower.'},
+  {name:'Simha (Leo)',te:'సింహం',lord:'Sun',element:'Fire',quality:'Fixed',symbol:'Lion',
+   traits:'Radiant, generous, creative, and naturally commanding. You were born to lead and to be genuinely seen. At your best, you inspire and uplift everyone around you.'},
+  {name:'Kanya (Virgo)',te:'కన్య',lord:'Mercury',element:'Earth',quality:'Mutable',symbol:'Virgin',
+   traits:'Analytical, precise, service-oriented, and quietly compassionate. You notice what others miss and skillfully correct what others ignore. Your perfectionism is both your greatest professional gift and your most demanding personal challenge.'},
+  {name:'Tula (Libra)',te:'తుల',lord:'Venus',element:'Air',quality:'Cardinal',symbol:'Scales',
+   traits:'Diplomatic, aesthetically refined, fair-minded, and deeply relational. Balance and beauty are your natural languages. Learning to trust your instincts is your key growth edge.'},
+  {name:'Vrischika (Scorpio)',te:'వృశ్చికం',lord:'Mars',element:'Water',quality:'Fixed',symbol:'Scorpion',
+   traits:'Intense, transformative, magnetically powerful, and deeply private. You feel everything at a profound level of intensity. Power and absolute truth are your core obsessions.'},
+  {name:'Dhanu (Sagittarius)',te:'ధనుస్సు',lord:'Jupiter',element:'Fire',quality:'Mutable',symbol:'Archer',
+   traits:'Philosophical, adventurous, truth-seeking, and free-spirited. You live for the big picture and the open horizon. Wisdom, freedom, and expansion are your highest values.'},
+  {name:'Makara (Capricorn)',te:'మకరం',lord:'Saturn',element:'Earth',quality:'Cardinal',symbol:'Goat',
+   traits:'Ambitious, disciplined, responsible, and built for the long game. You rise steadily and fall rarely. Success is virtually inevitable for those who carry your level of patient determination.'},
+  {name:'Kumbha (Aquarius)',te:'కుంభం',lord:'Saturn',element:'Air',quality:'Fixed',symbol:'Pot Bearer',
+   traits:'Visionary, humanitarian, unconventional, and intellectually electric. You think in systems and see futures others cannot yet imagine. Your greatest challenge is learning to connect emotionally.'},
+  {name:'Meena (Pisces)',te:'మీనం',lord:'Jupiter',element:'Water',quality:'Mutable',symbol:'Fish',
+   traits:'Spiritually attuned, deeply imaginative, compassionate, and profoundly feeling. You absorb the emotional energy of your environment like a sponge. Clear boundaries are your greatest protection.'},
+];
+
+const NAK_DATA = [
+  {name:'Ashwini',lord:'Ketu',deity:'Ashwini Kumaras',trait:'Swift healing energy, pioneering spirit, natural healer with quick decisive nature'},
+  {name:'Bharani',lord:'Venus',deity:'Yama',trait:'Creative power, deep transformation, strong life force and intense personal magnetism'},
+  {name:'Krittika',lord:'Sun',deity:'Agni',trait:'Fiery determination, cutting clarity, strong leadership and purifying nature'},
+  {name:'Rohini',lord:'Moon',deity:'Brahma',trait:'Creative abundance, sensual nature, material prosperity and artistic gifts'},
+  {name:'Mrigashira',lord:'Mars',deity:'Soma',trait:'Searching mind, gentle nature, artistic sensibility and eternal curiosity'},
+  {name:'Ardra',lord:'Rahu',deity:'Rudra',trait:'Storm energy, intense transformation, powerful intellect that seeks deep truths'},
+  {name:'Punarvasu',lord:'Jupiter',deity:'Aditi',trait:'Renewal and return, optimistic nature, spiritual wisdom and broad generosity'},
+  {name:'Pushya',lord:'Saturn',deity:'Brihaspati',trait:'Nourishing energy, disciplined care, strong moral foundation and desire to provide'},
+  {name:'Ashlesha',lord:'Mercury',deity:'Nagas',trait:'Penetrating wisdom, serpent energy, intense magnetism and psychological insight'},
+  {name:'Magha',lord:'Ketu',deity:'Pitris',trait:'Royal bearing, ancestral power, natural authority and connection to lineage'},
+  {name:'Purva Phalguni',lord:'Venus',deity:'Bhaga',trait:'Pleasure, creativity, generous heart and strong artistic and aesthetic nature'},
+  {name:'Uttara Phalguni',lord:'Sun',deity:'Aryaman',trait:'Partnership focus, service to others, solar strength and reliable character'},
+  {name:'Hasta',lord:'Moon',deity:'Savitar',trait:'Skilled hands, healing ability, craftsmanship excellence and clever dexterity'},
+  {name:'Chitra',lord:'Mars',deity:'Tvashta',trait:'Artistic brilliance, architect energy, striking presence and creative vision'},
+  {name:'Swati',lord:'Rahu',deity:'Vayu',trait:'Independence, flexible nature, entrepreneurial spirit and adaptable intelligence'},
+  {name:'Vishakha',lord:'Jupiter',deity:'Indra-Agni',trait:'Goal-oriented drive, purposeful ambition, triumph through persistent effort'},
+  {name:'Anuradha',lord:'Saturn',deity:'Mitra',trait:'Deep devotion, friendship, disciplined spiritual practice and loyalty'},
+  {name:'Jyeshtha',lord:'Mercury',deity:'Indra',trait:'Elder wisdom, protective strength, hidden power and leadership ability'},
+  {name:'Mula',lord:'Ketu',deity:'Nirriti',trait:'Root-level transformation, investigation, dissolution of illusion to find truth'},
+  {name:'Purva Ashadha',lord:'Venus',deity:'Apas',trait:'Invincible nature, purifying energy, strong convictions and philosophical mind'},
+  {name:'Uttara Ashadha',lord:'Sun',deity:'Vishvedevas',trait:'Universal principles, lasting victory, broad-minded wisdom and noble character'},
+  {name:'Shravana',lord:'Moon',deity:'Vishnu',trait:'Listening wisdom, learning ability, preserving and spreading knowledge widely'},
+  {name:'Dhanishtha',lord:'Mars',deity:'Eight Vasus',trait:'Wealth and prosperity energy, musical ability, abundance and generosity'},
+  {name:'Shatabhisha',lord:'Rahu',deity:'Varuna',trait:'Healing hundred stars, independent research, mystical knowledge and solitary nature'},
+  {name:'Purva Bhadrapada',lord:'Jupiter',deity:'Aja Ekapada',trait:'Spiritual fire, purifying intensity, visionary nature and unconventional thinking'},
+  {name:'Uttara Bhadrapada',lord:'Saturn',deity:'Ahir Budhyana',trait:'Deep wisdom, serpent of depth, ultimate spiritual achievement and endurance'},
+  {name:'Revati',lord:'Mercury',deity:'Pushan',trait:'Nourishing guide, completion energy, safe journeys and abundant nurturing grace'},
+];
+
+// ═══════════════════════════════════════════
+// VEDIC ASTROLOGY — MOON SIGN ENGINE
+// (Replaces Western sun-sign approach)
+// ═══════════════════════════════════════════
+function julianDay(y,m,d,h){
+  if(m<=2){y--;m+=12;}
+  const A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+h/24+B-1524.5;
 }
-function whatsAppMessage(rows,batchNo,totalBatches){
-  const groups=[];
-  for(let root=1;root<=9;root++){
-    const group=rows.filter(r=>r.root===root);
-    if(group.length){
-      groups.push(`*TOTAL ${root} (${group.length})*`);
-      groups.push(...group.map(r=>`📱 ${r.number} | Sum: ${r.sum}`));
-      groups.push('');
+
+function parseTob(tob){
+  // tob format: "HH:MM AM" or "HH:MM PM"
+  if(!tob)return 12;
+  const parts=tob.trim().split(' ');
+  const hm=parts[0].split(':');
+  let h=parseInt(hm[0])||12, mn=parseInt(hm[1])||0;
+  const ampm=(parts[1]||'').toUpperCase();
+  if(ampm==='PM'&&h!==12)h+=12;
+  if(ampm==='AM'&&h===12)h=0;
+  return h+mn/60;
+}
+
+function moonSiderealLon(y,m,d,h){
+  const jd=julianDay(y,m,d,h);
+  const T=(jd-2451545.0)/36525;
+  const r=x=>x*Math.PI/180;
+  const L0=(218.3164477+481267.88123421*T-0.0015786*T*T)%360;
+  const M=(134.9633964+477198.8676313*T)%360;
+  const MS=(357.5291092+35999.0502909*T)%360;
+  const F=(93.2720950+483202.0175233*T)%360;
+  const D=(297.8501921+445267.1114034*T)%360;
+  let lon=L0
+    +6.288774*Math.sin(r(M))
+    +1.274027*Math.sin(r(2*D-M))
+    +0.658314*Math.sin(r(2*D))
+    +0.213618*Math.sin(r(2*M))
+    -0.185116*Math.sin(r(MS))
+    -0.114332*Math.sin(r(2*F))
+    +0.058793*Math.sin(r(2*D-2*M))
+    +0.057066*Math.sin(r(2*D-MS-M))
+    +0.053322*Math.sin(r(2*D+M))
+    +0.045758*Math.sin(r(2*D-MS));
+  const ayanamsa=23.8536+T*1.3968;
+  return((lon-ayanamsa)%360+360)%360;
+}
+
+function getVedicRashi(dob,tob){
+  const [y,m,d]=dob.split('-').map(Number);
+  const h=parseTob(tob);
+  const sid=moonSiderealLon(y,m,d,h);
+  const idx=Math.floor(sid/30);
+  return VEDIC_RASHI[idx]||VEDIC_RASHI[0];
+}
+
+function getVedicNak(dob,tob){
+  const [y,m,d]=dob.split('-').map(Number);
+  const h=parseTob(tob);
+  const sid=moonSiderealLon(y,m,d,h);
+  const ni=Math.floor(sid/(360/27));
+  const pada=Math.floor((sid%(360/27))/((360/27)/4))+1;
+  return {...NAK_DATA[ni],pada};
+}
+
+// Keep getRashi/getNakshatra as aliases for backward compat
+function getRashi(dob,tob){return getVedicRashi(dob,tob||'12:00 PM');}
+function getNakshatra(dob,tob){return getVedicNak(dob,tob||'12:00 PM');}
+
+function getLuckyFromLP(lp) {
+  const d=LP_DATA[lp]||LP_DATA[1];
+  const ls=[lp,lp===9?1:lp+1].filter(n=>n<=9);
+  const lc=[lp*10+(lp>4?lp-4:lp+5),(lp+2)*3%99+10].map(n=>(n>9&&n<100)?n:lp*3+7);
+  return{single:ls,compound:lc.slice(0,3),avoid:lp===8?[4]:lp===4?[8]:[8],color:d.color,day:d.day,gem:d.gem,mantra:d.mantra,planet:d.planet};
+}
+
+// ═══════════════════════════════════════════
+// STATE & STORAGE
+// ═══════════════════════════════════════════
+const S={dealer:{name:'',code:'',type:''},timer:null,timerEnd:null,fd:null,nums:null,matched:null,aiNarrative:null,reportCount:0,sessionClients:[],reportId:''};
+const gak=()=>localStorage.getItem('mc_ak')||'';
+const sak=v=>localStorage.setItem('mc_ak',v);
+
+// ═══════════════════════════════════════════
+// SHEETS API
+// ═══════════════════════════════════════════
+function getEndpoint(){ return localStorage.getItem('mc_proxy_url')||SHEETS_URL; }
+
+function callSheets(params) {
+  const endpoint=getEndpoint();
+  const qs=Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(String(v))).join('&');
+  const url=endpoint+'?'+qs;
+  return fetch(url,{redirect:'follow',credentials:'omit',cache:'no-cache',mode:'cors'})
+    .then(res=>{ if(!res.ok) throw new Error('HTTP '+res.status); return res.json(); })
+    .catch(()=>jsonpCall(params));
+}
+
+function jsonpCall(params) {
+  return new Promise((resolve,reject)=>{
+    const cb='mcs_'+Date.now()+'_'+Math.floor(Math.random()*99999);
+    const timer=setTimeout(()=>{ cleanup();reject(new Error('Timed out. Check internet.')); },20000);
+    function cleanup(){ delete window[cb]; const s=document.getElementById(cb); if(s)s.remove(); }
+    window[cb]=d=>{ clearTimeout(timer);cleanup();resolve(d); };
+    const qs=Object.entries({...params,callback:cb}).map(([k,v])=>k+'='+encodeURIComponent(String(v))).join('&');
+    const s=document.createElement('script');
+    s.id=cb;
+    s.onerror=()=>{ clearTimeout(timer);cleanup();reject(new Error('Network error. Please check internet.')); };
+    s.src=SHEETS_URL+'?'+qs;
+    document.head.appendChild(s);
+  });
+}
+
+async function addCodesBatch(codes, sheet) {
+  const batchSize=8;
+  for(let i=0;i<codes.length;i+=batchSize){
+    const batch=codes.slice(i,i+batchSize);
+    await callSheets({action:'addCodes',codes:JSON.stringify(batch),sheet});
+  }
+}
+
+// ═══════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════
+function toast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),d);}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('show');s.style.display='none';});const s=document.getElementById('screen-'+id);if(s){s.style.display='flex';s.classList.add('show');}window.scrollTo(0,0);}
+function fmtDate(d){if(!d)return'';const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+function mkCode(pre='MC'){const ch='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const r=n=>Array(n).fill(0).map(()=>ch[Math.floor(Math.random()*ch.length)]).join('');return`${pre}-${r(4)}-${r(4)}`;}
+function setBtnLoading(id,loading,text=''){const b=document.getElementById(id);if(!b)return;b.disabled=loading;if(loading)b.innerHTML='<div class="spnsm"></div>';else if(text)b.textContent=text;}
+
+function formatAccessCode(el){
+  let v=el.value.replace(/[^A-Z0-9]/gi,'').toUpperCase().slice(0,10);
+  let r=v;
+  if(v.length>2) r=v.slice(0,2)+'-'+v.slice(2);
+  if(v.length>6) r=v.slice(0,2)+'-'+v.slice(2,6)+'-'+v.slice(6);
+  el.value=r;
+}
+
+// ═══════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════
+function goAdmin(){showScreen('admin-login');setTimeout(()=>document.getElementById('apass').focus(),100);}
+function doAdminLogin(){
+  if(document.getElementById('apass').value===ADMIN_PASS){
+    document.getElementById('apass').value='';document.getElementById('apass-er').textContent='';
+    sessionStorage.setItem('mc_admin','1');
+    const k=gak();if(k)document.getElementById('adm-apikey').value=k;
+    const pu=localStorage.getItem('mc_proxy_url');if(pu)document.getElementById('adm-proxyurl').value=pu;
+    renderAdmin();showScreen('admin');
+  } else document.getElementById('apass-er').textContent='Incorrect password';
+}
+function saveAdminKey(){const k=document.getElementById('adm-apikey').value.trim();if(!k){toast('Enter API key');return;}sak(k);document.getElementById('key-status').textContent='Saved ✓';setTimeout(()=>document.getElementById('key-status').textContent='',2000);}
+function saveProxyUrl(){const u=document.getElementById('adm-proxyurl').value.trim();if(!u){localStorage.removeItem('mc_proxy_url');toast('Proxy URL cleared');return;}localStorage.setItem('mc_proxy_url',u);document.getElementById('key-status').textContent='Proxy URL saved ✓';setTimeout(()=>document.getElementById('key-status').textContent='',2000);}
+
+async function renderAdmin(){
+  document.getElementById('ctbody').innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">Loading from Google Sheets...</td></tr>';
+  document.getElementById('aitbody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">Loading...</td></tr>';
+  document.getElementById('adm-stats').innerHTML='<div class="sc"><div class="sn">...</div><div class="sl">Loading</div></div>'.repeat(4);
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const codes=data.codes||[]; const ai=data.aiCodes||[];
+    const total=codes.length,unused=codes.filter(c=>c.status==='unused').length,used=codes.filter(c=>c.status==='used').length;
+    document.getElementById('adm-stats').innerHTML=`<div class="sc"><div class="sn">${total}</div><div class="sl">Total</div></div><div class="sc"><div class="sn">${unused}</div><div class="sl">Unused</div></div><div class="sc"><div class="sn">${used}</div><div class="sl">Used</div></div><div class="sc"><div class="sn">${ai.filter(c=>c.status==='unused').length}</div><div class="sl">AI Credits</div></div>`;
+    const statusOrder={unused:0,active:1,used:2,expired:3,revoked:4};
+    const sorted=[...codes].sort((a,b)=>(statusOrder[a.status]||9)-(statusOrder[b.status]||9));
+    window._allCodes=sorted;
+    renderCodesTable(sorted);
+    const sb=s=>s==='unused'?'su-b':s==='active'?'sac':s==='used'?'sus':s==='expired'?'sex':s==='revoked'?'srv':'sus';
+    document.getElementById('aitbody').innerHTML=ai.slice().reverse().map(c=>{
+      const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
+      return`<tr><td><span class="cm">${c.code}</span></td><td><span class="sb ${c.status==='unused'?'sai':c.status==='used'?'sus':'srv'}">${c.status}</span></td><td style="font-size:14px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:14px;color:var(--muted)">${ud}</td><td><button class="btn bv bsm" onclick="revokeAI('${c.code}')">Revoke</button> <button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button></td></tr>`;
+    }).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No AI codes. Generate above.</td></tr>';
+  }catch(e){
+    toast('Failed to load: '+e.message,4000);
+    document.getElementById('ctbody').innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--red);padding:2rem">Error: ${e.message}</td></tr>`;
+  }
+}
+
+function applyFilter(){
+  const f=document.getElementById('code-filter').value;
+  const codes=window._allCodes||[];
+  const filtered=f==='all'?codes:codes.filter(c=>c.status===f);
+  renderCodesTable(filtered);
+}
+
+function renderCodesTable(codes){
+  const sb=s=>s==='unused'?'su-b':s==='active'?'sac':s==='used'?'sus':s==='expired'?'sex':s==='revoked'?'srv':'sus';
+  document.getElementById('ctbody').innerHTML=codes.map(c=>{
+    const tp=c.type==='paid'?'<span class="sb spd">Paid</span>':'<span class="sb sus">Trial</span>';
+    const ud=c.usedAt?new Date(c.usedAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'—';
+    const acts=[
+      c.type==='trial'&&c.status!=='revoked'?`<button class="btn bw bsm" onclick="upgradeCode('${c.code}')">Upgrade</button>`:'',
+      c.status!=='revoked'?`<button class="btn bv bsm" onclick="revokeCode('${c.code}')">Revoke</button>`:'',
+      `<button class="btn bo bsm" onclick="navigator.clipboard.writeText('${c.code}').then(()=>toast('Copied!'))">Copy</button>`
+    ].filter(Boolean);
+    return`<tr><td><span class="cm">${c.code}</span></td><td>${tp}</td><td><span class="sb ${sb(c.status)}">${c.status}</span></td><td style="font-size:14px;color:var(--muted)">${c.dealer||'—'}</td><td style="font-size:14px;color:var(--muted)">${ud}</td><td><div style="display:flex;gap:4px;flex-wrap:nowrap;align-items:center">${acts.join('')}</div></td></tr>`;
+  }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">No codes match this filter.</td></tr>';
+}
+
+
+async function doGenCodes(){
+  const cnt=parseInt(document.getElementById('gc').value);const tp=document.getElementById('gt').value;
+  toast('Generating '+cnt+' codes...');
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const existing=new Set((data.codes||[]).map(c=>c.code));
+    const newCodes=[];
+    while(newCodes.length<cnt){const code=mkCode();if(!existing.has(code)){newCodes.push({code,type:tp,status:'unused',dealer:'',usedAt:'',expiresAt:'',created:new Date().toISOString()});existing.add(code);}}
+    await addCodesBatch(newCodes,'codes');
+    toast(cnt+' codes saved to Sheets ✓');
+    setTimeout(()=>renderAdmin(),1500);
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doGenAI(cnt){
+  toast('Generating '+cnt+' AI credits...');
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const existing=new Set((data.aiCodes||[]).map(c=>c.code));
+    const newCodes=[];
+    while(newCodes.length<cnt){const code=mkCode('AI');if(!existing.has(code)){newCodes.push({code,status:'unused',dealer:'',usedAt:'',created:new Date().toISOString()});existing.add(code);}}
+    await addCodesBatch(newCodes,'ai_codes');
+    toast(cnt+' AI credits saved ✓');
+    setTimeout(()=>renderAdmin(),1500);
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function upgradeCode(code){
+  if(!confirm('Upgrade '+code+' to paid?'))return;
+  toast('Upgrading...');
+  try{
+    await Promise.all([
+      callSheets({action:'updateCode',code,field:'type',value:'paid',sheet:'codes'}),
+      callSheets({action:'updateCode',code,field:'status',value:'unused',sheet:'codes'}),
+    ]);
+    toast('✓ Upgraded to Paid — refreshing...');setTimeout(()=>renderAdmin(),1200);
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function revokeCode(code){
+  if(!confirm('Revoke '+code+'?'))return;
+  toast('Revoking...');
+  try{
+    await callSheets({action:'updateCode',code,field:'status',value:'revoked',sheet:'codes'});
+    toast('✓ Revoked — refreshing...');setTimeout(()=>renderAdmin(),1200);
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function revokeAI(code){
+  if(!confirm('Revoke AI code '+code+'?'))return;
+  try{
+    await callSheets({action:'updateCode',code,field:'status',value:'revoked',sheet:'ai_codes'});
+    toast('AI code revoked');setTimeout(()=>renderAdmin(),1000);
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doCopyUnused(){
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const txt=(data.codes||[]).filter(c=>c.status==='unused').map(c=>c.code).join('\n');
+    if(!txt){toast('No unused codes');return;}
+    navigator.clipboard.writeText(txt).then(()=>toast('Unused codes copied!'));
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doCopyUnusedAI(){
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const txt=(data.aiCodes||[]).filter(c=>c.status==='unused').map(c=>c.code).join('\n');
+    if(!txt){toast('No unused AI codes');return;}
+    navigator.clipboard.writeText(txt).then(()=>toast('AI credits copied!'));
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+async function doExport(){
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const codes=data.codes||[];
+    const rows=['Code,Type,Status,Dealer,Used At'].concat(codes.map(c=>`${c.code},${c.type},${c.status},${c.dealer||''},${c.usedAt||''}`));
+    const blob=new Blob([rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mc_codes.csv';a.click();
+  }catch(e){toast('Error: '+e.message,4000);}
+}
+
+// ═══════════════════════════════════════════
+// DEALER LOGIN
+// ═══════════════════════════════════════════
+async function doDealerLogin(){
+  const name=document.getElementById('dn').value.trim();
+  const code=document.getElementById('dc').value.trim().toUpperCase();
+  let ok=true;
+  if(!name){document.getElementById('dn-er').textContent='Name required';ok=false;}else document.getElementById('dn-er').textContent='';
+  if(!code){document.getElementById('dc-er').textContent='Access code required';ok=false;}else document.getElementById('dc-er').textContent='';
+  if(!ok)return;
+
+  const btn=document.querySelector('#screen-dealer-login .btn.bg');
+  btn.disabled=true;btn.innerHTML='<div class="spnsm" style="display:inline-block"></div> Verifying...';
+  document.getElementById('dc-er').textContent='';
+
+  try{
+    const data=await callSheets({action:'getCodes'});
+    const codes=data.codes||[];
+    const c=codes.find(x=>String(x.code).toUpperCase()===code);
+
+    if(!c){document.getElementById('dc-er').textContent='Invalid code';return;}
+    if(c.status==='revoked'){document.getElementById('dc-er').textContent='Code revoked. Contact Manne Communications';return;}
+    if(c.status==='used'&&c.type==='trial'){document.getElementById('dc-er').textContent='Trial code already used';return;}
+    if(c.status==='expired'){document.getElementById('dc-er').textContent='Code expired';return;}
+
+    // Paid code already active from previous session — just let in
+    if(c.type==='paid'&&c.status==='active'){
+      S.dealer={name,code,type:'paid'};
+      document.getElementById('dealer-disp').textContent='👤 '+name+' — Paid';
+      document.getElementById('tbar').style.display='none';
+      showScreen('form');return;
+    }
+
+    // Trial code already active — check timer
+    if(c.type==='trial'&&c.status==='active'){
+      if(c.expiresAt&&new Date(c.expiresAt)<new Date()){
+        await callSheets({action:'updateCode',code,field:'status',value:'expired',sheet:'codes'});
+        document.getElementById('dc-er').textContent='Code expired';return;
+      }
+      const remaining=Math.max(0,Math.floor((new Date(c.expiresAt)-Date.now())/1000));
+      S.dealer={name,code,type:'trial'};
+      document.getElementById('dealer-disp').textContent='👤 '+name+' — Trial (resuming)';
+      startTimer(remaining);showScreen('form');return;
+    }
+
+    // Fresh activation
+    const now=new Date().toISOString();
+    const expiresAt=c.type==='trial'?new Date(Date.now()+1200000).toISOString():'';
+    const updates=[
+      callSheets({action:'updateCode',code,field:'status',value:'active',sheet:'codes'}),
+      callSheets({action:'updateCode',code,field:'dealer',value:name,sheet:'codes'}),
+      callSheets({action:'updateCode',code,field:'usedAt',value:now,sheet:'codes'}),
+    ];
+    if(expiresAt) updates.push(callSheets({action:'updateCode',code,field:'expiresAt',value:expiresAt,sheet:'codes'}));
+    await Promise.all(updates);
+
+    S.dealer={name,code,type:c.type};
+    document.getElementById('dealer-disp').textContent='👤 '+name+' — '+(c.type==='paid'?'Paid':'Trial');
+    if(c.type==='trial'){startTimer(1200);}else{document.getElementById('tbar').style.display='none';}
+    showScreen('form');
+  }catch(e){
+    document.getElementById('dc-er').textContent='Connection error: '+e.message+'. Check internet and try again.';
+  }finally{
+    btn.disabled=false;btn.innerHTML='Access Consultation';
+  }
+}
+
+function startTimer(secs){
+  const bar=document.getElementById('tbar');bar.style.display='flex';S.timerEnd=Date.now()+secs*1000;
+  function tick(){const rem=Math.max(0,Math.floor((S.timerEnd-Date.now())/1000));const m=Math.floor(rem/60).toString().padStart(2,'0');const s=(rem%60).toString().padStart(2,'0');document.getElementById('ttxt').textContent='Trial: '+m+':'+s+' remaining · Reports: '+S.reportCount+'/5';if(rem<=60)bar.classList.add('warn');else bar.classList.remove('warn');if(rem<=0){clearInterval(S.timer);S.timer=null;document.getElementById('ttxt').textContent='Trial expired';callSheets({action:'updateCode',code:S.dealer.code,field:'status',value:'expired',sheet:'codes'}).catch(()=>{});if(document.getElementById('screen-form').classList.contains('show'))toast('Trial expired. Contact Manne Communications.',4000);}}
+  tick();S.timer=setInterval(tick,1000);
+}
+
+// ═══════════════════════════════════════════
+// FORM
+// ═══════════════════════════════════════════
+function validateForm(){
+  const fs=[{id:'fn',er:'fn-er',l:'Full name'},{id:'fg',er:'fg-er',l:'Gender'},{id:'fdob',er:'fdob-er',l:'Date of birth'},{id:'ftob',er:'ftob-er',l:'Time of birth'},{id:'fct',er:'fct-er',l:'City'},{id:'fst',er:'fst-er',l:'State/Country'},{id:'fmob',er:'fmob-er',l:'Mobile'},{id:'fbud',er:'fbud-er',l:'Budget'}];
+  let ok=true;
+  fs.forEach(f=>{const v=document.getElementById(f.id).value.trim();const er=document.getElementById(f.er);if(!v){er.textContent=f.l+' is required';ok=false;}else er.textContent='';});
+  const mob=document.getElementById('fmob').value.replace(/[ \t\r\n]/g,'');
+  if(mob&&!/^\+?\d{10,13}$/.test(mob)){document.getElementById('fmob-er').textContent='Enter valid mobile';ok=false;}
+  return ok;
+}
+
+// ═══════════════════════════════════════════
+// GENERATE REPORT (offline - instant)
+// ═══════════════════════════════════════════
+function doGenReport(){
+  if(S.dealer.type==='trial'){
+    if(S.timerEnd&&Date.now()>S.timerEnd){toast('Trial expired.',4000);return;}
+    if(S.reportCount>=5){toast('Maximum 5 reports reached for this trial.',4000);return;}
+  }
+  if(!validateForm())return;
+  const d={name:document.getElementById('fn').value.trim(),gender:document.getElementById('fg').value,dob:document.getElementById('fdob').value,tob:document.getElementById('ftob').value+' '+document.getElementById('fampm').value,city:document.getElementById('fct').value.trim(),state:document.getElementById('fst').value.trim(),mobile:document.getElementById('fmob').value.trim(),budget:document.getElementById('fbud').value,purpose:document.getElementById('fpur').value.trim()};
+  S.fd=d;S.matched=null;S.aiNarrative=null;
+  showReview(d);
+}
+
+function renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky){
+  document.getElementById('rn').textContent=d.name;
+  // Lucky summary card at top
+  const ltop=document.getElementById('r-lucky-top');
+  if(ltop){
+    const lpCard='<div style="text-align:center;min-width:48px"><div style="font-size:26px;font-weight:900;color:var(--gold)">'+lp+'</div><div style="font-size:11px;color:var(--muted)">Life Path</div></div>';
+    const lCards=lucky.single.map(n=>'<div style="text-align:center;min-width:48px"><div style="font-size:22px;font-weight:700;color:#a0d4ff">'+n+'</div><div style="font-size:11px;color:var(--muted)">Lucky</div></div>').join('');
+    ltop.innerHTML='<div style="background:linear-gradient(135deg,#1a1500,#0d0a00);border:1px solid var(--gold);border-radius:14px;padding:1rem 1.25rem;display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">'
+      +'<div style="display:flex;gap:.75rem;flex-wrap:wrap">'+lpCard+lCards+'</div>'
+      +'<div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:14px">'
+      +'<div><span style="color:var(--muted)">Color: </span><strong style="color:var(--text)">'+lucky.color+'</strong></div>'
+      +'<div><span style="color:var(--muted)">Day: </span><strong style="color:var(--text)">'+lucky.day+'</strong></div>'
+      +'<div><span style="color:var(--muted)">Gem: </span><strong style="color:var(--text)">'+lucky.gem+'</strong></div>'
+      +'</div></div>';
+  }
+  document.getElementById('rm').innerHTML=d.gender+' &nbsp;·&nbsp; '+fmtDate(d.dob)+' at '+d.tob+' &nbsp;·&nbsp; '+d.city+', '+d.state+'<br>Mobile: '+d.mobile+' &nbsp;·&nbsp; Consultant: <strong>'+S.dealer.name+'</strong> &nbsp;·&nbsp; <span style="color:var(--gold);font-size:13px">Ref: '+S.reportId+'</span>';
+  const lpd=LP_DATA[lp]||LP_DATA[1];
+  document.getElementById('r-core').innerHTML=`<div class="rsec"><h3>✦ Core Numbers — Chaldean System</h3><div class="nums-grid"><div class="nc"><div class="nn">${lp}</div><div class="nt">Life Path</div><div class="ns">${lpd.title}</div></div><div class="nc"><div class="nn">${expr}</div><div class="nt">Expression</div><div class="ns">Destiny</div></div><div class="nc"><div class="nn">${su}</div><div class="nt">Soul Urge</div><div class="ns">Inner desire</div></div><div class="nc"><div class="nn">${pn}</div><div class="nt">Personality</div><div class="ns">How seen</div></div><div class="nc"><div class="nn">${mat}</div><div class="nt">Maturity</div><div class="ns">Future self</div></div><div class="nc"><div class="nn">${bal}</div><div class="nt">Balance</div><div class="ns">In crisis</div></div><div class="nc"><div class="nn">${py}</div><div class="nt">Personal Year</div><div class="ns">2025 theme</div></div></div></div>`;
+  let ng=`<div class="rsec"><h3>✦ Chaldean Name Analysis</h3><div class="ngrid">${grid.map(g=>g.space?'<div class="nletter space"></div>':`<div class="nletter${g.vowel?' vowel':''}"><div class="lc">${g.c}</div><div class="lv">${g.v||'—'}</div></div>`).join('')}</div><div style="font-size:12px;color:var(--muted);margin-top:.5rem">Gold border = vowel (soul energy)</div>`;
+  const words=d.name.split(' ');const ws=words.map(w=>({w,s:w.toUpperCase().split('').reduce((a,b)=>a+chv(b),0)}));
+  ng+=`<div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.75rem">`;
+  ws.forEach(({w,s})=>ng+=`<div style="font-size:13px;color:var(--muted)">${w}: <strong style="color:var(--text)">${s} → ${red(s)}</strong></div>`);
+  ng+=`<div style="font-size:13px;color:var(--muted)">Grand total: <strong style="color:var(--gold)">${expr}</strong></div></div></div>`;
+  document.getElementById('r-namegrid').innerHTML=ng;
+  document.getElementById('r-lp').innerHTML=`<div class="rsec"><h3>✦ Life Path ${lp} — ${lpd.title}</h3><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${lpd.planet}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${lpd.element}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lpd.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lpd.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lpd.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lpd.mantra}</div></div></div><div class="interp">${lpd.interp}</div></div>`;
+  document.getElementById('r-su').innerHTML=`<div class="rsec"><h3>✦ Soul Urge ${su} — Inner Motivation</h3><div class="rcontent">${SU_DATA[su]||SU_DATA[1]}</div></div>`;
+  const ddlp=LP_DATA[expr]||LP_DATA[1];
+  document.getElementById('r-destiny').innerHTML=`<div class="rsec"><h3>✦ Expression ${expr} — Life Destiny</h3><div class="rcontent"><p style="margin-bottom:.5rem;color:var(--muted);font-size:13px">How others see you: <em>${PN_DATA[pn]||PN_DATA[1]}</em></p><p>Your expression number ${expr} (${ddlp.title}) defines your life purpose. You are meant to embody the qualities of ${ddlp.planet} — ${ddlp.element} energy expressed as your unique contribution to the world.</p></div></div>`;
+  document.getElementById('r-rashi').innerHTML=`<div class="rsec"><h3>✦ జన్మ రాశి (Janma Rashi) — ${rashi.name}</h3><div style="font-size:22px;color:var(--gold);font-weight:700;margin-bottom:.5rem">${rashi.te}</div><div class="profile-row"><div class="pitem"><div class="pk">Ruling planet</div><div class="pv">${rashi.lord}</div></div><div class="pitem"><div class="pk">Element</div><div class="pv">${rashi.element}</div></div><div class="pitem"><div class="pk">Symbol</div><div class="pv">${rashi.symbol}</div></div><div class="pitem"><div class="pk">Quality</div><div class="pv">${rashi.quality}</div></div></div><div class="interp">${rashi.traits}</div></div>`;
+  const nakTe={'Ashwini':'అశ్వని','Bharani':'భరణి','Krittika':'కృత్తిక','Rohini':'రోహిణి','Mrigashira':'మృగశిర','Ardra':'ఆర్ద్ర','Punarvasu':'పునర్వసు','Pushya':'పుష్యమి','Ashlesha':'ఆశ్లేష','Magha':'మఖ','Purva Phalguni':'పూర్వ ఫల్గుణి','Uttara Phalguni':'ఉత్తర ఫల్గుణి','Hasta':'హస్త','Chitra':'చిత్త','Swati':'స్వాతి','Vishakha':'విశాఖ','Anuradha':'అనూరాధ','Jyeshtha':'జ్యేష్ఠ','Mula':'మూల','Purva Ashadha':'పూర్వాషాఢ','Uttara Ashadha':'ఉత్తరాషాఢ','Shravana':'శ్రవణం','Dhanishtha':'ధనిష్ఠ','Shatabhisha':'శతభిషం','Purva Bhadrapada':'పూర్వభాద్ర','Uttara Bhadrapada':'ఉత్తరభాద్ర','Revati':'రేవతి'};
+document.getElementById('r-nak').innerHTML=`<div class="rsec"><h3>✦ జన్మ నక్షత్రం (Janma Nakshatra) — ${nak.name}</h3><div style="font-size:22px;color:var(--gold);font-weight:700;margin-bottom:.5rem">${nakTe[nak.name]||nak.name} — పాదం ${nak.pada||1}</div><div class="profile-row"><div class="pitem"><div class="pk">Star lord</div><div class="pv">${nak.lord}</div></div><div class="pitem"><div class="pk">Deity</div><div class="pv">${nak.deity}</div></div><div class="pitem"><div class="pk">Pada</div><div class="pv">${nak.pada||1} / 4</div></div></div><div class="interp">${nak.trait}</div></div>`;
+  const dasha=calcDasha(d.dob,d.tob);
+  const dashaSeq=dasha.sequence.map(s=>'<span style="padding:3px 8px;margin:2px;border-radius:20px;display:inline-block;font-size:13px;'+(s.active?'background:var(--gold);color:#000;font-weight:700':'background:var(--card2);color:var(--muted)')+'">'+s.lord+' <span style="font-size:11px;opacity:.7">'+s.end+'</span></span>').join('');
+  document.getElementById('r-dasha').innerHTML='<div class="rsec"><h3>✦ వింశోత్తరి దశ (Vimshottari Dasha)</h3>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.75rem 0">'
+    +'<div style="background:#1a1a0a;border:1px solid var(--gold);border-radius:10px;padding:.85rem;text-align:center">'
+    +'<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Mahadasha</div>'
+    +'<div style="font-size:26px;font-weight:800;color:var(--gold);margin:.25rem 0">'+dasha.current+'</div>'
+    +'<div style="font-size:13px;color:var(--muted)">Until '+dasha.currentEnd+'</div>'
+    +'</div>'
+    +'<div style="background:#0a1a0a;border:1px solid #4a8a4a;border-radius:10px;padding:.85rem;text-align:center">'
+    +'<div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Antardasha</div>'
+    +'<div style="font-size:26px;font-weight:800;color:#7dea7d;margin:.25rem 0">'+dasha.antardasha+'</div>'
+    +'<div style="font-size:13px;color:var(--muted)">Until '+dasha.antarEnd+'</div>'
+    +'</div></div>'
+    +'<div style="margin-top:.75rem;line-height:2">'+dashaSeq+'</div>'
+    +'</div>';
+  document.getElementById('r-py').innerHTML=`<div class="rsec"><h3>✦ Personal Year ${py} — 2025 Theme</h3><div class="rcontent">${PY_DATA[py]||PY_DATA[1]}</div></div>`;
+  document.getElementById('r-lucky').innerHTML=`<div class="rsec"><h3>✦ Lucky Numbers & Remedies</h3><div style="display:flex;flex-wrap:wrap;gap:8px;margin:.5rem 0">${lucky.single.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Lucky</div></div>`).join('')}${lucky.compound.map(n=>`<div class="nc" style="min-width:70px"><div class="nn">${n}</div><div class="nt">Compound</div></div>`).join('')}</div><div class="profile-row" style="margin-top:.75rem"><div class="pitem"><div class="pk">Avoid digits</div><div class="pv" style="color:var(--red)">${lucky.avoid.join(', ')}</div></div><div class="pitem"><div class="pk">Lucky color</div><div class="pv">${lucky.color}</div></div><div class="pitem"><div class="pk">Lucky day</div><div class="pv">${lucky.day}</div></div><div class="pitem"><div class="pk">Gemstone</div><div class="pv">${lucky.gem}</div></div><div class="pitem"><div class="pk">Mantra</div><div class="pv">${lucky.mantra}</div></div></div></div>`;
+  document.getElementById('mcard').style.display='block';document.getElementById('mresults').style.display='none';document.getElementById('minput').value='';
+  document.getElementById('ai-narrative-output').style.display='none';document.getElementById('ai-code-input').value='';document.getElementById('ai-code-er').textContent='';document.getElementById('ai-loading').style.display='none';document.getElementById('ai-state-request').style.display='flex';
+}
+
+// ═══════════════════════════════════════════
+// NUMBER MATCHING
+// ═══════════════════════════════════════════
+function doMatch(){
+  const raw=document.getElementById('minput').value;
+  const nums=raw.split(/\n|,/).map(n=>n.replace(/[^0-9]/g,'').trim()).filter(n=>n.length>=8);
+  if(!nums.length){toast('Enter at least one number');return;}
+  const lucky=S.nums.lucky,lp=S.nums.lp,expr=S.nums.expr;
+  const scored=nums.map(num=>{
+    const digits=num.split('').map(Number),last=digits[digits.length-1],last2=parseInt(num.slice(-2)),ns=numSum(num);
+    let score=0;const reasons=[];
+    if(ns===lp){score+=5;reasons.push('total = life path');}else if(ns===expr){score+=4;reasons.push('total = destiny');}
+    if(lucky.single.includes(ns)){score+=3;reasons.push('total is lucky');}
+    if(lucky.single.includes(last)){score+=2;reasons.push('ends in lucky digit');}
+    if(lucky.compound.includes(last2)){score+=2;reasons.push('ends in lucky compound');}
+    let avCount=0;digits.forEach(d=>{if(lucky.avoid.includes(d))avCount++;});
+    if(avCount>=3){score-=4;reasons.push('many avoid digits');}else if(avCount>=2){score-=2;reasons.push('avoid digits present');}else if(avCount===1){score-=1;}
+    let pri='neutral';if(score>=5)pri='best';else if(score>=2)pri='good';else if(score<0)pri='avoid';
+    return{num,score,pri,reason:reasons.join(' · ')||'neutral match',ns};
+  }).sort((a,b)=>b.score-a.score);
+  S.matched=scored;
+  const html=`<div class="rsec"><div style="font-size:14px;font-weight:600;color:var(--gold);margin-bottom:1rem">Number Match Results</div>${scored.map(item=>{const tc=item.pri==='best'?'tbest':item.pri==='avoid'?'tavoid':item.pri==='good'?'tgood':'tneut';const tl=item.pri==='best'?'Best match':item.pri==='avoid'?'Avoid':item.pri==='good'?'Good':'Neutral';return`<div class="mi"><span class="mnum">${item.num}</span><span class="mreason">Sum: ${item.ns} · ${item.reason}</span><span class="tag ${tc}">${tl}</span></div>`;}).join('')}</div>`;
+  document.getElementById('mresults').innerHTML=html;document.getElementById('mresults').style.display='block';document.getElementById('mcard').style.display='none';document.getElementById('mresults').scrollIntoView({behavior:'smooth'});
+}
+
+
+// ═══════════════════════════════════════════
+// REVIEW SCREEN
+// ═══════════════════════════════════════════
+function showReview(d){
+  document.getElementById('rv-name').textContent=d.name;
+  document.getElementById('rv-sub').textContent=d.gender+' · '+fmtDate(d.dob)+' · '+d.city;
+  document.getElementById('review-dealer-disp').textContent=document.getElementById('dealer-disp').textContent;
+
+  const bLabels={'under5k':'Under ₹5,000','5k-15k':'₹5,000–₹15,000','15k-50k':'₹15,000–₹50,000','50k-1L':'₹50,000–₹1 Lakh','above1L':'Above ₹1 Lakh'};
+  const rows=[
+    {label:'Full Name',val:d.name,field:'fn'},
+    {label:'Gender',val:d.gender,field:'fg'},
+    {label:'Date of Birth',val:fmtDate(d.dob),field:'fdob'},
+    {label:'Time of Birth',val:d.tob,field:'ftob'},
+    {label:'City',val:d.city,field:'fct'},
+    {label:'State / Country',val:d.state,field:'fst'},
+    {label:'Mobile',val:d.mobile,field:'fmob'},
+    {label:'Budget',val:bLabels[d.budget]||d.budget,field:'fbud'},
+    {label:'Purpose',val:d.purpose||'Not specified',field:'fpur'},
+  ];
+  document.getElementById('rv-grid').innerHTML=rows.map(r=>
+    `<div class="rv-row">
+      <span class="rv-label">${r.label}</span>
+      <span class="rv-val">${r.val||'—'}</span>
+      <button class="rv-edit" onclick="goBackEditField('${r.field}')">Edit</button>
+    </div>`
+  ).join('');
+
+  document.getElementById('rv-confirm').checked=false;
+  const pb=document.getElementById('proceed-btn');pb.disabled=true;pb.style.opacity='.45';pb.style.cursor='not-allowed';
+
+  // sync timer bar to review screen
+  const tb=document.getElementById('tbar');
+  const tbr=document.getElementById('tbar-review');
+  tbr.style.display=tb.style.display;
+  document.getElementById('ttxt-review').textContent=document.getElementById('ttxt').textContent||'';
+  document.getElementById('rcount-review').textContent='Reports: '+(S.reportCount)+'/5';
+  showScreen('review');
+}
+
+function toggleProceed(){
+  const checked=document.getElementById('rv-confirm').checked;
+  const pb=document.getElementById('proceed-btn');
+  pb.disabled=!checked;
+  pb.style.opacity=checked?'1':'.45';
+  pb.style.cursor=checked?'pointer':'not-allowed';
+}
+
+function goBackEdit(){
+  document.getElementById('rv-confirm').checked=false;
+  showScreen('form');
+}
+
+function goBackEditField(fieldId){
+  showScreen('form');
+  setTimeout(()=>{
+    const el=document.getElementById(fieldId);
+    if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'});}
+  },300);
+}
+
+function doProceed(){
+  if(!document.getElementById('rv-confirm').checked)return;
+  const d=S.fd;
+  // Generate unique report ID
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  S.reportId='MC-'+now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'-'+String(Math.floor(Math.random()*9000)+1000);
+  const lp=calcLP(d.dob),expr=calcExpr(d.name),su=calcSU(d.name),pn=calcPN(d.name),mat=calcMat(lp,expr),bal=calcBal(d.name),py=calcPY(d.dob,2025);
+  const grid=getNameGrid(d.name),rashi=getVedicRashi(d.dob,d.tob),nak=getVedicNak(d.dob,d.tob),lucky=getLuckyFromLP(lp);
+  S.nums={lp,expr,su,pn,mat,bal,py,lucky};
+  S.reportCount=(S.reportCount||0)+1;
+  S.sessionClients=S.sessionClients||[];
+  S.sessionClients.push({name:d.name,mobile:d.mobile,rashi:'',id:S.reportId,time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})});
+  if(S.dealer.type==='trial'){
+    if(S.reportCount>=5){
+      callSheets({action:'updateCode',code:S.dealer.code,field:'status',value:'used',sheet:'codes'}).catch(()=>{});
     }
   }
-  return ['*MANNE COMMUNICATIONS*','*VIP MOBILE NUMBER TOTALS*',`Batch ${batchNo}/${totalBatches}`,'',...groups,`Numbers in this batch: ${rows.length}`,'','Number That Matters','Identity That Stays'].join('\n');
+  renderFullReport(d,lp,expr,su,pn,mat,bal,py,grid,rashi,nak,lucky);
+  showScreen('report');
+  // update history button
+  const hb=document.getElementById('hist-btn');
+  if(hb)hb.textContent='📋 Session ('+(S.sessionClients||[]).length+')';
+  document.getElementById('session-hist').style.display='none';
+  // update timer bar on report screen
+  if(S.dealer.type==='trial')document.getElementById('tbar').style.display='flex';
+  // update report counter in timer bar
+  document.getElementById('ttxt').textContent=document.getElementById('ttxt').textContent;
 }
-$('whatsapp').addEventListener('click',makeWhatsAppBatches);
-$('batchSize').addEventListener('change',()=>{if(!$('waPanel').hidden)makeWhatsAppBatches()});
-$('csv').addEventListener('click',()=>{const rows=visibleResults(),csv=['Mobile Number,Digit Total,Single Digit',...rows.map(r=>`${r.number},${r.sum},${r.root}`)].join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='manne-vip-number-totals.csv';a.click();URL.revokeObjectURL(url)});
-$('print').addEventListener('click',()=>window.print());
-$('numbers').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')calculate()});
+
+
+// ═══════════════════════════════════════════
+// DASHA CALCULATOR (Vimshottari)
+// ═══════════════════════════════════════════
+const DASHA_LORDS = ['Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury'];
+const DASHA_YEARS = [7,20,6,10,7,18,16,19,17];
+const DASHA_NAK_LORD = [
+  'Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury', // Ashwini-Ashlesha
+  'Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury', // Magha-Jyeshtha
+  'Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury'  // Mula-Revati
+];
+
+function calcDasha(dob, tob){
+  const [y,m,d]=dob.split('-').map(Number);
+  const h=parseTob(tob);
+  const sid=moonSiderealLon(y,m,d,h);
+  const ni=Math.floor(sid/(360/27));
+  const posInNak=(sid%(360/27))/(360/27); // 0-1 within nakshatra
+
+  // Find starting dasha lord
+  const lordIdx=ni%9;
+  const lord=DASHA_LORDS[lordIdx];
+  const lordYears=DASHA_YEARS[lordIdx];
+
+  // Balance of dasha at birth
+  const balance=lordYears*(1-posInNak);
+
+  // Build dasha sequence from birth
+  const birthDate=new Date(y,m-1,d);
+  const today=new Date();
+  const dashas=[];
+  let cursor=new Date(birthDate);
+  let startIdx=lordIdx;
+
+  for(let i=0;i<9;i++){
+    const idx=(startIdx+i)%9;
+    const yrs=i===0?balance:DASHA_YEARS[(startIdx+i)%9];
+    const end=new Date(cursor);
+    end.setDate(end.getDate()+Math.round(yrs*365.25));
+    dashas.push({lord:DASHA_LORDS[(startIdx+i)%9],years:yrs,start:new Date(cursor),end});
+    cursor=new Date(end);
+    if(cursor>new Date(today.getFullYear()+20,0,1))break;
+  }
+
+  // Find current dasha
+  const cur=dashas.find(d=>today>=d.start&&today<d.end)||dashas[dashas.length-1];
+
+  // Find antardasha within current
+  const elapsed=(today-cur.start)/(1000*60*60*24*365.25);
+  let antCursor=new Date(cur.start);
+  const anthas=[];
+  const curIdx=DASHA_LORDS.indexOf(cur.lord);
+  for(let i=0;i<9;i++){
+    const ai=(curIdx+i)%9;
+    const ayrs=(cur.years*DASHA_YEARS[ai])/120;
+    const aend=new Date(antCursor);
+    aend.setDate(aend.getDate()+Math.round(ayrs*365.25));
+    anthas.push({lord:DASHA_LORDS[ai],years:ayrs,start:new Date(antCursor),end:aend});
+    antCursor=new Date(aend);
+  }
+  const curAntha=anthas.find(a=>today>=a.start&&today<a.end)||anthas[0];
+
+  const fmtDt=d=>d.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+  return{
+    current:cur.lord,
+    currentEnd:fmtDt(cur.end),
+    antardasha:curAntha?curAntha.lord:'',
+    antarEnd:curAntha?fmtDt(curAntha.end):'',
+    sequence:dashas.map(d=>({lord:d.lord,start:fmtDt(d.start),end:fmtDt(d.end),active:d===cur}))
+  };
+}
+
+// ═══════════════════════════════════════════
+// AI NARRATIVE (validates code against Sheets)
+// ═══════════════════════════════════════════
+async function doAINarrative(){
+  const aiCode=document.getElementById('ai-code-input').value.trim().toUpperCase();
+  if(!aiCode){document.getElementById('ai-code-er').textContent='Enter AI credit code';return;}
+  const apiKey=gak();
+  if(!apiKey){document.getElementById('ai-code-er').textContent='API key not configured. Ask admin.';return;}
+
+  document.getElementById('ai-state-request').style.display='none';
+  document.getElementById('ai-loading').style.display='flex';
+  document.getElementById('ai-code-er').textContent='';
+
+  try{
+    // Validate AI code against Sheets
+    const data=await callSheets({action:'getCodes'});
+    const aiCodes=data.aiCodes||[];
+    const c=aiCodes.find(x=>String(x.code).toUpperCase()===aiCode);
+    if(!c){throw new Error('Invalid AI credit code');}
+    if(c.status==='used'){throw new Error('This AI credit has already been used');}
+    if(c.status==='revoked'){throw new Error('This AI credit has been revoked');}
+
+    const d=S.fd,n=S.nums,lpd=LP_DATA[n.lp]||LP_DATA[1],rashi=getRashi(d.dob);
+    const prompt=`You are a warm, insightful Vedic astrologer and Chaldean numerologist. Write a beautiful, flowing, personalized 600-word narrative consultation for this specific person. Do NOT use headers or lists — write as flowing prose, speaking directly to them.
+
+CLIENT: ${d.name} | ${d.gender} | Born ${fmtDate(d.dob)} at ${d.tob} | ${d.city}, ${d.state}
+Life Path: ${n.lp} (${lpd.title}) | Expression: ${n.expr} | Soul Urge: ${n.su} | Personal Year 2025: ${n.py}
+Sun Sign: ${rashi.name} | Ruling Planet: ${lpd.planet}
+Purpose: ${d.purpose||'General consultation'}
+
+Write in second person (you/your). Weave together their Life Path ${n.lp} energy, ${rashi.name} Sun sign nature, Personal Year ${n.py} themes, and Soul Urge ${n.su} inner motivation. Make it deeply personal and encouraging. End with their 2025-2026 outlook. About 600 words.`;
+
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-ipc':'true'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    const resp=await res.json();
+    if(resp.error)throw new Error(resp.error.message);
+    const narrative=resp.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+
+    // Mark AI code as used in Sheets
+    await callSheets({action:'updateCode',code:aiCode,field:'status',value:'used',sheet:'ai_codes'});
+    await callSheets({action:'updateCode',code:aiCode,field:'dealer',value:S.dealer.name,sheet:'ai_codes'});
+    await callSheets({action:'updateCode',code:aiCode,field:'usedAt',value:new Date().toISOString(),sheet:'ai_codes'});
+
+    S.aiNarrative=narrative;
+    document.getElementById('ai-loading').style.display='none';
+    document.getElementById('ai-narrative-text').textContent=narrative;
+    document.getElementById('ai-narrative-output').style.display='block';
+    toast('AI narrative generated ✓');
+  }catch(e){
+    document.getElementById('ai-loading').style.display='none';
+    document.getElementById('ai-state-request').style.display='flex';
+    document.getElementById('ai-code-er').textContent='Error: '+e.message;
+  }
+}
+
+// ═══════════════════════════════════════════
+// PDF
+// ═══════════════════════════════════════════
+async function loadHtml2pdf(){if(window.html2pdf)return;return new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+
+function buildPDF(){
+  const d=S.fd,n=S.nums,lp=n.lp,lpd=LP_DATA[lp]||LP_DATA[1],rashi=getVedicRashi(d.dob,d.tob),nak=getVedicNak(d.dob,d.tob);
+  document.getElementById('pdfdate').textContent='Report: '+new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+  let h=`<div class="pcb"><div class="pcn">${d.name}</div><div class="pcs">${d.gender} | DOB: ${fmtDate(d.dob)} | Time: ${d.tob}<br>Place: ${d.city}, ${d.state} | Mobile: ${d.mobile}<br>Consultant: ${S.dealer.name} | ${new Date().toLocaleDateString('en-IN')}</div></div>`;
+  h+=`<div class="psec"><h3>Core Numbers</h3><div style="display:flex;flex-wrap:wrap;gap:5px;font-family:sans-serif">`;
+  [{l:'Life Path',v:lp},{l:'Expression',v:n.expr},{l:'Soul Urge',v:n.su},{l:'Personality',v:n.pn},{l:'Maturity',v:n.mat},{l:'Personal Year 2025',v:n.py}].forEach(({l,v})=>h+=`<div class="pn"><div class="pnn">${v}</div><div class="pnl">${l}</div></div>`);
+  h+=`</div></div>`;
+  h+=`<div class="psec"><h3>Chaldean Name Grid</h3><div class="pngrid">${getNameGrid(d.name).filter(g=>!g.space&&g.v).map(g=>`<div class="pnl2"><div class="lc">${g.c}</div><div class="lv">${g.v}</div></div>`).join('')}</div></div>`;
+  h+=`<div class="psec"><h3>Life Path ${lp} — ${lpd.title}</h3><p><strong>Planet:</strong> ${lpd.planet} | <strong>Element:</strong> ${lpd.element} | <strong>Gem:</strong> ${lpd.gem} | <strong>Day:</strong> ${lpd.day} | <strong>Mantra:</strong> ${lpd.mantra}</p><p>${lpd.interp}</p></div>`;
+  h+=`<div class="psec"><h3>Soul Urge ${n.su}</h3><p>${SU_DATA[n.su]||SU_DATA[1]}</p></div>`;
+  h+=`<div class="psec"><h3>జన్మ రాశి — ${rashi.name} (${rashi.te})</h3><p><strong>Lord:</strong> ${rashi.lord} | <strong>Element:</strong> ${rashi.element} | <strong>Symbol:</strong> ${rashi.symbol}</p><p>${rashi.traits}</p></div>`;
+  h+=`<div class="psec"><h3>జన్మ నక్షత్రం — ${nak.name} (Pada ${nak.pada||1})</h3><p><strong>Lord:</strong> ${nak.lord} | <strong>Deity:</strong> ${nak.deity}</p><p>${nak.trait}</p></div>`;
+  h+=`<div class="psec"><h3>Personal Year ${n.py} — 2025</h3><p>${PY_DATA[n.py]||PY_DATA[1]}</p></div>`;
+  h+=`<div class="psec"><h3>Lucky Numbers & Remedies</h3><div class="pnums">${n.lucky.single.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Lucky</div></div>`).join('')}${n.lucky.compound.map(x=>`<div class="pn"><div class="pnn">${x}</div><div class="pnl">Compound</div></div>`).join('')}</div><p style="font-family:sans-serif;font-size:9pt">Avoid: ${n.lucky.avoid.join(', ')} | Color: ${n.lucky.color} | Day: ${n.lucky.day} | Gem: ${n.lucky.gem}</p></div>`;
+  if(S.matched&&S.matched.length){h+=`<div class="psec"><h3>VIP Number Match</h3>`;S.matched.forEach(item=>{const cl=item.pri==='best'?'ptbest':item.pri==='avoid'?'ptavoid':item.pri==='good'?'ptgood':'';const lb=item.pri==='best'?'Best':item.pri==='avoid'?'Avoid':item.pri==='good'?'Good':'Neutral';h+=`<div class="pmr"><span style="font-family:monospace;min-width:115px">${item.num}</span><span class="ptag ${cl}">${lb}</span><span style="color:#666;font-family:sans-serif"> ${item.reason}</span></div>`;});h+=`</div>`;}
+  if(S.aiNarrative){h+=`<div class="psec"><h3>AI Personalized Narrative</h3><p style="font-style:italic;line-height:1.7">${S.aiNarrative.replace(/\n/g,'</p><p style=\"font-style:italic;line-height:1.7\">')}</p></div>`;}
+  document.getElementById('pdfbody').innerHTML=h;
+}
+
+async function doPDF(){
+  buildPDF();
+  const wrap=document.getElementById('pdfout');
+  const el=document.getElementById('pdfc');
+  // Make visible for print
+  wrap.style.cssText='display:block;position:static;opacity:1;width:100%';
+  el.style.cssText='display:block;background:#fff';
+  await new Promise(r=>setTimeout(r,300));
+  window.print();
+  // Hide again after print dialog closes
+  setTimeout(()=>{
+    wrap.style.cssText='display:none';
+    el.style.cssText='display:none';
+  },1000);
+}
+
+// ═══════════════════════════════════════════
+// COPY & WHATSAPP
+// ═══════════════════════════════════════════
+function doCopy(){
+  const d=S.fd,n=S.nums;if(!d){toast('No report');return;}
+  const lpd=LP_DATA[n.lp]||LP_DATA[1],rashi=getRashi(d.dob),nak=getNakshatra(d.dob);
+  let txt='MANNE COMMUNICATIONS — CHALDEAN ASTROLOGY REPORT\n'+'='.repeat(45)+'\n';
+  txt+='Name: '+d.name+' | '+d.gender+'\nDOB: '+fmtDate(d.dob)+' | Time: '+d.tob+'\nPlace: '+d.city+', '+d.state+'\nConsultant: '+S.dealer.name+' | '+new Date().toLocaleDateString('en-IN')+'\n\n';
+  txt+='CORE NUMBERS\n'+'-'.repeat(35)+'\nLife Path: '+n.lp+' ('+lpd.title+') | Expression: '+n.expr+'\nSoul Urge: '+n.su+' | Maturity: '+n.mat+' | Personal Year: '+n.py+'\n\n';
+  txt+='SUN SIGN: '+rashi.name+' | BIRTH STAR: '+nak.name+'\n\n';
+  txt+='LUCKY NUMBERS: '+n.lucky.single.join(', ')+'\nCompound: '+n.lucky.compound.join(', ')+'\nAvoid: '+n.lucky.avoid.join(', ')+'\nGemstone: '+n.lucky.gem+'\n\n';
+  if(S.matched&&S.matched.length){txt+='VIP NUMBER MATCHES\n'+'-'.repeat(35)+'\n';S.matched.forEach(item=>{txt+=item.num+' — '+item.pri.toUpperCase()+' ('+item.reason+')\n';});txt+='\n';}
+  if(S.aiNarrative)txt+='AI NARRATIVE\n'+'-'.repeat(35)+'\n'+S.aiNarrative+'\n\n';
+  txt+='For further details, contact the consultant who shared this report.';
+  navigator.clipboard.writeText(txt).then(()=>toast('Copied!'));
+}
+
+function doWA(){
+  const d=S.fd,n=S.nums,rashi=getRashi(d.dob);
+  let top=S.matched?S.matched.filter(x=>x.pri==='best').slice(0,3).map(x=>x.num).join('\n'):'';
+  const msg='*Astrology Report*'
+    +'\nPrepared for: *'+d.name+'*'
+    +'\n\n*Date of Birth:* '+fmtDate(d.dob)+' | '+d.tob
+    +'\n*Place:* '+d.city+', '+d.state
+    +'\n\n*Sun Sign:* '+rashi.name
+    +'\n*Life Path:* '+(LP_DATA[n.lp]||LP_DATA[1]).title
+    +'\n*Lucky Numbers:* '+n.lucky.single.join(', ')
+    +(top?'\n\n*Recommended VIP Numbers:*\n'+top:'')
+    +'\n\n_Contact the consultant who shared this report for further guidance._';
+  window.open('https://wa.me/'+d.mobile.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function doLogout(){if(S.timer){clearInterval(S.timer);S.timer=null;}document.getElementById('tbar').style.display='none';S.dealer={name:'',code:'',type:''};S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('role');}
+
+function doQuickWA(){
+  const d=S.fd;
+  if(!d||!d.mobile){toast('Fill all details first');return;}
+  const msg='*Astrology Consultation*'
+    +'\nName: *'+d.name+'*'
+    +'\nDOB: '+fmtDate(d.dob)+' | '+d.tob
+    +'\nPlace: '+d.city+', '+d.state
+    +'\n\nYour detailed Chaldean numerology and Vedic astrology report is being prepared.'
+    +'\n\n_Contact your consultant for full report details._';
+  window.open('https://wa.me/'+d.mobile.replace(/[^0-9]/g,'')+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+function toggleHistory(){
+  const p=document.getElementById('session-hist');
+  const showing=p.style.display==='block';
+  p.style.display=showing?'none':'block';
+  if(!showing){
+    const clients=S.sessionClients||[];
+    document.getElementById('hist-list').innerHTML=clients.length
+      ?clients.map((c,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:0.5px solid var(--border);font-size:14px"><div><span style="color:var(--text);font-weight:600">${c.name}</span><span style="color:var(--muted);margin-left:.5rem">${c.mobile}</span></div><div style="text-align:right"><span style="color:var(--gold);font-size:12px">${c.id}</span><br><span style="color:var(--muted);font-size:11px">${c.time}</span></div></div>`).join('')
+      :'<div style="color:var(--muted);font-size:13px">No clients yet this session.</div>';
+    document.getElementById('hist-btn').textContent='📋 Session ('+clients.length+')';
+  }
+}
+
+function adminLogout(){sessionStorage.removeItem('mc_admin');showScreen('role');}
+function doNewConsult(){
+  if(S.dealer.type==='trial'&&S.reportCount>=5){toast('5 reports completed. Contact Manne Communications for paid access.',5000);setTimeout(doLogout,2500);return;}
+  ['fn','fdob','ftob','fct','fst','fmob','fpur'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('fg').value='';document.getElementById('fbud').value='';
+  S.fd=null;S.matched=null;S.aiNarrative=null;showScreen('form');
+}
+window.onload=()=>setTimeout(()=>{
+  if(sessionStorage.getItem('mc_admin')==='1'){
+    const k=gak();if(k)document.getElementById('adm-apikey').value=k;
+    const pu=localStorage.getItem('mc_proxy_url');if(pu)document.getElementById('adm-proxyurl').value=pu;
+    renderAdmin();showScreen('admin');
+  } else {
+    showScreen('role');
+  }
+},2200);
+
+
+// ─────────────────────────────────────────────
+// MANNE COMMUNICATIONS PUBLIC ENQUIRY FLOW
+// ─────────────────────────────────────────────
+const MC_PUBLIC_WHATSAPP = '919090900005';
+
+function toggleBusinessFields(){
+  const mode = document.getElementById('assessment-mode')?.value || 'Personal';
+  const box = document.getElementById('business-fields');
+  if(box) box.style.display = (mode === 'Business' || mode === 'Combined') ? 'block' : 'none';
+}
+
+function doGenReport(){
+  const val = id => (document.getElementById(id)?.value || '').trim();
+  const mode = val('assessment-mode') || 'Personal';
+  const name = val('fn');
+  const mobile = val('fmob').replace(/[^\d]/g,'');
+  const dob = val('fdob');
+  const city = val('fct');
+  const state = val('fst');
+  const consent = document.getElementById('privacy-consent')?.checked;
+
+  if(!name){toast('Please enter your full name');document.getElementById('fn').focus();return;}
+  if(!/^\d{10,13}$/.test(mobile)){toast('Please enter a valid mobile number with country code if needed');document.getElementById('fmob').focus();return;}
+  if((mode === 'Personal' || mode === 'Combined') && (!dob || !city || !state)){
+    toast('Please enter date and place of birth for the personal assessment');return;
+  }
+  if((mode === 'Business' || mode === 'Combined') && !val('biz-name')){
+    toast('Please enter your business or brand name');document.getElementById('biz-name').focus();return;
+  }
+  if(!consent){toast('Please confirm consent before submitting');return;}
+
+  const msg = [
+    '*MANNE COMMUNICATIONS | CONSULTATION ENQUIRY*',
+    '',
+    '*Assessment type:* ' + mode,
+    '*Full name:* ' + name,
+    '*Gender:* ' + (val('fg') || 'Not specified'),
+    '*Date of birth:* ' + (dob || 'Not provided'),
+    '*Time of birth:* ' + (val('ftob') ? val('ftob') + ' ' + val('fampm') : 'Not known / not provided'),
+    '*Birth place:* ' + [city,state].filter(Boolean).join(', '),
+    '*Contact mobile:* ' + mobile,
+    '*Additional number / number requirements:* ' + (val('fpur') || 'Not specified'),
+    '',
+    ...(mode === 'Business' || mode === 'Combined' ? [
+      '*BUSINESS DETAILS*',
+      '*Business / brand name:* ' + val('biz-name'),
+      '*Category:* ' + (val('biz-category') || 'Not specified'),
+      '*Business status:* ' + (val('biz-status') || 'Not specified'),
+      '*Commencement date:* ' + (val('biz-date') || 'Not provided'),
+      '*Business location:* ' + (val('biz-location') || 'Not provided'),
+      '*Business mobile number(s):* ' + (val('biz-mobile') || 'Not provided'),
+      '*Business goals / questions:* ' + (val('biz-goals') || 'Not specified'),
+      ''
+    ] : []),
+    '*Consultation purpose / questions:* ' + (val('fpur') || 'Not specified'),
+    '',
+    'I have completed the assessment form on the Manne Communications website. Please guide me on the next steps.'
+  ];
+
+  const url = 'https://wa.me/' + MC_PUBLIC_WHATSAPP + '?text=' + encodeURIComponent(msg.join('\n'));
+  window.open(url, '_blank');
+  toast('WhatsApp opened. Please review the enquiry and tap Send.', 4500);
+}
+
+// Public visitors always land on the new landing page.
+// Admin remains accessible through the Admin access link.
+window.onload = () => {
+  showScreen('role');
+  toggleBusinessFields();
+};
+
 </script>
 </body>
 </html>

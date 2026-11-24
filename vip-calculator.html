@@ -2,1291 +2,466 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Number Total Calculator</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="Free VIP mobile number total calculator by Manne Communications. Calculate digit sums and single digit roots for Indian mobile numbers in bulk.">
+<title>VIP Number Total Calculator | Manne Communications</title>
 <style>
-  :root {
-    --bg: #07080f;
-    --surface: #0d0f1e;
-    --surface2: #131628;
-    --surface3: #1a1f35;
-    --border: #252b45;
-    --border2: #2e3554;
-    --gold: #e8b84b;
-    --gold-bright: #f5cc6a;
-    --gold-dim: #9a7830;
-    --gold-glow: rgba(232,184,75,0.15);
-    --gold-glow2: rgba(232,184,75,0.08);
-    --gold-neon: rgba(232,184,75,0.35);
-    --green: #2edb6f;
-    --green-bright: #4ade80;
-    --green-dim: rgba(46,219,111,0.14);
-    --green-neon: rgba(46,219,111,0.4);
-    --blue: #4d9fff;
-    --blue-dim: rgba(77,159,255,0.13);
-    --red: #ff5252;
-    --red-dim: rgba(255,82,82,0.1);
-    --purple: #c084fc;
-    --purple-dim: rgba(192,132,252,0.13);
-    --orange: #fb923c;
-    --orange-dim: rgba(251,146,60,0.13);
-    --num-color: #cdd9f5;
-    --num-bright: #eef2ff;
-    --text: #dde3f5;
-    --text-bright: #f0f4ff;
-    --text-dim: #8899bb;
-    --text-muted: #3d4a68;
-    --text-mid: #aab8d8;
-  }
+:root{--bg:#f4f6fa;--panel:#fff;--ink:#172033;--muted:#687386;--line:#e4e8ef;--navy:#101827;--gold:#c7a45b;--gold2:#ead7a8;--green:#137a55;--red:#c23c42;--shadow:0 14px 38px rgba(18,31,51,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(135deg,#101827,#1c2b43);color:#fff;padding:27px 18px 30px;border-bottom:3px solid var(--gold)}
+.head{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:13px}.mark{width:44px;height:44px;border:1px solid rgba(234,215,168,.7);border-radius:13px;display:grid;place-items:center;color:var(--gold2);font-size:23px;font-weight:800}
+.brand-name{font-weight:800;letter-spacing:.4px;font-size:17px}.tagline{font-size:11px;color:#d5dbea;margin-top:4px;letter-spacing:.7px}
+.head-note{font-size:12px;color:#d5dbea;text-align:right}
+main{max-width:1120px;margin:28px auto;padding:0 16px 45px}
+.intro{text-align:center;margin:0 auto 23px}.intro h1{font-size:clamp(25px,4vw,35px);margin:0 0 8px;letter-spacing:-.8px}.intro p{color:var(--muted);margin:0;font-size:15px}
+.layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:18px;align-items:start}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);padding:21px}
+.panel h2{font-size:17px;margin:0 0 7px}.sub{font-size:13px;color:var(--muted);margin:0 0 17px;line-height:1.5}
+textarea{width:100%;min-height:225px;resize:vertical;border:1px solid #d9dfe8;border-radius:12px;padding:15px;font:15px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--ink);outline:none;background:#fbfcfe}
+textarea:focus,input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(199,164,91,.14)}
+.entry-workspace{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(210px,.85fr);gap:12px;align-items:stretch}
+.entry-workspace textarea{min-height:225px}
+.live-check{border:1px solid var(--line);border-radius:12px;background:#fbfcfe;padding:12px;min-width:0}
+.live-check h3{font-size:13px;margin:0 0 5px}
+.live-check .live-note{font-size:11px;color:var(--muted);margin:0 0 10px;line-height:1.45}
+.live-list{display:grid;gap:7px;max-height:225px;overflow:auto}
+.live-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px}
+.live-item .live-number{font:700 12px ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+.live-meta{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.live-sum{font-size:11px;color:var(--muted);font-weight:700}
+.live-empty{font-size:12px;color:var(--muted);padding:14px 5px;text-align:center}
+@media(max-width:800px){.entry-workspace{grid-template-columns:1fr}.entry-workspace textarea{min-height:180px}.live-list{max-height:180px}}
+.hint{font-size:12px;color:var(--muted);margin:9px 0 15px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+button{border:0;border-radius:10px;padding:11px 15px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
+button:focus-visible{outline:3px solid rgba(199,164,91,.4);outline-offset:2px}
+.primary{background:var(--navy);color:#fff}.primary:hover{background:#263953}.secondary{background:#f2eee4;color:#6b5427;border:1px solid #e7d8b5}.light{background:#f3f5f8;color:#354157;border:1px solid var(--line)}button:disabled{opacity:.45;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:0 0 16px}
+.stat{background:#f7f8fb;border:1px solid var(--line);border-radius:12px;padding:12px}.stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.stat strong{font-size:22px;letter-spacing:-.5px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 12px}
+.tools input,.tools select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:10px 11px;background:#fff;color:var(--ink);font-size:14px}
+.tools input{flex:1;min-width:140px}.tools select{min-width:130px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:510px;font-size:14px}
+th{background:#f7f8fb;color:#697487;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.55px;padding:12px 13px;white-space:nowrap}
+td{padding:12px 13px;border-top:1px solid #edf0f4;white-space:nowrap}
+tbody tr:hover{background:#fcfaf5}.number{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:14px;font-weight:750;letter-spacing:.5px}
+.root{display:inline-grid;place-items:center;min-width:30px;height:30px;padding:0 8px;border-radius:9px;font-weight:850}
+.root-1{background:#fff0ed;color:#b33a2c}.root-2{background:#eaf3ff;color:#245da8}.root-3{background:#fff5d9;color:#946800}
+.root-4{background:#e9f6ed;color:#247343}.root-5{background:#f1eaff;color:#7043ad}.root-6{background:#ffeaf3;color:#a52e68}
+.root-7{background:#e6f6f5;color:#176c69}.root-8{background:#f0eff2;color:#49434f}.root-9{background:#ffeddf;color:#a64c16}
+.filter-box{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fbfcfe;margin:0 0 12px}
+.group-panel{border:1px solid var(--line);border-radius:12px;padding:13px;margin-top:13px;background:#fff}
+.wa-panel{border:1px solid #cfe5d7;background:#f6fbf7;border-radius:13px;padding:14px;margin-top:13px}
+.wa-panel[hidden]{display:none}.wa-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.batch-size{font-size:11px;font-weight:700;color:#687386;min-width:135px}.batch-size select{display:block;width:100%;margin-top:5px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.batch-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+.batch-card{background:#fff;border:1px solid #dce9df;border-radius:10px;padding:11px;min-width:0}
+.batch-card strong{font-size:14px}.batch-card small{display:block;color:var(--muted);font-size:11px;margin:4px 0 9px}
+.batch-actions{display:flex;gap:6px;flex-wrap:wrap}.batch-actions button{flex:1;padding:8px 9px;font-size:12px}
+@media(max-width:480px){.wa-head{display:block}.batch-size{display:block;margin-top:10px}.batch-list{grid-template-columns:1fr}}
+.group-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.group-card{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fbfcfe;display:flex;align-items:center;gap:9px;min-width:0}
+.group-card strong{font-size:18px}.group-card small{display:block;color:var(--muted);font-size:10px}
+.group-card button{margin-left:auto;padding:6px 8px;font-size:10px;background:#f0f2f6;color:#344157}
+@media(max-width:480px){.group-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.filter-title{font-size:12px;font-weight:800;color:#344157;margin-bottom:10px}
+.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.filter-grid label{font-size:11px;font-weight:700;color:#687386}
+.filter-grid input{display:block;width:100%;margin-top:5px;border:1px solid #d9dfe8;border-radius:9px;padding:10px;background:white;color:var(--ink);font-size:14px}
+@media(max-width:480px){.filter-grid{grid-template-columns:1fr}}
+.empty{text-align:center;color:var(--muted);padding:28px 12px!important}
+.bad{color:var(--red);font-size:12px;margin-top:12px;line-height:1.5}.good{color:var(--green);font-size:12px;margin-top:12px}
+footer{text-align:center;color:#7c8798;font-size:12px;padding:20px 12px 30px}footer b{color:#344057}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#172235;color:white;padding:11px 16px;border-radius:10px;font-size:13px;box-shadow:var(--shadow);transition:.2s;z-index:5}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.head-note{display:none}main{margin-top:22px}.panel{padding:17px}}
+@media(max-width:420px){.stats{gap:6px}.stat{padding:10px 8px}.stat strong{font-size:19px}.actions button{flex:1}.intro p{font-size:13px}.intro h1{font-size:clamp(27px,8vw,34px);letter-spacing:0}}
+@media print{header,.intro,.entry-panel,.tools,.actions,footer{display:none!important}body{background:#fff}.layout{display:block}main{margin:0;padding:0}.panel{box-shadow:none;border:0;padding:0}.table-wrap{overflow:visible}table{min-width:0}th,td{padding:7px;font-size:12px}}
+
+/* Matte black and glowing gold visual theme */
+:root{--bg:#07080d;--panel:#0d101b;--ink:#f4f1e9;--muted:#a7afc2;--line:#252a3c;--navy:#d6a93d;--gold:#f3c85b;--gold2:#ffe28a;--green:#4fd3a0;--red:#ff7777;--shadow:0 18px 55px rgba(0,0,0,.38)}
+body{background-color:#07080d;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),radial-gradient(ellipse at 50% 0%,rgba(184,132,34,.13),transparent 48%);background-size:58px 58px,58px 58px,auto;color:var(--ink)}
+header{background:rgba(7,8,13,.94);border-bottom:1px solid rgba(243,200,91,.2)}
+.mark{background:#15120b;color:var(--gold2);box-shadow:0 0 22px rgba(243,200,91,.13)}
+.brand-name{color:#f5f0e4}.tagline{color:#c6a95f}
+.head-note{color:#9ca6bb}
+main{max-width:1320px;margin:22px auto}
+.intro{margin:0 auto 28px;max-width:1000px}
+.tool-badge{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(243,200,91,.32);border-radius:30px;padding:7px 15px;color:#f2c95f;background:rgba(243,200,91,.08);font:600 10px ui-monospace,monospace;letter-spacing:2.2px;margin-bottom:16px}
+.tool-badge span{width:7px;height:7px;border-radius:50%;background:#ffd76a;box-shadow:0 0 12px #ffd76a}
+.intro h1{font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:.3px;font-weight:900;text-transform:uppercase;margin:0 0 12px;text-shadow:0 3px 22px rgba(255,255,255,.07)}
+.intro h1 span,.intro h1 strong{display:block}
+.intro h1 span{color:#f4f1e9}
+.intro h1 strong{font-weight:950;color:#f4c85d;text-shadow:0 0 12px rgba(243,200,91,.55),0 0 38px rgba(243,200,91,.32)}
+.intro p{color:#aeb7cb;font-size:15px;line-height:1.55;margin:0}
+.layout{max-width:1240px;margin:0 auto;gap:18px}
+.panel{background:linear-gradient(145deg,rgba(16,19,31,.98),rgba(10,12,21,.98));border:1px solid #292d40;box-shadow:0 20px 55px rgba(0,0,0,.3);border-radius:20px}
+.panel h2{color:#f4f0e6}
+.sub,.hint,.live-check .live-note{color:#a8b1c5}
+textarea{background:#111523;color:#f4f0e6;border-color:#34394d;caret-color:#ffd76a}
+textarea::placeholder,input::placeholder{color:#737e96}
+textarea:focus,input:focus,select:focus{border-color:#e8bd51;box-shadow:0 0 0 3px rgba(243,200,91,.12)}
+.live-check{background:#101421;border-color:#30364b}
+.live-check h3{color:#f5d47c}
+.live-item{background:#171c2b;border-color:#30364b}
+.live-number{color:#f2f0e9}
+.live-sum{color:#aeb8cc}
+.live-empty{color:#929db3}
+.primary{background:linear-gradient(135deg,#f4d477,#c9972d);color:#17120a}
+.primary:hover{background:linear-gradient(135deg,#ffe49a,#d6a43b)}
+.secondary{background:#211c11;color:#f5d47c;border:1px solid #665125}
+.light{background:#171c2a;color:#dce2ef;border:1px solid #34394d}
+.stat{background:#141927;border-color:#30364b}
+.stat small{color:#a9b3c7}.stat strong{color:#f7f3e9}
+.tools input,.tools select{background:#111624;color:#eee9df;border-color:#34394d}
+.tools input:focus,.tools select:focus{border-color:#e8bd51}
+.table-wrap{border-color:#30364b}
+th{background:#171c2a;color:#c2cad9}
+td{border-top-color:#282e40;color:#e9eaf0}
+tbody tr:hover{background:#1a1c26}
+.group-card{background:#141927;border-color:#30364b;color:#f0eee8}
+.group-card button{background:#292315;color:#f2ce70;border:1px solid #5b4924}
+#message.good{color:#65d9aa}#message.bad{color:#ff9292}
+footer{color:#8792a9}
+.layout{grid-template-columns:minmax(0,1fr)}
+.filter-panel{width:100%}
+@media(max-width:800px){main{margin-top:20px}.intro{margin-bottom:22px}.intro h1{font-size:clamp(30px,6vw,42px)}.tool-badge{margin-bottom:13px}}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(232,184,75,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232,184,75,0.03) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    top: -220px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 900px;
-    height: 520px;
-    background: radial-gradient(ellipse, rgba(232,184,75,0.09) 0%, transparent 65%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px 80px;
-  }
-
-  header {
-    text-align: center;
-    padding: 48px 0 40px;
-  }
-
-  .brand-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(232,184,75,0.1);
-    border: 1px solid rgba(232,184,75,0.3);
-    border-radius: 100px;
-    padding: 6px 16px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold-bright);
-    margin-bottom: 22px;
-  }
-
-  .brand-pill::before {
-    content: '';
-    width: 7px; height: 7px;
-    background: var(--gold-bright);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--gold-bright);
-    animation: pulse 2s infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes pulse {
-    0%,100% { opacity:1; transform:scale(1); box-shadow: 0 0 8px var(--gold-bright); }
-    50% { opacity:0.4; transform:scale(0.5); box-shadow: none; }
-  }
-
-  h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(2.6rem, 6.5vw, 4rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--text-bright);
-    margin-bottom: 16px;
-    text-shadow: 0 0 40px rgba(232,184,75,0.25), 0 0 80px rgba(232,184,75,0.1);
-  }
-
-  h1 span {
-    color: var(--gold-bright);
-    text-shadow: 0 0 20px rgba(232,184,75,0.7), 0 0 50px rgba(232,184,75,0.35), 0 0 100px rgba(232,184,75,0.15);
-  }
-
-  .subtitle {
-    color: var(--text-mid);
-    font-size: 16px;
-    font-weight: 400;
-    max-width: 480px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 26px;
-    margin-bottom: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0.5;
-  }
-
-  .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--gold-bright);
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .paste-flex {
-    display: flex;
-    gap: 16px;
-    align-items: stretch;
-  }
-
-  .paste-main {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  textarea {
-    width: 100%;
-    min-height: 140px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--num-bright);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-    line-height: 2;
-    padding: 16px 18px;
-    resize: vertical;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  textarea:focus {
-    border-color: var(--gold-dim);
-    box-shadow: 0 0 0 3px var(--gold-glow2), 0 0 20px rgba(232,184,75,0.06);
-  }
-
-  textarea::placeholder { color: var(--text-muted); }
-
-  .quick-panel {
-    display: none;
-    flex: 0 0 250px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-    flex-direction: column;
-    max-height: 300px;
-  }
-
-  .quick-panel.visible { display: flex; }
-
-  .quick-panel-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 10px;
-    flex-shrink: 0;
-  }
-
-  .quick-panel-body {
-    overflow-y: auto;
-    flex: 1;
-  }
-
-  /* Single-number hero display inside quick panel */
-  .quick-single {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: 100%;
-    justify-content: center;
-  }
-
-  .quick-single .qnum {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    color: var(--num-bright);
-    word-break: break-all;
-    margin-bottom: 4px;
-  }
-
-  .quick-total-block {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    background: var(--surface3);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    padding: 8px 12px;
-  }
-
-  .quick-total-block .qlabel {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .quick-total-block .qval {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 24px;
-    font-weight: 800;
-  }
-
-  .quick-total-block.qd2 .qval { color: var(--gold-bright); text-shadow: 0 0 14px rgba(232,184,75,0.35); }
-  .quick-total-block.qd1 .qval { color: var(--green-bright); text-shadow: 0 0 14px rgba(46,219,111,0.35); }
-
-  .quick-pattern-row { display: flex; justify-content: center; }
-
-  /* Multi-number compact list inside quick panel */
-  .quick-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 7px 4px;
-    border-bottom: 1px solid var(--border);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-  }
-
-  .quick-row:last-child { border-bottom: none; }
-
-  .quick-row .qrnum { color: var(--num-bright); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-  .quick-row .qrtotals { display: flex; gap: 6px; flex-shrink: 0; }
-
-  .quick-row .qrtag {
-    display: inline-block;
-    border-radius: 5px;
-    padding: 2px 7px;
-    font-size: 11px;
-    font-weight: 600;
-    min-width: 20px;
-    text-align: center;
-  }
-
-  .quick-row .qrtag.d2 { background: rgba(232,184,75,0.12); color: var(--gold-bright); border: 1px solid rgba(232,184,75,0.3); }
-  .quick-row .qrtag.d1 { background: var(--green-dim); color: var(--green-bright); border: 1px solid rgba(46,219,111,0.3); }
-
-  .quick-panel-count {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: center;
-    padding-top: 8px;
-    flex-shrink: 0;
-  }
-
-  .paste-meta {
-    margin-top: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .count-badge {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    color: var(--text-mid);
-  }
-
-  .count-badge strong { color: var(--gold-bright); }
-
-  .btn-clear {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  .btn-clear:hover { border-color: var(--red); color: var(--red); }
-
-  .warn-bar {
-    display: none;
-    align-items: center;
-    gap: 8px;
-    background: var(--red-dim);
-    border: 1px solid rgba(255,82,82,0.25);
-    border-radius: 10px;
-    padding: 10px 16px;
-    font-size: 13px;
-    color: #ff8080;
-    margin-bottom: 16px;
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  .warn-bar.visible { display: flex; }
-
-  .digit-exclude-section { display: none; }
-  .digit-exclude-section.visible { display: block; }
-
-  .digit-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .dchip {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
-    color: var(--text-mid);
-    user-select: none;
-    position: relative;
-  }
-
-  .dchip:hover { border-color: var(--gold-dim); color: var(--gold-bright); background: var(--gold-glow2); }
-
-  .dchip.excluded {
-    background: var(--red-dim);
-    border-color: var(--red);
-    color: var(--red);
-  }
-
-  .dchip.excluded::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%) rotate(45deg);
-    width: 68%; height: 2px;
-    background: var(--red);
-    opacity: 0.7;
-    border-radius: 1px;
-  }
-
-  .exclude-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .exclude-status {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--text-mid);
-  }
-
-  .exclude-status strong { color: var(--red); }
-
-  .filter-section { display: none; }
-  .filter-section.visible { display: block; }
-
-  .filter-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin-bottom: 14px;
-  }
-
-  .filter-row:last-child { margin-bottom: 0; }
-
-  .filter-group-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    min-width: 90px;
-    padding-top: 9px;
-    flex-shrink: 0;
-  }
-
-  .chips { display: flex; flex-wrap: wrap; gap: 7px; flex: 1; }
-
-  .chip {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 15px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.15s;
-    color: var(--text-mid);
-  }
-
-  .chip:hover { border-color: var(--gold-dim); color: var(--text-bright); }
-
-  .chip.active-2digit {
-    background: rgba(232,184,75,0.12);
-    border-color: var(--gold);
-    color: var(--gold-bright);
-    font-weight: 600;
-    box-shadow: 0 0 12px rgba(232,184,75,0.15);
-  }
-
-  .chip.active-1digit {
-    background: var(--green-dim);
-    border-color: var(--green);
-    color: var(--green-bright);
-    font-weight: 600;
-    box-shadow: 0 0 12px rgba(46,219,111,0.15);
-  }
-
-  .chip .chip-count { font-size: 11px; opacity: 0.6; margin-left: 4px; }
-
-  .filter-clear-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'IBM Plex Mono', monospace;
-    white-space: nowrap;
-  }
-
-  .filter-clear-btn:hover { border-color: var(--gold-dim); color: var(--gold-bright); }
-
-  .dist-section { display: none; }
-  .dist-section.visible { display: block; }
-
-  .dist-grid {
-    display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    gap: 8px;
-  }
-
-  .dist-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .dist-bar-wrap {
-    width: 100%;
-    height: 52px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-  }
-
-  .dist-bar {
-    width: 58%;
-    background: rgba(232,184,75,0.12);
-    border: 1px solid rgba(232,184,75,0.25);
-    border-radius: 4px 4px 0 0;
-    transition: height 0.4s cubic-bezier(0.34,1.3,0.64,1), background 0.15s;
-    min-height: 4px;
-    cursor: pointer;
-  }
-
-  .dist-bar:hover { background: rgba(232,184,75,0.28); box-shadow: 0 0 10px rgba(232,184,75,0.2); }
-  .dist-bar.active-bar { background: rgba(232,184,75,0.3); border-color: var(--gold-bright); box-shadow: 0 0 16px rgba(232,184,75,0.3); }
-
-  .dist-label { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-mid); }
-  .dist-count { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-muted); }
-
-  .results-section { display: none; }
-  .results-section.visible { display: block; }
-
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 10px;
-    margin-bottom: 18px;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px 18px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0.3;
-  }
-
-  .stat-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 38px;
-    font-weight: 800;
-    color: var(--gold-bright);
-    line-height: 1;
-    margin-bottom: 5px;
-    text-shadow: 0 0 20px rgba(232,184,75,0.4);
-  }
-
-  .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; font-family: 'IBM Plex Mono', monospace; }
-
-  .actions-bar {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 14px;
-    align-items: center;
-  }
-
-  .filter-info {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--text-dim);
-    margin-right: auto;
-    line-height: 1.6;
-  }
-
-  .filter-info strong { color: var(--text-bright); }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-    white-space: nowrap;
-    font-family: 'Barlow', sans-serif;
-  }
-
-  .btn-gold { background: var(--gold); color: #0a0b14; }
-  .btn-gold:hover { background: var(--gold-bright); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(232,184,75,0.35), 0 0 40px rgba(232,184,75,0.15); }
-
-  .btn-wa { background: #25D366; color: #fff; }
-  .btn-wa:hover { background: #1ebe5a; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(37,211,102,0.3); }
-
-  .btn-outline { background: none; border: 1px solid var(--border); color: var(--text-mid); }
-  .btn-outline:hover { border-color: var(--gold-dim); color: var(--text-bright); }
-
-  .sort-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-
-  .sort-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); }
-
-  .sort-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text-mid);
-    border-radius: 7px;
-    padding: 6px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: 'IBM Plex Mono', monospace;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .sort-btn:hover { border-color: var(--gold-dim); color: var(--text-bright); }
-  .sort-btn.active { background: rgba(232,184,75,0.12); border-color: var(--gold); color: var(--gold-bright); box-shadow: 0 0 10px rgba(232,184,75,0.12); }
-
-  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
-
-  table { width: 100%; border-collapse: collapse; }
-
-  thead tr { background: var(--surface2); border-bottom: 1px solid var(--border2); }
-
-  th {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    padding: 15px 22px;
-    text-align: left;
-    font-weight: 600;
-    user-select: none;
-  }
-
-  th:nth-child(1) { color: var(--num-color); }
-  th:nth-child(2) { text-align: center; width: 140px; color: var(--gold); }
-  th:nth-child(3) { text-align: center; width: 140px; color: var(--green-bright); }
-  th:nth-child(4) { text-align: center; width: 100px; color: var(--purple); }
-
-  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; cursor: pointer; }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: rgba(232,184,75,0.04); }
-  tbody tr:active { background: rgba(232,184,75,0.07); }
-
-  td { padding: 14px 22px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; }
-  td:nth-child(1) { color: var(--num-bright); font-weight: 500; letter-spacing: 0.04em; }
-  td:nth-child(2), td:nth-child(3) { text-align: center; }
-  td:nth-child(4) { text-align: center; }
-
-  .serial { color: var(--text-muted); font-size: 11px; margin-right: 12px; font-weight: 400; }
-
-  .badge-2d {
-    display: inline-block;
-    background: rgba(232,184,75,0.12);
-    border: 1px solid rgba(232,184,75,0.35);
-    color: var(--gold-bright);
-    border-radius: 7px;
-    padding: 5px 16px;
-    font-size: 15px;
-    font-weight: 600;
-    min-width: 50px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(232,184,75,0.1);
-    letter-spacing: 0.03em;
-  }
-
-  .badge-1d {
-    display: inline-block;
-    background: rgba(46,219,111,0.1);
-    border: 1px solid rgba(46,219,111,0.3);
-    color: var(--green-bright);
-    border-radius: 7px;
-    padding: 5px 16px;
-    font-size: 15px;
-    font-weight: 600;
-    min-width: 50px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(46,219,111,0.08);
-    letter-spacing: 0.03em;
-  }
-
-  .pattern-tag { display: inline-block; border-radius: 6px; padding: 3px 9px; font-size: 11px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; white-space: nowrap; font-weight: 500; }
-
-  .pt-mirror { background: var(--purple-dim); border: 1px solid rgba(192,132,252,0.3); color: var(--purple); }
-  .pt-repeat { background: var(--orange-dim); border: 1px solid rgba(251,146,60,0.3); color: var(--orange); }
-  .pt-seq { background: var(--blue-dim); border: 1px solid rgba(77,159,255,0.3); color: var(--blue); }
-  .pt-plain { color: var(--text-muted); font-size: 11px; }
-
-  .copy-flash {
-    position: fixed;
-    bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--surface2);
-    border: 1px solid var(--green);
-    color: var(--green-bright);
-    padding: 7px 20px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-family: 'IBM Plex Mono', monospace;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s;
-    z-index: 998;
-    white-space: nowrap;
-    box-shadow: 0 0 20px rgba(46,219,111,0.2);
-  }
-
-  .copy-flash.show { opacity: 1; }
-
-  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 15px; }
-  .empty-state svg { opacity: 0.15; margin-bottom: 16px; }
-
-  .toast {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--surface2);
-    border: 1px solid var(--gold-dim);
-    color: var(--gold-bright);
-    padding: 10px 24px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-family: 'IBM Plex Mono', monospace;
-    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    z-index: 999;
-    white-space: nowrap;
-    box-shadow: 0 0 24px rgba(232,184,75,0.15);
-  }
-
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  .reset-all-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); border-radius: 8px; padding: 6px 14px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'IBM Plex Mono', monospace; }
-  .reset-all-btn:hover { border-color: var(--red); color: var(--red); }
-
-  footer { text-align: center; padding: 56px 0 0; }
-
-  .footer-inner { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; }
-
-  .footer-dot { width: 36px; height: 2px; border-radius: 2px; background: var(--gold); box-shadow: 0 0 12px var(--gold), 0 0 30px rgba(232,184,75,0.4); margin-bottom: 4px; }
-
-  .footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--gold-bright); letter-spacing: 0.12em; text-transform: uppercase; text-shadow: 0 0 10px rgba(232,184,75,0.9), 0 0 30px rgba(232,184,75,0.55), 0 0 60px rgba(232,184,75,0.25); }
-
-  .footer-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); text-shadow: 0 0 8px rgba(232,184,75,0.6); opacity: 0.85; }
-
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-
-  @media (max-width: 700px) {
-    .quick-panel { display: none !important; }
-  }
-
-  @media (max-width: 480px) {
-    .wrap { padding: 0 12px 60px; }
-    header { padding: 30px 0 24px; }
-    h1 { font-size: 1.8rem; }
-    .subtitle { font-size: 14px; }
-    .card { padding: 18px 14px; border-radius: 14px; }
-    textarea { font-size: 13px; min-height: 110px; padding: 12px 14px; }
-    .filter-row { flex-direction: column; gap: 8px; }
-    .filter-group-label { min-width: unset; padding-top: 0; }
-    .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-    .stat-val { font-size: 26px; }
-    .actions-bar { flex-direction: column; align-items: stretch; gap: 8px; }
-    .filter-info { text-align: center; margin-right: 0; }
-    .btn { justify-content: center; padding: 11px 14px; }
-    th { padding: 11px 12px; font-size: 10px; }
-    td { padding: 11px 12px; font-size: 13px; }
-    th:nth-child(2), th:nth-child(3) { width: 80px; }
-    th:nth-child(4) { width: 70px; }
-    .badge-2d, .badge-1d { font-size: 13px; padding: 3px 10px; min-width: 36px; }
-    .serial { display: none; }
-    .table-wrap { border-radius: 14px; }
-    .dist-grid { gap: 4px; }
-    .dist-label { font-size: 13px; }
-    .sort-btn { font-size: 11px; padding: 5px 10px; }
-    .dchip { width: 40px; height: 40px; font-size: 16px; }
-    .footer-brand { font-size: 18px; }
-    .quick-panel { max-height: 180px; padding: 12px; }
-    .quick-total-block .qval { font-size: 20px; }
-  }
-
-  @media (min-width: 481px) and (max-width: 768px) {
-    .wrap { padding: 0 16px 60px; }
-    .filter-row { gap: 10px; }
-    .actions-bar { flex-wrap: wrap; }
-    th:nth-child(2), th:nth-child(3) { width: 100px; }
-    .stats-row { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  @media (max-width: 600px) {
-    .actions-bar { flex-direction: column; align-items: stretch; }
-    .btn { justify-content: center; }
-    .filter-info { text-align: center; margin-right: 0; }
-  }
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <header>
-    <div class="brand-pill">Free Online Tool</div>
-    <h1>Number Total<br><span>Calculator</span></h1>
-    <p class="subtitle">Paste any number list — any format, any mess. Extract, filter, sort, and share instantly.</p>
-  </header>
-
-  <div class="card">
-    <div class="section-label">Paste Number List</div>
-    <div class="paste-flex">
-      <div class="paste-main">
-        <textarea id="pasteBox" placeholder="Paste numbers here — with text, emojis, prices, spaces, dashes — anything.&#10;&#10;Examples:&#10;📱 9876543210&#10;✅ 7403910000 ₹15,000&#10;+91 98765 43210 — Fancy number&#10;9111-333-639"></textarea>
-        <div class="paste-meta">
-          <span class="count-badge" id="countBadge">Waiting for input…</span>
-          <button class="btn-clear" onclick="clearAll()">✕ Clear All</button>
+<header><div class="head">
+  <div class="brand"><div class="mark">M</div><div><div class="brand-name">MANNE COMMUNICATIONS</div><div class="tagline">NUMBER THAT MATTERS · IDENTITY THAT STAYS</div></div></div>
+  <div class="head-note">VIP & Fancy Mobile Number Tools<br>Made for quick, accurate calculations</div>
+</div></header>
+<main>
+  <div class="intro"><div class="tool-badge"><span></span> FREE ONLINE TOOL</div><h1><span>NUMBER TOTAL</span><strong>INSTANT CALCULATOR</strong></h1><p>Paste any number list, in any format. Get digit totals and single-digit roots instantly.</p></div>
+  <div class="layout">
+    <section class="panel entry-panel">
+      <h2>Enter mobile numbers</h2>
+      <p class="sub">Paste up to 1,000 mobile numbers per calculation from WhatsApp, Excel, websites or messages. Emojis, icons, spaces and decorative characters between digits are ignored.</p>
+      <div class="entry-workspace">
+        <textarea id="numbers" spellcheck="false" inputmode="numeric" autocomplete="off" autocorrect="off" placeholder="9090900005&#10;9999944449&#10;8888877777"></textarea>
+        <aside class="live-check" aria-live="polite">
+          <h3>Quick live total</h3>
+          <p class="live-note">Digit total and single-digit root appear here as you type or paste.</p>
+          <div id="liveResults" class="live-list"><div class="live-empty">Start entering a 10-digit mobile number.</div></div>
+        </aside>
+      </div>
+      <div class="hint">Typing accepts digits only. After 10 digits, the cursor moves to the next line automatically. Pasted text is cleaned into 10-digit numbers. Each number must start with 6, 7, 8 or 9. Maximum: 1,000 valid unique numbers per calculation.</div>
+      <div class="actions">
+        <button class="secondary" id="sample">Load sample</button>
+        <button class="light" id="clear">Clear</button>
+      </div>
+      <div id="message" aria-live="polite"></div>
+    </section>
+    <section class="panel filter-panel">
+      <div class="filter-box">
+        <div class="filter-title">Optional exclusions</div>
+        <div class="filter-grid">
+          <label>Include digits in numbers
+            <input id="includeDigits" type="text" inputmode="numeric" maxlength="10" placeholder="Example: 9, 0">
+          </label>
+          <label>Include single-digit totals
+            <input id="includeTotals" type="text" inputmode="numeric" maxlength="17" placeholder="Example: 1, 5">
+          </label>
+          <label>Exclude digits in numbers
+            <input id="excludeDigits" type="text" inputmode="numeric" maxlength="10" placeholder="Example: 2, 4, 8">
+          </label>
+          <label>Exclude single-digit totals
+            <input id="excludeTotals" type="text" inputmode="numeric" maxlength="17" placeholder="Example: 4, 8">
+          </label>
         </div>
+        <div class="hint" style="margin:8px 0 0">Include digits requires every entered digit to appear in the number. Exclude digits removes a number if it contains any excluded digit. Include/exclude totals work on the final single-digit root. Exports follow the active filters.</div>
       </div>
-      <div class="quick-panel" id="quickPanel">
-        <div class="quick-panel-title">Instant Totals</div>
-        <div class="quick-panel-body" id="quickPanelBody"></div>
+      <div class="tools" style="margin-top:13px">
+        <input id="search" type="search" placeholder="Search number or total…" aria-label="Search results">
+        <select id="filter" aria-label="Filter by total"><option value="all">All totals</option><option value="1">Total 1</option><option value="2">Total 2</option><option value="3">Total 3</option><option value="4">Total 4</option><option value="5">Total 5</option><option value="6">Total 6</option><option value="7">Total 7</option><option value="8">Total 8</option><option value="9">Total 9</option></select>
+        <select id="sort" aria-label="Sort results"><option value="input">Original order</option><option value="number">Number: low to high</option><option value="sumAsc">Total: low to high</option><option value="sumDesc">Total: high to low</option><option value="root">Root: low to high</option></select>
       </div>
-    </div>
+      <div class="table-wrap"><table><thead><tr><th>#</th><th>Mobile number</th><th>Digit total</th><th>Single digit</th></tr></thead><tbody id="results"><tr><td colspan="4" class="empty">Your calculated numbers will appear here.</td></tr></tbody></table></div>
+      <div class="group-panel">
+        <div class="filter-title">Numbers grouped by single-digit total</div>
+        <div id="groupSummary" class="group-grid"><div class="empty">Groups will appear after calculation.</div></div>
+      </div>
+      <div class="actions" style="margin-top:13px">
+        <button class="secondary" id="copy" disabled>Copy results</button>
+        <button class="light" id="txt" disabled>Download TXT</button>
+        <button class="light" id="csv" disabled>Download CSV</button>
+        <button class="light" id="whatsapp" disabled>WhatsApp batches</button>
+        <button class="light" id="print" disabled>Print</button>
+      </div>
+      <div class="wa-panel" id="waPanel" hidden>
+        <div class="wa-head">
+          <div><div class="filter-title">WhatsApp copy & send batches</div><div class="hint" style="margin:4px 0 0">Large lists are split into smaller messages. Copy a batch, paste it into the WhatsApp chat, send it, then move to the next batch.</div></div>
+          <label class="batch-size">Numbers per message
+            <select id="batchSize"><option value="25">25</option><option value="50">50</option><option value="75">75</option><option value="100" selected>100</option><option value="150">150</option><option value="200">200</option></select>
+          </label>
+        </div>
+        <div id="batchInfo" class="hint" aria-live="polite"></div>
+        <div id="batchList" class="batch-list"></div>
+      </div>
+    </section>
   </div>
-
-  <div class="warn-bar" id="warnBar">
-    ⚠ Only first 1000 numbers processed — extra numbers ignored.
-  </div>
-
-  <div class="card digit-exclude-section" id="digitExcludeSection">
-    <div class="section-label">Exclude Numbers Containing Digit</div>
-    <div class="digit-grid" id="digitGrid"></div>
-    <div class="exclude-meta">
-      <span class="exclude-status" id="excludeStatus">No digits excluded</span>
-      <button class="reset-all-btn" onclick="clearExcluded()">Clear Exclusions</button>
-    </div>
-  </div>
-
-  <div class="card dist-section" id="distSection">
-    <div class="section-label">1-Digit Total Distribution
-      <span style="color:var(--text-muted);font-size:10px;margin-left:2px;letter-spacing:0.05em;">(tap bar to filter)</span>
-    </div>
-    <div class="dist-grid" id="distGrid"></div>
-  </div>
-
-  <div class="card filter-section" id="filterSection">
-    <div class="section-label">Filter by Total</div>
-    <div class="filter-row">
-      <span class="filter-group-label">2-Digit</span>
-      <div class="chips" id="chips2d"></div>
-      <button class="filter-clear-btn" onclick="clearFilter('2d')">Clear</button>
-    </div>
-    <div class="filter-row">
-      <span class="filter-group-label">1-Digit</span>
-      <div class="chips" id="chips1d"></div>
-      <button class="filter-clear-btn" onclick="clearFilter('1d')">Clear</button>
-    </div>
-  </div>
-
-  <div class="results-section" id="resultsSection">
-    <div class="stats-row" id="statsRow"></div>
-
-    <div class="actions-bar">
-      <span class="filter-info" id="filterInfo"></span>
-      <button class="btn btn-gold" onclick="copyNumbers()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        Copy Numbers
-      </button>
-      <button class="btn btn-outline" onclick="copyWithTotals()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Copy with Totals
-      </button>
-      <button class="btn btn-wa" onclick="shareWhatsApp()">
-        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.851L0 24l6.335-1.56A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.376l-.36-.213-3.727.917.978-3.638-.234-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
-        WhatsApp
-      </button>
-    </div>
-
-    <div class="sort-bar">
-      <span class="sort-label">Sort:</span>
-      <button class="sort-btn active" id="sortNone" onclick="setSort('none')">Original</button>
-      <button class="sort-btn" id="sort2asc" onclick="setSort('2asc')">2-Digit ↑</button>
-      <button class="sort-btn" id="sort2desc" onclick="setSort('2desc')">2-Digit ↓</button>
-      <button class="sort-btn" id="sort1asc" onclick="setSort('1asc')">1-Digit ↑</button>
-      <button class="sort-btn" id="sort1desc" onclick="setSort('1desc')">1-Digit ↓</button>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>#&nbsp;&nbsp;Mobile Number</th>
-            <th>2-Digit Total</th>
-            <th>1-Digit Total</th>
-            <th>Pattern</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-dot"></div>
-      <div class="footer-brand">Manne Communications</div>
-      <div class="footer-sub">Designed &amp; Developed &nbsp;·&nbsp; Made for India to the World</div>
-    </div>
-  </footer>
-</div>
-
-<div class="toast" id="toast"></div>
-<div class="copy-flash" id="copyFlash"></div>
-
+</main>
+<footer><b>Manne Communications</b> · All calculations happen in your browser. No numbers are uploaded or stored.</footer>
+<div class="toast" id="toast" role="status"></div>
 <script>
-  const MAX = 1000;
-  let allNumbers = [];
-  let active2d = null;
-  let active1d = null;
-  let excludedDigits = new Set();
-  let currentSort = 'none';
+const $=id=>document.getElementById(id);
+let allResults=[],invalidEntries=[];
+function digitsOnly(s){return String(s).replace(/\D/g,'')}
+function reduceTotal(n){while(n>9)n=String(n).split('').reduce((a,d)=>a+Number(d),0);return n}
+function parseEntries(raw){
+  // Keep each pasted line as a record. This prevents a bad 11-digit entry
+  // from being silently combined with the next mobile number.
+  return String(raw).split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+}
+function extractMobile(line){
+  let text=String(line);
 
-  function digitSum2(n) {
-    return n.toString().split('').reduce((a, c) => a + parseInt(c), 0);
+  // A currency or price label marks the start of the price, not part of the mobile.
+  // Examples: ₹5,000, Rs. 5000, INR 5000, Price: 5000.
+  text=text.split(/₹|\b(?:INR|RS\.?|PRICE|COST|AMOUNT|MRP)\b|[ \t]+[-–—|][ \t]+/i)[0];
+
+  // Collect digits despite emojis, icons, spaces, brackets, dots, hyphens,
+  // slashes or other decorative characters between them.
+  let d=digitsOnly(text);
+
+  // Accept an explicit +91 country prefix followed by exactly 10 mobile digits.
+  if(d.length===12 && d.startsWith('91')) d=d.slice(2);
+
+  // If several complete numbers were pasted on one line, split only into exact
+  // 10-digit chunks. Every chunk must independently start with 6, 7, 8 or 9.
+  if(d.length>10 && d.length%10===0){
+    const chunks=d.match(/.{10}/g)||[];
+    if(chunks.length && chunks.every(n=>/^[6-9]\d{9}$/.test(n))) return chunks;
   }
 
-  function digitSum1(n) {
-    let s = digitSum2(n);
-    while (s >= 10) s = digitSum2(s);
-    return s;
-  }
+  // Never truncate 11, 13, 14... digit entries into a false 10-digit number.
+  if(d.length===10 && /^[6-9]\d{9}$/.test(d)) return [d];
+  return [];
+}
 
-  function detectPattern(num) {
-    const s = num.toString();
-    const digits = s.split('');
-    const half = Math.floor(s.length / 2);
-    const first = s.slice(0, half);
-    const last = s.slice(s.length - half);
-    if (first === last.split('').reverse().join('')) return { label: 'Mirror', cls: 'pt-mirror' };
-    if (/(.)\1{3,}/.test(s)) return { label: 'Repeat', cls: 'pt-repeat' };
-    let asc = 1, desc = 1;
-    for (let i = 1; i < digits.length; i++) {
-      const diff = parseInt(digits[i]) - parseInt(digits[i-1]);
-      if (diff === 1) asc++; else asc = 1;
-      if (diff === -1) desc++; else desc = 1;
-      if (asc >= 4 || desc >= 4) return { label: 'Sequence', cls: 'pt-seq' };
-    }
-    return null;
-  }
-
-  function normalizeUnicode(str) {
-    return str.replace(/[\u{1D7CE}-\u{1D7FF}]/gu, ch => {
-      const cp = ch.codePointAt(0);
-      const bases = [0x1D7CE, 0x1D7D8, 0x1D7E2, 0x1D7EC, 0x1D7F6];
-      for (const base of bases) { if (cp >= base && cp < base + 10) return String(cp - base); }
-      return ch;
-    })
-    .replace(/[０-９]/g, ch => String(ch.charCodeAt(0) - 0xFF10))
-    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, ch => '0123456789'['⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(ch)])
-    .replace(/[①-⑨]/g, ch => String(ch.charCodeAt(0) - 0x2460 + 1));
-  }
-
-  function extract(text) {
-    const lines = normalizeUnicode(text).split(/\n/);
-    const found = [];
-    const sep = '[\\s.\\-()\\/]';
-    const re = new RegExp('([6-9])(?:' + sep + '*\\d){9}', 'g');
-    const ccRe = new RegExp('(?:\\+91|0091|\\b91|\\b0)[\\s\\-]?(?=(?:' + sep + '*\\d){10})', 'g');
-    for (let line of lines) {
-      line = line.replace(/(?:₹|Rs\.?|INR)\s*[\d,]+(?:\.\d+)?/gi, ' ');
-      line = line.replace(ccRe, ' ');
-      let m;
-      re.lastIndex = 0;
-      while ((m = re.exec(line)) !== null) {
-        const candidate = m[0].replace(/\D/g, '').slice(0, 10);
-        if (candidate.length === 10 && /^[6-9]/.test(candidate) && !/^(\d)\1{9}$/.test(candidate)) {
-          found.push(candidate);
+function numberInfo(number){
+  const sum=[...number].reduce((a,x)=>a+Number(x),0);
+  return {number,sum,root:reduceTotal(sum)};
+}
+function liveNumbers(){
+  const raw=$('numbers').value;
+  const seen=new Set(),out=[];
+  raw.split(/\r?\n/).forEach(line=>{
+    const d=digitsOnly(line);
+    let chunks=[];
+    if(d.length===12 && d.startsWith('91')) chunks=[d.slice(2)];
+    else if(d.length===10) chunks=[d];
+    else if(d.length>10 && d.length%10===0) chunks=d.match(/.{10}/g)||[];
+    chunks.forEach(n=>{
+      if(/^[6-9]\d{9}$/.test(n)&&!seen.has(n)){seen.add(n);out.push(numberInfo(n));}
+    });
+  });
+  return out;
+}
+function renderLive(){
+  const rows=liveNumbers(),el=$('liveResults');
+  if(!rows.length){el.innerHTML='<div class="live-empty">Enter 10 digits to see the total instantly.</div>';return;}
+  el.innerHTML=rows.slice(-20).reverse().map(r=>`<div class="live-item"><span class="live-number">${r.number}</span><span class="live-meta"><span class="live-sum">Total ${r.sum}</span><span class="root root-${r.root}">${r.root}</span></span></div>`).join('');
+}
+function cleanPastedText(text){
+  const output=[];
+  String(text).split(/\r?\n/).forEach(line=>{
+    let part=line.trim();
+    if(!part)return;
+    // Ignore any price suffix, but allow country code +91 before the number.
+    part=part.split(/₹|\b(?:INR|RS\.?|PRICE|COST|AMOUNT|MRP)\b|[ \t]+[-–—|][ \t]+/i)[0];
+    let d=digitsOnly(part);
+    if(d.startsWith('91')&&d.length===12)d=d.slice(2);
+    if(d.length>0){
+      // Split pasted digit runs into ten-digit lines, preserving a short final
+      // chunk so it can be completed. This also handles pasted text with letters
+      // or symbols inserted between digits.
+      for(let i=0;i<d.length;i+=10){
+        const chunk=d.slice(i,i+10);
+        if(chunk.length===10){
+          if(/^[6-9]\d{9}$/.test(chunk))output.push(chunk);
+        }else if(/^[6-9]\d{0,8}$/.test(chunk)){
+          output.push(chunk);
         }
       }
     }
-    return [...new Map(found.map(n => [n, n])).values()];
-  }
-
-  function process(nums) {
-    return nums.map(n => ({ num: n, d2: digitSum2(n), d1: digitSum1(n), pattern: detectPattern(n) }));
-  }
-
-  function filtered() {
-    let data = allNumbers.filter(r => {
-      if (active2d !== null && r.d2 !== active2d) return false;
-      if (active1d !== null && r.d1 !== active1d) return false;
-      if (excludedDigits.size > 0) {
-        for (const d of excludedDigits) { if (r.num.includes(String(d))) return false; }
+  });
+  return output.join('\n');
+}
+function bindNumberEntry(){
+  const field=$('numbers');
+  field.addEventListener('keydown',e=>{
+    if(e.ctrlKey||e.metaKey||e.altKey||['Backspace','Delete','Tab','Enter','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(e.key))return;
+    if(e.key.length===1 && !/[0-9]/.test(e.key))e.preventDefault();
+  });
+  field.addEventListener('paste',e=>{
+    e.preventDefault();
+    const pasted=(e.clipboardData||window.clipboardData).getData('text');
+    const cleaned=cleanPastedText(pasted);
+    const start=field.selectionStart,end=field.selectionEnd;
+    const before=field.value.slice(0,start),after=field.value.slice(end);
+    const prefix=before && !before.endsWith('\n') && cleaned ? '\n' : '';
+    const suffix=after && cleaned && !cleaned.endsWith('\n') ? '\n' : '';
+    field.value=before+prefix+cleaned+suffix+after;
+    field.dispatchEvent(new Event('input',{bubbles:true}));
+  });
+  field.addEventListener('input',()=>{
+    const pos=field.selectionStart;
+    const before=field.value.slice(0,pos);
+    const currentLine=before.split(/\r?\n/).pop()||'';
+    const lineStart=before.length-currentLine.length;
+    let cleaned=field.value.replace(/[^\d\n\r]/g,'');
+    // Enforce ten digits per line during manual entry, moving overflow to the next line.
+    const lines=cleaned.split(/\r?\n/),normalized=[];
+    lines.forEach((line,index)=>{
+      let digits=line;
+      while(digits.length>=10){
+        normalized.push(digits.slice(0,10));
+        digits=digits.slice(10);
       }
-      return true;
+      if(digits.length)normalized.push(digits);
+      else if(index===lines.length-1 && line.length===10)normalized.push('');
     });
-    if (currentSort === '2asc') data = [...data].sort((a,b) => a.d2 - b.d2);
-    else if (currentSort === '2desc') data = [...data].sort((a,b) => b.d2 - a.d2);
-    else if (currentSort === '1asc') data = [...data].sort((a,b) => a.d1 - b.d1);
-    else if (currentSort === '1desc') data = [...data].sort((a,b) => b.d1 - a.d1);
-    return data;
-  }
-
-  function formatLine(r) {
-    return `${r.num} - ${r.d2} - ${r.d1}`;
-  }
-
-  function renderQuickPanel() {
-    const panel = document.getElementById('quickPanel');
-    const body = document.getElementById('quickPanelBody');
-    if (allNumbers.length === 0) {
-      panel.classList.remove('visible');
-      body.innerHTML = '';
-      return;
+    const next=normalized.join('\n');
+    if(next!==field.value){
+      const beforeDigits=digitsOnly(before);
+      field.value=next;
+      let cursor=0,remaining=beforeDigits.length;
+      for(let i=0;i<next.length&&remaining>0;i++){if(/\d/.test(next[i]))remaining--;cursor=i+1;}
+      if(remaining===0 && next[cursor]==='\n')cursor++;
+      field.setSelectionRange(cursor,cursor);
     }
-    panel.classList.add('visible');
-
-    if (allNumbers.length === 1) {
-      const r = allNumbers[0];
-      const ptag = r.pattern ? `<span class="pattern-tag ${r.pattern.cls}">${r.pattern.label}</span>` : '';
-      body.innerHTML = `
-        <div class="quick-single">
-          <div class="qnum">${r.num}</div>
-          <div class="quick-total-block qd2">
-            <span class="qlabel">2-Digit</span>
-            <span class="qval">${r.d2}</span>
-          </div>
-          <div class="quick-total-block qd1">
-            <span class="qlabel">1-Digit</span>
-            <span class="qval">${r.d1}</span>
-          </div>
-          <div class="quick-pattern-row">${ptag}</div>
-        </div>`;
-    } else {
-      const rows = allNumbers.map(r => `
-        <div class="quick-row">
-          <span class="qrnum">${r.num}</span>
-          <span class="qrtotals">
-            <span class="qrtag d2">${r.d2}</span>
-            <span class="qrtag d1">${r.d1}</span>
-          </span>
-        </div>`).join('');
-      body.innerHTML = rows + `<div class="quick-panel-count">${allNumbers.length} numbers</div>`;
-    }
-  }
-
-  function render() {
-    const data = filtered();
-    const tbody = document.getElementById('tableBody');
-    if (data.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4"><div class="empty-state">
-        <svg width="40" height="40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <div>No numbers match current filters</div>
-      </div></td></tr>`;
-    } else {
-      tbody.innerHTML = data.map((r, i) => {
-        const ptag = r.pattern
-          ? `<span class="pattern-tag ${r.pattern.cls}">${r.pattern.label}</span>`
-          : `<span class="pt-plain">—</span>`;
-        return `<tr onclick="copyRow('${r.num}', this)">
-          <td><span class="serial">${i+1}</span>${r.num}</td>
-          <td><span class="badge-2d">${r.d2}</span></td>
-          <td><span class="badge-1d">${r.d1}</span></td>
-          <td>${ptag}</td>
-        </tr>`;
-      }).join('');
-    }
-    const info = document.getElementById('filterInfo');
-    const parts = [];
-    if (active2d !== null) parts.push(`2-digit = <strong>${active2d}</strong>`);
-    if (active1d !== null) parts.push(`1-digit = <strong>${active1d}</strong>`);
-    if (excludedDigits.size > 0) parts.push(`excl. <strong>${[...excludedDigits].sort().join(',')}</strong>`);
-    info.innerHTML = parts.length
-      ? `<strong>${data.length}</strong> of ${allNumbers.length} · ${parts.join(' · ')}`
-      : `All <strong>${data.length}</strong> numbers`;
-    document.getElementById('statsRow').innerHTML = `
-      <div class="stat-card"><div class="stat-val">${allNumbers.length}</div><div class="stat-label">Total</div></div>
-      <div class="stat-card"><div class="stat-val">${data.length}</div><div class="stat-label">Showing</div></div>
-      <div class="stat-card"><div class="stat-val">${allNumbers.length - data.length}</div><div class="stat-label">Hidden</div></div>
-    `;
-    updateDist();
-    renderQuickPanel();
-  }
-
-  function updateDist() {
-    const freq = {};
-    for (let i = 1; i <= 9; i++) freq[i] = 0;
-    allNumbers.forEach(r => { if (r.d1 >= 1 && r.d1 <= 9) freq[r.d1]++; });
-    const maxVal = Math.max(...Object.values(freq), 1);
-    document.getElementById('distGrid').innerHTML = Object.keys(freq).map(v => {
-      const count = freq[v];
-      const pct = Math.round((count / maxVal) * 100);
-      const isActive = active1d === parseInt(v);
-      return `<div class="dist-col">
-        <div class="dist-bar-wrap">
-          <div class="dist-bar ${isActive ? 'active-bar' : ''}" style="height:${Math.max(pct, 5)}%" onclick="toggleFilter('1d',${v})" title="${count} numbers"></div>
-        </div>
-        <div class="dist-label">${v}</div>
-        <div class="dist-count">${count}</div>
-      </div>`;
-    }).join('');
-  }
-
-  function buildChips() {
-    const freq2 = {}, freq1 = {};
-    allNumbers.forEach(r => { freq2[r.d2] = (freq2[r.d2]||0)+1; freq1[r.d1] = (freq1[r.d1]||0)+1; });
-    document.getElementById('chips2d').innerHTML = Object.keys(freq2).map(Number).sort((a,b)=>a-b).map(v =>
-      `<button class="chip ${active2d===v?'active-2digit':''}" onclick="toggleFilter('2d',${v})">${v}<span class="chip-count">(${freq2[v]})</span></button>`
-    ).join('');
-    document.getElementById('chips1d').innerHTML = Object.keys(freq1).map(Number).sort((a,b)=>a-b).map(v =>
-      `<button class="chip ${active1d===v?'active-1digit':''}" onclick="toggleFilter('1d',${v})">${v}<span class="chip-count">(${freq1[v]})</span></button>`
-    ).join('');
-  }
-
-  function buildDigitGrid() {
-    document.getElementById('digitGrid').innerHTML = Array.from({length:10}, (_,i) =>
-      `<div class="dchip ${excludedDigits.has(i)?'excluded':''}" onclick="toggleExclude(${i})">${i}</div>`
-    ).join('');
-    const status = document.getElementById('excludeStatus');
-    if (excludedDigits.size === 0) {
-      status.innerHTML = 'No digits excluded';
-    } else {
-      status.innerHTML = `Excluding numbers with: ${[...excludedDigits].sort().map(d => `<strong>${d}</strong>`).join(', ')}`;
-    }
-  }
-
-  function toggleExclude(d) {
-    if (excludedDigits.has(d)) excludedDigits.delete(d); else excludedDigits.add(d);
-    buildDigitGrid(); render();
-  }
-
-  function clearExcluded() { excludedDigits.clear(); buildDigitGrid(); render(); }
-
-  function toggleFilter(type, val) {
-    if (type === '2d') active2d = (active2d === val) ? null : val;
-    if (type === '1d') active1d = (active1d === val) ? null : val;
-    buildChips(); render();
-  }
-
-  function clearFilter(type) {
-    if (type === '2d') active2d = null;
-    if (type === '1d') active1d = null;
-    buildChips(); render();
-  }
-
-  function setSort(s) {
-    currentSort = s;
-    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('sort' + (s === 'none' ? 'None' : s)).classList.add('active');
-    render();
-  }
-
-  function copyRow(num, row) {
-    navigator.clipboard.writeText(num).then(() => {
-      const flash = document.getElementById('copyFlash');
-      flash.textContent = `✓ Copied ${num}`;
-      flash.classList.add('show');
-      row.style.background = 'rgba(46,219,111,0.06)';
-      setTimeout(() => { flash.classList.remove('show'); row.style.background = ''; }, 1400);
-    });
-  }
-
-  function copyNumbers() {
-    const data = filtered();
-    if (!data.length) { showToast('Nothing to copy'); return; }
-    navigator.clipboard.writeText(data.map(r => r.num).join('\n')).then(() => showToast(`✓ Copied ${data.length} numbers`));
-  }
-
-  function copyWithTotals() {
-    const data = filtered();
-    if (!data.length) { showToast('Nothing to copy'); return; }
-    navigator.clipboard.writeText(data.map(r => formatLine(r)).join('\n'))
-      .then(() => showToast(`✓ Copied ${data.length} numbers with totals`));
-  }
-
-  function shareWhatsApp() {
-    const data = filtered();
-    if (!data.length) { showToast('Nothing to share'); return; }
-    window.open('https://wa.me/?text=' + encodeURIComponent(data.map(r => formatLine(r)).join('\n')), '_blank');
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 1800);
-  }
-
-  function clearAll() {
-    const box = document.getElementById('pasteBox');
-    box.value = '';
-    allNumbers = []; active2d = null; active1d = null; excludedDigits.clear(); currentSort = 'none';
-    document.getElementById('countBadge').textContent = 'Waiting for input…';
-    ['filterSection','resultsSection','warnBar','digitExcludeSection','distSection']
-      .forEach(id => document.getElementById(id).classList.remove('visible'));
-    document.getElementById('quickPanel').classList.remove('visible');
-    document.getElementById('quickPanelBody').innerHTML = '';
-    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('sortNone').classList.add('active');
-    setTimeout(() => box.focus(), 50);
-  }
-
-  function processInput(val) {
-    const raw = val.trim();
-    if (!raw) { clearAll(); return; }
-    let nums = extract(raw);
-    const warn = nums.length > MAX;
-    if (warn) nums = nums.slice(0, MAX);
-    document.getElementById('warnBar').classList.toggle('visible', warn);
-    if (nums.length === 0) {
-      document.getElementById('countBadge').textContent = 'No valid 10-digit numbers found';
-      ['filterSection','resultsSection','digitExcludeSection','distSection'].forEach(id => document.getElementById(id).classList.remove('visible'));
-      allNumbers = [];
-      renderQuickPanel();
-      return;
-    }
-    allNumbers = process(nums);
-    active2d = null; active1d = null;
-    document.getElementById('countBadge').innerHTML = `<strong>${nums.length}</strong> numbers extracted`;
-    ['filterSection','resultsSection','digitExcludeSection','distSection'].forEach(id => document.getElementById(id).classList.add('visible'));
-    buildChips(); buildDigitGrid(); render();
-  }
-
-  const pasteBox = document.getElementById('pasteBox');
-
-  pasteBox.addEventListener('input', function() {
-    processInput(this.value);
+    renderLive();
+    calculate();
   });
+}
 
-  pasteBox.addEventListener('paste', function(e) {
-    const pasted = (e.clipboardData || window.clipboardData).getData('text');
-    if (pasted) {
-      e.preventDefault();
-      const start = this.selectionStart;
-      const end = this.selectionEnd;
-      this.value = this.value.slice(0, start) + pasted + this.value.slice(end);
-      this.selectionStart = this.selectionEnd = start + pasted.length;
-      processInput(this.value);
-    }
+function calculate(){
+  const entries=parseEntries($('numbers').value),seen=new Set(),valid=[],invalid=[];
+  entries.forEach(entry=>{
+    const extracted=extractMobile(entry);
+    if(extracted.length){
+      extracted.forEach(number=>{
+        if(!seen.has(number)){
+          seen.add(number);
+          const sum=[...number].reduce((a,x)=>a+Number(x),0);
+          valid.push({number,sum,root:reduceTotal(sum)});
+        }
+      });
+    }else invalid.push(entry);
   });
+  const overLimit=valid.length>1000?valid.slice(1000):[];
+  const accepted=valid.slice(0,1000);
+  allResults=accepted;invalidEntries=invalid.concat(overLimit.map(x=>x.number));
+  $('message').className=(invalid.length||overLimit.length)?'bad':'good';
+  $('message').textContent=overLimit.length
+    ?`Calculated the first 1,000 valid unique numbers. ${overLimit.length} additional valid number(s) were not included. Split your list and calculate the remaining numbers separately.`
+    :invalid.length
+      ?`${accepted.length} valid unique number(s) calculated. ${invalid.length} line(s) skipped. Each accepted number must contain exactly 10 digits and start with 6, 7, 8 or 9.`
+      :`Successfully calculated ${accepted.length} valid unique number(s).`;
+  ['copy','txt','csv','whatsapp','print'].forEach(id=>$(id).disabled=!valid.length);
+  render();
+}
+function visibleResults(){
+  const q=$('search').value.trim().toLowerCase(),f=$('filter').value,s=$('sort').value;
+  const excludedDigits=new Set(digitsOnly($('excludeDigits').value));
+  const excludedTotals=new Set(digitsOnly($('excludeTotals').value));
+  const includedDigits=new Set(digitsOnly($('includeDigits').value));
+  const includedTotals=new Set(digitsOnly($('includeTotals').value));
+  let rows=allResults.filter(r=>{
+    const hasIncludedDigit=!includedDigits.size||[...includedDigits].every(d=>r.number.includes(d));
+    const hasIncludedTotal=!includedTotals.size||includedTotals.has(String(r.root));
+    return (f==='all'||String(r.root)===f) &&
+      !excludedTotals.has(String(r.root)) &&
+      ![...r.number].some(d=>excludedDigits.has(d)) &&
+      hasIncludedDigit && hasIncludedTotal &&
+      (!q||r.number.includes(q)||String(r.sum).includes(q)||String(r.root).includes(q));
+  });
+  rows=[...rows];
+  if(s==='number')rows.sort((a,b)=>a.number.localeCompare(b.number));
+  if(s==='sumAsc')rows.sort((a,b)=>a.sum-b.sum||a.number.localeCompare(b.number));
+  if(s==='sumDesc')rows.sort((a,b)=>b.sum-a.sum||a.number.localeCompare(b.number));
+  if(s==='root')rows.sort((a,b)=>a.root-b.root||a.sum-b.sum);
+  return rows;
+}
+function render(){
+  const rows=visibleResults(),body=$('results');
+  if(!rows.length){body.innerHTML='<tr><td colspan="4" class="empty">No numbers match the current filters.</td></tr>';}
+  else body.innerHTML=rows.map((r,i)=>`<tr><td>${i+1}</td><td class="number">${r.number}</td><td><b>${r.sum}</b></td><td><span class="root root-${r.root}">${r.root}</span></td></tr>`).join('');
+  renderGroups(rows);
+}
+function renderGroups(rows){
+  const el=$('groupSummary');if(!el)return;
+  const counts=Array.from({length:9},(_,i)=>({root:i+1,count:rows.filter(r=>r.root===i+1).length}));
+  el.innerHTML=counts.map(x=>`<div class="group-card"><span class="root root-${x.root}">${x.root}</span><div><strong>${x.count}</strong><small>Number${x.count===1?'':'s'}</small></div><button type="button" data-root="${x.root}">Show</button></div>`).join('');
+  el.querySelectorAll('button[data-root]').forEach(btn=>btn.addEventListener('click',()=>{
+    $('filter').value=btn.dataset.root;render();
+  }));
+}
+function outputText(rows){return ['MOBILE NUMBER\tDIGIT TOTAL\tSINGLE DIGIT',...rows.map(r=>`${r.number}\t${r.sum}\t${r.root}`)].join('\n')}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2100)}
+bindNumberEntry();renderLive();
+$('sample').addEventListener('click',()=>{$('numbers').value='9090900005\n9999944449\n8888877777\n9876543210\n9000000009';renderLive();calculate()});
+$('clear').addEventListener('click',()=>{$('numbers').value='';renderLive();$('message').textContent='';$('message').className='';$('waPanel').hidden=true;$('batchList').innerHTML='';allResults=[];invalidEntries=[];$('results').innerHTML='<tr><td colspan="4" class="empty">Your calculated numbers will appear here.</td></tr>';$('groupSummary').innerHTML='<div class="empty">Groups will appear after calculation.</div>';['copy','txt','csv','whatsapp','print'].forEach(id=>$(id).disabled=true)});
+['search','filter','sort'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',()=>{render();if(!$('waPanel').hidden)makeWhatsAppBatches()}));
+['excludeDigits','excludeTotals','includeDigits','includeTotals'].forEach(id=>$(id).addEventListener('input',()=>{render();if(!$('waPanel').hidden)makeWhatsAppBatches()}));
+$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(outputText(visibleResults()));toast('Visible results copied')}catch(e){toast('Clipboard unavailable. Use Download TXT instead.')}});
+$('txt').addEventListener('click',()=>{
+  const rows=visibleResults();
+  const lines=['MANNE COMMUNICATIONS - VIP NUMBER TOTALS','='.repeat(42),'','Mobile Number | Digit Total | Single Digit','-'.repeat(42),...rows.map(r=>`${r.number} | ${r.sum} | ${r.root}`),'','Total numbers: '+rows.length,'Generated using Manne Communications VIP Number Total Calculator'];
+  const blob=new Blob([lines.join('\\r\\n')],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='manne-vip-number-totals.txt';a.click();URL.revokeObjectURL(url);
+});
+function makeWhatsAppBatches(){
+  const rows=visibleResults();
+  const size=Number($('batchSize').value)||100;
+  const batches=[];
+  for(let i=0;i<rows.length;i+=size)batches.push(rows.slice(i,i+size));
+  const panel=$('waPanel');
+  panel.hidden=false;
+  $('batchInfo').textContent=`${rows.length} filtered number(s) · ${batches.length} WhatsApp message(s) · ${size} numbers maximum per message.`;
+  $('batchList').innerHTML=batches.length?batches.map((batch,i)=>`
+    <div class="batch-card">
+      <strong>Batch ${i+1} of ${batches.length}</strong>
+      <small>${batch.length} numbers · ${batch[0].number} to ${batch[batch.length-1].number}</small>
+      <div class="batch-actions">
+        <button class="secondary" type="button" data-copy-batch="${i}">Copy batch</button>
+        <button class="light" type="button" data-open-batch="${i}">Open WhatsApp</button>
+      </div>
+    </div>`).join(''):'<div class="empty">No numbers match the current filters.</div>';
+  $('batchList').querySelectorAll('[data-copy-batch]').forEach(btn=>btn.addEventListener('click',async()=>{
+    const batch=batches[Number(btn.dataset.copyBatch)];
+    try{await navigator.clipboard.writeText(whatsAppMessage(batch,Number(btn.dataset.copyBatch)+1,batches.length));toast(`Batch ${Number(btn.dataset.copyBatch)+1} copied. Paste it into WhatsApp.`)}
+    catch(e){toast('Copy was blocked by the browser. Select and copy the batch using the text export instead.')}
+  }));
+  $('batchList').querySelectorAll('[data-open-batch]').forEach(btn=>btn.addEventListener('click',()=>{
+    const idx=Number(btn.dataset.openBatch);
+    const msg=whatsAppMessage(batches[idx],idx+1,batches.length);
+    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener,noreferrer');
+  }));
+}
+function whatsAppMessage(rows,batchNo,totalBatches){
+  const groups=[];
+  for(let root=1;root<=9;root++){
+    const group=rows.filter(r=>r.root===root);
+    if(group.length){
+      groups.push(`*TOTAL ${root} (${group.length})*`);
+      groups.push(...group.map(r=>`📱 ${r.number} | Sum: ${r.sum}`));
+      groups.push('');
+    }
+  }
+  return ['*MANNE COMMUNICATIONS*','*VIP MOBILE NUMBER TOTALS*',`Batch ${batchNo}/${totalBatches}`,'',...groups,`Numbers in this batch: ${rows.length}`,'','Number That Matters','Identity That Stays'].join('\n');
+}
+$('whatsapp').addEventListener('click',makeWhatsAppBatches);
+$('batchSize').addEventListener('change',()=>{if(!$('waPanel').hidden)makeWhatsAppBatches()});
+$('csv').addEventListener('click',()=>{const rows=visibleResults(),csv=['Mobile Number,Digit Total,Single Digit',...rows.map(r=>`${r.number},${r.sum},${r.root}`)].join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='manne-vip-number-totals.csv';a.click();URL.revokeObjectURL(url)});
+$('print').addEventListener('click',()=>window.print());
+$('numbers').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')calculate()});
 </script>
 </body>
 </html>
